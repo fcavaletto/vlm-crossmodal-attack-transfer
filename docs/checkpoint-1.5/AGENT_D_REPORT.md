@@ -172,5 +172,7 @@ The Evidence section records the virtualenv path used so that `.venv` was not co
 - Branch: `checkpoint-1.5/h-star-estimator`
 - Base of this branch: `90c6ffe83d61514da217a20f8dfc2f202afbbe69` (`checkpoint-1/dev-pilot`)
 - The pull request targets `main`. The diff against `main` contains Checkpoint 1 because this branch starts at that commit. Checkpoint 1 files are not edited here.
-- Pull request: pending
+- Estimator, fixtures, and the first version of this report: `9b8fbbbff69c61396daedc5026a4a9f39d63e8fd`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/9
 - Not merged.
+- The commit after `9b8fbbb` records this pull-request URL.
