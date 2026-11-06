@@ -6,6 +6,8 @@ import json
 import re
 from collections import Counter
 
+import PIL
+
 RECORD_KEYS = {
     "ambiguity_flags",
     "answer",
@@ -95,8 +97,11 @@ def test_manifest_contract(records: list[dict], generated) -> None:
             assert obj["position"]["cy"] == row * 192 + 96
 
 
-def test_metadata_describes_the_sample(generated) -> None:
+def test_metadata_describes_the_sample(generated, repo_root) -> None:
     metadata = json.loads((generated / "metadata.json").read_text(encoding="utf-8"))
+    committed = json.loads(
+        (repo_root / "fixtures" / "development_simple" / "metadata.json").read_text(encoding="utf-8")
+    )
     assert metadata["name"] == "study2_development_simple"
     assert metadata["scene_count"] == 24
     assert metadata["split"] == "development"
@@ -105,7 +110,12 @@ def test_metadata_describes_the_sample(generated) -> None:
     assert metadata["image_size"] == [512, 384]
     assert metadata["grid"] == {"cols": 4, "rows": 2, "cell": [128, 192]}
     assert metadata["radius"] == 60
-    assert metadata["pillow"] == "11.3.0"
+    # A regeneration records the Pillow that wrote it. The committed metadata
+    # keeps 11.3.0, the Pillow that wrote the committed PNGs.
+    assert metadata["pillow"] == PIL.__version__
+    assert committed["pillow"] == "11.3.0"
+    assert committed["scene_count"] == metadata["scene_count"]
+    assert committed["split"] == metadata["split"]
     assert metadata["task_families"] == ["row_color"]
     assert metadata["task_counts"] == {"row_color": 24}
     assert metadata["answer_counts"]["row_color"] == {
