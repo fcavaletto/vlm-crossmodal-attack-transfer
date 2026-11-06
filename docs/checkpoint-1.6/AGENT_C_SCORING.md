@@ -189,5 +189,5 @@ Interpreter: `/Users/fedecava/Development/_c0-work/venv-vlm/bin/python`.
 
 - Branch: `checkpoint-1.6/scoring`
 - Parent: `b2e7abff72b87b475d0abf8d037e1b4d2f9c0c06`
-- Commit: `COMMIT_SHA_PENDING`
+- Scoring commit: `f82f0fd2e7684924c9b9ded3f6d9b0a855f7b63b`
 - Not pushed. No pull request.
