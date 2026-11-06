@@ -166,6 +166,42 @@ class VLMSession:
             "prompt_tokens": prompt_length,
         }
 
+    def prompt_last_logits(
+        self, image, prompt: str, prefix_token_ids: list[int] | None = None
+    ) -> torch.Tensor:
+        """Float32 CPU logits at the last position of the prompt plus ``prefix_token_ids``.
+
+        With no prefix, these logits predict the first answer token. With a prefix,
+        they predict the next answer token under teacher forcing. The forward uses
+        the same float32 pixels as scoring and generation. No image gradient is
+        taken. This is not an attack.
+        """
+        bound = self._bind(image, prompt, enable_grad=False)
+        input_ids = bound["input_ids"]
+        attention_mask = bound["attention_mask"]
+        if prefix_token_ids:
+            prefix = torch.tensor([prefix_token_ids], dtype=torch.long, device=self.device)
+            input_ids = torch.cat([input_ids, prefix], dim=-1)
+            attention_mask = torch.cat(
+                [
+                    attention_mask,
+                    torch.ones(1, prefix.shape[-1], dtype=attention_mask.dtype, device=self.device),
+                ],
+                dim=-1,
+            )
+        with torch.inference_mode():
+            outputs = self.model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+                pixel_values=bound["pixel_values"],
+                pixel_attention_mask=bound["pixel_attention_mask"],
+                use_cache=False,
+            )
+        logits = outputs.logits[0, -1, :].detach().to(dtype=torch.float32, device="cpu").contiguous()
+        if not torch.isfinite(logits).all():
+            raise RuntimeError("Answer-position logits are not finite.")
+        return logits
+
     def _logprob_tensor(self, image, prompt: str, answer_text: str, *, enable_grad: bool):
         bound = self._bind(image, prompt, enable_grad=enable_grad)
         answer_ids = answer_token_ids(
