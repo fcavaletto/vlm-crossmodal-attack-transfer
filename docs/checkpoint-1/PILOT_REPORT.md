@@ -265,8 +265,10 @@ H\* should stay the provisional primary hypothesis until the lead revises it in 
 - Branch: `checkpoint-1/dev-pilot`
 - Base: `main` at `65a8d8ffb2f22f3d284b64e2d481151474761c5e`
 - Integration commit: `591581a6cdc3cdc55eb1a9c53585b9bfd5978f44`
+- Pilot tables and this report: `0dbb280a453df6fd0ea50f7609c82d1ab548526f`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/6
 - Source pull requests: [PR 1](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/1), [PR 2](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/2), [PR 3](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/3), [PR 4](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/4). [PR 5](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/5) was cited and not merged.
-- Pilot tables and this report: the commit on this branch that adds `docs/checkpoint-1/`. The pull request to `main` records the URL. This checkpoint is not merged.
+- This checkpoint is not merged. The commit that records the pull request URL is the child of `0dbb280a453df6fd0ea50f7609c82d1ab548526f`.
 
 Compact files a reviewer can rebuild without the model:
 
