@@ -89,7 +89,7 @@ Denominator is every scene in the context. DEVELOPMENT ONLY. Closed-vocabulary a
 | Qwen3-VL-2B | `contradictory` | 36/96 | scored after a stable primary pass, outside the gate |
 | Qwen3-VL-2B | `answer_revealing` | 96/96 | scored after a stable primary pass, outside the gate |
 
-The extra contexts ran because each model's primary pass wrote all 192 rows and OS-available memory after that pass was still at least the existing 6 GiB floor. They did not enter the gate and they were not used to edit the rule.
+The extra contexts ran because each model's primary pass wrote all 192 rows and OS-available memory after that pass was still at least the existing 6 GiB floor. That floor is 6 × 1024³ = 6,442,450,944 bytes, not 6 × 10⁹. They did not enter the gate and they were not used to edit the rule.
 
 Scenes clean on both primary contexts, DEVELOPMENT ONLY:
 
@@ -169,7 +169,7 @@ Observation. DEVELOPMENT ONLY. Apple M4, 25769803776 bytes of unified memory. On
 | SmolVLM2 | float32 | 5.409 | 203.343 | 384 | 10164.2 MB | 7399.3 MB | 1965.6 MB |
 | Qwen3-VL-2B | bfloat16 | 5.411 | 651.863 | 384 | 11721.1 MB | 6045.4 MB | 4072.9 MB |
 
-The MB figures are the snapshot's `os_available_mb` and `mps_current_allocated_mb`. Qwen's before-load reading is above the BF16 calibrated line of 11509447200 bytes and below the float32 line of 20871410752 bytes. That is the selection the code is written to make. Smol's before-first-scene available bytes were 7759183872, still above 6 GiB, so the extra contexts ran. Qwen's before-first-scene available bytes were 6373998592, also above 6 GiB, so the extra contexts ran. There was no memory refusal and no retry.
+The MB figures are the snapshot's `os_available_mb` and `mps_current_allocated_mb`. Those fields divide bytes by 1024², so the table is a mebibyte count stored under an `mb` name. Qwen's before-load reading is above the BF16 calibrated line of 11509447200 bytes and below the float32 line of 20871410752 bytes. That is the selection the code is written to make. The 6 GiB floor is 6 × 1024³ = 6,442,450,944 bytes, which is 6,144 MiB. It is not 6 × 10⁹ = 6,000,000,000 bytes. Smol's before-first-scene available bytes were 7759183872, which is above 6,442,450,944. Qwen's before-first-scene available bytes were 6373998592, which is 6,078.71875 MiB and below 6,442,450,944. The extra contexts still ran, because the runner's later reading, after the primary pass, was at least 6,442,450,944 bytes. That later reading is not the before-first-scene count. There was no memory refusal and no retry.
 
 Wall clock from process start to exit was about 214 seconds for Smol and about 663 seconds for Qwen. The Qwen process started after the Smol process had exited and the resident file was gone.
 
