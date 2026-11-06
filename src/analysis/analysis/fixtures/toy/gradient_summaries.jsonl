@@ -1,0 +1,12 @@
+{"scene_id": "toy-01", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-02", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-03", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-04", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-05", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-06", "source_context": "neutral", "target_context": "contradictory", "alignment_a": 0.5}
+{"scene_id": "toy-01", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": 0.2}
+{"scene_id": "toy-02", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": 1.0}
+{"scene_id": "toy-03", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": -1.0}
+{"scene_id": "toy-04", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": null}
+{"scene_id": "toy-05", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": 0.0}
+{"scene_id": "toy-06", "source_context": "neutral", "target_context": "helpful_nonrevealing", "alignment_a": 0.0}
