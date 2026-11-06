@@ -2,7 +2,7 @@
 
 **DEVELOPMENT ONLY.** No attack was run. H\* was not fit. No held-out scene was generated. Nothing was trained. No cloud GPU was purchased. The diff against `main` contains Checkpoint 1 and Checkpoint 1.5 because this branch starts at `b2e7abff72b87b475d0abf8d037e1b4d2f9c0c06`, not at `main`. Do not merge.
 
-The row-color protocol is `docs/checkpoint-1.6/EVAL_PROTOCOL.md`, commit `3b4b60a0b0fb8509be6472566420b9294c9bae37`. The model call that scored those scenes recorded git head `49a3945b42ad132b662178317eea0eb2bac80ddc`. That head is a descendant of the protocol commit. The protocol file was not edited after the run.
+The row-color protocol is `docs/checkpoint-1.6/EVAL_PROTOCOL.md`, commit `3b4b60a0b0fb8509be6472566420b9294c9bae37`. The model call that scored those scenes recorded git head `49a3945b42ad132b662178317eea0eb2bac80ddc`. That head is a descendant of the protocol commit. The protocol file was not edited after the run. Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/12.
 
 ## What the four workstreams found
 
