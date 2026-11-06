@@ -1,0 +1,61 @@
+{
+  "answer_counts": {
+    "attribute": {
+      "blue": 2,
+      "green": 2,
+      "red": 2,
+      "yellow": 2
+    },
+    "counting": {
+      "three": 4,
+      "two": 4
+    },
+    "spatial": {
+      "blue": 2,
+      "green": 2,
+      "red": 2,
+      "yellow": 2
+    }
+  },
+  "caution": "Development sample only. Not a sealed test set. Not a measurement of clean accuracy or attack success.",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_is_model_input": false,
+  "contact_sheet_scene_ids": [
+    "dev-attribute-00-a",
+    "dev-counting-00-a",
+    "dev-spatial-00-a",
+    "dev-attribute-00-b",
+    "dev-counting-00-b",
+    "dev-spatial-00-b"
+  ],
+  "counterfactual_group_count": 12,
+  "dataset_origin": "Original Pillow drawings from the scene graph. No photographs, no CLEVR images, no downloaded assets.",
+  "generator": "scene_gen.generate",
+  "generator_version": "0.1.0",
+  "grid": {
+    "cell": [
+      128,
+      192
+    ],
+    "cols": 4,
+    "rows": 2
+  },
+  "image_path_rule": "relative to the directory that contains manifest.jsonl",
+  "image_size": [
+    512,
+    384
+  ],
+  "name": "study2_development_v0",
+  "normalization": "scene_gen.normalize.normalize_for_leakage",
+  "pillow": "11.3.0",
+  "scene_count": 24,
+  "seed_domain": "study2-development-v1",
+  "seed_modulus": 2147483647,
+  "split": "development",
+  "status": "checkpoint_0_development_sample",
+  "task_counts": {
+    "attribute": 8,
+    "counting": 8,
+    "spatial": 8
+  }
+}
