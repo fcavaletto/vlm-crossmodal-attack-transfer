@@ -1,0 +1,38 @@
+{
+  "attempted": true,
+  "gradients": [
+    {
+      "context": "neutral",
+      "device": "mps",
+      "finite": true,
+      "height": 384,
+      "l1": 4246.361184982032,
+      "l2": 16.470396064664637,
+      "linf": 1.4664320945739746,
+      "loss": "canonical_word",
+      "nonzero_fraction": 1.0,
+      "repeat_max_abs_diff": 0.0,
+      "seconds": 4.789,
+      "width": 512
+    },
+    {
+      "context": "helpful_nonrevealing",
+      "device": "mps",
+      "finite": true,
+      "height": 384,
+      "l1": 2881.5884123653705,
+      "l2": 9.215236387359013,
+      "linf": 0.7817201614379883,
+      "loss": "canonical_word",
+      "nonzero_fraction": 1.0,
+      "repeat_max_abs_diff": 0.0,
+      "seconds": 4.378,
+      "width": 512
+    }
+  ],
+  "label": "DEVELOPMENT ONLY",
+  "passed": true,
+  "problems": [],
+  "reason": null,
+  "scene_id": "dev3-row-00-a"
+}

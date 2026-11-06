@@ -1,0 +1,83 @@
+{
+  "attacks_run": false,
+  "attn_implementation": "eager",
+  "device": "mps",
+  "do_image_splitting": false,
+  "environment": {
+    "cpu_brand": "Apple M4",
+    "machine": "arm64",
+    "memory_bytes": 25769803776,
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14",
+    "system": "Darwin",
+    "torch": "2.15.0",
+    "transformers": "5.22.1"
+  },
+  "format_line_used": false,
+  "full_gradient_pass": false,
+  "full_gradient_pass_reason": "available memory after scoring was below the 6 GiB guard, so the full gradient pass was not started",
+  "gate_scene_id": "dev2-attribute-00-a",
+  "gate_seconds": 18.231,
+  "git_head_at_run": "a6f3fdc91b263787390c42da0f709c8303af75a9",
+  "gradient_loss": "canonical_word",
+  "gradient_seconds": null,
+  "h_star_fitted": false,
+  "helpful_text_role": "task guidance, not additional factual scene evidence",
+  "label": "DEVELOPMENT ONLY",
+  "leading_space": true,
+  "load_seconds": 4.956,
+  "manifest_sha256": "b62ab1171a0aec7b2f264615a2961b6d384d00a1a4b17977d619ea27481154e1",
+  "max_new_tokens": 16,
+  "measurement_kind": "checkpoint1_5_v2_validation",
+  "memory_after_gate": {
+    "current_rss_mb": 625.0,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2891.7,
+    "os_available_mb": 6054.7,
+    "peak_rss_mb": 625.0
+  },
+  "memory_after_gradients": {
+    "current_rss_mb": 643.3,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2917.8,
+    "os_available_mb": 5583.9,
+    "peak_rss_mb": 643.3
+  },
+  "memory_after_load": {
+    "current_rss_mb": 210.1,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2856.5,
+    "os_available_mb": 3492.1,
+    "peak_rss_mb": 400.0
+  },
+  "memory_after_scoring": {
+    "current_rss_mb": 643.3,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2917.8,
+    "os_available_mb": 5583.9,
+    "peak_rss_mb": 643.3
+  },
+  "memory_before_load": {
+    "current_rss_mb": 207.1,
+    "device": "mps",
+    "mps_current_allocated_mb": 0.0,
+    "mps_driver_allocated_mb": 0.5,
+    "os_available_mb": 6911.5,
+    "peak_rss_mb": 207.1
+  },
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "n_scenes": 72,
+  "preprocess": "float32_shared",
+  "protocol_sha256": "51dfbf696db0327e29cf981206567bc3a10b618adfbe8da97579978764206058",
+  "qwen_loaded": false,
+  "score_seconds": 289.931,
+  "scoring_stable": false,
+  "verification_command": "PYTHONPATH=src/validation:src/scoring:src/vlm_iface:src/pilot:src/analysis:src/scene_v2 python -m validation.verify"
+}
