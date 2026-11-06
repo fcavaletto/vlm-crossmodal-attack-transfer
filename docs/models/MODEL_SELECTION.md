@@ -2,7 +2,7 @@
 
 Checkpoint 1.5 decision for the study model. Every SmolVLM2 accuracy and gradient figure below is the Checkpoint 1 MPS pilot, labeled **DEVELOPMENT ONLY**. This checkpoint did not load SmolVLM2 again and did not load Qwen. No attack was run. No approved decision is revised.
 
-The raw gate record is [`../checkpoint-1.5/feasibility-record.json`](../checkpoint-1.5/feasibility-record.json). The lab notes are [`../checkpoint-1.5/AGENT_C_REPORT.md`](../checkpoint-1.5/AGENT_C_REPORT.md).
+The raw gate record is [`../checkpoint-1.5/feasibility-record.json`](../checkpoint-1.5/feasibility-record.json). The lab notes are [`../checkpoint-1.5/AGENT_C_REPORT.md`](../checkpoint-1.5/AGENT_C_REPORT.md). Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/7.
 
 ## Decision
 

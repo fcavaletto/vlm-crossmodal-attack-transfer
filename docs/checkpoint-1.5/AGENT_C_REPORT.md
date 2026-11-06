@@ -178,4 +178,6 @@ The process runs the budget fixtures before any Hub call. A fixture failure exit
 - Branch point: `90c6ffe83d61514da217a20f8dfc2f202afbbe69` on `checkpoint-1/dev-pilot`
 - Base for the pull request: `main` at `65a8d8ffb2f22f3d284b64e2d481151474761c5e`
 - The pull request diff against `main` contains Checkpoint 1 because this branch starts at the Checkpoint 1 head. Checkpoint 1 files were not edited.
-- Pull request URL and the commit that records it: filled in the child commit after `gh pr create`.
+- Feasibility commit: `bc344d1e06470aa288a8b8aca5e6a9a7816d87b1`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/7
+- The commit that records this URL is the child of `bc344d1e06470aa288a8b8aca5e6a9a7816d87b1`.
