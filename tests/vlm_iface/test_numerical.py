@@ -121,13 +121,13 @@ def test_generate_contract_marks_truncated_output_invalid(processor):
     finished = VLMSession(
         model=Scripted(word + [eos]), processor=processor, device="cpu", max_new_tokens=8
     )
-    result = generate(torch.full((3, 16, 16), 0.2), PROMPT, session=finished)
+    result = generate(torch.full((3, 16, 16), 0.2), PROMPT, task_family="attribute", session=finished)
     assert set(result) == {"text", "parsed_answer", "invalid"}
     assert result["invalid"] is False
     assert result["parsed_answer"] == "red"
 
     truncated = VLMSession(model=Scripted(word), processor=processor, device="cpu", max_new_tokens=8)
-    rejected = generate(torch.full((3, 16, 16), 0.2), PROMPT, session=truncated)
+    rejected = generate(torch.full((3, 16, 16), 0.2), PROMPT, task_family="attribute", session=truncated)
     assert rejected["invalid"] is True
     assert rejected["parsed_answer"] is None
 

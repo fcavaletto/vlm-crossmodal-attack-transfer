@@ -153,7 +153,7 @@ def run_measurement(device_name: str) -> dict[str, Any]:
     }
     payload["memory_after_gradients"] = memory_snapshot(device)
 
-    generation = session.generate(red, PROMPT)
+    generation = session.generate(red, PROMPT, task_family="attribute")
     payload["generation"] = generation
     payload["generation_is_accuracy_claim"] = False
 

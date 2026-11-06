@@ -86,8 +86,20 @@ class VLMSession:
         self._leaf = None
         return result
 
-    def generate(self, image, prompt: str) -> dict[str, str | bool | None]:
-        """Greedy generation. The dict keys are ``text``, ``parsed_answer``, and ``invalid``."""
+    def generate(self, image, prompt: str, *, task_family: str) -> dict[str, str | bool | None]:
+        """Greedy generation parsed with the task vocabulary.
+
+        The dict keys are ``text``, ``parsed_answer``, and ``invalid``.
+        ``task_family`` selects the Checkpoint 1 vocabulary. Scoring and this
+        call share ``_bind``, so they use the same float32 pixels.
+        """
+        return {
+            key: self.generate_detailed(image, prompt, task_family=task_family)[key]
+            for key in ("text", "parsed_answer", "invalid")
+        }
+
+    def generate_detailed(self, image, prompt: str, *, task_family: str) -> dict[str, Any]:
+        """Greedy generation plus parse reasons, token ids, and the truncation flag."""
         bound = self._bind(image, prompt, enable_grad=False)
         inputs = {
             "input_ids": bound["input_ids"],
@@ -104,8 +116,14 @@ class VLMSession:
             )
         new_ids = _continuation_ids(generated, inputs["input_ids"])
         text = self.processor.tokenizer.decode(new_ids, skip_special_tokens=True).strip()
-        truncated = not any(int(token) in eos_ids for token in new_ids.tolist())
-        return parse_generation(text, truncated=truncated).as_contract()
+        token_ids = [int(token) for token in new_ids.tolist()]
+        truncated = not any(token in eos_ids for token in token_ids)
+        parsed = parse_generation(text, truncated=truncated, task_family=task_family)
+        detailed = parsed.as_contract()
+        detailed["reasons"] = list(parsed.reasons)
+        detailed["token_ids"] = token_ids
+        detailed["truncated"] = truncated
+        return detailed
 
     def score_details(self, image, prompt: str, answer_text: str) -> dict[str, Any]:
         """Log-probability, token ids, and the library mean NLL on the same logits."""
@@ -243,9 +261,11 @@ def image_loss_gradient(image, prompt: str, answer_text: str, *, session: VLMSes
     return _session(session).image_loss_gradient(image, prompt, answer_text)
 
 
-def generate(image, prompt: str, *, session: VLMSession | None = None) -> dict[str, str | bool | None]:
+def generate(
+    image, prompt: str, *, task_family: str, session: VLMSession | None = None
+) -> dict[str, str | bool | None]:
     """Greedy generation parsed into ``text``, ``parsed_answer``, and ``invalid``."""
-    return _session(session).generate(image, prompt)
+    return _session(session).generate(image, prompt, task_family=task_family)
 
 
 def _session(session: VLMSession | None) -> VLMSession:

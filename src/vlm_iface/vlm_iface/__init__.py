@@ -4,7 +4,7 @@ The module-level functions are the Checkpoint 0 contract:
 
 - ``answer_logprob(image, prompt, answer_text) -> float``
 - ``image_loss_gradient(image, prompt, answer_text) -> tensor``
-- ``generate(image, prompt) -> {"text", "parsed_answer", "invalid"}``
+- ``generate(image, prompt, task_family=...) -> {"text", "parsed_answer", "invalid"}``
 
 They use a process-wide session that loads the pinned SmolVLM2 revision on
 first call. Tests and scripts can pass ``session=`` instead.

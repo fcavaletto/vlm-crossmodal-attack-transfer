@@ -13,7 +13,7 @@ Import `vlm_iface`.
 | --- | --- |
 | `answer_logprob(image, prompt, answer_text)` | Python float, the joint log-probability of the full answer |
 | `image_loss_gradient(image, prompt, answer_text)` | CPU float32 tensor, `g_c`, shape `(3, height, width)` |
-| `generate(image, prompt)` | `{"text", "parsed_answer", "invalid"}` |
+| `generate(image, prompt, *, task_family)` | `{"text", "parsed_answer", "invalid"}` |
 
 `session=` may be passed to any of the three. If it is omitted, the first call
 loads the pinned checkpoint. `device="auto"` selects CUDA, then MPS, then CPU.
@@ -114,21 +114,24 @@ future prompt.
 
 ## Parser
 
-`invalid` means the generation is not one short answer. It does not mean the
-answer is factually wrong, and it is not an attack success.
+Checkpoint 1 decision D4 replaced the Checkpoint 0 format-only parser. The
+feasibility JSON was produced before that change. Its single string `Red.` is
+still only a smoke check.
 
-A string is invalid when generation stopped without an end token, when it is
-empty, when it contains a line break, when it has no letter or digit, when it
-matches a refusal phrase (`I don't know`, `unknown`, and the other phrases in
-`parsing.py`), or when the normalized form exceeds 4 whitespace-separated
-tokens or 32 characters. Otherwise the parsed answer is lowercased, with one
-leading `answer:` or `response:` removed and trailing punctuation stripped.
-`parsed_answer` is `None` when `invalid` is true.
+Normalization is case, whitespace, surrounding quotes, and terminal
+punctuation. Nothing else is stripped. An `Answer:` label stays in the string
+and makes it invalid. `task_family` selects the vocabulary. Attribute and
+spatial questions in the current scenes ask for a color, so the vocabulary is
+`red`, `blue`, `green`, and `yellow`. Counting accepts `one`, `two`, `three`,
+and `four`, plus the digit aliases `1`, `2`, `3`, and `4`. A digit is stored
+as the canonical word: `2` becomes `two`. The raw decoded text is kept beside it.
 
-The length cap will reject a long spatial phrase. It is provisional until the
-answer strings are frozen. Study 1 instead used a closed color/shape list.
-This study does not have one global label set, so the parser does not check
-the scene label.
+A recognized color or count that is not the scene answer is a valid parse.
+The caller marks that row valid-but-wrong. It is not an invalid output.
+Option-list echoes, more than one vocabulary item, refusals, empty strings,
+line breaks, truncation, and every other string are invalid. Invalid output is
+a task error and is not an attack success. `parsed_answer` is `None` when
+`invalid` is true.
 
 Greedy decoding uses `do_sample=False` and `max_new_tokens=16`.
 
