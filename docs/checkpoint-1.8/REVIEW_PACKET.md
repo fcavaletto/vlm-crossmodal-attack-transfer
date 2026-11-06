@@ -2,7 +2,7 @@
 
 DEVELOPMENT ONLY. Research lead: Federico Cavaletto. Qwen3-VL-2B-Instruct, one MPS load, no attack, no H* fit, not merged.
 
-The measurement code is commit `fa7523ca9654beade6598449d4069995c37f10b2`. The scene ledger, the aggregate summary, and this packet are the results commit on `checkpoint-1.8/qwen-rgb-loss`. That branch starts at `b9a31a80533bfa52c973a92c06364a4d74b4e537`, not at `main`, so a pull request into `main` also shows earlier checkpoints.
+The measurement code is commit `fa7523ca9654beade6598449d4069995c37f10b2`. The scene ledger and the aggregate summary are commit `de364ac451cfa41c2df33106645aca8ddbba00c9`. Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/18. It is not merged. The branch starts at `b9a31a80533bfa52c973a92c06364a4d74b4e537`, not at `main`, so the pull request also shows earlier checkpoints.
 
 ## What a labeled-color gradient is
 
