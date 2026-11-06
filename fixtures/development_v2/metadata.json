@@ -1,0 +1,157 @@
+{
+  "answer_counts": {
+    "attribute": {
+      "blue": 6,
+      "green": 6,
+      "red": 6,
+      "yellow": 6
+    },
+    "counting": {
+      "four": 4,
+      "one": 4,
+      "three": 8,
+      "two": 8
+    },
+    "spatial": {
+      "blue": 6,
+      "green": 6,
+      "red": 6,
+      "yellow": 6
+    }
+  },
+  "caution": "Development sample only. Not a sealed test set. Not a measurement of clean accuracy or attack success. No model was run to produce these files.",
+  "checkpoint_1_fixture_dir": "fixtures/development",
+  "contact_sheet": "contact_sheet.png",
+  "contact_sheet_is_model_input": false,
+  "contact_sheet_layout": "12 pair columns. Rows are attribute A, attribute B, counting A, counting B, spatial A, spatial B.",
+  "contact_sheet_scene_ids": [
+    "dev2-attribute-00-a",
+    "dev2-attribute-01-a",
+    "dev2-attribute-02-a",
+    "dev2-attribute-03-a",
+    "dev2-attribute-04-a",
+    "dev2-attribute-05-a",
+    "dev2-attribute-06-a",
+    "dev2-attribute-07-a",
+    "dev2-attribute-08-a",
+    "dev2-attribute-09-a",
+    "dev2-attribute-10-a",
+    "dev2-attribute-11-a",
+    "dev2-attribute-00-b",
+    "dev2-attribute-01-b",
+    "dev2-attribute-02-b",
+    "dev2-attribute-03-b",
+    "dev2-attribute-04-b",
+    "dev2-attribute-05-b",
+    "dev2-attribute-06-b",
+    "dev2-attribute-07-b",
+    "dev2-attribute-08-b",
+    "dev2-attribute-09-b",
+    "dev2-attribute-10-b",
+    "dev2-attribute-11-b",
+    "dev2-counting-00-a",
+    "dev2-counting-01-a",
+    "dev2-counting-02-a",
+    "dev2-counting-03-a",
+    "dev2-counting-04-a",
+    "dev2-counting-05-a",
+    "dev2-counting-06-a",
+    "dev2-counting-07-a",
+    "dev2-counting-08-a",
+    "dev2-counting-09-a",
+    "dev2-counting-10-a",
+    "dev2-counting-11-a",
+    "dev2-counting-00-b",
+    "dev2-counting-01-b",
+    "dev2-counting-02-b",
+    "dev2-counting-03-b",
+    "dev2-counting-04-b",
+    "dev2-counting-05-b",
+    "dev2-counting-06-b",
+    "dev2-counting-07-b",
+    "dev2-counting-08-b",
+    "dev2-counting-09-b",
+    "dev2-counting-10-b",
+    "dev2-counting-11-b",
+    "dev2-spatial-00-a",
+    "dev2-spatial-01-a",
+    "dev2-spatial-02-a",
+    "dev2-spatial-03-a",
+    "dev2-spatial-04-a",
+    "dev2-spatial-05-a",
+    "dev2-spatial-06-a",
+    "dev2-spatial-07-a",
+    "dev2-spatial-08-a",
+    "dev2-spatial-09-a",
+    "dev2-spatial-10-a",
+    "dev2-spatial-11-a",
+    "dev2-spatial-00-b",
+    "dev2-spatial-01-b",
+    "dev2-spatial-02-b",
+    "dev2-spatial-03-b",
+    "dev2-spatial-04-b",
+    "dev2-spatial-05-b",
+    "dev2-spatial-06-b",
+    "dev2-spatial-07-b",
+    "dev2-spatial-08-b",
+    "dev2-spatial-09-b",
+    "dev2-spatial-10-b",
+    "dev2-spatial-11-b"
+  ],
+  "counterfactual_group_count": 36,
+  "counting_transitions": {
+    "1-2": 4,
+    "2-3": 4,
+    "3-4": 4
+  },
+  "dataset_origin": "Original Pillow drawings from the scene graph. No photographs, no CLEVR images, no downloaded assets.",
+  "generator": "scene_v2.generate",
+  "generator_version": "0.2.0",
+  "grid": {
+    "cell": [
+      128,
+      128
+    ],
+    "cols": 4,
+    "rows": 3
+  },
+  "image_path_rule": "relative to the directory that contains manifest.jsonl",
+  "image_size": [
+    512,
+    384
+  ],
+  "name": "study2_development_v2",
+  "normalization": "scene_v2.normalize.normalize_for_leakage",
+  "object_counts_by_family": {
+    "attribute": {
+      "4": 8,
+      "5": 6,
+      "6": 6,
+      "7": 4
+    },
+    "counting": {
+      "4": 2,
+      "5": 4,
+      "6": 4,
+      "7": 8,
+      "8": 6
+    },
+    "spatial": {
+      "6": 12,
+      "7": 10,
+      "8": 2
+    }
+  },
+  "pillow": "11.3.0",
+  "replaces_checkpoint_1_sample": false,
+  "scene_count": 72,
+  "seed_domain": "study2-development-v2",
+  "seed_modulus": 2147483647,
+  "split": "development",
+  "status": "checkpoint_1_5_development_sample",
+  "task_counts": {
+    "attribute": 24,
+    "counting": 24,
+    "spatial": 24
+  }
+}

@@ -1,0 +1,737 @@
+{
+  "cited_checkpoint1_eligible_groups": 3,
+  "cited_checkpoint1_note": "The pilot report states that three counterfactual groups were clean-correct under both primary contexts and that no coefficient was fit. This number is that citation. It is not recomputed here.",
+  "confirmatory_blocked_reason": "fabricated_data_cannot_support_h_star",
+  "confirmatory_supported": false,
+  "controls": {
+    "fgsm": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261116,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    },
+    "noise": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": -0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": -0.5,
+          "ci_low": -0.5,
+          "estimate": -0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261117,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    }
+  },
+  "data_origin": "fabricated",
+  "decomposition": {
+    "invalid_only_pattern": false,
+    "invalid_target": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.0,
+        "intercept": 0.0,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": true,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": false,
+      "interval": null,
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": true,
+      "outcome_mean": 0.0,
+      "quantile_method": "linear",
+      "seed": 20261109,
+      "status": "flat_outcome",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": false
+    },
+    "note": "invalid_only_pattern is true when the invalid-outcome interval lies entirely above 0 and the valid-wrong interval does not. That pattern means a positive association is carried by unparseable outputs. It is a label on these rows, not a model measurement.",
+    "strict_error": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261107,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    },
+    "valid_wrong_target": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261110,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    }
+  },
+  "empirical_claim": false,
+  "estimand": "strict-error transfer on alignment and task-family indicators, clustered by counterfactual_group_id, both ordered directions kept",
+  "hypothesis": "beta_A > 0 on the linear probability model",
+  "inclusion": {
+    "direction_counts": {
+      "helpful_to_neutral": 6,
+      "neutral_to_helpful": 6
+    },
+    "exclusion_counts": {
+      "ambiguity_flagged": 1,
+      "answer_leakage": 2,
+      "context_outside_primary": 1,
+      "contexts_not_group_invariant": 1,
+      "gradient_not_finite_or_zero": 2,
+      "not_clean_correct_both": 2,
+      "undefined_alignment": 2
+    },
+    "exclusion_examples": [
+      {
+        "method": "pgd",
+        "reasons": [
+          "not_clean_correct_both"
+        ],
+        "scene_id": "fab-ex-source-clean"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "not_clean_correct_both"
+        ],
+        "scene_id": "fab-ex-target-clean"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "answer_leakage"
+        ],
+        "scene_id": "fab-ex-contains"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "answer_leakage"
+        ],
+        "scene_id": "fab-ex-reveals"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "contexts_not_group_invariant"
+        ],
+        "scene_id": "fab-ex-invariant"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "ambiguity_flagged"
+        ],
+        "scene_id": "fab-ex-ambiguity"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "gradient_not_finite_or_zero",
+          "undefined_alignment"
+        ],
+        "scene_id": "fab-ex-zero-gradient"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "gradient_not_finite_or_zero"
+        ],
+        "scene_id": "fab-ex-nonfinite"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "undefined_alignment"
+        ],
+        "scene_id": "fab-ex-undefined-alignment"
+      },
+      {
+        "method": "pgd",
+        "reasons": [
+          "context_outside_primary"
+        ],
+        "scene_id": "fab-ex-context"
+      }
+    ],
+    "exclusion_reason_incidences": 11,
+    "multiple_budgets": false,
+    "n_groups_pgd": 6,
+    "n_included": 36,
+    "n_included_by_method": {
+      "fgsm": 12,
+      "noise": 12,
+      "pgd": 12
+    },
+    "n_rows_excluded": 10,
+    "n_rows_input": 46,
+    "n_scenes_pgd": 6,
+    "n_scenes_with_both_directions": 6,
+    "n_scenes_with_one_direction": 0,
+    "pgd_budgets": [
+      {
+        "epsilon_key": "0.01000000",
+        "step_budget": 2
+      }
+    ]
+  },
+  "logistic_sensitivity": {
+    "columns": [
+      "intercept",
+      "alignment_a",
+      "task_counting",
+      "task_spatial"
+    ],
+    "interval": null,
+    "n_groups": 6,
+    "n_parameters": 4,
+    "note": "Sensitivity only. The primary estimand is the linear probability coefficient. A null logistic interval means the fit was separated, flat, or unstable under cluster resampling.",
+    "status": "separation"
+  },
+  "mechanical_reading": "interval_above_zero",
+  "not_an_empirical_finding": true,
+  "packet_name": "packet.jsonl",
+  "packet_sha256": "48376bb46ab7164a684799d60de28bfe6528001a9531682b2e82a3742614fcbe",
+  "predictor_comparison": {
+    "alignment_a": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261107,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    },
+    "clean_confidence": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "clean_confidence",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": null,
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": true,
+      "focal": "clean_confidence",
+      "identifiable": false,
+      "interval": null,
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261111,
+      "status": "flat_predictor",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": false
+    },
+    "gradient_magnitude": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "gradient_magnitude",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": null,
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": true,
+      "focal": "gradient_magnitude",
+      "identifiable": false,
+      "interval": null,
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261112,
+      "status": "flat_predictor",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": false
+    },
+    "high_correlation": [],
+    "high_correlation_threshold": 0.95,
+    "joint_diagnostic": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "clean_confidence",
+        "gradient_magnitude",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": null,
+      "evidence": false,
+      "families_present": [
+        "attribute",
+        "counting",
+        "spatial"
+      ],
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": false,
+      "interval": null,
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 7,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 6,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "not_a_primary_estimand": true,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261113,
+      "status": "singular_design",
+      "task_baseline": "attribute",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": false
+    },
+    "note": "Each predictor is fit in its own linear model with the same task indicators and the same clusters. Coefficients are not in the same units. A larger coefficient is not a better predictor. The joint fit is a collinearity diagnostic and is not a primary estimand.",
+    "pearson_alignment_confidence": 0.0,
+    "pearson_alignment_magnitude": null,
+    "status": "compared"
+  },
+  "primary": {
+    "alpha": 0.05,
+    "columns": [
+      "intercept",
+      "alignment_a",
+      "task_counting",
+      "task_spatial"
+    ],
+    "diagnostic_point_estimate": {
+      "alignment_a": 0.5,
+      "intercept": 0.5,
+      "task_counting": 0.0,
+      "task_spatial": 0.0
+    },
+    "evidence": false,
+    "flat_outcome": false,
+    "flat_predictor": false,
+    "focal": "alignment_a",
+    "identifiable": true,
+    "interval": {
+      "alignment_a": {
+        "ci_high": 0.5,
+        "ci_low": 0.5,
+        "estimate": 0.5
+      },
+      "intercept": {
+        "ci_high": 0.5,
+        "ci_low": 0.5,
+        "estimate": 0.5
+      },
+      "task_counting": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "estimate": 0.0
+      },
+      "task_spatial": {
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "estimate": 0.0
+      }
+    },
+    "interval_method": "wild_cluster_bootstrap",
+    "minimum_groups": 5,
+    "n_boot": 200,
+    "n_groups": 6,
+    "n_parameters": 4,
+    "n_rows": 12,
+    "near_flat_outcome": false,
+    "outcome_mean": 0.5,
+    "quantile_method": "linear",
+    "seed": 20261107,
+    "status": "interval_returned",
+    "unit": "counterfactual_group_id",
+    "weights": "webb6",
+    "zero_residual_fit": true
+  },
+  "procedure": {
+    "alpha": 0.05,
+    "logistic_interval": "pairs_cluster_bootstrap",
+    "n_boot": 200,
+    "primary_interval": "wild_cluster_bootstrap",
+    "quantile_method": "linear",
+    "seed": 20261107,
+    "seed_offsets": {
+      "clean_confidence": 4,
+      "fgsm": 9,
+      "gradient_magnitude": 5,
+      "invalid_target": 2,
+      "joint_diagnostic": 6,
+      "logistic": 1,
+      "noise": 10,
+      "primary_linear": 0,
+      "source_failure_slice": 8,
+      "source_success_slice": 7,
+      "valid_wrong_target": 3
+    },
+    "unit": "counterfactual_group_id",
+    "weights": "webb6"
+  },
+  "reading_note": "mechanical_reading applies the pre-specified interval rules to this fit. confirmatory_supported stays false because the rows are fabricated.",
+  "reference_task": "attribute",
+  "source_stratification": {
+    "note": "source_strict_error is not a regressor. The two slices are separate fits. A sign disagreement blocks reading the pooled coefficient as one mechanism.",
+    "sign_disagreement": false,
+    "source_failure": {
+      "alpha": null,
+      "columns": [],
+      "diagnostic_point_estimate": null,
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": false,
+      "interval": null,
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": null,
+      "n_boot": null,
+      "n_groups": 0,
+      "n_parameters": 0,
+      "n_rows": 0,
+      "near_flat_outcome": false,
+      "outcome_mean": null,
+      "quantile_method": "linear",
+      "seed": null,
+      "status": "no_included_rows",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": false
+    },
+    "source_success": {
+      "alpha": 0.05,
+      "columns": [
+        "intercept",
+        "alignment_a",
+        "task_counting",
+        "task_spatial"
+      ],
+      "diagnostic_point_estimate": {
+        "alignment_a": 0.5,
+        "intercept": 0.5,
+        "task_counting": 0.0,
+        "task_spatial": 0.0
+      },
+      "evidence": false,
+      "flat_outcome": false,
+      "flat_predictor": false,
+      "focal": "alignment_a",
+      "identifiable": true,
+      "interval": {
+        "alignment_a": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "intercept": {
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5
+        },
+        "task_counting": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        },
+        "task_spatial": {
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0
+        }
+      },
+      "interval_method": "wild_cluster_bootstrap",
+      "minimum_groups": 5,
+      "n_boot": 200,
+      "n_groups": 6,
+      "n_parameters": 4,
+      "n_rows": 12,
+      "near_flat_outcome": false,
+      "outcome_mean": 0.5,
+      "quantile_method": "linear",
+      "seed": 20261114,
+      "status": "interval_returned",
+      "unit": "counterfactual_group_id",
+      "weights": "webb6",
+      "zero_residual_fit": true
+    },
+    "status": "incomplete"
+  },
+  "worked_example": {
+    "included_pgd_alignment_coefficient": 0.5,
+    "included_pgd_intercept": 0.5,
+    "included_task_coefficients": 0.0,
+    "noise_alignment_coefficient": -0.5,
+    "note": "The included PGD rows satisfy strict_error = 1/2 + (1/2) A(s, t). Task indicators have coefficient 0. The noise rows flip the outcome, so their alignment coefficient is -1/2. Residuals are 0, and the wild-bootstrap interval collapses to that point."
+  }
+}

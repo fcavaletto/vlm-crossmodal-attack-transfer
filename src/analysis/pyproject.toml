@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlm-attack-transfer-analysis"
+version = "0.0.1"
+description = "Checkpoint 0 toy-data metrics and verification for cross-modal attack transfer. Does not run models or attacks."
+requires-python = ">=3.11"
+dependencies = [
+  "numpy==1.26.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.5"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["analysis*"]
+
+[tool.setuptools.package-data]
+analysis = ["fixtures/toy/*"]

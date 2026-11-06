@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlm-iface"
+version = "0.1.0"
+description = "Checkpoint 0 interface for VLM answer log-probabilities and input-image gradients."
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=1.26,<3",
+  "Pillow>=10,<14",
+  "torch>=2.4",
+  "torchvision>=0.19",
+  "transformers>=4.56,<6",
+  "accelerate>=1.0,<3",
+  "num2words>=0.5.14",
+  "huggingface_hub>=0.26",
+  "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["vlm_iface*"]
