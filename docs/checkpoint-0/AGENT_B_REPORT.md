@@ -169,7 +169,8 @@ Pillow is pinned to 11.3.0 in `src/scene_gen/pyproject.toml`. Do not replace the
 
 - Branch: `checkpoint-0/scene-generator`
 - Base: `main` at `65a8d8ffb2f22f3d284b64e2d481151474761c5e`
-- PR: recorded in the commit that follows the generator commit, and in the pull request body
-- Test status: 44 passed, command and verbatim output in Reproduction instructions and Evidence. That run is the tree with the generator, fixtures, tests, and this report. A commit that only inserts the PR URL does not change the suite.
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/3
+- Commit that added the generator, the 24 scenes, the tests, and the scientific sections of this report: `1c04873cec4038137aaf71f462587b75d26e6c62`
+- Test status: 44 passed. The verbatim pytest log in Evidence is from `1c04873` (`44 passed in 1.54s`). A rerun after this URL edit, same command, was `44 passed in 1.52s`. The edit does not change the generator, the fixtures, or the tests.
 
-The authoritative hash of the branch head is `git rev-parse HEAD` on `checkpoint-0/scene-generator` after the pull request is opened.
+`git rev-parse HEAD` on `checkpoint-0/scene-generator` is the branch head, which includes this URL line.
