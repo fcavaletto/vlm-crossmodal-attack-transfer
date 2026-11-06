@@ -624,6 +624,10 @@ def _run_permitted_path(payload: dict[str, Any], budget, min_available: int, dty
     torch_dtype = torch.float32 if dtype_name == "float32" else torch.bfloat16
     device = torch.device("mps")
     started = time.perf_counter()
+    payload["gates"]["weight_load_and_memory"] = {
+        "status": "loading",
+        "from_pretrained_called": False,
+    }
     try:
         from transformers import AutoProcessor
         from transformers.models.qwen3_vl.modeling_qwen3_vl import Qwen3VLForConditionalGeneration

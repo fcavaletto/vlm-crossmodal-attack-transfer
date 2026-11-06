@@ -155,3 +155,7 @@ Do not set `HF_HUB_OFFLINE`. The run recorded here exited 0. `wall_seconds` was 
 - Feasibility commit: `c21561274d21001b83ba0b74af0bea36373a7136`
 - The commit that names that SHA is this file's follow-up on the same branch. `git rev-parse HEAD` is that follow-up. Its parent is the feasibility commit.
 - Not pushed. No pull request.
+
+# Retry after the lead's clarification
+
+The preflight above is not a ruling-out. Other processes were using the 24 GiB machine. The budget numbers were left unchanged. A later reading of 12,188,794,880 available bytes cleared every BF16 line. `from_pretrained` was called. BF16 MPS inference, a 12-row development subset, and finite processor-pixel gradients are in `qwen_feasibility.json`. The preflight record is `qwen_feasibility_preflight.json`. Qwen remains a candidate. The strict parser scored those 12 generations invalid because they are sentences. Adoption is still a lead decision. No safeguard was lowered and no GPU was purchased.

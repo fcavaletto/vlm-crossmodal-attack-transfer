@@ -7,7 +7,7 @@ from collections import defaultdict
 
 from PIL import Image
 
-from graph_oracle import graph_answer
+from simple_graph_oracle import graph_answer
 
 # Typed from the design table. Not imported from the generator.
 _PAIRS = [

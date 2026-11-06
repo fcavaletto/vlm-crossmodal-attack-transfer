@@ -8,9 +8,9 @@
   "paid_gpu_launched": false,
   "held_out_opened": false,
   "h_star_fitted": false,
-  "from_pretrained_called": false,
-  "model_from_pretrained_called": false,
-  "processor_from_pretrained_called": false,
+  "from_pretrained_called": true,
+  "model_from_pretrained_called": true,
+  "processor_from_pretrained_called": true,
   "weights_downloaded": false,
   "checkpoint15_feasibility_record_consulted_for_available_bytes": false,
   "reproduction_command": "HF_HOME=/Users/fedecava/Development/models/huggingface PYTHONPATH=src/vlm_iface:src/pilot /Users/fedecava/Development/_c0-work/venv-vlm/bin/python docs/checkpoint-1.6/run_qwen_feasibility.py",
@@ -46,23 +46,23 @@
   },
   "os_memory_bytes_at_start": {
     "total": 25769803776,
-    "available": 10061201408,
-    "used": 11216207872,
-    "free": 2926624768,
-    "active": 7174717440,
-    "inactive": 6769393664,
-    "wired": 4041490432
+    "available": 12463718400,
+    "used": 8537423872,
+    "free": 8410284032,
+    "active": 4075241472,
+    "inactive": 3494658048,
+    "wired": 4462182400
   },
   "os_memory_bytes_at_decision": {
     "total": 25769803776,
-    "available": 10080436224,
-    "used": 11193679872,
-    "free": 2815377408,
-    "active": 7241629696,
-    "inactive": 6950895616,
-    "wired": 3952050176
+    "available": 12188794880,
+    "used": 8829566976,
+    "free": 7918059520,
+    "active": 4258922496,
+    "inactive": 3648978944,
+    "wired": 4570644480
   },
-  "decision_available_bytes": 10080436224,
+  "decision_available_bytes": 12188794880,
   "bf16_support": {
     "mps_available": true,
     "mps_built": true,
@@ -130,7 +130,7 @@
   "qwen_dtype_decisions": {
     "float32": {
       "resident_bytes": 8510128128,
-      "available_bytes": 10080436224,
+      "available_bytes": 12188794880,
       "required_available_bytes": 20871410752,
       "lines_bytes": {
         "os_floor": 6442450944,
@@ -154,7 +154,7 @@
     },
     "bfloat16": {
       "resident_bytes": 4255064064,
-      "available_bytes": 10080436224,
+      "available_bytes": 12188794880,
       "required_available_bytes": 11509447200,
       "lines_bytes": {
         "os_floor": 6442450944,
@@ -163,12 +163,10 @@
         "staging_double_copy": 8510128128
       },
       "binding_line": "calibrated_projection",
-      "failed_lines": [
-        "calibrated_projection"
-      ],
+      "failed_lines": [],
       "mps_available": true,
-      "permitted": false,
-      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+      "permitted": true,
+      "reason": "OS-available memory clears every pre-load line.",
       "dtype": "bfloat16",
       "note": "Resident size is two bytes times the surveyed parameter count.",
       "from_pretrained_called": false,
@@ -176,17 +174,56 @@
     }
   },
   "dtype_selection": {
-    "dtype": null,
-    "permitted": false,
-    "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+    "dtype": "bfloat16",
+    "permitted": true,
+    "reason": "Float32 failed. The BF16 budget passed and the MPS probe ran."
   },
-  "mps_model_measurement": null,
+  "mps_model_measurement": {
+    "device": "mps",
+    "dtype": "torch.bfloat16",
+    "dtype_counts": {
+      "torch.bfloat16": 2127532032
+    },
+    "memory_after_load": {
+      "device": "mps",
+      "peak_rss_mb": 603.9,
+      "current_rss_mb": 335.1,
+      "os_available_mb": 4259.3,
+      "mps_driver_allocated_mb": 4712.5,
+      "mps_current_allocated_mb": 4072.9
+    }
+  },
   "mps_current_allocated_bytes_with_no_model": 0,
   "snapshot_files_before": [
+    "chat_template.json",
     "config.json",
-    "preprocessor_config.json"
+    "generation_config.json",
+    "merges.txt",
+    "model.safetensors",
+    "preprocessor_config.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "video_preprocessor_config.json",
+    "vocab.json"
   ],
-  "large_blobs_before": [],
+  "large_blobs_before": [
+    {
+      "name": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+      "bytes": 1671839
+    },
+    {
+      "name": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "bytes": 2776833
+    },
+    {
+      "name": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+      "bytes": 4255140312
+    },
+    {
+      "name": "c6cc1014128b19d1fc46b1d30a23e3b1d35db421",
+      "bytes": 7032403
+    }
+  ],
   "subset_definition": {
     "label": "DEVELOPMENT ONLY",
     "model_outputs": null,
@@ -260,165 +297,574 @@
     ],
     "note": "fixture_answer is the scene label. It is not a model generation."
   },
-  "cuda_proposal": {
-    "label": "ESTIMATE",
-    "authorization": "requested",
-    "launched": false,
-    "paid_gpu": false,
-    "attacks_included": false,
-    "proposed_device": "cuda",
-    "proposed_gpu_memory_bytes": 25769803776,
-    "proposed_dtype": "bfloat16",
-    "workload": "24 development scenes x 4 contexts, greedy, max_new_tokens=16, plus canonical-word gradients on dev2-attribute-00-a for neutral and helpful_nonrevealing. One model. No attack, no H*, no held-out split.",
-    "weight_memory": {
-      "source": "safetensors header",
-      "bfloat16_bytes": 4255064064,
-      "float32_bytes": 8510128128,
-      "on_disk_bytes": 4255140312,
-      "proposed_dtype": "bfloat16"
-    },
-    "activation_headroom": {
-      "label": "ESTIMATE",
-      "not_a_measurement": true,
-      "formula": "Per stack: attention = layers * heads * seq * seq * 2; mlp = layers * 2 * seq * intermediate * 2; residual = layers * 8 * seq * hidden * 2. Bytes are BF16. The 2 and the 8 are planning multipliers, not profiler counts.",
-      "decoder": {
-        "layers": 28,
-        "sequence": 256,
-        "attention_scores_bytes": 58720256,
-        "mlp_bytes": 176160768,
-        "residual_bytes": 234881024,
-        "total_bytes": 469762048,
-        "text_tokens_assumed": 64,
-        "image_tokens_arithmetic": 192
-      },
-      "vision_spatial_patches": {
-        "layers": 24,
-        "sequence": 768,
-        "attention_scores_bytes": 452984832,
-        "mlp_bytes": 301989888,
-        "residual_bytes": 301989888,
-        "total_bytes": 1056964608
-      },
-      "vision_if_temporal_patch_duplicates_the_still": {
-        "layers": 24,
-        "sequence": 1536,
-        "attention_scores_bytes": 1811939328,
-        "mlp_bytes": 603979776,
-        "residual_bytes": 603979776,
-        "total_bytes": 3019898880
-      },
-      "temporal_duplicate_is_unmeasured": true,
-      "upper_envelope_bytes": 3489660928,
-      "slack_factor": 2,
-      "recommended_headroom_bytes": 8589934592,
-      "recommended_headroom_rule": "max(2 * upper envelope, 8 GiB)"
-    },
-    "planning_total_bytes": 12844998656,
-    "runtime": {
-      "label": "ESTIMATE",
-      "wall_clock": "15 to 60 minutes, including cold start and a weight download",
-      "basis": "Ninety-six short generations and two backwards of a 2B BF16 model are a small CUDA job. The window is the one-hour cap used for the cost range. Checkpoint 1 SmolVLM2 MPS scene times are a different model and device and are not used as this estimate."
-    },
-    "cost_usd": {
-      "label": "ESTIMATE",
-      "not_a_quote": true,
-      "not_purchased": true,
-      "as_of": "2026-11-06",
-      "low_usd": 0.34,
-      "high_usd": 1.79,
-      "billing_assumption": "Up to one hour on one GPU. The job is expected to finish inside that hour.",
-      "sources": [
-        {
-          "gpu": "RTX 4090",
-          "vram_gb": 24,
-          "usd_per_hour": 0.34,
-          "tier": "RunPod Community",
-          "source": "https://cirrun.com/providers/runpod.html",
-          "read": "2026-11-06"
-        },
-        {
-          "gpu": "L4",
-          "vram_gb": 24,
-          "usd_per_hour": 0.44,
-          "tier": "RunPod Community",
-          "source": "https://cirrun.com/providers/runpod.html",
-          "read": "2026-11-06"
-        },
-        {
-          "gpu": "L4",
-          "vram_gb": 24,
-          "usd_per_hour": 0.59,
-          "tier": "RunPod Secure",
-          "source": "https://cirrun.com/providers/runpod.html",
-          "read": "2026-11-06"
-        },
-        {
-          "gpu": "RTX 4090",
-          "vram_gb": 24,
-          "usd_per_hour": 0.89,
-          "tier": "RunPod Secure",
-          "source": "https://www.runpod.io/pricing",
-          "read": "2026-11-06"
-        },
-        {
-          "gpu": "A10",
-          "vram_gb": 24,
-          "usd_per_hour": 1.29,
-          "tier": "Lambda on-demand",
-          "source": "https://answerfootprint.com/gpu/gpu-cloud-price-index.csv",
-          "verified": "2026-11-02"
-        },
-        {
-          "gpu": "A100 80GB PCIe",
-          "vram_gb": 80,
-          "usd_per_hour": 1.79,
-          "tier": "RunPod Secure",
-          "source": "https://cirrun.com/providers/runpod.html",
-          "read": "2026-11-06",
-          "note": "Upper reference if a 24 GB card is not offered. Not required by the weight size."
-        }
-      ]
-    }
-  },
+  "cuda_proposal": null,
   "gates": {
     "os_memory": {
       "status": "measured",
-      "available_bytes": 10080436224
+      "available_bytes": 12188794880
     },
     "compatibility_and_budget": {
-      "status": "aborted",
-      "from_pretrained_called": false,
-      "weights_loaded": false,
-      "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+      "status": "passed",
+      "dtype": "bfloat16"
     },
     "minimal_forward": {
-      "status": "not_started",
-      "from_pretrained_called": false,
-      "reason": "No dtype cleared the pre-load budget."
+      "status": "passed",
+      "image": "synthetic_64x64_red_square",
+      "accuracy_claim": false,
+      "finite_logits": true,
+      "logit_shape": [
+        1,
+        85,
+        151936
+      ],
+      "seconds": 2.011,
+      "memory": {
+        "device": "mps",
+        "peak_rss_mb": 603.9,
+        "current_rss_mb": 379.1,
+        "os_available_mb": 7887.0,
+        "mps_driver_allocated_mb": 4763.7,
+        "mps_current_allocated_mb": 4108.7
+      },
+      "device": "mps",
+      "dtype": "torch.bfloat16"
     },
     "clean_answers": {
-      "status": "not_started",
-      "from_pretrained_called": false,
-      "reason": "No dtype cleared the pre-load budget."
+      "status": "completed",
+      "label": "DEVELOPMENT ONLY",
+      "n_rows": 12,
+      "correct": 0,
+      "valid_wrong": 0,
+      "invalid": 12,
+      "seconds": 23.534,
+      "device": "mps",
+      "max_new_tokens": 16,
+      "official_parser": "vlm_iface.parsing.parse_generation"
     },
     "image_gradients": {
-      "status": "not_started",
-      "from_pretrained_called": false,
-      "reason": "No dtype cleared the pre-load budget."
+      "status": "completed",
+      "rows": [
+        {
+          "label": "DEVELOPMENT ONLY",
+          "scene_id": "dev2-attribute-00-a",
+          "context": "neutral",
+          "answer": "red",
+          "loss": 29.81302833557129,
+          "finite_loss": true,
+          "gradient_space": "processor_pixel_values",
+          "canonical_01_rgb_gradient_computed": false,
+          "finite": true,
+          "abs_mean": 0.024977361783385277,
+          "abs_max": 3.328125,
+          "nonzero": true,
+          "shape": [
+            768,
+            1536
+          ],
+          "seconds": 18.857,
+          "attack": false
+        },
+        {
+          "label": "DEVELOPMENT ONLY",
+          "scene_id": "dev2-attribute-00-a",
+          "context": "helpful_nonrevealing",
+          "answer": "red",
+          "loss": 24.503292083740234,
+          "finite_loss": true,
+          "gradient_space": "processor_pixel_values",
+          "canonical_01_rgb_gradient_computed": false,
+          "finite": true,
+          "abs_mean": 0.03415403515100479,
+          "abs_max": 4.40625,
+          "nonzero": true,
+          "shape": [
+            768,
+            1536
+          ],
+          "seconds": 19.859,
+          "attack": false
+        }
+      ],
+      "note": "The leaf is processor pixel_values. The official processor goes through PIL, so this is not the [0, 1] RGB gradient. It is a finiteness check, not an attack."
+    },
+    "weight_load_and_memory": {
+      "status": "loaded",
+      "from_pretrained_called": false
     }
   },
-  "action": "load_aborted",
-  "adopted": false,
-  "recommendation": "needs_authorized_cuda",
-  "stopped_at_gate": "gate_2_preload_budget",
-  "passed_gate_2": false,
-  "comparison_with_smolvlm": "Not run. Qwen produced no scores. SmolVLM2 was not loaded. The comparison model remains the committed Checkpoint 1.5 tables.",
-  "snapshot_files_after": [
-    "config.json",
-    "preprocessor_config.json"
+  "action": "gates_completed_not_adopted",
+  "recommendation": "not_adopted_pending_lead",
+  "stopped_at_gate": null,
+  "passed_gate_2": true,
+  "budget_recheck_immediately_before_load": {
+    "resident_bytes": 4255064064,
+    "available_bytes": 12449562624,
+    "required_available_bytes": 11509447200,
+    "lines_bytes": {
+      "os_floor": 6442450944,
+      "spare_above_weights": 9623773184,
+      "calibrated_projection": 11509447200,
+      "staging_double_copy": 8510128128
+    },
+    "binding_line": "calibrated_projection",
+    "failed_lines": [],
+    "mps_available": true,
+    "permitted": true,
+    "reason": "OS-available memory clears every pre-load line."
+  },
+  "load_seconds": 5.253,
+  "development_predictions": [
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "neutral",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, there are several simple geometric shapes on a plain,",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1052,
+        525,
+        3807,
+        4285,
+        52484,
+        20816,
+        389,
+        264,
+        14396,
+        11
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, let's identify the object in question.\n\n- The",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        10542,
+        279,
+        1633,
+        304,
+        3405,
+        382,
+        12,
+        576
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "contradictory",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, the large circle is red.\n\nThe description in the",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        279,
+        3460,
+        12671,
+        374,
+        2518,
+        382,
+        785,
+        4008,
+        304,
+        279
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "answer_revealing",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, the large circle is red.",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "not_exact"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": false,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        279,
+        3460,
+        12671,
+        374,
+        2518,
+        13,
+        151645
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "neutral",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects to determine how many are",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        311,
+        8253,
+        1246,
+        1657,
+        525
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's identify the objects and their colors.\n\n-",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        10542,
+        279,
+        6171,
+        323,
+        862,
+        7987,
+        382,
+        12
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "contradictory",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects present.\n\n- There is",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        3042,
+        382,
+        12,
+        2619,
+        374
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "answer_revealing",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects present.\n\n- The image",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        3042,
+        382,
+        12,
+        576,
+        2168
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "neutral",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "spatial",
+      "raw_output": "Of course, let's analyze the image step by step to answer your question.",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        2124,
+        3308,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        2168,
+        3019,
+        553,
+        3019,
+        311,
+        4226,
+        697,
+        3405,
+        382
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "contradictory",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "answer_revealing",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    }
   ],
-  "large_blobs_after": [],
-  "qwen_local_weight_file_present": false,
-  "from_pretrained_call_count": 0,
-  "wall_seconds": 4.755
+  "passed_all_gates": true,
+  "adopted": false,
+  "adoption_note": "Gates finished on a development subset. Adoption is a lead decision. This script does not replace the pinned SmolVLM2 checkpoint.",
+  "snapshot_files_after": [
+    "chat_template.json",
+    "config.json",
+    "generation_config.json",
+    "merges.txt",
+    "model.safetensors",
+    "preprocessor_config.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "video_preprocessor_config.json",
+    "vocab.json"
+  ],
+  "large_blobs_after": [
+    {
+      "name": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+      "bytes": 1671839
+    },
+    {
+      "name": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "bytes": 2776833
+    },
+    {
+      "name": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+      "bytes": 4255140312
+    },
+    {
+      "name": "c6cc1014128b19d1fc46b1d30a23e3b1d35db421",
+      "bytes": 7032403
+    }
+  ],
+  "qwen_local_weight_file_present": true,
+  "from_pretrained_call_count": 2,
+  "wall_seconds": 74.653
 }
