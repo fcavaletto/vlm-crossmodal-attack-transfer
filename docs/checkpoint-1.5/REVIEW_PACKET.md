@@ -30,7 +30,7 @@ The instrument does not meet the pre-specified adequacy rule. That is an accepta
 | Model feasibility | `checkpoint-1.5/model-feasibility` | `b27cfff03c029e0d0f19052793a09cf645678dd2` | https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/7 | `8d40da2` |
 | H\* estimator | `checkpoint-1.5/h-star-estimator` | `be8be387fe93fd071d31543273baacfa476cb61c` | https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/9 | `a07ee8f` |
 
-This packet is branch `checkpoint-1.5/review-packet`. The protocol commit is `e8bf93ea1b49e6a2c721431b82c1d132ca9a95bc`. The runner commit, and the git head recorded at inference, is `a6f3fdc91b263787390c42da0f709c8303af75a9`. None of these branches is merged to `main`.
+This packet is branch `checkpoint-1.5/review-packet`. Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/11. The protocol commit is `e8bf93ea1b49e6a2c721431b82c1d132ca9a95bc`. The runner commit, and the git head recorded at inference, is `a6f3fdc91b263787390c42da0f709c8303af75a9`. None of these branches is merged to `main`.
 
 ## 4. Tests and verification
 
