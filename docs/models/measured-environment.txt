@@ -1,0 +1,26 @@
+# Resolver output for the Checkpoint 0 MPS measurement
+
+Queried from the virtualenv after that run. The package metadata lower-bounds
+dependencies so another platform can resolve wheels. Reproducing the recorded
+MPS numbers needs these builds.
+
+```
+python==3.12.14
+torch==2.15.0
+torchvision==0.29.2
+transformers==5.22.1
+numpy==2.5.4
+pillow==13.0.0
+accelerate==1.15.0
+huggingface_hub==2.4.0
+num2words==0.5.14
+psutil==7.2.2
+pytest==9.2.0
+```
+
+Install command that produced this environment:
+
+```
+python3.12 -m pip install 'torch==2.15.0' 'torchvision==0.29.2' 'transformers==5.22.1' 'accelerate>=1.0,<3' 'numpy>=1.26,<3' 'Pillow>=10,<14' 'num2words>=0.5.14' 'psutil>=5.9' 'pytest>=8'
+python3.12 -m pip install -e 'src/vlm_iface[dev]'
+```
