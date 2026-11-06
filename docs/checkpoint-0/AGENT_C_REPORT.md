@@ -65,7 +65,7 @@ Proposal, not a finding: keep the sum log-probability, the leading-space rule, t
 
 - `docs/models/feasibility-smolvlm2-mps.json` is the script output. `passed` is true and `mps_validation` is `passed`.
 - `docs/models/measured-environment.txt` lists the builds used: Python 3.12.14, torch 2.15.0, torchvision 0.29.2, transformers 5.22.1.
-- `pytest tests/vlm_iface -q` reported `38 passed` in 4.71 seconds. Those tests do not load the 500M weights. They cover the sum-versus-mean identity, a central difference of `L = -log P` on a closed-form score, gradient flow through the real processor, exact repeat on the CPU probe, and the parser.
+- `pytest tests/vlm_iface -q` reported `38 passed` in 4.78 seconds. Those tests do not load the 500M weights. They cover the sum-versus-mean identity, a central difference of `L = -log P` on a closed-form score, gradient flow through the real processor, exact repeat on the CPU probe, and the parser.
 - The Qwen Hub directory on this machine contains the config from the header survey and does not contain `model.safetensors`.
 - Study 1 sources used as lessons, not copied into this repo: `docs/freeze-config.md`, `docs/REPRODUCIBILITY.md`, `tests/test_gradient_gate.py`, and the gradient-gate implementation. Study 1 was not modified.
 
@@ -137,6 +137,6 @@ Unit tests download the processor and tokenizer for the pinned revision. They do
 # Git information
 
 - Branch: `checkpoint-0/model-gradients`
-- Measurement commit: recorded in the commit that adds the pull request URL below.
-- Pull request: recorded in that same commit.
-- Tests: `38 passed` in 4.71 seconds with `python -m pytest tests/vlm_iface -q` on Python 3.12.14. The MPS feasibility script exited 0 with `passed: true` and `mps_validation: passed`.
+- Measurement commit: `5fd7c3cc88d934658ab89aacb81e6350ad0ba5b2` (interface, tests, MPS record, and this report). The pull request URL was added in the following commit.
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/2
+- Tests: `38 passed` in 4.78 seconds with `python -m pytest tests/vlm_iface -q` on Python 3.12.14. The MPS feasibility script exited 0 with `passed: true` and `mps_validation: passed`.
