@@ -120,6 +120,7 @@ PYTHONPATH=src/choice_eval:src/vlm_iface python3 -m choice_eval.verify_live
 
 - Branch: `checkpoint-1.7/choice-scoring`
 - Base: `004783b5604c34aa066befbcd5356bfd7bd6e7b2`
-- Pull request: recorded in the commit that opens it
-- Head: the pull request head. This file is on that head.
+- Scoring commit: `3d99e76ada71deba3e1a48d806271ce6c4eff057`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/16
+- Head: the head of that pull request. This file is on that head.
 - The diff against `main` includes earlier checkpoints because this branch does not start at `main`.
