@@ -3,6 +3,10 @@
 Exit status 0 means the worked packet reproduces the summary. The packet is
 fabricated. This command does not load a model, does not run an attack, and
 does not read the Checkpoint 1 development scenes.
+
+``numpy_version`` is the NumPy that reran this check. The committed summary
+was produced with NumPy 1.26.4, recorded separately. Those strings are not
+required to match. Numeric agreement is ``n_mismatches``.
 """
 
 from __future__ import annotations
@@ -23,6 +27,18 @@ SUMMARY_FILENAME = "hstar_summary.json"
 WORKED_BOOT = 200
 WORKED_SEED = 20261107
 WORKED_ALPHA = 0.05
+# The committed hstar_summary.json was produced with this NumPy. A rerun
+# records its own version beside this one and does not rewrite the file.
+NUMPY_VERSION_THAT_PRODUCED_THE_FILE = "1.26.4"
+
+
+def _numpy_version_record() -> dict[str, str]:
+    reran = np.__version__
+    return {
+        "numpy_version": reran,
+        "numpy_version_that_produced_the_file": NUMPY_VERSION_THAT_PRODUCED_THE_FILE,
+        "numpy_version_that_reran_the_check": reran,
+    }
 
 
 def build_hstar_summary(rows: list[dict[str, Any]] | None = None) -> dict[str, Any]:
@@ -55,7 +71,7 @@ def verify_hstar_summary(directory: Path | None = None) -> dict[str, Any]:
             "ok": False,
             "n_mismatches": len(missing),
             "mismatches": [f"missing {path}" for path in missing],
-            "numpy_version": np.__version__,
+            **_numpy_version_record(),
         }
     try:
         loaded = load_packet(root)
@@ -69,13 +85,13 @@ def verify_hstar_summary(directory: Path | None = None) -> dict[str, Any]:
             "ok": False,
             "n_mismatches": 1,
             "mismatches": [str(exc)],
-            "numpy_version": np.__version__,
+            **_numpy_version_record(),
         }
     return {
         "ok": len(mismatches) == 0,
         "n_mismatches": len(mismatches),
         "mismatches": mismatches[:30],
-        "numpy_version": np.__version__,
+        **_numpy_version_record(),
         "summary_path": str(published_path),
     }
 

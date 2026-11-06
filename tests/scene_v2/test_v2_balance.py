@@ -6,6 +6,8 @@ import json
 import re
 from collections import Counter
 
+import PIL
+
 RECORD_KEYS = {
     "ambiguity_flags",
     "answer",
@@ -123,16 +125,27 @@ def test_manifest_contract(records: list[dict], generated) -> None:
             assert obj["position"]["cy"] == row * 128 + 64
 
 
-def test_metadata_describes_the_sample(generated) -> None:
+def test_metadata_describes_the_sample(generated, repo_root) -> None:
     metadata = json.loads((generated / "metadata.json").read_text(encoding="utf-8"))
+    committed = json.loads(
+        (repo_root / "fixtures" / "development_v2" / "metadata.json").read_text(encoding="utf-8")
+    )
     assert metadata["name"] == "study2_development_v2"
     assert metadata["scene_count"] == 72
     assert metadata["split"] == "development"
     assert metadata["counterfactual_group_count"] == 36
     assert metadata["seed_domain"] == "study2-development-v2"
+    assert metadata["seed_modulus"] == 2_147_483_647
     assert metadata["image_size"] == [512, 384]
     assert metadata["grid"] == {"cols": 4, "rows": 3, "cell": [128, 128]}
-    assert metadata["pillow"] == "11.3.0"
+    # A regeneration records the Pillow that wrote it. The committed metadata
+    # keeps 11.3.0, the Pillow that wrote the committed PNGs.
+    assert metadata["pillow"] == PIL.__version__
+    assert committed["pillow"] == "11.3.0"
+    assert committed["scene_count"] == metadata["scene_count"]
+    assert committed["split"] == metadata["split"]
+    assert committed["seed_domain"] == metadata["seed_domain"]
+    assert committed["seed_modulus"] == metadata["seed_modulus"]
     assert metadata["contact_sheet_is_model_input"] is False
     assert metadata["replaces_checkpoint_1_sample"] is False
     assert metadata["checkpoint_1_fixture_dir"] == "fixtures/development"

@@ -5,6 +5,8 @@ from __future__ import annotations
 import json
 from collections import Counter
 
+import PIL
+
 from graph_oracle import graph_answer
 
 RECORD_KEYS = {
@@ -103,12 +105,23 @@ def test_questions_use_only_the_three_templates(records: list[dict]) -> None:
         assert question.endswith("?")
 
 
-def test_metadata_describes_the_sample(records: list[dict], generated) -> None:
+def test_metadata_describes_the_sample(records: list[dict], generated, repo_root) -> None:
     metadata = json.loads((generated / "metadata.json").read_text(encoding="utf-8"))
+    committed = json.loads(
+        (repo_root / "fixtures" / "development" / "metadata.json").read_text(encoding="utf-8")
+    )
     assert metadata["scene_count"] == 24
     assert metadata["split"] == "development"
     assert metadata["seed_domain"] == "study2-development-v1"
-    assert metadata["pillow"] == "11.3.0"
+    assert metadata["seed_modulus"] == 2_147_483_647
+    # A regeneration records the Pillow that wrote it. The committed metadata
+    # keeps 11.3.0, the Pillow that wrote the committed PNGs.
+    assert metadata["pillow"] == PIL.__version__
+    assert committed["pillow"] == "11.3.0"
+    assert committed["scene_count"] == metadata["scene_count"]
+    assert committed["split"] == metadata["split"]
+    assert committed["seed_domain"] == metadata["seed_domain"]
+    assert committed["seed_modulus"] == metadata["seed_modulus"]
     assert metadata["contact_sheet_is_model_input"] is False
     assert metadata["image_size"] == [512, 384]
     hashes = json.loads((generated / "scene_graph_hashes.json").read_text(encoding="utf-8"))
