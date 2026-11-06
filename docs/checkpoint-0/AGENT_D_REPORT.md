@@ -166,6 +166,7 @@ The Evidence section records the commands actually executed for this report, inc
 
 - Branch: `checkpoint-0/analysis-plan`
 - Base: `main` (`65a8d8ffb2f22f3d284b64e2d481151474761c5e`, initial commit)
-- Commit: filled in after the commit that contains this test log
-- Pull request: opened to `main`, not merged. URL filled in after the PR exists
-- Test status: see the command output in Evidence
+- Commit with the metrics, fixtures, and the test log: `1058ef2bdf54a3e0b9b1ce53740cff32604cd7e9`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/4 (to `main`, not merged)
+- Test status: 41 passed; `verify_toy` reported zero mismatches. See Evidence.
+- The commit after `1058ef2` only records this pull-request URL in the report.
