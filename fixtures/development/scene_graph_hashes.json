@@ -1,0 +1,31 @@
+{
+  "algorithm": "sha256",
+  "canonicalization": "json sort_keys separators=(',', ':') of question, answer, objects",
+  "hashes": {
+    "dev-attribute-00-a": "eea34783c761a89d57a5ac99fea351a49ba3a4c0033881a940b0631680ac4e6e",
+    "dev-attribute-00-b": "758decafdc17f95b08b9f8811e5078e16d0f56256e1b5aff970e04d7e59b8fcb",
+    "dev-attribute-01-a": "8eae5bf86cb140c6d5ce740ca2ad24e868b2cd1b9e8dad06f0086b5150e877c0",
+    "dev-attribute-01-b": "f01001587b6bd33dfd26fa5427c1d3382fc3d77dfe76cbb9c24a9f2105bbcae4",
+    "dev-attribute-02-a": "88a74f98fffaf2109b40abcae537e3a42915bb925325096cd32ff9cfc777ad2d",
+    "dev-attribute-02-b": "3af107c64fb4cb6d2897208ae983afa7fe46d5fc09c84c7034adf9ce16f84274",
+    "dev-attribute-03-a": "72f8588a6b690cb18cb9c7c9d605fb83f9f78a5b2fb13f6b7e7587bf06969423",
+    "dev-attribute-03-b": "f9487d65320d26ff41a6ed7fdc9c79485d3d6e42ba96337d3d7a0203be56c14a",
+    "dev-counting-00-a": "475b8a9c652f46c4c67227852d75579cbd50dd9fc3dc1289a2476ba6967a2558",
+    "dev-counting-00-b": "a50a99504232d9c8913d572bb3d424aeaa2a148905ac72b0175146dcca5a29a1",
+    "dev-counting-01-a": "b4757557531d5c24575fa22d2791c87bf8b6870b53b529ab4bbc759ebfda087f",
+    "dev-counting-01-b": "756864405ab55395d7c7ae9583f2ef437c9414cc8c424cbddfba57b4668d5e4e",
+    "dev-counting-02-a": "ccde672639af8fdf486dddd997778d15f614b760a13fa8f8b1f63c5e5c99a347",
+    "dev-counting-02-b": "a78e1d829fc26a5e1c3b14ea87e620ac83dcb36a39f1a5b4eb13d34f0b200fe9",
+    "dev-counting-03-a": "e89bb6b8e4f08f38e7dc661b9432ca7f329089869a73bdb04d38c19a9a7a8c4c",
+    "dev-counting-03-b": "54d105f73121a28bf8e30ebc891be24b3e201b9493206b475dfe756528dc166f",
+    "dev-spatial-00-a": "1e6f38f306ef9cb31fed80843161e216f404296953479a90942675d94565c4f5",
+    "dev-spatial-00-b": "31a16a20e137c8cda85c6a5b49b837386d6085fe6531c1864d554c01e3e66eb3",
+    "dev-spatial-01-a": "1b7932418c1527e8b2bb23b3c1713c13999efac014a536eaee499e17a01b01d9",
+    "dev-spatial-01-b": "fee821e1bce792c27855d8ba4c56d58cb587e0057aa948c6fd698768c82e297b",
+    "dev-spatial-02-a": "baeb12aa50df77ac218ff41ebb1be26fc79a2a1cc13afe45d6afaecc3b220f28",
+    "dev-spatial-02-b": "2992758b91b07a4036066333771c71109e22c55584bd70854ec892865fe538b8",
+    "dev-spatial-03-a": "18b03926d9c009741db4ea0abdde9624c71ae6963ed419e2fec94ca99f02df0e",
+    "dev-spatial-03-b": "792aa260b44c381ec68eceb00535e7b45b39c6613d22d0908beb621a61ce23bd"
+  },
+  "purpose": "Exclusion list for a future sealed generator. This file is not a sealed set."
+}
