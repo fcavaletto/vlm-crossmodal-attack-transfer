@@ -1,0 +1,1329 @@
+{
+  "alternative_selected": false,
+  "attack_run": false,
+  "by_condition": {
+    "checkpoint1_prompt": {
+      "alternative_applicable": 20,
+      "alternative_matches_answer": 10,
+      "by_context": {
+        "answer_revealing": {
+          "class_differs_from_word": 1,
+          "class_disagreement": 0,
+          "n": 24,
+          "strict_correct": 13,
+          "strict_invalid": 6,
+          "strict_valid_wrong": 5,
+          "word_only_disagreement": 0
+        },
+        "contradictory": {
+          "class_differs_from_word": 1,
+          "class_disagreement": 1,
+          "n": 24,
+          "strict_correct": 3,
+          "strict_invalid": 4,
+          "strict_valid_wrong": 17,
+          "word_only_disagreement": 1
+        },
+        "helpful_nonrevealing": {
+          "class_differs_from_word": 12,
+          "class_disagreement": 0,
+          "n": 24,
+          "strict_correct": 5,
+          "strict_invalid": 7,
+          "strict_valid_wrong": 12,
+          "word_only_disagreement": 9
+        },
+        "neutral": {
+          "class_differs_from_word": 6,
+          "class_disagreement": 0,
+          "n": 24,
+          "strict_correct": 10,
+          "strict_invalid": 3,
+          "strict_valid_wrong": 11,
+          "word_only_disagreement": 5
+        }
+      },
+      "by_family_context": {
+        "attribute": {
+          "answer_revealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 5,
+            "strict_invalid": 3,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          },
+          "contradictory": {
+            "class_differs_from_word": 1,
+            "class_disagreement": 1,
+            "n": 8,
+            "strict_correct": 3,
+            "strict_invalid": 2,
+            "strict_valid_wrong": 3,
+            "word_only_disagreement": 1
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 4,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 7,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 1
+          },
+          "neutral": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 6,
+            "strict_invalid": 2,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          }
+        },
+        "counting": {
+          "answer_revealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 8,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          },
+          "contradictory": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 0,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 8,
+            "word_only_disagreement": 0
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 8,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 3,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 5,
+            "word_only_disagreement": 8
+          },
+          "neutral": {
+            "class_differs_from_word": 5,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 2,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 6,
+            "word_only_disagreement": 5
+          }
+        },
+        "spatial": {
+          "answer_revealing": {
+            "class_differs_from_word": 1,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 0,
+            "strict_invalid": 3,
+            "strict_valid_wrong": 5,
+            "word_only_disagreement": 0
+          },
+          "contradictory": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 0,
+            "strict_invalid": 2,
+            "strict_valid_wrong": 6,
+            "word_only_disagreement": 0
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 7,
+            "word_only_disagreement": 0
+          },
+          "neutral": {
+            "class_differs_from_word": 1,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 2,
+            "strict_invalid": 1,
+            "strict_valid_wrong": 5,
+            "word_only_disagreement": 0
+          }
+        }
+      },
+      "class_differs_from_word": 20,
+      "class_disagreement": 1,
+      "first_token_outside_surface_set": 0,
+      "n": 96,
+      "strict_correct": 31,
+      "strict_invalid": 20,
+      "strict_valid_wrong": 45,
+      "word_only_disagreement": 15
+    },
+    "format_instruction": {
+      "alternative_applicable": 0,
+      "alternative_matches_answer": 0,
+      "by_context": {
+        "answer_revealing": {
+          "class_differs_from_word": 0,
+          "class_disagreement": 1,
+          "n": 24,
+          "strict_correct": 17,
+          "strict_invalid": 0,
+          "strict_valid_wrong": 7,
+          "word_only_disagreement": 1
+        },
+        "contradictory": {
+          "class_differs_from_word": 2,
+          "class_disagreement": 0,
+          "n": 24,
+          "strict_correct": 2,
+          "strict_invalid": 0,
+          "strict_valid_wrong": 22,
+          "word_only_disagreement": 2
+        },
+        "helpful_nonrevealing": {
+          "class_differs_from_word": 8,
+          "class_disagreement": 1,
+          "n": 24,
+          "strict_correct": 6,
+          "strict_invalid": 0,
+          "strict_valid_wrong": 18,
+          "word_only_disagreement": 9
+        },
+        "neutral": {
+          "class_differs_from_word": 2,
+          "class_disagreement": 0,
+          "n": 24,
+          "strict_correct": 14,
+          "strict_invalid": 3,
+          "strict_valid_wrong": 7,
+          "word_only_disagreement": 2
+        }
+      },
+      "by_family_context": {
+        "attribute": {
+          "answer_revealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 8,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          },
+          "contradictory": {
+            "class_differs_from_word": 1,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 7,
+            "word_only_disagreement": 1
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 3,
+            "class_disagreement": 1,
+            "n": 8,
+            "strict_correct": 3,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 5,
+            "word_only_disagreement": 4
+          },
+          "neutral": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 8,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          }
+        },
+        "counting": {
+          "answer_revealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 8,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 0,
+            "word_only_disagreement": 0
+          },
+          "contradictory": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 0,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 8,
+            "word_only_disagreement": 0
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 5,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 2,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 6,
+            "word_only_disagreement": 5
+          },
+          "neutral": {
+            "class_differs_from_word": 2,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 3,
+            "strict_invalid": 3,
+            "strict_valid_wrong": 2,
+            "word_only_disagreement": 2
+          }
+        },
+        "spatial": {
+          "answer_revealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 1,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 7,
+            "word_only_disagreement": 1
+          },
+          "contradictory": {
+            "class_differs_from_word": 1,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 7,
+            "word_only_disagreement": 1
+          },
+          "helpful_nonrevealing": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 1,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 7,
+            "word_only_disagreement": 0
+          },
+          "neutral": {
+            "class_differs_from_word": 0,
+            "class_disagreement": 0,
+            "n": 8,
+            "strict_correct": 3,
+            "strict_invalid": 0,
+            "strict_valid_wrong": 5,
+            "word_only_disagreement": 0
+          }
+        }
+      },
+      "class_differs_from_word": 12,
+      "class_disagreement": 2,
+      "first_token_outside_surface_set": 32,
+      "n": 96,
+      "strict_correct": 39,
+      "strict_invalid": 3,
+      "strict_valid_wrong": 54,
+      "word_only_disagreement": 14
+    }
+  },
+  "checkpoint1_reparse_mismatches": 0,
+  "checkpoint1_word_argmin_mismatches": 0,
+  "checkpoint1_word_nll_max_abs_diff": 5.435943603515625e-05,
+  "checkpoint1_word_nll_reproduced": true,
+  "class_loss_selected_by_accuracy": false,
+  "device": "mps",
+  "digit_sequence_checks": [
+    {
+      "abs_diff": 5.424022674560547e-05,
+      "context": "neutral",
+      "digit": "2",
+      "scene_id": "dev-counting-00-a",
+      "score_details_logprob": -1.4698642492294312,
+      "sequence_logprob": -1.4698100090026855,
+      "token_ids": [
+        216,
+        34
+      ]
+    }
+  ],
+  "format_instruction": "Reply using only the answer. Do not write a sentence.",
+  "format_instruction_selected_by_accuracy": false,
+  "generation_spotcheck": [
+    {
+      "context": "neutral",
+      "fresh_raw_output": "The large circle is red.",
+      "fresh_token_ids": [
+        378,
+        1507,
+        7842,
+        314,
+        2382,
+        30,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-attribute-00-a",
+      "stored_raw_output": "The large circle is red."
+    },
+    {
+      "context": "helpful_nonrevealing",
+      "fresh_raw_output": "The large circle is red.",
+      "fresh_token_ids": [
+        378,
+        1507,
+        7842,
+        314,
+        2382,
+        30,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-attribute-00-a",
+      "stored_raw_output": "The large circle is red."
+    },
+    {
+      "context": "contradictory",
+      "fresh_raw_output": "Green",
+      "fresh_token_ids": [
+        4910,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-attribute-00-a",
+      "stored_raw_output": "Green"
+    },
+    {
+      "context": "answer_revealing",
+      "fresh_raw_output": "The large circle is red.",
+      "fresh_token_ids": [
+        378,
+        1507,
+        7842,
+        314,
+        2382,
+        30,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-attribute-00-a",
+      "stored_raw_output": "The large circle is red."
+    },
+    {
+      "context": "neutral",
+      "fresh_raw_output": "3",
+      "fresh_token_ids": [
+        216,
+        35,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-counting-00-a",
+      "stored_raw_output": "3"
+    },
+    {
+      "context": "helpful_nonrevealing",
+      "fresh_raw_output": "3",
+      "fresh_token_ids": [
+        216,
+        35,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-counting-00-a",
+      "stored_raw_output": "3"
+    },
+    {
+      "context": "contradictory",
+      "fresh_raw_output": "4",
+      "fresh_token_ids": [
+        216,
+        36,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-counting-00-a",
+      "stored_raw_output": "4"
+    },
+    {
+      "context": "answer_revealing",
+      "fresh_raw_output": "2",
+      "fresh_token_ids": [
+        216,
+        34,
+        49279
+      ],
+      "match": true,
+      "scene_id": "dev-counting-00-a",
+      "stored_raw_output": "2"
+    }
+  ],
+  "generation_spotcheck_matches": 8,
+  "h_star_fitted": false,
+  "label": "DEVELOPMENT ONLY",
+  "load_seconds": 3.661,
+  "measurement_kind": "checkpoint1_5_answer_scoring",
+  "memory_after_load": {
+    "current_rss_mb": 223.1,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2856.5,
+    "os_available_mb": 4117.3,
+    "peak_rss_mb": 399.8
+  },
+  "memory_after_run": {
+    "current_rss_mb": 490.8,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2929.8,
+    "os_available_mb": 5522.9,
+    "peak_rss_mb": 490.8
+  },
+  "memory_before_load": {
+    "current_rss_mb": 205.7,
+    "device": "mps",
+    "mps_current_allocated_mb": 0.0,
+    "mps_driver_allocated_mb": 0.5,
+    "os_available_mb": 8256.2,
+    "peak_rss_mb": 205.7
+  },
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "n_rows": 192,
+  "n_scenes": 24,
+  "note": "DEVELOPMENT ONLY. Class NLL on the 24 committed scenes. Single-token surfaces use the first answer position. The leading-space digit uses its two-token joint log-probability. The strict parser is unchanged. No attack and no H* fit.",
+  "score_seconds": 94.81,
+  "skipped_surfaces": {
+    "attribute": [
+      {
+        "canonical": "blue",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "BLUE"
+      },
+      {
+        "canonical": "blue",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "BLUE"
+      },
+      {
+        "canonical": "green",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "GREEN"
+      },
+      {
+        "canonical": "green",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "GREEN"
+      },
+      {
+        "canonical": "yellow",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "YELLOW"
+      },
+      {
+        "canonical": "yellow",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "YELLOW"
+      }
+    ],
+    "counting": [
+      {
+        "canonical": "two",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "TWO"
+      },
+      {
+        "canonical": "two",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "TWO"
+      },
+      {
+        "canonical": "three",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "THREE"
+      },
+      {
+        "canonical": "three",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "THREE"
+      },
+      {
+        "canonical": "four",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "FOUR"
+      },
+      {
+        "canonical": "four",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "FOUR"
+      }
+    ],
+    "spatial": [
+      {
+        "canonical": "blue",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "BLUE"
+      },
+      {
+        "canonical": "blue",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "BLUE"
+      },
+      {
+        "canonical": "green",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "GREEN"
+      },
+      {
+        "canonical": "green",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "GREEN"
+      },
+      {
+        "canonical": "yellow",
+        "kind": "case_variant",
+        "leading_space": true,
+        "reason": "multi_token",
+        "source_text": "YELLOW"
+      },
+      {
+        "canonical": "yellow",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "reason": "multi_token",
+        "source_text": "YELLOW"
+      }
+    ]
+  },
+  "strict_parser_replaced": false,
+  "surfaces": {
+    "attribute": [
+      {
+        "canonical": "red",
+        "decoded": " red",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "red",
+        "token_id": 2382,
+        "token_ids": [
+          2382
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "red",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "red",
+        "token_id": 455,
+        "token_ids": [
+          455
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": " Red",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Red",
+        "token_id": 3950,
+        "token_ids": [
+          3950
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "Red",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Red",
+        "token_id": 12869,
+        "token_ids": [
+          12869
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": " RED",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "RED",
+        "token_id": 31013,
+        "token_ids": [
+          31013
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "RED",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "RED",
+        "token_id": 32961,
+        "token_ids": [
+          32961
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": " blue",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "blue",
+        "token_id": 4461,
+        "token_ids": [
+          4461
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": "blue",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "blue",
+        "token_id": 16591,
+        "token_ids": [
+          16591
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": " Blue",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Blue",
+        "token_id": 10062,
+        "token_ids": [
+          10062
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": "Blue",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Blue",
+        "token_id": 23390,
+        "token_ids": [
+          23390
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": " green",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "green",
+        "token_id": 2654,
+        "token_ids": [
+          2654
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": "green",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "green",
+        "token_id": 9298,
+        "token_ids": [
+          9298
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": " Green",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Green",
+        "token_id": 4910,
+        "token_ids": [
+          4910
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": "Green",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Green",
+        "token_id": 15420,
+        "token_ids": [
+          15420
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": " yellow",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "yellow",
+        "token_id": 5724,
+        "token_ids": [
+          5724
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": "yellow",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "yellow",
+        "token_id": 23429,
+        "token_ids": [
+          23429
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": " Yellow",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Yellow",
+        "token_id": 13581,
+        "token_ids": [
+          13581
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": "Yellow",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Yellow",
+        "token_id": 36086,
+        "token_ids": [
+          36086
+        ]
+      }
+    ],
+    "counting": [
+      {
+        "canonical": "one",
+        "decoded": " one",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "one",
+        "token_id": 582,
+        "token_ids": [
+          582
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": "one",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "one",
+        "token_id": 537,
+        "token_ids": [
+          537
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": " One",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "One",
+        "token_id": 1963,
+        "token_ids": [
+          1963
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": "One",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "One",
+        "token_id": 2705,
+        "token_ids": [
+          2705
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": " ONE",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "ONE",
+        "token_id": 24319,
+        "token_ids": [
+          24319
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": "ONE",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "ONE",
+        "token_id": 19832,
+        "token_ids": [
+          19832
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": " 1",
+        "kind": "digit_alias",
+        "leading_space": true,
+        "source_text": "1",
+        "token_ids": [
+          216,
+          33
+        ]
+      },
+      {
+        "canonical": "one",
+        "decoded": "1",
+        "kind": "digit_alias_bare",
+        "leading_space": false,
+        "source_text": "1",
+        "token_id": 33,
+        "token_ids": [
+          33
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": " two",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "two",
+        "token_id": 827,
+        "token_ids": [
+          827
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": "two",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "two",
+        "token_id": 11355,
+        "token_ids": [
+          11355
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": " Two",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Two",
+        "token_id": 5713,
+        "token_ids": [
+          5713
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": "Two",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Two",
+        "token_id": 10345,
+        "token_ids": [
+          10345
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": " 2",
+        "kind": "digit_alias",
+        "leading_space": true,
+        "source_text": "2",
+        "token_ids": [
+          216,
+          34
+        ]
+      },
+      {
+        "canonical": "two",
+        "decoded": "2",
+        "kind": "digit_alias_bare",
+        "leading_space": false,
+        "source_text": "2",
+        "token_id": 34,
+        "token_ids": [
+          34
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": " three",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "three",
+        "token_id": 1296,
+        "token_ids": [
+          1296
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": "three",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "three",
+        "token_id": 16347,
+        "token_ids": [
+          16347
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": " Three",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Three",
+        "token_id": 8696,
+        "token_ids": [
+          8696
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": "Three",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Three",
+        "token_id": 16705,
+        "token_ids": [
+          16705
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": " 3",
+        "kind": "digit_alias",
+        "leading_space": true,
+        "source_text": "3",
+        "token_ids": [
+          216,
+          35
+        ]
+      },
+      {
+        "canonical": "three",
+        "decoded": "3",
+        "kind": "digit_alias_bare",
+        "leading_space": false,
+        "source_text": "3",
+        "token_id": 35,
+        "token_ids": [
+          35
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": " four",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "four",
+        "token_id": 1876,
+        "token_ids": [
+          1876
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": "four",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "four",
+        "token_id": 13996,
+        "token_ids": [
+          13996
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": " Four",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Four",
+        "token_id": 8920,
+        "token_ids": [
+          8920
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": "Four",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Four",
+        "token_id": 19622,
+        "token_ids": [
+          19622
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": " 4",
+        "kind": "digit_alias",
+        "leading_space": true,
+        "source_text": "4",
+        "token_ids": [
+          216,
+          36
+        ]
+      },
+      {
+        "canonical": "four",
+        "decoded": "4",
+        "kind": "digit_alias_bare",
+        "leading_space": false,
+        "source_text": "4",
+        "token_id": 36,
+        "token_ids": [
+          36
+        ]
+      }
+    ],
+    "spatial": [
+      {
+        "canonical": "red",
+        "decoded": " red",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "red",
+        "token_id": 2382,
+        "token_ids": [
+          2382
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "red",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "red",
+        "token_id": 455,
+        "token_ids": [
+          455
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": " Red",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Red",
+        "token_id": 3950,
+        "token_ids": [
+          3950
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "Red",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Red",
+        "token_id": 12869,
+        "token_ids": [
+          12869
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": " RED",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "RED",
+        "token_id": 31013,
+        "token_ids": [
+          31013
+        ]
+      },
+      {
+        "canonical": "red",
+        "decoded": "RED",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "RED",
+        "token_id": 32961,
+        "token_ids": [
+          32961
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": " blue",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "blue",
+        "token_id": 4461,
+        "token_ids": [
+          4461
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": "blue",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "blue",
+        "token_id": 16591,
+        "token_ids": [
+          16591
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": " Blue",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Blue",
+        "token_id": 10062,
+        "token_ids": [
+          10062
+        ]
+      },
+      {
+        "canonical": "blue",
+        "decoded": "Blue",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Blue",
+        "token_id": 23390,
+        "token_ids": [
+          23390
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": " green",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "green",
+        "token_id": 2654,
+        "token_ids": [
+          2654
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": "green",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "green",
+        "token_id": 9298,
+        "token_ids": [
+          9298
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": " Green",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Green",
+        "token_id": 4910,
+        "token_ids": [
+          4910
+        ]
+      },
+      {
+        "canonical": "green",
+        "decoded": "Green",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Green",
+        "token_id": 15420,
+        "token_ids": [
+          15420
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": " yellow",
+        "kind": "canonical_word",
+        "leading_space": true,
+        "source_text": "yellow",
+        "token_id": 5724,
+        "token_ids": [
+          5724
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": "yellow",
+        "kind": "canonical_word_bare",
+        "leading_space": false,
+        "source_text": "yellow",
+        "token_id": 23429,
+        "token_ids": [
+          23429
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": " Yellow",
+        "kind": "case_variant",
+        "leading_space": true,
+        "source_text": "Yellow",
+        "token_id": 13581,
+        "token_ids": [
+          13581
+        ]
+      },
+      {
+        "canonical": "yellow",
+        "decoded": "Yellow",
+        "kind": "case_variant_bare",
+        "leading_space": false,
+        "source_text": "Yellow",
+        "token_id": 36086,
+        "token_ids": [
+          36086
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,1694 @@
+{
+  "attacks_run": false,
+  "checkpoint": "checkpoint-1-development-pilot",
+  "clean_by_context": {
+    "answer_revealing": {
+      "accuracy": {
+        "denominator": 24,
+        "numerator": 13,
+        "undefined_reason": null,
+        "value": 0.5416666666666666
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 24,
+        "numerator": 6,
+        "undefined_reason": null,
+        "value": 0.25
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 13,
+      "n_invalid": 6,
+      "n_rows": 24,
+      "n_scenes": 24,
+      "n_unique_scenes": 24,
+      "n_valid_wrong": 5,
+      "valid_wrong_rate": {
+        "denominator": 24,
+        "numerator": 5,
+        "undefined_reason": null,
+        "value": 0.20833333333333334
+      }
+    },
+    "contradictory": {
+      "accuracy": {
+        "denominator": 24,
+        "numerator": 3,
+        "undefined_reason": null,
+        "value": 0.125
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 24,
+        "numerator": 4,
+        "undefined_reason": null,
+        "value": 0.16666666666666666
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 3,
+      "n_invalid": 4,
+      "n_rows": 24,
+      "n_scenes": 24,
+      "n_unique_scenes": 24,
+      "n_valid_wrong": 17,
+      "valid_wrong_rate": {
+        "denominator": 24,
+        "numerator": 17,
+        "undefined_reason": null,
+        "value": 0.7083333333333334
+      }
+    },
+    "helpful_nonrevealing": {
+      "accuracy": {
+        "denominator": 24,
+        "numerator": 5,
+        "undefined_reason": null,
+        "value": 0.20833333333333334
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 24,
+        "numerator": 7,
+        "undefined_reason": null,
+        "value": 0.2916666666666667
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 5,
+      "n_invalid": 7,
+      "n_rows": 24,
+      "n_scenes": 24,
+      "n_unique_scenes": 24,
+      "n_valid_wrong": 12,
+      "valid_wrong_rate": {
+        "denominator": 24,
+        "numerator": 12,
+        "undefined_reason": null,
+        "value": 0.5
+      }
+    },
+    "neutral": {
+      "accuracy": {
+        "denominator": 24,
+        "numerator": 10,
+        "undefined_reason": null,
+        "value": 0.4166666666666667
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 24,
+        "numerator": 3,
+        "undefined_reason": null,
+        "value": 0.125
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 10,
+      "n_invalid": 3,
+      "n_rows": 24,
+      "n_scenes": 24,
+      "n_unique_scenes": 24,
+      "n_valid_wrong": 11,
+      "valid_wrong_rate": {
+        "denominator": 24,
+        "numerator": 11,
+        "undefined_reason": null,
+        "value": 0.4583333333333333
+      }
+    }
+  },
+  "clean_by_family_and_context": {
+    "attribute": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.625
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 5,
+        "n_invalid": 3,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 0,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 3,
+        "n_invalid": 2,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 3,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.125
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 7,
+          "undefined_reason": null,
+          "value": 0.875
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 1,
+        "n_invalid": 7,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 0,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 6,
+          "undefined_reason": null,
+          "value": 0.75
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 6,
+        "n_invalid": 2,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 0,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        }
+      }
+    },
+    "counting": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 8,
+        "n_invalid": 0,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 0,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 0,
+        "n_invalid": 0,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 8,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 1.0
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 3,
+        "n_invalid": 0,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 5,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.625
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 2,
+        "n_invalid": 0,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 6,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 6,
+          "undefined_reason": null,
+          "value": 0.75
+        }
+      }
+    },
+    "spatial": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 0,
+        "n_invalid": 3,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 5,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.625
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 0,
+        "n_invalid": 2,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 6,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 6,
+          "undefined_reason": null,
+          "value": 0.75
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.125
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 1,
+        "n_invalid": 0,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 7,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 7,
+          "undefined_reason": null,
+          "value": 0.875
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 8,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "denominator": "scene-context rows",
+        "invalid_output_rate": {
+          "denominator": 8,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.125
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 2,
+        "n_invalid": 1,
+        "n_rows": 8,
+        "n_scenes": 8,
+        "n_unique_scenes": 8,
+        "n_valid_wrong": 5,
+        "valid_wrong_rate": {
+          "denominator": 8,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.625
+        }
+      }
+    }
+  },
+  "clean_by_task_family": {
+    "attribute": {
+      "accuracy": {
+        "denominator": 32,
+        "numerator": 15,
+        "undefined_reason": null,
+        "value": 0.46875
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 32,
+        "numerator": 14,
+        "undefined_reason": null,
+        "value": 0.4375
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 15,
+      "n_invalid": 14,
+      "n_rows": 32,
+      "n_scenes": 8,
+      "n_unique_scenes": 8,
+      "n_valid_wrong": 3,
+      "valid_wrong_rate": {
+        "denominator": 32,
+        "numerator": 3,
+        "undefined_reason": null,
+        "value": 0.09375
+      }
+    },
+    "counting": {
+      "accuracy": {
+        "denominator": 32,
+        "numerator": 13,
+        "undefined_reason": null,
+        "value": 0.40625
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 32,
+        "numerator": 0,
+        "undefined_reason": null,
+        "value": 0.0
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 13,
+      "n_invalid": 0,
+      "n_rows": 32,
+      "n_scenes": 8,
+      "n_unique_scenes": 8,
+      "n_valid_wrong": 19,
+      "valid_wrong_rate": {
+        "denominator": 32,
+        "numerator": 19,
+        "undefined_reason": null,
+        "value": 0.59375
+      }
+    },
+    "spatial": {
+      "accuracy": {
+        "denominator": 32,
+        "numerator": 3,
+        "undefined_reason": null,
+        "value": 0.09375
+      },
+      "denominator": "scene-context rows",
+      "invalid_output_rate": {
+        "denominator": 32,
+        "numerator": 6,
+        "undefined_reason": null,
+        "value": 0.1875
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 3,
+      "n_invalid": 6,
+      "n_rows": 32,
+      "n_scenes": 8,
+      "n_unique_scenes": 8,
+      "n_valid_wrong": 23,
+      "valid_wrong_rate": {
+        "denominator": 32,
+        "numerator": 23,
+        "undefined_reason": null,
+        "value": 0.71875
+      }
+    }
+  },
+  "confirmatory_estimator": "not_implemented",
+  "confirmatory_note": "Agent A's regression estimand, with counterfactual-group clustering, is still required before any confirmatory evaluation.",
+  "counterfactual": {
+    "by_context": {
+      "answer_revealing": {
+        "both_parsed": {
+          "denominator": 12,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 0.6666666666666666
+        },
+        "changed_to_correct_counterfactual": {
+          "denominator": 12,
+          "numerator": 6,
+          "undefined_reason": null,
+          "value": 0.5
+        },
+        "correct_on_both_arms": {
+          "denominator": 12,
+          "numerator": 6,
+          "undefined_reason": null,
+          "value": 0.5
+        },
+        "group_ids_unchanged": [],
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 12,
+        "n_scenes": 24,
+        "pair_denominator": 12,
+        "parsed_answer_changed": {
+          "denominator": 8,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "relevant_to_visual_edit": false,
+        "scene_denominator": 24,
+        "scenes_in_pairs_whose_parsed_answers_changed": {
+          "denominator": 24,
+          "numerator": 16,
+          "undefined_reason": null,
+          "value": 0.6666666666666666
+        },
+        "texts_identical_pairs": 0,
+        "true_answers_differ": {
+          "denominator": 12,
+          "numerator": 12,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "unchanged_despite_edit": {
+          "denominator": 8,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        }
+      },
+      "contradictory": {
+        "both_parsed": {
+          "denominator": 12,
+          "numerator": 9,
+          "undefined_reason": null,
+          "value": 0.75
+        },
+        "changed_to_correct_counterfactual": {
+          "denominator": 12,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.08333333333333333
+        },
+        "correct_on_both_arms": {
+          "denominator": 12,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.08333333333333333
+        },
+        "group_ids_unchanged": [
+          "cf-attribute-00",
+          "cf-counting-00",
+          "cf-counting-01",
+          "cf-counting-02",
+          "cf-counting-03"
+        ],
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 12,
+        "n_scenes": 24,
+        "pair_denominator": 12,
+        "parsed_answer_changed": {
+          "denominator": 9,
+          "numerator": 4,
+          "undefined_reason": null,
+          "value": 0.4444444444444444
+        },
+        "relevant_to_visual_edit": true,
+        "scene_denominator": 24,
+        "scenes_in_pairs_whose_parsed_answers_changed": {
+          "denominator": 24,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 0.3333333333333333
+        },
+        "texts_identical_pairs": 12,
+        "true_answers_differ": {
+          "denominator": 12,
+          "numerator": 12,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "unchanged_despite_edit": {
+          "denominator": 9,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.5555555555555556
+        }
+      },
+      "helpful_nonrevealing": {
+        "both_parsed": {
+          "denominator": 12,
+          "numerator": 8,
+          "undefined_reason": null,
+          "value": 0.6666666666666666
+        },
+        "changed_to_correct_counterfactual": {
+          "denominator": 12,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "correct_on_both_arms": {
+          "denominator": 12,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "group_ids_unchanged": [
+          "cf-counting-00",
+          "cf-counting-01",
+          "cf-spatial-03"
+        ],
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 12,
+        "n_scenes": 24,
+        "pair_denominator": 12,
+        "parsed_answer_changed": {
+          "denominator": 8,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.625
+        },
+        "relevant_to_visual_edit": true,
+        "scene_denominator": 24,
+        "scenes_in_pairs_whose_parsed_answers_changed": {
+          "denominator": 24,
+          "numerator": 10,
+          "undefined_reason": null,
+          "value": 0.4166666666666667
+        },
+        "texts_identical_pairs": 12,
+        "true_answers_differ": {
+          "denominator": 12,
+          "numerator": 12,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "unchanged_despite_edit": {
+          "denominator": 8,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.375
+        }
+      },
+      "neutral": {
+        "both_parsed": {
+          "denominator": 12,
+          "numerator": 9,
+          "undefined_reason": null,
+          "value": 0.75
+        },
+        "changed_to_correct_counterfactual": {
+          "denominator": 12,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "correct_on_both_arms": {
+          "denominator": 12,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.25
+        },
+        "group_ids_unchanged": [
+          "cf-counting-00",
+          "cf-counting-03"
+        ],
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 12,
+        "n_scenes": 24,
+        "pair_denominator": 12,
+        "parsed_answer_changed": {
+          "denominator": 9,
+          "numerator": 7,
+          "undefined_reason": null,
+          "value": 0.7777777777777778
+        },
+        "relevant_to_visual_edit": true,
+        "scene_denominator": 24,
+        "scenes_in_pairs_whose_parsed_answers_changed": {
+          "denominator": 24,
+          "numerator": 14,
+          "undefined_reason": null,
+          "value": 0.5833333333333334
+        },
+        "texts_identical_pairs": 12,
+        "true_answers_differ": {
+          "denominator": 12,
+          "numerator": 12,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "unchanged_despite_edit": {
+          "denominator": 9,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.2222222222222222
+        }
+      }
+    },
+    "definition": "An answer change after a visual edit is not proof of mechanistic visual grounding.",
+    "label": "DEVELOPMENT ONLY"
+  },
+  "definitions": {
+    "alignment": "A(s, t) = dot(g_t, sign(g_s)) / ||g_t||_1. A zero target L1 norm is null, not zero.",
+    "correct": "The parse is one vocabulary item and it matches the canonical answer or a documented alias.",
+    "counterfactual": "An answer change after a visual edit is not proof of mechanistic visual grounding.",
+    "flat_source": "A zero source L1 norm can make the algebra return 0. That row is excluded from the proposed H* population.",
+    "h_star": "H* was not fit. The cluster-robust coefficient is still required before any confirmatory evaluation.",
+    "helpful_text": "The current helpful text is task guidance, not additional factual scene evidence.",
+    "invalid": "The generation is not one task-vocabulary item. It is a task error and not an attack success.",
+    "loss": "L = -log P(canonical answer | image, prompt), the sum of token negative log-likelihoods.",
+    "mean_nll": "mean token NLL is sum_nll / token_count. It is stored beside the sum and is not the optimized loss.",
+    "valid_wrong": "The parse is one recognized color or count and it does not match the answer or an alias."
+  },
+  "gate_passed": true,
+  "gate_scene_id": "dev-attribute-00-a",
+  "gradients": {
+    "alignment": {
+      "helpful_to_neutral": {
+        "label": "DEVELOPMENT ONLY",
+        "max": 0.7208635018306813,
+        "mean": 0.5531856178495526,
+        "min": 0.3810648294956236,
+        "n": 24,
+        "n_defined": 24,
+        "n_source_excluded": 0,
+        "n_undefined": 0,
+        "source_context": "helpful_nonrevealing",
+        "target_context": "neutral"
+      },
+      "neutral_to_helpful": {
+        "label": "DEVELOPMENT ONLY",
+        "max": 0.7306347348058236,
+        "mean": 0.5657356251815255,
+        "min": 0.3746876833727764,
+        "n": 24,
+        "n_defined": 24,
+        "n_source_excluded": 0,
+        "n_undefined": 0,
+        "source_context": "neutral",
+        "target_context": "helpful_nonrevealing"
+      }
+    },
+    "by_context": {
+      "helpful_nonrevealing": {
+        "l1_max": 15789.011066392126,
+        "l1_median": 4256.392616011012,
+        "l1_min": 1759.3153309430604,
+        "label": "DEVELOPMENT ONLY",
+        "max_repeat_max_abs_diff": 0.0,
+        "n": 24,
+        "n_finite": 24,
+        "n_repeated": 1,
+        "n_zero_l1": 0,
+        "nonzero_fraction_min": 1.0,
+        "seconds_max": 6.33,
+        "seconds_sum": 121.901
+      },
+      "neutral": {
+        "l1_max": 5828.848310229574,
+        "l1_median": 3894.878542752327,
+        "l1_min": 2148.651811356698,
+        "label": "DEVELOPMENT ONLY",
+        "max_repeat_max_abs_diff": 0.0,
+        "n": 24,
+        "n_finite": 24,
+        "n_repeated": 1,
+        "n_zero_l1": 0,
+        "nonzero_fraction_min": 1.0,
+        "seconds_max": 7.187,
+        "seconds_sum": 124.79599999999999
+      }
+    },
+    "by_scene": [
+      {
+        "counterfactual_group_id": "cf-attribute-00",
+        "helpful_nonrevealing__to__neutral": 0.6527476087535867,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6801713866100443,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-00-a"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-00",
+        "helpful_nonrevealing__to__neutral": 0.6052840811515274,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6342664389286217,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-00-b"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-01",
+        "helpful_nonrevealing__to__neutral": 0.3810648294956236,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.3888837915141334,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-01-a"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-01",
+        "helpful_nonrevealing__to__neutral": 0.45215189957797436,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.45506824599347606,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-01-b"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-02",
+        "helpful_nonrevealing__to__neutral": 0.6860178724000787,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6936402137061796,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-02-a"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-02",
+        "helpful_nonrevealing__to__neutral": 0.6200585759589112,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6145056362371111,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-02-b"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-03",
+        "helpful_nonrevealing__to__neutral": 0.525481337203651,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5599036785425305,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-03-a"
+      },
+      {
+        "counterfactual_group_id": "cf-attribute-03",
+        "helpful_nonrevealing__to__neutral": 0.43380689954692275,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.39185382117830597,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-attribute-03-b"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-00",
+        "helpful_nonrevealing__to__neutral": 0.4542840004227658,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.44531401204484244,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-00-a"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-00",
+        "helpful_nonrevealing__to__neutral": 0.5114631643838332,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5103674325232578,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-00-b"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-01",
+        "helpful_nonrevealing__to__neutral": 0.4806910371097409,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.513911439611942,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-01-a"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-01",
+        "helpful_nonrevealing__to__neutral": 0.5773643544088184,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5773087707666053,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-01-b"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-02",
+        "helpful_nonrevealing__to__neutral": 0.4769900324734219,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.4690776804326951,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-02-a"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-02",
+        "helpful_nonrevealing__to__neutral": 0.38156266588952314,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.3746876833727764,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-02-b"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-03",
+        "helpful_nonrevealing__to__neutral": 0.6884376338557409,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.7116678772010466,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-03-a"
+      },
+      {
+        "counterfactual_group_id": "cf-counting-03",
+        "helpful_nonrevealing__to__neutral": 0.7058191014256325,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.7228256301438198,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-counting-03-b"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-00",
+        "helpful_nonrevealing__to__neutral": 0.5335281511678794,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5510352172520102,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-00-a"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-00",
+        "helpful_nonrevealing__to__neutral": 0.4733999094552377,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5365460649083933,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-00-b"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-01",
+        "helpful_nonrevealing__to__neutral": 0.4530790438824747,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5366150661571533,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-01-a"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-01",
+        "helpful_nonrevealing__to__neutral": 0.6168397635319838,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6337696584966267,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-01-b"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-02",
+        "helpful_nonrevealing__to__neutral": 0.6463709662240975,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6139992960288555,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-02-a"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-02",
+        "helpful_nonrevealing__to__neutral": 0.5627016136506517,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.5701121466720286,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-02-b"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-03",
+        "helpful_nonrevealing__to__neutral": 0.6364467845885036,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.6614890812283345,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-03-a"
+      },
+      {
+        "counterfactual_group_id": "cf-spatial-03",
+        "helpful_nonrevealing__to__neutral": 0.7208635018306813,
+        "helpful_nonrevealing__to__neutral_excluded": false,
+        "neutral__to__helpful_nonrevealing": 0.7306347348058236,
+        "neutral__to__helpful_nonrevealing_excluded": false,
+        "scene_id": "dev-spatial-03-b"
+      }
+    ],
+    "definition": "A(s, t) = dot(g_t, sign(g_s)) / ||g_t||_1. A zero target L1 norm is null, not zero.",
+    "label": "DEVELOPMENT ONLY"
+  },
+  "h_star_fitted": false,
+  "input_sha256": {
+    "alignments.jsonl": "925a394013f419e6a855b3f5efffda3f01953f7b9e98e028d83f29a21e573d97",
+    "gate.json": "c77cc4e825a844b12496f61c3652e0fdfd699ba3cc45af791afa532ca88ab5d8",
+    "gradient_stats.jsonl": "dce35b2259b24f61abf3f112da112f9ee4cfdbc0a0449a072ac0adc48cec4207",
+    "predictions.jsonl": "9b2574eccc671e6866be1e5e364c4e98f75f727730dfd7e94174e8205845bc0e",
+    "run_meta.json": "736c41979d3af07e940f5d6114b6c1db64bb00a6a4e3eb3213898e2a0a21c22f"
+  },
+  "label": "DEVELOPMENT ONLY",
+  "n_groups": 12,
+  "n_predictions": 96,
+  "n_scenes": 24,
+  "proposed_h_star_population": {
+    "coefficient_fit": false,
+    "definition": "H* was not fit. The cluster-robust coefficient is still required before any confirmatory evaluation.",
+    "label": "DEVELOPMENT ONLY",
+    "n_groups_included": 3,
+    "n_scenes_included": 3,
+    "scene_ids": [
+      "dev-attribute-03-a",
+      "dev-counting-00-b",
+      "dev-counting-02-b"
+    ]
+  },
+  "quality_flags": [
+    {
+      "detail": {
+        "parsed_answer": "green"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-attribute-00 contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "four"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-00 contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "three"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-00 helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "three"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-00 neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "four"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-01 contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "two"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-01 helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "four"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-02 contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "four"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-03 contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-counting-03 neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "blue"
+      },
+      "flag_id": "counterfactual_unchanged_answer",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "cf-spatial-03 helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "attribute": 4,
+        "counting": 8,
+        "spatial": 5
+      },
+      "flag_id": "generator_constant_object_count",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "task_family"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.25,
+        "n_scenes": 24,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "context:answer_revealing"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.2916666666666667,
+        "n_scenes": 24,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.4375,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.375,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:answer_revealing"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.25,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:contradictory"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.875,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.25,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:neutral"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.375,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:answer_revealing"
+    },
+    {
+      "detail": {
+        "invalid_output_rate": 0.25,
+        "n_scenes": 8,
+        "threshold": 0.25
+      },
+      "flag_id": "high_invalid_rate",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:contradictory"
+    },
+    {
+      "detail": {
+        "accuracy_gap": 0.75,
+        "threshold": 0.25
+      },
+      "flag_id": "possible_revealing_shortcut",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:counting"
+    },
+    {
+      "detail": {
+        "parsed_answer": "green",
+        "scored_argmin": "blue"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-attribute-00-b contradictory"
+    },
+    {
+      "detail": {
+        "parsed_answer": "blue",
+        "scored_argmin": "yellow"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-attribute-03-a helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "three",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-00-a helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "three",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-00-b helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "two",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-01-a helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "three"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-01-a neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "two",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-01-b helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "two",
+        "scored_argmin": "three"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-01-b neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-02-a helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "three"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-02-a neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "three",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-02-b helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-03-a helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "three"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-03-a neutral"
+    },
+    {
+      "detail": {
+        "parsed_answer": "two",
+        "scored_argmin": "four"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-03-b helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "parsed_answer": "one",
+        "scored_argmin": "three"
+      },
+      "flag_id": "scoring_generation_disagreement",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "dev-counting-03-b neutral"
+    },
+    {
+      "detail": {
+        "accuracy": 0.125,
+        "n_scenes": 24,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "context:contradictory"
+    },
+    {
+      "detail": {
+        "accuracy": 0.20833333333333334,
+        "n_scenes": 24,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "accuracy": 0.4166666666666667,
+        "n_scenes": 24,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "context:neutral"
+    },
+    {
+      "detail": {
+        "accuracy": 0.46875,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute"
+    },
+    {
+      "detail": {
+        "accuracy": 0.375,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:contradictory"
+    },
+    {
+      "detail": {
+        "accuracy": 0.125,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:attribute context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "accuracy": 0.40625,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:counting"
+    },
+    {
+      "detail": {
+        "accuracy": 0.0,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:counting context:contradictory"
+    },
+    {
+      "detail": {
+        "accuracy": 0.375,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:counting context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "accuracy": 0.25,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:counting context:neutral"
+    },
+    {
+      "detail": {
+        "accuracy": 0.09375,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial"
+    },
+    {
+      "detail": {
+        "accuracy": 0.0,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:answer_revealing"
+    },
+    {
+      "detail": {
+        "accuracy": 0.0,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:contradictory"
+    },
+    {
+      "detail": {
+        "accuracy": 0.125,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:helpful_nonrevealing"
+    },
+    {
+      "detail": {
+        "accuracy": 0.25,
+        "n_scenes": 8,
+        "threshold": 0.5
+      },
+      "flag_id": "weak_clean_accuracy",
+      "kept": true,
+      "label": "DEVELOPMENT ONLY",
+      "where": "family:spatial context:neutral"
+    }
+  ],
+  "run_meta": {
+    "attacks_run": false,
+    "attn_implementation": "eager",
+    "commands": {
+      "gate_only": "PYTHONPATH=src/scene_gen:src/vlm_iface:src/analysis:src/pilot python -m pilot.run --device mps --gate-only",
+      "pilot": "PYTHONPATH=src/scene_gen:src/vlm_iface:src/analysis:src/pilot python -m pilot.run --device mps",
+      "tests": "PYTHONPATH=src/scene_gen:src/vlm_iface:src/analysis:src/pilot python -m pytest tests/scene_gen tests/vlm_iface tests/analysis tests/pilot -q",
+      "verify": "PYTHONPATH=src/scene_gen:src/vlm_iface:src/analysis:src/pilot python -m pilot.verify"
+    },
+    "device": "mps",
+    "do_image_splitting": false,
+    "environment": {
+      "cpu_brand": "Apple M4",
+      "machine": "arm64",
+      "memory_bytes": 25769803776,
+      "numpy": "2.5.4",
+      "pillow": "13.0.0",
+      "platform": "macOS-26.6-arm64-arm-64bit",
+      "python": "3.12.14",
+      "system": "Darwin",
+      "torch": "2.15.0",
+      "transformers": "5.22.1"
+    },
+    "gate_scene_id": "dev-attribute-00-a",
+    "gate_seconds": 23.325,
+    "git_head_at_run": "591581a6cdc3cdc55eb1a9c53585b9bfd5978f44",
+    "h_star_fitted": false,
+    "helpful_text_role": "task guidance, not additional factual scene evidence",
+    "label": "DEVELOPMENT ONLY",
+    "leading_space": true,
+    "load_seconds": 5.231,
+    "manifest_sha256": "3aea59c848aaafc76de6c70ebe77d452c5f89db7920b573161d30f9a23695453",
+    "max_new_tokens": 16,
+    "memory_after_gate": {
+      "current_rss_mb": 616.0,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2891.7,
+      "os_available_mb": 5487.5,
+      "peak_rss_mb": 616.0
+    },
+    "memory_after_load": {
+      "current_rss_mb": 88.4,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2856.5,
+      "os_available_mb": 3749.7,
+      "peak_rss_mb": 399.4
+    },
+    "memory_after_pilot": {
+      "current_rss_mb": 618.0,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2861.7,
+      "os_available_mb": 5304.5,
+      "peak_rss_mb": 624.5
+    },
+    "memory_before_load": {
+      "current_rss_mb": 205.6,
+      "device": "mps",
+      "mps_current_allocated_mb": 0.0,
+      "mps_driver_allocated_mb": 0.5,
+      "os_available_mb": 8074.4,
+      "peak_rss_mb": 205.6
+    },
+    "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "model_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "n_scenes": 24,
+    "preprocess": "float32_shared",
+    "remaining_scenes_seconds": 401.795,
+    "scene_seconds": {
+      "dev-attribute-00-a": 23.325,
+      "dev-attribute-00-b": 13.945,
+      "dev-attribute-01-a": 13.966,
+      "dev-attribute-01-b": 13.957,
+      "dev-attribute-02-a": 14.366,
+      "dev-attribute-02-b": 14.383,
+      "dev-attribute-03-a": 14.333,
+      "dev-attribute-03-b": 14.473,
+      "dev-counting-00-a": 17.132,
+      "dev-counting-00-b": 16.092,
+      "dev-counting-01-a": 17.347,
+      "dev-counting-01-b": 18.207,
+      "dev-counting-02-a": 18.957,
+      "dev-counting-02-b": 19.256,
+      "dev-counting-03-a": 21.709,
+      "dev-counting-03-b": 19.291,
+      "dev-spatial-00-a": 19.002,
+      "dev-spatial-00-b": 18.714,
+      "dev-spatial-01-a": 18.872,
+      "dev-spatial-01-b": 18.824,
+      "dev-spatial-02-a": 19.539,
+      "dev-spatial-02-b": 19.952,
+      "dev-spatial-03-a": 19.98,
+      "dev-spatial-03-b": 19.496
+    },
+    "verification_command": "PYTHONPATH=src/scene_gen:src/vlm_iface:src/analysis:src/pilot python -m pilot.verify"
+  }
+}

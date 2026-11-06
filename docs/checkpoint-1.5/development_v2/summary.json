@@ -1,0 +1,735 @@
+{
+  "agreement": {
+    "class_argmin_matches_official_on_valid_rows": {
+      "denominator": 234,
+      "numerator": 230,
+      "value": 0.9829059829059829
+    },
+    "class_disagreement_rows": 4,
+    "label": "DEVELOPMENT ONLY",
+    "n_rows": 288,
+    "n_valid_rows": 234,
+    "note": "Official versus generated answer is the strict parse of the stored string. A row reaches this summary only when that parse matches. Class-loss agreement is the argmin against that official label, on valid rows. Invalid rows are excluded from the class-loss rate, matching the Checkpoint 1 disagreement rule.",
+    "official_parse_matches_generation": {
+      "denominator": 288,
+      "numerator": 288,
+      "value": 1.0
+    },
+    "official_score": "strict parse of raw_output",
+    "word_argmin_matches_official_on_valid_rows": {
+      "denominator": 234,
+      "numerator": 179,
+      "value": 0.7649572649572649
+    },
+    "word_disagreement_rows": 55
+  },
+  "attacks_run": false,
+  "clean_by_context": {
+    "answer_revealing": {
+      "accuracy": {
+        "denominator": 72,
+        "numerator": 45,
+        "value": 0.625
+      },
+      "invalid_rate": {
+        "denominator": 72,
+        "numerator": 11,
+        "value": 0.1527777777777778
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 45,
+      "n_invalid": 11,
+      "n_rows": 72,
+      "n_valid_wrong": 16,
+      "valid_wrong_rate": {
+        "denominator": 72,
+        "numerator": 16,
+        "value": 0.2222222222222222
+      }
+    },
+    "contradictory": {
+      "accuracy": {
+        "denominator": 72,
+        "numerator": 17,
+        "value": 0.2361111111111111
+      },
+      "invalid_rate": {
+        "denominator": 72,
+        "numerator": 14,
+        "value": 0.19444444444444445
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 17,
+      "n_invalid": 14,
+      "n_rows": 72,
+      "n_valid_wrong": 41,
+      "valid_wrong_rate": {
+        "denominator": 72,
+        "numerator": 41,
+        "value": 0.5694444444444444
+      }
+    },
+    "helpful_nonrevealing": {
+      "accuracy": {
+        "denominator": 72,
+        "numerator": 22,
+        "value": 0.3055555555555556
+      },
+      "invalid_rate": {
+        "denominator": 72,
+        "numerator": 22,
+        "value": 0.3055555555555556
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 22,
+      "n_invalid": 22,
+      "n_rows": 72,
+      "n_valid_wrong": 28,
+      "valid_wrong_rate": {
+        "denominator": 72,
+        "numerator": 28,
+        "value": 0.3888888888888889
+      }
+    },
+    "neutral": {
+      "accuracy": {
+        "denominator": 72,
+        "numerator": 26,
+        "value": 0.3611111111111111
+      },
+      "invalid_rate": {
+        "denominator": 72,
+        "numerator": 7,
+        "value": 0.09722222222222222
+      },
+      "label": "DEVELOPMENT ONLY",
+      "n_correct": 26,
+      "n_invalid": 7,
+      "n_rows": 72,
+      "n_valid_wrong": 39,
+      "valid_wrong_rate": {
+        "denominator": 72,
+        "numerator": 39,
+        "value": 0.5416666666666666
+      }
+    }
+  },
+  "clean_by_family_context": {
+    "attribute": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 20,
+          "value": 0.8333333333333334
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 2,
+          "value": 0.08333333333333333
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 20,
+        "n_invalid": 2,
+        "n_rows": 24,
+        "n_valid_wrong": 2,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 2,
+          "value": 0.08333333333333333
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 10,
+          "value": 0.4166666666666667
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 6,
+          "value": 0.25
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 10,
+        "n_invalid": 6,
+        "n_rows": 24,
+        "n_valid_wrong": 8,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 8,
+          "value": 0.3333333333333333
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 22,
+          "value": 0.9166666666666666
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 0,
+        "n_invalid": 22,
+        "n_rows": 24,
+        "n_valid_wrong": 2,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 2,
+          "value": 0.08333333333333333
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 10,
+          "value": 0.4166666666666667
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 5,
+          "value": 0.20833333333333334
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 10,
+        "n_invalid": 5,
+        "n_rows": 24,
+        "n_valid_wrong": 9,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 9,
+          "value": 0.375
+        }
+      }
+    },
+    "counting": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 23,
+          "value": 0.9583333333333334
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 23,
+        "n_invalid": 0,
+        "n_rows": 24,
+        "n_valid_wrong": 1,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 1,
+          "value": 0.041666666666666664
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 0,
+        "n_invalid": 0,
+        "n_rows": 24,
+        "n_valid_wrong": 24,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 24,
+          "value": 1.0
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 10,
+          "value": 0.4166666666666667
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 10,
+        "n_invalid": 0,
+        "n_rows": 24,
+        "n_valid_wrong": 14,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 14,
+          "value": 0.5833333333333334
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 10,
+          "value": 0.4166666666666667
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 2,
+          "value": 0.08333333333333333
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 10,
+        "n_invalid": 2,
+        "n_rows": 24,
+        "n_valid_wrong": 12,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 12,
+          "value": 0.5
+        }
+      }
+    },
+    "spatial": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 2,
+          "value": 0.08333333333333333
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 9,
+          "value": 0.375
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 2,
+        "n_invalid": 9,
+        "n_rows": 24,
+        "n_valid_wrong": 13,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 13,
+          "value": 0.5416666666666666
+        }
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 7,
+          "value": 0.2916666666666667
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 8,
+          "value": 0.3333333333333333
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 7,
+        "n_invalid": 8,
+        "n_rows": 24,
+        "n_valid_wrong": 9,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 9,
+          "value": 0.375
+        }
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 12,
+          "value": 0.5
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 12,
+        "n_invalid": 0,
+        "n_rows": 24,
+        "n_valid_wrong": 12,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 12,
+          "value": 0.5
+        }
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 24,
+          "numerator": 6,
+          "value": 0.25
+        },
+        "invalid_rate": {
+          "denominator": 24,
+          "numerator": 0,
+          "value": 0.0
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_correct": 6,
+        "n_invalid": 0,
+        "n_rows": 24,
+        "n_valid_wrong": 18,
+        "valid_wrong_rate": {
+          "denominator": 24,
+          "numerator": 18,
+          "value": 0.75
+        }
+      }
+    }
+  },
+  "counterfactual_pairs": {
+    "by_context": {
+      "answer_revealing": {
+        "both_valid": {
+          "denominator": 36,
+          "numerator": 29,
+          "value": 0.8055555555555556
+        },
+        "correct_on_both_arms": {
+          "denominator": 36,
+          "numerator": 19,
+          "value": 0.5277777777777778
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 36,
+        "parsed_answer_changed": {
+          "denominator": 29,
+          "numerator": 23,
+          "value": 0.7931034482758621
+        },
+        "parsed_answer_unchanged": {
+          "denominator": 29,
+          "numerator": 6,
+          "value": 0.20689655172413793
+        },
+        "true_answers_differ": {
+          "denominator": 36,
+          "numerator": 36,
+          "value": 1.0
+        }
+      },
+      "contradictory": {
+        "both_valid": {
+          "denominator": 36,
+          "numerator": 27,
+          "value": 0.75
+        },
+        "correct_on_both_arms": {
+          "denominator": 36,
+          "numerator": 4,
+          "value": 0.1111111111111111
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 36,
+        "parsed_answer_changed": {
+          "denominator": 27,
+          "numerator": 6,
+          "value": 0.2222222222222222
+        },
+        "parsed_answer_unchanged": {
+          "denominator": 27,
+          "numerator": 21,
+          "value": 0.7777777777777778
+        },
+        "true_answers_differ": {
+          "denominator": 36,
+          "numerator": 36,
+          "value": 1.0
+        }
+      },
+      "helpful_nonrevealing": {
+        "both_valid": {
+          "denominator": 36,
+          "numerator": 25,
+          "value": 0.6944444444444444
+        },
+        "correct_on_both_arms": {
+          "denominator": 36,
+          "numerator": 4,
+          "value": 0.1111111111111111
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 36,
+        "parsed_answer_changed": {
+          "denominator": 25,
+          "numerator": 10,
+          "value": 0.4
+        },
+        "parsed_answer_unchanged": {
+          "denominator": 25,
+          "numerator": 15,
+          "value": 0.6
+        },
+        "true_answers_differ": {
+          "denominator": 36,
+          "numerator": 36,
+          "value": 1.0
+        }
+      },
+      "neutral": {
+        "both_valid": {
+          "denominator": 36,
+          "numerator": 30,
+          "value": 0.8333333333333334
+        },
+        "correct_on_both_arms": {
+          "denominator": 36,
+          "numerator": 4,
+          "value": 0.1111111111111111
+        },
+        "label": "DEVELOPMENT ONLY",
+        "n_pairs": 36,
+        "parsed_answer_changed": {
+          "denominator": 30,
+          "numerator": 13,
+          "value": 0.43333333333333335
+        },
+        "parsed_answer_unchanged": {
+          "denominator": 30,
+          "numerator": 17,
+          "value": 0.5666666666666667
+        },
+        "true_answers_differ": {
+          "denominator": 36,
+          "numerator": 36,
+          "value": 1.0
+        }
+      }
+    },
+    "label": "DEVELOPMENT ONLY"
+  },
+  "differentiated_gradient": "canonical_word",
+  "eligible": {
+    "algebraic_minimum_groups": 5,
+    "coverage_description_groups": 24,
+    "definition": "An eligible group has at least one scene that is strict-correct under both neutral and helpful_nonrevealing, whose canonical-word image gradients on those contexts are finite with L1 norm greater than zero, whose ambiguity flags are empty, whose primary contexts are marked reveals_answer false, and whose primary context strings are identical across the two scenes in the group. The count is not a fitted coefficient.",
+    "eligible_group_ids": null,
+    "eligible_scene_ids": null,
+    "full_gradient_pass": false,
+    "full_gradient_pass_reason": "available memory after scoring was below the 6 GiB guard, so the full gradient pass was not started",
+    "group_ids_clean_both_primary": [
+      "cf2-counting-02",
+      "cf2-counting-04",
+      "cf2-counting-05",
+      "cf2-counting-06",
+      "cf2-counting-08",
+      "cf2-counting-09",
+      "cf2-spatial-00",
+      "cf2-spatial-03",
+      "cf2-spatial-05",
+      "cf2-spatial-06",
+      "cf2-spatial-11"
+    ],
+    "label": "DEVELOPMENT ONLY",
+    "meets_algebraic_minimum": null,
+    "meets_coverage_description": null,
+    "n_groups_clean_both_primary": 11,
+    "n_groups_eligible": null,
+    "n_scenes_clean_both_primary": 13,
+    "n_scenes_eligible": null,
+    "scene_ids_clean_both_primary": [
+      "dev2-counting-02-a",
+      "dev2-counting-02-b",
+      "dev2-counting-04-b",
+      "dev2-counting-05-a",
+      "dev2-counting-06-a",
+      "dev2-counting-08-a",
+      "dev2-counting-08-b",
+      "dev2-counting-09-a",
+      "dev2-spatial-00-b",
+      "dev2-spatial-03-b",
+      "dev2-spatial-05-a",
+      "dev2-spatial-06-a",
+      "dev2-spatial-11-b"
+    ]
+  },
+  "family_recommendations": {
+    "by_family": {
+      "attribute": {
+        "meets_design_target": false,
+        "primary_accuracy": {
+          "helpful_nonrevealing": {
+            "denominator": 24,
+            "numerator": 0,
+            "value": 0.0
+          },
+          "neutral": {
+            "denominator": 24,
+            "numerator": 10,
+            "value": 0.4166666666666667
+          }
+        },
+        "recommendation": "drop_or_replace",
+        "unsuitable": true
+      },
+      "counting": {
+        "meets_design_target": false,
+        "primary_accuracy": {
+          "helpful_nonrevealing": {
+            "denominator": 24,
+            "numerator": 10,
+            "value": 0.4166666666666667
+          },
+          "neutral": {
+            "denominator": 24,
+            "numerator": 10,
+            "value": 0.4166666666666667
+          }
+        },
+        "recommendation": "drop_or_replace",
+        "unsuitable": true
+      },
+      "spatial": {
+        "meets_design_target": false,
+        "primary_accuracy": {
+          "helpful_nonrevealing": {
+            "denominator": 24,
+            "numerator": 12,
+            "value": 0.5
+          },
+          "neutral": {
+            "denominator": 24,
+            "numerator": 6,
+            "value": 0.25
+          }
+        },
+        "recommendation": "drop_or_replace",
+        "unsuitable": true
+      }
+    },
+    "deletes_rows": false,
+    "design_band": [
+      0.6,
+      0.8
+    ],
+    "label": "DEVELOPMENT ONLY",
+    "note": "The band is the locked reading of about 70 percent. A family below one half in either primary context is recommended for drop or replace. Its rows stay in the table.",
+    "unsuitable_below": 0.5
+  },
+  "format_line_used": false,
+  "gate_passed": true,
+  "gate_scene_id": "dev2-attribute-00-a",
+  "gradients": {
+    "by_context": {
+      "helpful_nonrevealing": {
+        "loss": "canonical_word",
+        "n_finite": 1,
+        "n_nonpositive_l1": 0,
+        "n_rows": 1
+      },
+      "neutral": {
+        "loss": "canonical_word",
+        "n_finite": 1,
+        "n_nonpositive_l1": 0,
+        "n_rows": 1
+      }
+    },
+    "full_gradient_pass": false,
+    "label": "DEVELOPMENT ONLY",
+    "loss": "canonical_word",
+    "n_alignment_defined": 2,
+    "n_alignment_rows": 2,
+    "regressed": false
+  },
+  "h_star_fitted": false,
+  "helpful_text_role": "task guidance, not additional factual scene evidence",
+  "label": "DEVELOPMENT ONLY",
+  "n_groups": 36,
+  "n_predictions": 288,
+  "n_scenes": 72,
+  "note": "DEVELOPMENT ONLY. Strict D4 is the official score. The class-loss argmin is stored beside it and is not the official score. Image gradients are the canonical-word loss. No attack and no H* fit.",
+  "official_parser": "checkpoint1_strict_d4",
+  "qwen_loaded": false,
+  "run_meta": {
+    "attacks_run": false,
+    "attn_implementation": "eager",
+    "device": "mps",
+    "do_image_splitting": false,
+    "environment": {
+      "cpu_brand": "Apple M4",
+      "machine": "arm64",
+      "memory_bytes": 25769803776,
+      "numpy": "2.5.4",
+      "pillow": "13.0.0",
+      "platform": "macOS-26.6-arm64-arm-64bit",
+      "python": "3.12.14",
+      "system": "Darwin",
+      "torch": "2.15.0",
+      "transformers": "5.22.1"
+    },
+    "format_line_used": false,
+    "full_gradient_pass": false,
+    "full_gradient_pass_reason": "available memory after scoring was below the 6 GiB guard, so the full gradient pass was not started",
+    "gate_scene_id": "dev2-attribute-00-a",
+    "gate_seconds": 18.231,
+    "git_head_at_run": "a6f3fdc91b263787390c42da0f709c8303af75a9",
+    "gradient_loss": "canonical_word",
+    "gradient_seconds": null,
+    "h_star_fitted": false,
+    "helpful_text_role": "task guidance, not additional factual scene evidence",
+    "label": "DEVELOPMENT ONLY",
+    "leading_space": true,
+    "load_seconds": 4.956,
+    "manifest_sha256": "b62ab1171a0aec7b2f264615a2961b6d384d00a1a4b17977d619ea27481154e1",
+    "max_new_tokens": 16,
+    "measurement_kind": "checkpoint1_5_v2_validation",
+    "memory_after_gate": {
+      "current_rss_mb": 625.0,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2891.7,
+      "os_available_mb": 6054.7,
+      "peak_rss_mb": 625.0
+    },
+    "memory_after_gradients": {
+      "current_rss_mb": 643.3,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2917.8,
+      "os_available_mb": 5583.9,
+      "peak_rss_mb": 643.3
+    },
+    "memory_after_load": {
+      "current_rss_mb": 210.1,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2856.5,
+      "os_available_mb": 3492.1,
+      "peak_rss_mb": 400.0
+    },
+    "memory_after_scoring": {
+      "current_rss_mb": 643.3,
+      "device": "mps",
+      "mps_current_allocated_mb": 1965.6,
+      "mps_driver_allocated_mb": 2917.8,
+      "os_available_mb": 5583.9,
+      "peak_rss_mb": 643.3
+    },
+    "memory_before_load": {
+      "current_rss_mb": 207.1,
+      "device": "mps",
+      "mps_current_allocated_mb": 0.0,
+      "mps_driver_allocated_mb": 0.5,
+      "os_available_mb": 6911.5,
+      "peak_rss_mb": 207.1
+    },
+    "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "model_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "n_scenes": 72,
+    "preprocess": "float32_shared",
+    "protocol_sha256": "51dfbf696db0327e29cf981206567bc3a10b618adfbe8da97579978764206058",
+    "qwen_loaded": false,
+    "score_seconds": 289.931,
+    "scoring_stable": false,
+    "verification_command": "PYTHONPATH=src/validation:src/scoring:src/vlm_iface:src/pilot:src/analysis:src/scene_v2 python -m validation.verify"
+  }
+}

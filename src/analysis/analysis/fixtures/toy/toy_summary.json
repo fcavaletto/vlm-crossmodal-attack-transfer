@@ -1,0 +1,1052 @@
+{
+  "alignment": {
+    "analysis_role": "proposed_secondary",
+    "by_pair": [
+      {
+        "analysis_role": "proposed_secondary",
+        "bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.5,
+          "ci_low": 0.5,
+          "estimate": 0.5,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "mean": 0.5,
+        "missing_rule": "Undefined alignments are excluded from the mean and counted. They are not imputed as zero.",
+        "n_defined": 6,
+        "n_scenes": 6,
+        "n_undefined": 0,
+        "positive_control_only": false,
+        "research_question": "RQ2",
+        "source_context": "neutral",
+        "target_context": "contradictory",
+        "undefined_reason": null
+      },
+      {
+        "analysis_role": "proposed_secondary",
+        "bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.64,
+          "ci_low": -0.5599999999999999,
+          "estimate": 0.039999999999999994,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 5,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "mean": 0.039999999999999994,
+        "missing_rule": "Undefined alignments are excluded from the mean and counted. They are not imputed as zero.",
+        "n_defined": 5,
+        "n_scenes": 6,
+        "n_undefined": 1,
+        "positive_control_only": false,
+        "research_question": "RQ2",
+        "source_context": "neutral",
+        "target_context": "helpful_nonrevealing",
+        "undefined_reason": null
+      }
+    ]
+  },
+  "alignment_transfer_association": {
+    "analysis_role": "proposed_secondary",
+    "epsilon": 0.01,
+    "epsilon_key": "0.01000000",
+    "join": "Scenes correct before the attack, with a defined alignment for the same source and target. Success is 1 only for a valid incorrect output.",
+    "locked": false,
+    "method": "pgd",
+    "n_scenes": 4,
+    "pairs": [
+      {
+        "alignment_a": 0.2,
+        "scene_id": "toy-01",
+        "transfer_success": 1
+      },
+      {
+        "alignment_a": 1.0,
+        "scene_id": "toy-02",
+        "transfer_success": 0
+      },
+      {
+        "alignment_a": 0.0,
+        "scene_id": "toy-05",
+        "transfer_success": 1
+      },
+      {
+        "alignment_a": 0.0,
+        "scene_id": "toy-06",
+        "transfer_success": 0
+      }
+    ],
+    "pearson_r": {
+      "n": 4,
+      "undefined_reason": null,
+      "value": -0.48507125007266594
+    },
+    "reading": "Fabricated arithmetic check on hand-written rows. Not evidence about vision-language models.",
+    "research_question": "RQ2",
+    "source_context": "neutral",
+    "step_budget": 1,
+    "target_context": "helpful_nonrevealing"
+  },
+  "attack_cells": [
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.8333333333333334,
+        "clean_error_rate": 0.16666666666666666,
+        "floor_warning": null,
+        "mean": 0.6666666666666666,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.3333333333333333,
+        "estimate": 0.6666666666666666,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.4,
+        "estimate": 0.8,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 5,
+          "numerator": 4,
+          "undefined_reason": null,
+          "value": 0.8
+        },
+        "baseline_correct_n": 5,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 0,
+        "n_scenes": 6,
+        "n_success": 4
+      },
+      "cell_id": "fgsm|0.02000000|1|neutral|neutral",
+      "cross_context": false,
+      "epsilon": 0.02,
+      "epsilon_key": "0.02000000",
+      "method": "fgsm",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ1_RQ3",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "neutral"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 1.0,
+        "clean_error_rate": 1.0,
+        "floor_warning": "Clean error is at least half the scenes in this cell. Additional error cannot be +1 on scenes that are already wrong, so a low additional error is not by itself evidence that an attack did nothing.",
+        "mean": 0.0,
+        "n_scenes": 1,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.0,
+        "ci_low": 0.0,
+        "estimate": 0.0,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 1,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": null,
+        "ci_low": null,
+        "estimate": null,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 1,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": "no scene was in the denominator",
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 0,
+          "numerator": 0,
+          "undefined_reason": "no scene was correct before the attack",
+          "value": null
+        },
+        "baseline_correct_n": 0,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 0,
+        "n_scenes": 1,
+        "n_success": 0
+      },
+      "cell_id": "noise|0.02000000|1|neutral|neutral",
+      "cross_context": false,
+      "epsilon": 0.02,
+      "epsilon_key": "0.02000000",
+      "method": "noise",
+      "n_scenes": 1,
+      "positive_control_only": false,
+      "research_question": "RQ1_RQ3",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "neutral"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.6666666666666666,
+        "clean_error_rate": 0.6666666666666666,
+        "floor_warning": "Clean error is at least half the scenes in this cell. Additional error cannot be +1 on scenes that are already wrong, so a low additional error is not by itself evidence that an attack did nothing.",
+        "mean": 0.0,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.5,
+        "ci_low": -0.5,
+        "estimate": 0.0,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.0,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 175,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 2,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.5
+        },
+        "baseline_correct_n": 2,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 0,
+        "n_scenes": 6,
+        "n_success": 1
+      },
+      "cell_id": "pgd|0.01000000|1|helpful_nonrevealing|contradictory",
+      "cross_context": true,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ2_RQ3",
+      "source_context": "helpful_nonrevealing",
+      "step_budget": 1,
+      "target_context": "contradictory"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 1.0,
+        "clean_error_rate": 0.3333333333333333,
+        "floor_warning": null,
+        "mean": 0.6666666666666666,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.3333333333333333,
+        "estimate": 0.6666666666666666,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 1.0,
+        "estimate": 1.0,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 1,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 4,
+          "numerator": 4,
+          "undefined_reason": null,
+          "value": 1.0
+        },
+        "baseline_correct_n": 4,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 0,
+        "n_scenes": 6,
+        "n_success": 4
+      },
+      "cell_id": "pgd|0.01000000|1|helpful_nonrevealing|helpful_nonrevealing",
+      "cross_context": false,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ1_RQ3",
+      "source_context": "helpful_nonrevealing",
+      "step_budget": 1,
+      "target_context": "helpful_nonrevealing"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.6666666666666666,
+        "clean_error_rate": 0.16666666666666666,
+        "floor_warning": null,
+        "mean": 0.5,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.8333333333333334,
+        "ci_low": 0.16666666666666666,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "positive_control",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.8333333333333334,
+        "ci_low": 0.0,
+        "estimate": 0.4,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 5,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.4
+        },
+        "baseline_correct_n": 5,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 1,
+        "n_scenes": 6,
+        "n_success": 2
+      },
+      "cell_id": "pgd|0.01000000|1|neutral|answer_revealing",
+      "cross_context": true,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": true,
+      "research_question": "positive_control",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "answer_revealing"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.6666666666666666,
+        "clean_error_rate": 0.6666666666666666,
+        "floor_warning": "Clean error is at least half the scenes in this cell. Additional error cannot be +1 on scenes that are already wrong, so a low additional error is not by itself evidence that an attack did nothing.",
+        "mean": 0.0,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.5,
+        "ci_low": -0.5,
+        "estimate": 0.0,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.0,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 175,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 2,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.5
+        },
+        "baseline_correct_n": 2,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 0,
+        "n_scenes": 6,
+        "n_success": 1
+      },
+      "cell_id": "pgd|0.01000000|1|neutral|contradictory",
+      "cross_context": true,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ2_RQ3",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "contradictory"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.8333333333333334,
+        "clean_error_rate": 0.3333333333333333,
+        "floor_warning": null,
+        "mean": 0.5,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.8333333333333334,
+        "ci_low": 0.16666666666666666,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.0,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 1,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 4,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.5
+        },
+        "baseline_correct_n": 4,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 1,
+        "n_scenes": 6,
+        "n_success": 2
+      },
+      "cell_id": "pgd|0.01000000|1|neutral|helpful_nonrevealing",
+      "cross_context": true,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ2_RQ3",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "helpful_nonrevealing"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.8333333333333334,
+        "clean_error_rate": 0.16666666666666666,
+        "floor_warning": null,
+        "mean": 0.6666666666666666,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.3333333333333333,
+        "estimate": 0.6666666666666666,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 1.0,
+        "ci_low": 0.16666666666666666,
+        "estimate": 0.6,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 5,
+          "numerator": 3,
+          "undefined_reason": null,
+          "value": 0.6
+        },
+        "baseline_correct_n": 5,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 1,
+        "n_scenes": 6,
+        "n_success": 3
+      },
+      "cell_id": "pgd|0.01000000|1|neutral|neutral",
+      "cross_context": false,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ1_RQ3",
+      "source_context": "neutral",
+      "step_budget": 1,
+      "target_context": "neutral"
+    },
+    {
+      "additional_error": {
+        "attacked_error_rate": 0.6666666666666666,
+        "clean_error_rate": 0.16666666666666666,
+        "floor_warning": null,
+        "mean": 0.5,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "additional_error_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.8333333333333334,
+        "ci_low": 0.16666666666666666,
+        "estimate": 0.5,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "analysis_role": "proposed_secondary",
+      "attack_success_bootstrap": {
+        "alpha": 0.05,
+        "ci_high": 0.8333333333333334,
+        "ci_low": 0.0,
+        "estimate": 0.4,
+        "method": "scene_percentile_bootstrap",
+        "n_boot": 2000,
+        "n_scenes": 6,
+        "n_undefined_replicates": 0,
+        "quantile_method": "linear",
+        "seed": 20261106,
+        "undefined_reason": null,
+        "unit": "scene_id"
+      },
+      "attack_success_rate": {
+        "attack_success_rate": {
+          "denominator": 5,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.4
+        },
+        "baseline_correct_n": 5,
+        "definition": "Among scenes correct before the attack, the fraction with a valid and incorrect output after. Invalid outputs are not successes and remain in the denominator.",
+        "n_invalid_after_among_baseline": 1,
+        "n_scenes": 6,
+        "n_success": 2
+      },
+      "cell_id": "pgd_multi|0.01000000|1|multi|neutral",
+      "cross_context": true,
+      "epsilon": 0.01,
+      "epsilon_key": "0.01000000",
+      "method": "pgd_multi",
+      "n_scenes": 6,
+      "positive_control_only": false,
+      "research_question": "RQ3",
+      "source_context": "multi",
+      "step_budget": 1,
+      "target_context": "neutral"
+    }
+  ],
+  "bootstrap_settings": {
+    "alpha": 0.05,
+    "interval": "equal_tailed_percentile",
+    "n_boot": 2000,
+    "note": "This seed and replicate count make the toy interval rebuildable. They are not the confirmatory seed.",
+    "quantile_method": "linear",
+    "scope": "toy_verification_only",
+    "seed": 20261106,
+    "unit": "scene_id"
+  },
+  "clean": {
+    "analysis_role": "proposed_secondary",
+    "by_context": {
+      "answer_revealing": {
+        "accuracy": {
+          "denominator": 6,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.8333333333333334
+        },
+        "accuracy_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 1.0,
+          "ci_low": 0.5,
+          "estimate": 0.8333333333333334,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "analysis_role": "positive_control",
+        "clean_error_rate": 0.16666666666666663,
+        "context": "answer_revealing",
+        "floor_warning": null,
+        "invalid_output_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.5,
+          "ci_low": 0.0,
+          "estimate": 0.16666666666666666,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "invalid_output_rate": {
+          "denominator": 6,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.16666666666666666
+        },
+        "n_correct": 5,
+        "n_invalid": 1,
+        "n_scenes": 6,
+        "positive_control_only": true,
+        "scoring": "strict_invalid_counts_as_incorrect"
+      },
+      "contradictory": {
+        "accuracy": {
+          "denominator": 6,
+          "numerator": 2,
+          "undefined_reason": null,
+          "value": 0.3333333333333333
+        },
+        "accuracy_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.6666666666666666,
+          "ci_low": 0.0,
+          "estimate": 0.3333333333333333,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "analysis_role": "proposed_secondary",
+        "clean_error_rate": 0.6666666666666667,
+        "context": "contradictory",
+        "floor_warning": "Clean error is at least half the scenes in this cell. Additional error cannot be +1 on scenes that are already wrong, so a low additional error is not by itself evidence that an attack did nothing.",
+        "invalid_output_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.5,
+          "ci_low": 0.0,
+          "estimate": 0.16666666666666666,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "invalid_output_rate": {
+          "denominator": 6,
+          "numerator": 1,
+          "undefined_reason": null,
+          "value": 0.16666666666666666
+        },
+        "n_correct": 2,
+        "n_invalid": 1,
+        "n_scenes": 6,
+        "positive_control_only": false,
+        "scoring": "strict_invalid_counts_as_incorrect"
+      },
+      "helpful_nonrevealing": {
+        "accuracy": {
+          "denominator": 6,
+          "numerator": 4,
+          "undefined_reason": null,
+          "value": 0.6666666666666666
+        },
+        "accuracy_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 1.0,
+          "ci_low": 0.3333333333333333,
+          "estimate": 0.6666666666666666,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "analysis_role": "proposed_secondary",
+        "clean_error_rate": 0.33333333333333337,
+        "context": "helpful_nonrevealing",
+        "floor_warning": null,
+        "invalid_output_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "invalid_output_rate": {
+          "denominator": 6,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "n_correct": 4,
+        "n_invalid": 0,
+        "n_scenes": 6,
+        "positive_control_only": false,
+        "scoring": "strict_invalid_counts_as_incorrect"
+      },
+      "neutral": {
+        "accuracy": {
+          "denominator": 6,
+          "numerator": 5,
+          "undefined_reason": null,
+          "value": 0.8333333333333334
+        },
+        "accuracy_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 1.0,
+          "ci_low": 0.5,
+          "estimate": 0.8333333333333334,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "analysis_role": "proposed_secondary",
+        "clean_error_rate": 0.16666666666666663,
+        "context": "neutral",
+        "floor_warning": null,
+        "invalid_output_bootstrap": {
+          "alpha": 0.05,
+          "ci_high": 0.0,
+          "ci_low": 0.0,
+          "estimate": 0.0,
+          "method": "scene_percentile_bootstrap",
+          "n_boot": 2000,
+          "n_scenes": 6,
+          "n_undefined_replicates": 0,
+          "quantile_method": "linear",
+          "seed": 20261106,
+          "undefined_reason": null,
+          "unit": "scene_id"
+        },
+        "invalid_output_rate": {
+          "denominator": 6,
+          "numerator": 0,
+          "undefined_reason": null,
+          "value": 0.0
+        },
+        "n_correct": 5,
+        "n_invalid": 0,
+        "n_scenes": 6,
+        "positive_control_only": false,
+        "scoring": "strict_invalid_counts_as_incorrect"
+      }
+    }
+  },
+  "conditional_transfer": {
+    "analysis_role": "exploratory",
+    "definition": "Among same-context successes that were correct on the target before the attack, the fraction with a valid incorrect target output after. Invalid outputs are not successes. Scenes already incorrect on the target are excluded.",
+    "epsilon": 0.01,
+    "epsilon_key": "0.01000000",
+    "method": "pgd",
+    "n_eligible": 2,
+    "n_excluded_target_not_correct_before": 2,
+    "n_missing_target_row": 0,
+    "n_source_success": 4,
+    "n_target_success": 1,
+    "positive_control_only": false,
+    "rate": {
+      "denominator": 2,
+      "numerator": 1,
+      "undefined_reason": null,
+      "value": 0.5
+    },
+    "reading": "Fabricated arithmetic check on hand-written rows. Not evidence about vision-language models.",
+    "source_context": "helpful_nonrevealing",
+    "step_budget": 1,
+    "target_context": "contradictory"
+  },
+  "data_origin": "fabricated_toy_fixtures",
+  "fixture_sha256": {
+    "attacks.jsonl": "0b73e69ff43f1e025a0ab6362daa03c981c9c9cd74163893149d5ee6055e0d0a",
+    "gradient_summaries.jsonl": "91d195b7dc2c8376313c92663422a5351087d808452260739dd0d2a8166544bc",
+    "gradient_vectors.jsonl": "cbd1d9c05795ead71bfb4f4bbf5ea02ef23df3a9b018308db0338474f27f8fa4",
+    "losses.jsonl": "f3b496653fbe78e23a0ce794bb79856be87a67dd0d4a33e5e036de7171b7ab17",
+    "predictions.jsonl": "69f062cadc28062a675645b97073000ef09b305a80cfe53662562d850888779c"
+  },
+  "grouping": {
+    "bootstrap_unit": "scene_id",
+    "counterfactual_cluster": "not_applied",
+    "note": "Pass cluster_of to the bootstrap to resample counterfactual groups. These fixtures have no group ids, so the toy intervals do not.",
+    "point_estimate_unit": "scene_id"
+  },
+  "labels_are_proposals": true,
+  "losses": {
+    "analysis_role": "descriptive_not_an_endpoint",
+    "by_context": {
+      "answer_revealing": {
+        "mean_loss": 0.6,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "contradictory": {
+        "mean_loss": 0.7000000000000001,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "helpful_nonrevealing": {
+        "mean_loss": 0.5,
+        "n_scenes": 6,
+        "undefined_reason": null
+      },
+      "neutral": {
+        "mean_loss": 0.5,
+        "n_scenes": 6,
+        "undefined_reason": null
+      }
+    }
+  },
+  "n_attack_rows": 49,
+  "n_gradient_rows": 12,
+  "n_loss_rows": 24,
+  "n_prediction_rows": 24,
+  "n_scenes": 6,
+  "not_an_empirical_finding": true,
+  "precision_simulation": {
+    "analysis_role": "exploratory",
+    "command": "python -m analysis.simulation",
+    "included_in_this_file": false,
+    "reason": "The simulation draws a fabricated distribution. It is not rebuilt from the compact fixtures."
+  },
+  "primary_estimand_locked": false,
+  "proposed_primary_illustration": {
+    "analysis_role": "proposed_primary",
+    "bootstrap": {
+      "alpha": 0.05,
+      "ci_high": -0.3333333333333333,
+      "ci_low": -1.0,
+      "contrast": "mean(left - right) on scenes present in both maps",
+      "estimate": -0.6666666666666666,
+      "method": "scene_percentile_bootstrap",
+      "n_boot": 2000,
+      "n_only_left": 0,
+      "n_only_right": 0,
+      "n_scenes": 6,
+      "n_undefined_replicates": 0,
+      "quantile_method": "linear",
+      "seed": 20261106,
+      "undefined_reason": null,
+      "unit": "scene_id"
+    },
+    "epsilon": 0.01,
+    "epsilon_key": "0.01000000",
+    "estimand": "Mean over scenes of additional error under contradictory text minus additional error under neutral text, for one labeled attack cell.",
+    "left_target": "contradictory",
+    "locked": false,
+    "method": "pgd",
+    "positive_control_only": false,
+    "reading": "Fabricated arithmetic check on hand-written rows. Not evidence about vision-language models.",
+    "research_question": "RQ1",
+    "right_target": "neutral",
+    "scene_differences": [
+      {
+        "difference": 0.0,
+        "scene_id": "toy-01"
+      },
+      {
+        "difference": -1.0,
+        "scene_id": "toy-02"
+      },
+      {
+        "difference": 0.0,
+        "scene_id": "toy-03"
+      },
+      {
+        "difference": -1.0,
+        "scene_id": "toy-04"
+      },
+      {
+        "difference": -1.0,
+        "scene_id": "toy-05"
+      },
+      {
+        "difference": -1.0,
+        "scene_id": "toy-06"
+      }
+    ],
+    "source_context": "neutral",
+    "step_budget": 1
+  },
+  "role_catalog": {
+    "descriptive_not_an_endpoint": "Mean clean loss by context.",
+    "exploratory": "Conditional transfer given a same-context success. Representation interventions are exploratory and not implemented.",
+    "positive_control": "answer_revealing. Not evidence of visual robustness.",
+    "proposed_primary": "RQ1 paired difference in additional error. Illustration only; not locked.",
+    "proposed_secondary": "Clean accuracy, invalid-output rate, attack success, transfer cells, alignment, noise and FGSM controls."
+  },
+  "scene_ids": [
+    "toy-01",
+    "toy-02",
+    "toy-03",
+    "toy-04",
+    "toy-05",
+    "toy-06"
+  ],
+  "schema_version": "checkpoint0-toy-1",
+  "scoring": {
+    "additional_error": "Mean over scenes of (task error after minus task error before). Task error is 1 when the answer is not correct, so invalid output counts here.",
+    "answer_revealing": "Positive control only. Never evidence of visual robustness by itself.",
+    "attack_success_rate": "Valid incorrect outputs after the attack, divided by scenes correct before it. Invalid outputs are not successes and stay in the denominator. A cell with no clean-correct scene has a null rate.",
+    "clean_accuracy": "correct scenes divided by scenes in that context. Invalid output is not correct. A context with no scenes has a null rate.",
+    "correct_before": "Proposed meaning: clean correctness under the target context, the context in which the attacked image is scored.",
+    "cross_context_attack_transfer": "Attack success and additional error on a cell whose source context differs from its target context.",
+    "gradient_alignment": "A(s,t) = dot(g_t, sign(g_s)) / ||g_t||_1. Undefined when the L1 norm of g_t is zero.",
+    "invalid_output_rate": "invalid scenes divided by scenes in that context."
+  },
+  "verification_command": "python -m analysis.verify_toy",
+  "verification_idea": "Rebuild this file from the compact JSONL fixtures. Study 1 published numbers are not inputs."
+}

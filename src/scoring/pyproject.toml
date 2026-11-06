@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "answer-scoring"
+version = "0.1.0"
+description = "Checkpoint 1.5 answer scoring. Development scenes only. Does not run attacks."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["answer_scoring*"]

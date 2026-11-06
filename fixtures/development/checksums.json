@@ -1,0 +1,119 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "contact_sheet.png": {
+      "bytes": 8838,
+      "sha256": "5f50897767f677990c577a996853629372bbe3ae1501788e1c495f6222705e2c"
+    },
+    "images/dev-attribute-00-a.png": {
+      "bytes": 1905,
+      "sha256": "fa830317110c7cd79faef062d9585ca9da7fac44d36a3ccb313abbcabaea2ee6"
+    },
+    "images/dev-attribute-00-b.png": {
+      "bytes": 1907,
+      "sha256": "2b00737170ff5c4a84c07b071d6b14a42c222cf65acdd718be3e91e57d61207a"
+    },
+    "images/dev-attribute-01-a.png": {
+      "bytes": 2088,
+      "sha256": "9a46281e78f79b83cc96219b975885362d0eae0a865fbe3b926078bfba063d24"
+    },
+    "images/dev-attribute-01-b.png": {
+      "bytes": 2088,
+      "sha256": "22fc5b18102b115167281fe1de3561ee0890e7188779b6671206e6f2e5f30786"
+    },
+    "images/dev-attribute-02-a.png": {
+      "bytes": 2282,
+      "sha256": "4971aa4234b146e0ce431d1a2c87efeb506f7566a8c51a2d673c67b773b0cf70"
+    },
+    "images/dev-attribute-02-b.png": {
+      "bytes": 2281,
+      "sha256": "db8c4079742a56c4bb21ee6c65439ba84ff000e8673481208c475ad58d8dbb21"
+    },
+    "images/dev-attribute-03-a.png": {
+      "bytes": 2314,
+      "sha256": "5ae206f22ceb3f041a0dc0128838bedb00d8c3e9ac2519ab17cde138e2a130d9"
+    },
+    "images/dev-attribute-03-b.png": {
+      "bytes": 2312,
+      "sha256": "f399810a2ed4fd06032e6fe215d41a2f3f7b67f16b5313595e18c9fdaf6feb1c"
+    },
+    "images/dev-counting-00-a.png": {
+      "bytes": 3071,
+      "sha256": "4cb5c2d481000fd14741a008072473328a322f14f8a88e0ce5bef73521718fdb"
+    },
+    "images/dev-counting-00-b.png": {
+      "bytes": 3072,
+      "sha256": "4ee7ec7a7cb18685733e2af839e8cda4b881c0d17d9e491428ed7d3a58fbe157"
+    },
+    "images/dev-counting-01-a.png": {
+      "bytes": 3097,
+      "sha256": "e00b8eccfe2fd8a506c569ba38c78c5e42da3be819014a4a50011bad19e5084c"
+    },
+    "images/dev-counting-01-b.png": {
+      "bytes": 3104,
+      "sha256": "124b90bd6aa58b637d63c8c758fe2c69c3525c7e367f53dcac4e437c6891de26"
+    },
+    "images/dev-counting-02-a.png": {
+      "bytes": 2874,
+      "sha256": "ec4b8f647b70ee2c4fd6b0f0e7e48530773a527a4eb124aae8d2c137d0775bf8"
+    },
+    "images/dev-counting-02-b.png": {
+      "bytes": 2874,
+      "sha256": "220e129f310ecce0ca36e8cd02fccd4afb82ad23dafc5a09634c44b2ccbc43b9"
+    },
+    "images/dev-counting-03-a.png": {
+      "bytes": 2908,
+      "sha256": "5672301be132714d902f8ccf6f9e497afbeefbcdd34cf25d7ff97347014ace75"
+    },
+    "images/dev-counting-03-b.png": {
+      "bytes": 2920,
+      "sha256": "301284a3603c7362d327aed0da9daab5672d276636866a9bb9c60e1c7be63494"
+    },
+    "images/dev-spatial-00-a.png": {
+      "bytes": 2264,
+      "sha256": "51f80d4c049516aef80c9dd7af357a797eaa6738584a0dac3352dcf3f2a123d6"
+    },
+    "images/dev-spatial-00-b.png": {
+      "bytes": 2231,
+      "sha256": "be889a0a562e21f56d8b7aac3a18fc79f8090c90116af85777419fd9d927327d"
+    },
+    "images/dev-spatial-01-a.png": {
+      "bytes": 2104,
+      "sha256": "87c89d837afe97491e1ce5b69abe44c685bd454b8e8337f51c12b8b92d9af87f"
+    },
+    "images/dev-spatial-01-b.png": {
+      "bytes": 2113,
+      "sha256": "e2294f3f3494744996f56462729e918bd29d3938e287e48c4c834b03ad369b85"
+    },
+    "images/dev-spatial-02-a.png": {
+      "bytes": 2500,
+      "sha256": "96c92d4a22fc03be7eb3beb9d9a4cc27d1ee08177544ec75c253e5e41d4e53c3"
+    },
+    "images/dev-spatial-02-b.png": {
+      "bytes": 2444,
+      "sha256": "9b2a1e7ca3f6c33c254ab51fd13b72c22681d6d52662c1fee59ff61cf05a9afc"
+    },
+    "images/dev-spatial-03-a.png": {
+      "bytes": 2517,
+      "sha256": "037406eb9402f37e48b4a6c04570377e9ca9f581b83189907a7dbf61273d8818"
+    },
+    "images/dev-spatial-03-b.png": {
+      "bytes": 2522,
+      "sha256": "57e59e284434365937accd6248680a8c4bcebd9952194afabb08c9d66b036ae9"
+    },
+    "manifest.jsonl": {
+      "bytes": 36198,
+      "sha256": "3aea59c848aaafc76de6c70ebe77d452c5f89db7920b573161d30f9a23695453"
+    },
+    "metadata.json": {
+      "bytes": 1463,
+      "sha256": "b0dd66211a4d90a4ea3a18c5dce095638b15f65761cab820e38c537fe3b95b1a"
+    },
+    "scene_graph_hashes.json": {
+      "bytes": 2462,
+      "sha256": "ccaa28bbb0af2a8cb716198bfeb2db56154938978996ae1bc8b71e61b671cb5b"
+    }
+  },
+  "note": "Integrity of the committed files. A later machine may encode PNG bytes differently; compare pixels before replacing these files.",
+  "pillow": "11.3.0"
+}
