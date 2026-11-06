@@ -125,3 +125,11 @@ PYTHONPATH=src/study2_audit python3 -m study2_audit
 ```
 
 Exit 0 from the module means the pinned Qwen hashes match, the reproducibility checks match, H* was not fit, and the decision is no-go. The precision block in that JSON is the fabricated grid above.
+
+## Git
+
+- Branch: `checkpoint-1.7/study-audit`
+- Parent commit: `004783b5604c34aa066befbcd5356bfd7bd6e7b2`
+- Implementation commit: `336fe962f0bbb213703aa527a5c9eaf27e6327ad`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/13
+- Head SHA: the commit that records this pull request URL. `git rev-parse HEAD` on the branch prints it.

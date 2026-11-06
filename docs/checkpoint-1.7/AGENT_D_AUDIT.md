@@ -135,5 +135,6 @@ The module prints one JSON document to stdout. Exit 0 means the pinned hashes ma
 
 - Branch: `checkpoint-1.7/study-audit`
 - Parent commit: `004783b5604c34aa066befbcd5356bfd7bd6e7b2`
-- Head SHA: recorded in the commit that adds the pull request URL
-- Pull request: recorded in the commit that adds the pull request URL
+- Implementation commit: `336fe962f0bbb213703aa527a5c9eaf27e6327ad`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/13
+- Head SHA: the commit that records this pull request URL. `git rev-parse HEAD` on the branch prints it.
