@@ -185,6 +185,7 @@ Exit code 1. Those directories are not modified.
 
 - Branch: `checkpoint-1.7/scene-v4`
 - Start: `004783b5604c34aa066befbcd5356bfd7bd6e7b2`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/15
 - The branch is not merged. The pull request targets `main` and includes earlier checkpoint commits because the branch does not start at `main`.
-- Generator, fixtures, tests, and the scientific text of this report: recorded in the follow-up commit on this file.
-- Pull request: recorded in the follow-up commit on this file.
+- Generator, fixtures, tests, and the scientific text of this report: `44aafcffc0f7d3ad8d65abe630ef35f7974aee7b`
+- The child of that commit records this hash and the pull request URL. It does not change the generator, the fixtures, or the tests.
