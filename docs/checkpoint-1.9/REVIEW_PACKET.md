@@ -2,7 +2,7 @@
 
 DEVELOPMENT ONLY. Research lead: Federico Cavaletto. Qwen3-VL-2B-Instruct was not loaded. No pixel was stepped. No H* fit. Not merged.
 
-The protocol is commit `fce3480d158298851587a692c56b6e4eebb554a7`. The runner is commit `45c969e030af70d2d7a8f5478691271e647376dd`. The branch starts at `ebe3db8ec300303affdaebadeb280ccba439e97a`. The pull request is opened from `checkpoint-1.9/attack-feasibility` and is not merged.
+The protocol is commit `fce3480d158298851587a692c56b6e4eebb554a7`. The runner is commit `45c969e030af70d2d7a8f5478691271e647376dd`. The branch starts at `ebe3db8ec300303affdaebadeb280ccba439e97a`. Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/19. It is not merged. The pull request targets `checkpoint-1.8/qwen-rgb-loss`, not `main`.
 
 ## Stop
 
