@@ -168,5 +168,5 @@ Exit code 1. Those directories are not modified.
 - Branch: `checkpoint-1.6/task-design`
 - Start: `b2e7abff72b87b475d0abf8d037e1b4d2f9c0c06`
 - No pull request was opened. The branch was not pushed. It was not merged.
-- Generator, fixtures, tests, and the scientific text of this report: recorded by the commit that adds them. The child commit, if present, only fills the hash line below and does not change scenes.
-- Generator commit: `PENDING_GENERATOR_SHA`
+- Generator, fixtures, tests, and the scientific text of this report: `ed24bfe33b65419e653e6cfeaf63b27499abc2a1`
+- The child of that commit only records this hash. It does not change the generator, the fixtures, or the tests.
