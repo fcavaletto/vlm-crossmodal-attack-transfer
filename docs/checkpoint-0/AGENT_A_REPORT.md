@@ -141,6 +141,7 @@ Study 1 was read from a separate clone and was not copied into this repository. 
 # Git information
 
 - Branch: `checkpoint-0/research-design`
-- Commit SHA: recorded in the follow-up commit that adds the pull-request URL. Until that commit exists, this line is incomplete on purpose.
-- Pull request: opened to `main` after the documentation commit. The URL is added in that follow-up commit.
-- Test status: documentation only. No unit tests ship with this workstream. The check is `git diff --check` on the four owned files, as in the reproduction section. No attack, gradient, or scene test was run.
+- Documentation commit: `a9cc0fbaff220f53b9f48016e10faf93b8c86d19`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/1 (base `main`, not merged)
+- The pull-request head is the commit that adds this Git section. Its parent is the documentation commit above.
+- Test status: documentation only. No unit tests ship with this workstream. `git diff --check` on the four owned files passed with exit code 0 before the documentation commit. No attack, gradient, or scene test was run.
