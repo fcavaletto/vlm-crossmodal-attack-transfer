@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vlm-attack-transfer-study2-audit"
+version = "0.0.1"
+description = "Checkpoint 1.7 audit of the Qwen load record and the H* sample-size plan. Does not run a model, an attack, or a fit on real scenes."
+requires-python = ">=3.11"
+dependencies = [
+  "numpy==1.26.4",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==8.3.5"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["study2_audit*"]
