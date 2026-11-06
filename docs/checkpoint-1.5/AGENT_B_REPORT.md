@@ -182,5 +182,7 @@ Exit code 1. That directory is not modified.
 - Start: `90c6ffe83d61514da217a20f8dfc2f202afbbe69` (`checkpoint-1/dev-pilot`)
 - Pull request base: `main` at `65a8d8ffb2f22f3d284b64e2d481151474761c5e`
 - The diff against `main` contains Checkpoint 1 because this branch starts there. Checkpoint 1 was not merged to `main`. This branch does not merge either.
-- Pull request: recorded in the commit that adds the URL.
-- Tests on this commit's parent content: `tests/scene_v2` 54 passed in 6.82s; `tests/scene_gen` 46 passed in 1.49s. Together, 100 passed in 8.69s.
+- Generator, fixtures, tests, and the scientific sections of this report: `0c190e856ed20d6934139b12ec20001e3c1488ed`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/10
+- Tests recorded against `0c190e856ed20d6934139b12ec20001e3c1488ed`: `tests/scene_v2` 54 passed in 6.82s; `tests/scene_gen` 46 passed in 1.49s. Together, 100 passed in 8.69s.
+- The branch head is the child of `0c190e856ed20d6934139b12ec20001e3c1488ed`. That child only records this URL. It does not change the generator, the fixtures, or the tests.
