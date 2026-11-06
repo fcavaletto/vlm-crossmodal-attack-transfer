@@ -1,0 +1,124 @@
+{
+  "status": "stopped_budget",
+  "stopped_reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget. Available bytes entering the decision: 11093655552. Fresh available bytes: 11093655552. BF16 required bytes: 11509447200. The guard was not lowered.",
+  "stage_b_ran": false,
+  "stage_a_judgment": null,
+  "stage_a_description": {
+    "0.5/255": {
+      "n_positive_records": 0,
+      "n_float_loss_increased": 0,
+      "n_directional_agreement": 0,
+      "n_uint8_loss_increased": 0,
+      "n_float_answer_changed": 0,
+      "n_uint8_answer_changed": 0
+    },
+    "1/255": {
+      "n_positive_records": 0,
+      "n_float_loss_increased": 0,
+      "n_directional_agreement": 0,
+      "n_uint8_loss_increased": 0,
+      "n_float_answer_changed": 0,
+      "n_uint8_answer_changed": 0
+    },
+    "2/255": {
+      "n_positive_records": 0,
+      "n_float_loss_increased": 0,
+      "n_directional_agreement": 0,
+      "n_uint8_loss_increased": 0,
+      "n_float_answer_changed": 0,
+      "n_uint8_answer_changed": 0
+    },
+    "4/255": {
+      "n_positive_records": 0,
+      "n_float_loss_increased": 0,
+      "n_directional_agreement": 0,
+      "n_uint8_loss_increased": 0,
+      "n_float_answer_changed": 0,
+      "n_uint8_answer_changed": 0
+    },
+    "gradient_sha256_matches_checkpoint_1_8": {
+      "n_recorded": 0,
+      "n_match": 0,
+      "n_mismatch": 0
+    }
+  },
+  "stage_b_judgment": null,
+  "summary_counts": {
+    "stage_a_scenes_finished": 0,
+    "stage_a_scene_ids": [
+      "dev4-ref-01-a",
+      "dev4-ref-09-b",
+      "dev4-ref-25-a",
+      "dev4-ref-21-b",
+      "dev4-ref-30-b",
+      "dev4-ref-07-a",
+      "dev4-ref-17-b",
+      "dev4-ref-45-b"
+    ],
+    "stage_b_ran": false,
+    "h_star_fitted": false
+  },
+  "protocol_commit": "fce3480d158298851587a692c56b6e4eebb554a7",
+  "protocol_sha256": "2676683793d908c9f5c8af9a46867d39d0ecea18cd5dbbe54144196153c78648",
+  "loaded_model": null,
+  "budget_recheck_immediately_before_load": {
+    "float32": {
+      "resident_bytes": 8510128128,
+      "available_bytes": 11093655552,
+      "required_available_bytes": 20871410752,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 13878837248,
+        "calibrated_projection": 20871410752,
+        "staging_double_copy": 17020256256
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "float32"
+    },
+    "bfloat16": {
+      "resident_bytes": 4255064064,
+      "available_bytes": 11093655552,
+      "required_available_bytes": 11509447200,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 9623773184,
+        "calibrated_projection": 11509447200,
+        "staging_double_copy": 8510128128
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "calibrated_projection"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+      "dtype": "bfloat16"
+    }
+  },
+  "dtype_selection_immediately_before_load": {
+    "dtype": null,
+    "permitted": false,
+    "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+  },
+  "available_bytes_entering_decision": 11093655552,
+  "available_bytes_at_decision": 11093655552,
+  "peak_memory": null,
+  "load_seconds": null,
+  "wall_seconds": 1.24,
+  "checkpoint_1_8_finite_difference": {
+    "kept": true,
+    "replaced_with_a_passing_result": false,
+    "note": "Checkpoint 1.8 confirmed one of eight gate pairs, and only at the smaller step. This checkpoint does not rerun that check to overturn it."
+  },
+  "h_star_fitted": false,
+  "model_from_pretrained_called": false,
+  "stage_a_sample": "exploratory"
+}
