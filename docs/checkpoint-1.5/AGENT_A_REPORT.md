@@ -140,7 +140,9 @@ The run recorded here exited 0. `checkpoint1_word_nll_reproduced` is true. `gene
 
 - Branch: `checkpoint-1.5/answer-scoring`
 - Started at: `90c6ffe83d61514da217a20f8dfc2f202afbbe69` (`checkpoint-1/dev-pilot`)
+- Scoring commit: `e972cd0eb12cbd252e6daf4882c8d605f9bc7e13`
 - Base of the pull request: `main`
 - The diff against `main` contains Checkpoint 1 because this branch starts at the Checkpoint 1 pilot commit. Those `docs/checkpoint-1/` files are unchanged by this workstream.
-- Pull request: recorded in the commit that follows this report.
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/8
+- The pull-request head is the commit that adds this URL. Its parent is the scoring commit above.
 - Tests: `pytest tests/scoring tests/vlm_iface tests/pilot` — 60 passed. MPS scoring command above — exit 0.
