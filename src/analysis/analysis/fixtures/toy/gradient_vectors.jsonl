@@ -1,0 +1,12 @@
+{"scene_id": "toy-01", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-02", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-03", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-04", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-05", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-06", "source_context": "neutral", "target_context": "contradictory", "g_source": [1, 0], "g_target": [1, 1]}
+{"scene_id": "toy-01", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [1, -2, 0, 0.5], "g_target": [3, -1, 4, -2]}
+{"scene_id": "toy-02", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [1, 1], "g_target": [2, 4]}
+{"scene_id": "toy-03", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [1, 1], "g_target": [-2, -4]}
+{"scene_id": "toy-04", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [1, -1], "g_target": [0, 0]}
+{"scene_id": "toy-05", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [1, -1, 1], "g_target": [1, 1, 0]}
+{"scene_id": "toy-06", "source_context": "neutral", "target_context": "helpful_nonrevealing", "g_source": [0, 0], "g_target": [3, -1]}

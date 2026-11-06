@@ -1,0 +1,31 @@
+{
+  "algorithm": "sha256",
+  "canonicalization": "json sort_keys separators=(',', ':') of question, answer, objects",
+  "hashes": {
+    "dev3-row-00-a": "d94096273c5299167a51f2a416b3c9d1bc2b49bcba68a487dd28bc0acae639d8",
+    "dev3-row-00-b": "3f86b444035c3e891de7cfd1ab1aa1f4311d422577cdc9cbae91d5fa6efa2e48",
+    "dev3-row-01-a": "a810ef7facd2515b5503229d4c6fe7d8088440aade7ed529dfb6c11b33596dab",
+    "dev3-row-01-b": "3e3f0f791514593c0ebbda58769e478f1ab3f41a57879724bf477d4fd124f72e",
+    "dev3-row-02-a": "ac1db353abc72155a409e356e08321500b0dfcc2de34b97161ea2b31ab9f5406",
+    "dev3-row-02-b": "5e916b47f8dd30f06308936fc5dec4f6de96115e66e8857f3dd81e0d0464127d",
+    "dev3-row-03-a": "5e9dea7097b6e0816bdeab545b0553eac1cae78163e5a4879247085ab8360be7",
+    "dev3-row-03-b": "7cd46475dcaa185024557db3a227c49ebc6ef48c3dc54d6c203dbd47531bb31b",
+    "dev3-row-04-a": "214b16439cf638c5bb16fa285cdd6a9ebc3d80efd9e43e04500798d7c85c5785",
+    "dev3-row-04-b": "4eaf5ef106828134954f863be6ae41e907ff4bb2207a766141b36a8e6ae06d2d",
+    "dev3-row-05-a": "3594981bb002bbaec3020712b88902cd3c74eecdd5e30042bafe811146107bde",
+    "dev3-row-05-b": "0a8796ed20f311da78a6c4614df9dff92a653a6832d806762ed217023c670cc1",
+    "dev3-row-06-a": "fabb16144b8b9e7308b113682b00c67dcc3d246ed183f60accaaeed42599e709",
+    "dev3-row-06-b": "b983f8acef82e33ec5268b17ba9248938ebff1611681efee030b350fe7c94b45",
+    "dev3-row-07-a": "44c85f03f7a9bbee4d44a37a88f57a03e9dd9e405f309f03b9386b4f5f229bbb",
+    "dev3-row-07-b": "c8ebcfaa20356b0bd7af426b05850d6067c490c80abbfc619c0517b5639f1819",
+    "dev3-row-08-a": "d07d2667a8a5d914825dd8576a6e448aec6be372baf17a8a1ac023fa306092b1",
+    "dev3-row-08-b": "81795a25846776662ea64373a1ba5c9a59e7f81b7ac83956452f335775fc1bd1",
+    "dev3-row-09-a": "9a4f4a4128ac1c55336e8f7d644c3e65cb5c64e611f8de679941229ee630850c",
+    "dev3-row-09-b": "6693deda706f2b7b7792d7e47fc92e3105caf282b0c4fa035ab4746cc61e32b7",
+    "dev3-row-10-a": "e8c83d31bc2ff8bda6fa8002f5f1910492e525884bd2bf1da47b68f677893f3b",
+    "dev3-row-10-b": "9a7fe429026a8e88d300bc60df25cbd86f5e436b408bc9a7ba2a9184ce05d69b",
+    "dev3-row-11-a": "1c0d4cb7128ba96bc44e8ecfc50f9778c0244201a5a295db7a80a77ec076e382",
+    "dev3-row-11-b": "ce3b8023186a176e8a3edc48eaef406aeb836dcdaf1c08d5e2ff7ffdeb15e2fb"
+  },
+  "purpose": "Exclusion list for a future sealed generator, together with fixtures/development/scene_graph_hashes.json and fixtures/development_v2/scene_graph_hashes.json. This file is not a sealed set."
+}

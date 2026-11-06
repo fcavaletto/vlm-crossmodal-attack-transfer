@@ -1,0 +1,47 @@
+{
+  "attacks_run": false,
+  "device": "mps",
+  "git_head_at_run": "49a3945b42ad132b662178317eea0eb2bac80ddc",
+  "gradient_seconds": 17.843,
+  "h_star_fitted": false,
+  "label": "DEVELOPMENT ONLY",
+  "load_seconds": 5.125,
+  "manifest_sha256": "bf21cdcfeca8f5c9a05e9f53465402c48f4a3175bbd363a38ca36dbc443f2367",
+  "memory_after_gradients": {
+    "current_rss_mb": 624.2,
+    "device": "mps",
+    "mps_current_allocated_mb": 2.2,
+    "mps_driver_allocated_mb": 69.7,
+    "os_available_mb": 9091.8,
+    "peak_rss_mb": 624.2
+  },
+  "memory_after_load": {
+    "current_rss_mb": 188.1,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2856.5,
+    "os_available_mb": 5693.5,
+    "peak_rss_mb": 398.0
+  },
+  "memory_after_scoring": {
+    "current_rss_mb": 448.5,
+    "device": "mps",
+    "mps_current_allocated_mb": 1965.6,
+    "mps_driver_allocated_mb": 2924.8,
+    "os_available_mb": 7124.4,
+    "peak_rss_mb": 448.5
+  },
+  "memory_before_load": {
+    "current_rss_mb": 205.9,
+    "device": "mps",
+    "mps_current_allocated_mb": 0.0,
+    "mps_driver_allocated_mb": 0.5,
+    "os_available_mb": 8805.4,
+    "peak_rss_mb": 205.9
+  },
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "model_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "protocol_sha256": "fe8a43561f649e996333913f14d2801e923c88061c0318f22fdbafbef16ff284",
+  "qwen_loaded": false,
+  "score_seconds": 61.696
+}
