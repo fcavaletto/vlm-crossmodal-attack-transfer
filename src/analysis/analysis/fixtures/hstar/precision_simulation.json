@@ -1,0 +1,133 @@
+{
+  "by_n_groups": [
+    {
+      "cluster_status_counts": {
+        "flat_outcome": 1,
+        "interval_returned": 197,
+        "near_flat_outcome": 2
+      },
+      "coverage_cluster_among_returned": 0.7258883248730964,
+      "coverage_cluster_counting_unreturned_as_not_covered": 0.715,
+      "coverage_row_among_returned": 0.817258883248731,
+      "fraction_interval_returned": 0.985,
+      "fraction_row_interval_returned": 0.985,
+      "median_ci_width_cluster": 0.8880462604960917,
+      "median_ci_width_row": 1.025924498893302,
+      "n_groups": 6,
+      "n_interval_returned": 197,
+      "n_replications": 200,
+      "n_rows": 24
+    },
+    {
+      "cluster_status_counts": {
+        "interval_returned": 200
+      },
+      "coverage_cluster_among_returned": 0.84,
+      "coverage_cluster_counting_unreturned_as_not_covered": 0.84,
+      "coverage_row_among_returned": 0.87,
+      "fraction_interval_returned": 1.0,
+      "fraction_row_interval_returned": 1.0,
+      "median_ci_width_cluster": 0.7926554873547027,
+      "median_ci_width_row": 0.8481398314945243,
+      "n_groups": 12,
+      "n_interval_returned": 200,
+      "n_replications": 200,
+      "n_rows": 48
+    },
+    {
+      "cluster_status_counts": {
+        "interval_returned": 200
+      },
+      "coverage_cluster_among_returned": 0.915,
+      "coverage_cluster_counting_unreturned_as_not_covered": 0.915,
+      "coverage_row_among_returned": 0.89,
+      "fraction_interval_returned": 1.0,
+      "fraction_row_interval_returned": 1.0,
+      "median_ci_width_cluster": 0.6684087415785716,
+      "median_ci_width_row": 0.6404491693422852,
+      "n_groups": 24,
+      "n_interval_returned": 200,
+      "n_replications": 200,
+      "n_rows": 96
+    },
+    {
+      "cluster_status_counts": {
+        "interval_returned": 200
+      },
+      "coverage_cluster_among_returned": 0.95,
+      "coverage_cluster_counting_unreturned_as_not_covered": 0.95,
+      "coverage_row_among_returned": 0.92,
+      "fraction_interval_returned": 1.0,
+      "fraction_row_interval_returned": 1.0,
+      "median_ci_width_cluster": 0.500101652578785,
+      "median_ci_width_row": 0.46097746273692214,
+      "n_groups": 48,
+      "n_interval_returned": 200,
+      "n_replications": 200,
+      "n_rows": 192
+    },
+    {
+      "cluster_status_counts": {
+        "interval_returned": 200
+      },
+      "coverage_cluster_among_returned": 0.93,
+      "coverage_cluster_counting_unreturned_as_not_covered": 0.93,
+      "coverage_row_among_returned": 0.915,
+      "fraction_interval_returned": 1.0,
+      "fraction_row_interval_returned": 1.0,
+      "median_ci_width_cluster": 0.3625147745416266,
+      "median_ci_width_row": 0.33529029250250963,
+      "n_groups": 96,
+      "n_interval_returned": 200,
+      "n_replications": 200,
+      "n_rows": 384
+    }
+  ],
+  "data_origin": "fabricated_dgp",
+  "dgp": {
+    "alignment_high": 0.5,
+    "alignment_low": -0.5,
+    "beta_0": 0.5,
+    "beta_a": 0.25,
+    "dependence": "One Uniform(0, 1) draw per counterfactual group is compared with each row probability. Sibling scenes and both ordered directions share that draw.",
+    "directions_per_scene": 2,
+    "name": "shared_uniform_linear_probability",
+    "probability_bound_note": "With these constants every row probability lies in [0.335, 0.665] before the shared uniform is applied.",
+    "scenes_per_group": 2,
+    "task_effects": {
+      "attribute": 0.0,
+      "counting": -0.04,
+      "spatial": 0.04
+    }
+  },
+  "empirical_claim": false,
+  "estimand": "linear probability coefficient on alignment, clustered by counterfactual group",
+  "known_beta_a": 0.25,
+  "not_an_empirical_finding": true,
+  "procedure": {
+    "algebraic_minimum_groups": 5,
+    "alpha": 0.05,
+    "bootstrap_seed_rule": "data_seed + 1 + replication_index",
+    "data_seed": 20261107,
+    "n_boot": 399,
+    "name": "wild_cluster_bootstrap",
+    "primary_design_parameters": 4,
+    "quantile_method": "linear",
+    "row_level_contrast": "same bootstrap with one cluster per row",
+    "weights": "webb6"
+  },
+  "reading": "Coverage and width describe this fabricated design and this cluster interval. They are not a measurement of a vision-language model. A group count that meets the planning bar does not promise that an interval will exclude zero.",
+  "recommendation": {
+    "algebraic_minimum_groups": 5,
+    "algebraic_rule": "Return a cluster interval only when G >= k + 1.",
+    "cited_checkpoint1_below_algebraic_minimum": true,
+    "cited_checkpoint1_eligible_groups": 3,
+    "does_not_promise_significance": true,
+    "planning_bar_note": "The bar is a description of coverage under the fabricated design. It is not a promise that an interval will exclude zero and it is not a significance calculation.",
+    "planning_coverage_bar": 0.9,
+    "primary_design_parameters": 4,
+    "recommended_minimum_eligible_groups": 24,
+    "sentence": "Under this fabricated design, the smallest grid point at which every replication returned a cluster interval and at least 90% of those intervals covered the known coefficient is 24 eligible groups. That count does not promise that an interval will exclude zero. The algebraic minimum for returning any interval on the three-family design is 5 groups. A cited Checkpoint 1 inclusion count of 3 groups is below that minimum. This is not a measurement of a vision-language model.",
+    "status": "smallest_grid_point_meeting_planning_bar"
+  }
+}

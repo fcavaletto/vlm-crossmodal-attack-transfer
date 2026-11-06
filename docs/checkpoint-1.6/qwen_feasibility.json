@@ -1,0 +1,870 @@
+{
+  "measurement_kind": "checkpoint16_qwen_feasibility",
+  "label": "DEVELOPMENT ONLY",
+  "checkpoint": "checkpoint-1.6",
+  "attacks_run": false,
+  "training_run": false,
+  "cloud_gpu": false,
+  "paid_gpu_launched": false,
+  "held_out_opened": false,
+  "h_star_fitted": false,
+  "from_pretrained_called": true,
+  "model_from_pretrained_called": true,
+  "processor_from_pretrained_called": true,
+  "weights_downloaded": false,
+  "checkpoint15_feasibility_record_consulted_for_available_bytes": false,
+  "reproduction_command": "HF_HOME=/Users/fedecava/Development/models/huggingface PYTHONPATH=src/vlm_iface:src/pilot /Users/fedecava/Development/_c0-work/venv-vlm/bin/python docs/checkpoint-1.6/run_qwen_feasibility.py",
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "budget_module": {
+    "path": "docs/checkpoint-1.5/run_model_feasibility.py",
+    "sha256": "b7cd9ad2808a5bbfd37c619b3f4d7df1225f95650f60d20b63b8eb49e41981a8",
+    "spare_required_bytes": 5368709120,
+    "projected_remaining_floor_bytes": 2147483648,
+    "min_available_bytes": 6442450944,
+    "drop_per_current_allocation": 2.2001933251933252,
+    "fixtures_passed": true,
+    "note": "budget_decision and the fixture constants were imported from the Checkpoint 1.5 script. The live decision uses psutil available bytes from this process, not a stored available-byte field."
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "system": "Darwin",
+    "python": "3.12.14",
+    "machine": "arm64",
+    "memory_bytes": 25769803776,
+    "cpu_brand": "Apple M4",
+    "hw_memsize": 25769803776
+  },
+  "versions": {
+    "python": "3.12.14",
+    "torch": "2.15.0",
+    "transformers": "5.22.1"
+  },
+  "os_memory_bytes_at_start": {
+    "total": 25769803776,
+    "available": 12463718400,
+    "used": 8537423872,
+    "free": 8410284032,
+    "active": 4075241472,
+    "inactive": 3494658048,
+    "wired": 4462182400
+  },
+  "os_memory_bytes_at_decision": {
+    "total": 25769803776,
+    "available": 12188794880,
+    "used": 8829566976,
+    "free": 7918059520,
+    "active": 4258922496,
+    "inactive": 3648978944,
+    "wired": 4570644480
+  },
+  "decision_available_bytes": 12188794880,
+  "bf16_support": {
+    "mps_available": true,
+    "mps_built": true,
+    "torch_bfloat16": "torch.bfloat16",
+    "add_ok": true,
+    "matmul_ok": true,
+    "is_model_forward": false,
+    "matmul_shape": [
+      8,
+      8
+    ]
+  },
+  "model_compatibility": {
+    "weights_loaded": false,
+    "from_pretrained_called": false,
+    "model_class": "Qwen3VLForConditionalGeneration",
+    "processor_class": "Qwen3VLProcessor",
+    "image_processor_class": "Qwen2VLImageProcessor",
+    "fast_alias_resolves": true,
+    "fast_alias_name": "Qwen2VLImageProcessor"
+  },
+  "qwen_candidate": {
+    "repo_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "filename": "model.safetensors",
+    "on_disk_bytes": 4255140312,
+    "gated": false,
+    "weights_loaded": false,
+    "parameter_count": 2127532032,
+    "dtype_counts": {
+      "BF16": 2127532032
+    },
+    "float32_weight_bytes": 8510128128,
+    "header_bytes": 76240,
+    "approximate": false,
+    "header_source": "range",
+    "load_permitted_by_weight_guard": false,
+    "abort_bytes": 6442450944,
+    "reason": "float32 weight bytes exceed the guard; from_pretrained must not be called",
+    "from_pretrained_called": false
+  },
+  "qwen_config_dtype": "bfloat16",
+  "qwen_config_architectures": [
+    "Qwen3VLForConditionalGeneration"
+  ],
+  "qwen_preprocessor": {
+    "downloaded": true,
+    "weights_included": false,
+    "image_processor_type": "Qwen2VLImageProcessorFast",
+    "patch_size": 16,
+    "merge_size": 2,
+    "min_pixels": 65536,
+    "max_pixels": 16777216,
+    "development_image_hw": [
+      384,
+      512
+    ],
+    "estimated_resize_hw": [
+      384,
+      512
+    ],
+    "estimated_llm_image_tokens": 192,
+    "estimate_formula": "smart_resize(384, 512, factor=patch*merge, min_pixels, max_pixels); tokens = (h/patch)*(w/patch)/(merge*merge). Not a measured forward."
+  },
+  "qwen_dtype_decisions": {
+    "float32": {
+      "resident_bytes": 8510128128,
+      "available_bytes": 12188794880,
+      "required_available_bytes": 20871410752,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 13878837248,
+        "calibrated_projection": 20871410752,
+        "staging_double_copy": 17020256256
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "float32",
+      "note": "Resident size is the float32 expansion of the surveyed header.",
+      "from_pretrained_called": false,
+      "available_bytes_source": "psutil.virtual_memory().available at the decision snapshot"
+    },
+    "bfloat16": {
+      "resident_bytes": 4255064064,
+      "available_bytes": 12188794880,
+      "required_available_bytes": 11509447200,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 9623773184,
+        "calibrated_projection": 11509447200,
+        "staging_double_copy": 8510128128
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [],
+      "mps_available": true,
+      "permitted": true,
+      "reason": "OS-available memory clears every pre-load line.",
+      "dtype": "bfloat16",
+      "note": "Resident size is two bytes times the surveyed parameter count.",
+      "from_pretrained_called": false,
+      "available_bytes_source": "psutil.virtual_memory().available at the decision snapshot"
+    }
+  },
+  "dtype_selection": {
+    "dtype": "bfloat16",
+    "permitted": true,
+    "reason": "Float32 failed. The BF16 budget passed and the MPS probe ran."
+  },
+  "mps_model_measurement": {
+    "device": "mps",
+    "dtype": "torch.bfloat16",
+    "dtype_counts": {
+      "torch.bfloat16": 2127532032
+    },
+    "memory_after_load": {
+      "device": "mps",
+      "peak_rss_mb": 603.9,
+      "current_rss_mb": 335.1,
+      "os_available_mb": 4259.3,
+      "mps_driver_allocated_mb": 4712.5,
+      "mps_current_allocated_mb": 4072.9
+    }
+  },
+  "mps_current_allocated_bytes_with_no_model": 0,
+  "snapshot_files_before": [
+    "chat_template.json",
+    "config.json",
+    "generation_config.json",
+    "merges.txt",
+    "model.safetensors",
+    "preprocessor_config.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "video_preprocessor_config.json",
+    "vocab.json"
+  ],
+  "large_blobs_before": [
+    {
+      "name": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+      "bytes": 1671839
+    },
+    {
+      "name": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "bytes": 2776833
+    },
+    {
+      "name": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+      "bytes": 4255140312
+    },
+    {
+      "name": "c6cc1014128b19d1fc46b1d30a23e3b1d35db421",
+      "bytes": 7032403
+    }
+  ],
+  "subset_definition": {
+    "label": "DEVELOPMENT ONLY",
+    "model_outputs": null,
+    "listed_in_script_before_generation": true,
+    "scene_ids": [
+      "dev2-attribute-00-a",
+      "dev2-counting-00-a",
+      "dev2-spatial-00-a"
+    ],
+    "contexts": [
+      "neutral",
+      "helpful_nonrevealing",
+      "contradictory",
+      "answer_revealing"
+    ],
+    "prompt_rule": "context_text + newline + question",
+    "max_new_tokens": 16,
+    "official_parser": "checkpoint-1 strict parser, vlm_iface.parsing.parse_generation",
+    "scenes": [
+      {
+        "scene_id": "dev2-attribute-00-a",
+        "task_family": "attribute",
+        "question": "What color is the large circle?",
+        "fixture_answer": "red",
+        "image_path": "fixtures/development_v2/images/dev2-attribute-00-a.png",
+        "image_wh": [
+          512,
+          384
+        ],
+        "contexts": {
+          "neutral": "Several simple objects appear on a plain background.",
+          "helpful_nonrevealing": "Identify the single object with the size and shape named in the question, then name its color.",
+          "contradictory": "The large circle is green.",
+          "answer_revealing": "The large circle is red."
+        }
+      },
+      {
+        "scene_id": "dev2-counting-00-a",
+        "task_family": "counting",
+        "question": "How many red objects are there?",
+        "fixture_answer": "one",
+        "image_path": "fixtures/development_v2/images/dev2-counting-00-a.png",
+        "image_wh": [
+          512,
+          384
+        ],
+        "contexts": {
+          "neutral": "Several simple objects appear on a plain background.",
+          "helpful_nonrevealing": "Count objects of the color named in the question. Size and shape do not matter.",
+          "contradictory": "There are four red objects.",
+          "answer_revealing": "There is one red object."
+        }
+      },
+      {
+        "scene_id": "dev2-spatial-00-a",
+        "task_family": "spatial",
+        "question": "What color is the object immediately left of the large circle in the same row?",
+        "fixture_answer": "red",
+        "image_path": "fixtures/development_v2/images/dev2-spatial-00-a.png",
+        "image_wh": [
+          512,
+          384
+        ],
+        "contexts": {
+          "neutral": "Several simple objects appear on a plain background.",
+          "helpful_nonrevealing": "Use the object named in the question as the anchor. Name the color of the adjacent object toward the left edge in the same row.",
+          "contradictory": "The object immediately left of the large circle in the same row is green.",
+          "answer_revealing": "The object immediately left of the large circle in the same row is red."
+        }
+      }
+    ],
+    "note": "fixture_answer is the scene label. It is not a model generation."
+  },
+  "cuda_proposal": null,
+  "gates": {
+    "os_memory": {
+      "status": "measured",
+      "available_bytes": 12188794880
+    },
+    "compatibility_and_budget": {
+      "status": "passed",
+      "dtype": "bfloat16"
+    },
+    "minimal_forward": {
+      "status": "passed",
+      "image": "synthetic_64x64_red_square",
+      "accuracy_claim": false,
+      "finite_logits": true,
+      "logit_shape": [
+        1,
+        85,
+        151936
+      ],
+      "seconds": 2.011,
+      "memory": {
+        "device": "mps",
+        "peak_rss_mb": 603.9,
+        "current_rss_mb": 379.1,
+        "os_available_mb": 7887.0,
+        "mps_driver_allocated_mb": 4763.7,
+        "mps_current_allocated_mb": 4108.7
+      },
+      "device": "mps",
+      "dtype": "torch.bfloat16"
+    },
+    "clean_answers": {
+      "status": "completed",
+      "label": "DEVELOPMENT ONLY",
+      "n_rows": 12,
+      "correct": 0,
+      "valid_wrong": 0,
+      "invalid": 12,
+      "seconds": 23.534,
+      "device": "mps",
+      "max_new_tokens": 16,
+      "official_parser": "vlm_iface.parsing.parse_generation"
+    },
+    "image_gradients": {
+      "status": "completed",
+      "rows": [
+        {
+          "label": "DEVELOPMENT ONLY",
+          "scene_id": "dev2-attribute-00-a",
+          "context": "neutral",
+          "answer": "red",
+          "loss": 29.81302833557129,
+          "finite_loss": true,
+          "gradient_space": "processor_pixel_values",
+          "canonical_01_rgb_gradient_computed": false,
+          "finite": true,
+          "abs_mean": 0.024977361783385277,
+          "abs_max": 3.328125,
+          "nonzero": true,
+          "shape": [
+            768,
+            1536
+          ],
+          "seconds": 18.857,
+          "attack": false
+        },
+        {
+          "label": "DEVELOPMENT ONLY",
+          "scene_id": "dev2-attribute-00-a",
+          "context": "helpful_nonrevealing",
+          "answer": "red",
+          "loss": 24.503292083740234,
+          "finite_loss": true,
+          "gradient_space": "processor_pixel_values",
+          "canonical_01_rgb_gradient_computed": false,
+          "finite": true,
+          "abs_mean": 0.03415403515100479,
+          "abs_max": 4.40625,
+          "nonzero": true,
+          "shape": [
+            768,
+            1536
+          ],
+          "seconds": 19.859,
+          "attack": false
+        }
+      ],
+      "note": "The leaf is processor pixel_values. The official processor goes through PIL, so this is not the [0, 1] RGB gradient. It is a finiteness check, not an attack."
+    },
+    "weight_load_and_memory": {
+      "status": "loaded",
+      "from_pretrained_called": false
+    }
+  },
+  "action": "gates_completed_not_adopted",
+  "recommendation": "not_adopted_pending_lead",
+  "stopped_at_gate": null,
+  "passed_gate_2": true,
+  "budget_recheck_immediately_before_load": {
+    "resident_bytes": 4255064064,
+    "available_bytes": 12449562624,
+    "required_available_bytes": 11509447200,
+    "lines_bytes": {
+      "os_floor": 6442450944,
+      "spare_above_weights": 9623773184,
+      "calibrated_projection": 11509447200,
+      "staging_double_copy": 8510128128
+    },
+    "binding_line": "calibrated_projection",
+    "failed_lines": [],
+    "mps_available": true,
+    "permitted": true,
+    "reason": "OS-available memory clears every pre-load line."
+  },
+  "load_seconds": 5.253,
+  "development_predictions": [
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "neutral",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, there are several simple geometric shapes on a plain,",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1052,
+        525,
+        3807,
+        4285,
+        52484,
+        20816,
+        389,
+        264,
+        14396,
+        11
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, let's identify the object in question.\n\n- The",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        10542,
+        279,
+        1633,
+        304,
+        3405,
+        382,
+        12,
+        576
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "contradictory",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, the large circle is red.\n\nThe description in the",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        279,
+        3460,
+        12671,
+        374,
+        2518,
+        382,
+        785,
+        4008,
+        304,
+        279
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-attribute-00-a",
+      "context": "answer_revealing",
+      "task_family": "attribute",
+      "raw_output": "Based on the image provided, the large circle is red.",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "not_exact"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": false,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        279,
+        3460,
+        12671,
+        374,
+        2518,
+        13,
+        151645
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "neutral",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects to determine how many are",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        311,
+        8253,
+        1246,
+        1657,
+        525
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's identify the objects and their colors.\n\n-",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        10542,
+        279,
+        6171,
+        323,
+        862,
+        7987,
+        382,
+        12
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "contradictory",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects present.\n\n- There is",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        3042,
+        382,
+        12,
+        2619,
+        374
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-counting-00-a",
+      "context": "answer_revealing",
+      "task_family": "counting",
+      "raw_output": "Based on the image provided, let's analyze the objects present.\n\n- The image",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        6171,
+        3042,
+        382,
+        12,
+        576,
+        2168
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "neutral",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "helpful_nonrevealing",
+      "task_family": "spatial",
+      "raw_output": "Of course, let's analyze the image step by step to answer your question.",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "not_in_vocabulary"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        2124,
+        3308,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        2168,
+        3019,
+        553,
+        3019,
+        311,
+        4226,
+        697,
+        3405,
+        382
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "contradictory",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    },
+    {
+      "label": "DEVELOPMENT ONLY",
+      "scene_id": "dev2-spatial-00-a",
+      "context": "answer_revealing",
+      "task_family": "spatial",
+      "raw_output": "Based on the image provided, let's analyze the arrangement of the objects.\n\n1",
+      "parsed_answer": null,
+      "invalid": true,
+      "parse_reasons": [
+        "truncated",
+        "multiline"
+      ],
+      "correct": false,
+      "valid_wrong": false,
+      "truncated": true,
+      "token_ids": [
+        28715,
+        389,
+        279,
+        2168,
+        3897,
+        11,
+        1077,
+        594,
+        23643,
+        279,
+        26112,
+        315,
+        279,
+        6171,
+        382,
+        16
+      ],
+      "device": "mps"
+    }
+  ],
+  "passed_all_gates": true,
+  "adopted": false,
+  "adoption_note": "Gates finished on a development subset. Adoption is a lead decision. This script does not replace the pinned SmolVLM2 checkpoint.",
+  "snapshot_files_after": [
+    "chat_template.json",
+    "config.json",
+    "generation_config.json",
+    "merges.txt",
+    "model.safetensors",
+    "preprocessor_config.json",
+    "tokenizer.json",
+    "tokenizer_config.json",
+    "video_preprocessor_config.json",
+    "vocab.json"
+  ],
+  "large_blobs_after": [
+    {
+      "name": "20024bfe7c83998e9aeaf98a0cd6a2ce6306c2f0",
+      "bytes": 1671839
+    },
+    {
+      "name": "4783fe10ac3adce15ac8f358ef5462739852c569",
+      "bytes": 2776833
+    },
+    {
+      "name": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+      "bytes": 4255140312
+    },
+    {
+      "name": "c6cc1014128b19d1fc46b1d30a23e3b1d35db421",
+      "bytes": 7032403
+    }
+  ],
+  "qwen_local_weight_file_present": true,
+  "from_pretrained_call_count": 2,
+  "wall_seconds": 74.653
+}
