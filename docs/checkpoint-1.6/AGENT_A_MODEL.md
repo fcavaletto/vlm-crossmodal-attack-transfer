@@ -152,5 +152,6 @@ Do not set `HF_HUB_OFFLINE`. The run recorded here exited 0. `wall_seconds` was 
 
 - Branch: `checkpoint-1.6/stronger-model`
 - Started at: `b2e7abff72b87b475d0abf8d037e1b4d2f9c0c06`
-- Feasibility commit: stamped after the files are committed
+- Feasibility commit: `c21561274d21001b83ba0b74af0bea36373a7136`
+- The commit that names that SHA is this file's follow-up on the same branch. `git rev-parse HEAD` is that follow-up. Its parent is the feasibility commit.
 - Not pushed. No pull request.
