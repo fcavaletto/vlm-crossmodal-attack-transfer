@@ -133,7 +133,9 @@ def test_committed_sample_matches_regeneration_and_checksums(repo_root: Path, ge
         assert hashlib.sha256(path.read_bytes()).hexdigest() == info["sha256"]
         assert path.stat().st_size == info["bytes"]
     names = sorted(path.name for path in (repo_root / "fixtures").iterdir())
-    assert names == ["development"]
+    # development is the Checkpoint 1 sample. development_v2 is the Checkpoint 1.5
+    # development sample. A sealed, test, or held-out directory still fails this lock.
+    assert names == ["development", "development_v2"]
 
 
 def test_package_does_not_sample_download_or_import_models(repo_root: Path) -> None:
