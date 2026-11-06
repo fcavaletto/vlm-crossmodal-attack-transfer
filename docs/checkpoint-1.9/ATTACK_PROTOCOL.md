@@ -82,7 +82,7 @@ The gradient array is discarded after the scene's twelve steps. Compact records 
 
 ## Stage A stop rule
 
-There are eight scenes and four budgets. A cell is one scene at one budget. A cell is valid only when the clean gradient is finite and nonzero and the three float observed changes are finite. An invalid cell does not count as a rise and does not count as beating a control.
+There are eight scenes and four budgets. A cell is one scene at one budget. A cell is valid only when the clean gradient is finite and nonzero and the three float observed changes are finite. An invalid cell does not count as a rise and does not count as beating a control. A budget fails if any of its eight cells is invalid. A missing observed change is not imputed as zero, and the median is not used to pass a budget that has a missing change.
 
 The median of eight numbers is `numpy.median`: the arithmetic mean of the two central values after sorting.
 
