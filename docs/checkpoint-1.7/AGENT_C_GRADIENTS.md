@@ -2,7 +2,7 @@
 
 Checkpoint 1.7, section C. The branch is `checkpoint-1.7/qwen-rgb`. It starts at `004783b5604c34aa066befbcd5356bfd7bd6e7b2`, not at `main`, so the pull request also contains Checkpoints 0 through 1.6. Those earlier files were not edited. `docs/checkpoint-1.6/` was not changed. Nothing was merged.
 
-Pull request: see the GitHub pull request opened from this branch against `main`.
+Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/14
 
 ## Design decisions
 
@@ -115,7 +115,8 @@ The command is the one used on this Mac. The interpreter is `/Users/fedecava/Dev
 
 - Branch: `checkpoint-1.7/qwen-rgb`
 - Started from: `004783b5604c34aa066befbcd5356bfd7bd6e7b2`
-- Base for the pull request: `main`
-- The diff against `main` includes earlier checkpoints because this branch does not start there
-- Pull request: opened from this branch; the URL is in the pull request that contains this file
+- Measurement commit: `bc31af63a5df7bcd7120cab611f50e4b10fd9f78`
+- Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/14
+- Base: `main`. The diff against `main` includes earlier checkpoints because this branch does not start there.
+- The pull request head is the commit that records this URL, the child of the measurement commit.
 - Chosen-answer RGB gradient finite: not measured. The budget stopped the load.
