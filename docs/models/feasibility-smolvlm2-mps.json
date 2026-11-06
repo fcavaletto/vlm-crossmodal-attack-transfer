@@ -1,0 +1,271 @@
+{
+  "measurement_kind": "checkpoint0_gradient_feasibility",
+  "device_requested": "mps",
+  "device_resolved": "mps",
+  "mps_validation": "passed",
+  "cuda_measurement": false,
+  "reproduction_command": "python -m vlm_iface.feasibility --device mps --output docs/models/feasibility-smolvlm2-mps.json",
+  "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+  "pinned_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+  "prompt": "What color is the central square? Reply with one word.",
+  "answer": "red",
+  "multi_token_answer": "red square",
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "system": "Darwin",
+    "python": "3.12.14",
+    "machine": "arm64",
+    "cpu_brand": "Apple M4",
+    "memory_bytes": 25769803776
+  },
+  "versions": {
+    "python": "3.12.14",
+    "torch": "2.15.0",
+    "transformers": "5.22.1"
+  },
+  "os_available_bytes_before_load": 8435777536,
+  "qwen_candidate": {
+    "repo_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "filename": "model.safetensors",
+    "on_disk_bytes": 4255140312,
+    "gated": false,
+    "weights_loaded": false,
+    "parameter_count": 2127532032,
+    "dtype_counts": {
+      "BF16": 2127532032
+    },
+    "float32_weight_bytes": 8510128128,
+    "header_bytes": 76240,
+    "approximate": false,
+    "header_source": "range",
+    "load_permitted_by_weight_guard": false,
+    "abort_bytes": 6442450944,
+    "reason": "float32 weight bytes exceed the guard; from_pretrained must not be called",
+    "action": "load_aborted",
+    "adopted": false
+  },
+  "smolvlm_weights": {
+    "repo_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "filename": "model.safetensors",
+    "on_disk_bytes": 2029990624,
+    "gated": false,
+    "weights_loaded": false,
+    "parameter_count": 507482304,
+    "dtype_counts": {
+      "F32": 507482304
+    },
+    "float32_weight_bytes": 2029929216,
+    "header_bytes": 61400,
+    "approximate": false,
+    "header_source": "range",
+    "load_permitted_by_weight_guard": true,
+    "abort_bytes": 6442450944,
+    "reason": "float32 weight bytes are within the guard"
+  },
+  "load_seconds": 4.717,
+  "memory_after_load": {
+    "device": "mps",
+    "peak_rss_mb": 402.0,
+    "current_rss_mb": 222.2,
+    "os_available_mb": 3826.9,
+    "mps_driver_allocated_mb": 2856.5,
+    "mps_current_allocated_mb": 1965.6
+  },
+  "model_parameter_device": "mps",
+  "model_parameter_dtype": "torch.float32",
+  "attn_implementation": "eager",
+  "preprocess_gap_96x128": {
+    "do_image_splitting": false,
+    "do_rescale_on_float_path": false,
+    "float_pixel_shape": [
+      1,
+      1,
+      3,
+      512,
+      512
+    ],
+    "pil_pixel_shape": [
+      1,
+      1,
+      3,
+      512,
+      512
+    ],
+    "shapes_match": true,
+    "float_mask_matches_pil": true,
+    "uint8_tensor_matches_pil_mask": true,
+    "max_abs_diff_float_vs_pil": 0.79078209400177,
+    "mean_abs_diff_float_vs_pil": 0.007893807254731655,
+    "max_abs_diff_uint8_tensor_vs_pil": 0.0,
+    "mean_abs_diff_uint8_tensor_vs_pil": 0.0,
+    "note": "Float32 Lanczos resize is not uint8 Lanczos resize. Scoring and generation in this package share the float32 path. The PIL path is the processor default and is not differentiated."
+  },
+  "preprocess_gap_512x512": {
+    "do_image_splitting": false,
+    "do_rescale_on_float_path": false,
+    "float_pixel_shape": [
+      1,
+      1,
+      3,
+      512,
+      512
+    ],
+    "pil_pixel_shape": [
+      1,
+      1,
+      3,
+      512,
+      512
+    ],
+    "shapes_match": true,
+    "float_mask_matches_pil": true,
+    "uint8_tensor_matches_pil_mask": true,
+    "max_abs_diff_float_vs_pil": 0.26636171340942383,
+    "mean_abs_diff_float_vs_pil": 0.008854102343320847,
+    "max_abs_diff_uint8_tensor_vs_pil": 0.0,
+    "mean_abs_diff_uint8_tensor_vs_pil": 0.0,
+    "note": "Float32 Lanczos resize is not uint8 Lanczos resize. Scoring and generation in this package share the float32 path. The PIL path is the processor default and is not differentiated."
+  },
+  "multi_token_score": {
+    "logprob": -19.265708923339844,
+    "n_tokens": 2,
+    "token_ids": [
+      2382,
+      5222
+    ],
+    "tokens": [
+      "\u0120red",
+      "\u0120square"
+    ],
+    "mean_nll_from_sum": 9.632854461669922,
+    "library_mean_nll": 9.632854461669922,
+    "mean_nll_abs_diff": 0.0,
+    "prompt_tokens": 88
+  },
+  "tokenization": {
+    "bare_ids": [
+      455
+    ],
+    "bare_tokens": [
+      "red"
+    ],
+    "leading_space_ids": [
+      2382
+    ],
+    "leading_space_tokens": [
+      "\u0120red"
+    ],
+    "ids_differ": true
+  },
+  "leading_space_comparison": {
+    "image": "red_square",
+    "answer": "red",
+    "bare_logprob": -11.636720657348633,
+    "leading_space_logprob": -3.3405706882476807,
+    "leading_space_higher": true
+  },
+  "gradient_red_square": {
+    "seconds": 4.594,
+    "stats": {
+      "shape": [
+        3,
+        128,
+        128
+      ],
+      "finite": true,
+      "abs_mean": 0.02934574894607067,
+      "abs_max": 2.3487305641174316,
+      "nonzero_fraction": 1.0,
+      "nonzero": true
+    },
+    "memory": {
+      "device": "mps",
+      "peak_rss_mb": 596.9,
+      "current_rss_mb": 596.9,
+      "os_available_mb": 5403.6,
+      "mps_driver_allocated_mb": 4131.7,
+      "mps_current_allocated_mb": 1965.6
+    }
+  },
+  "gradient_red_square_repeat": {
+    "seconds": 4.357,
+    "stats": {
+      "shape": [
+        3,
+        128,
+        128
+      ],
+      "finite": true,
+      "abs_mean": 0.02934574894607067,
+      "abs_max": 2.3487305641174316,
+      "nonzero_fraction": 1.0,
+      "nonzero": true
+    },
+    "memory": {
+      "device": "mps",
+      "peak_rss_mb": 601.5,
+      "current_rss_mb": 601.5,
+      "os_available_mb": 5426.1,
+      "mps_driver_allocated_mb": 4131.7,
+      "mps_current_allocated_mb": 1965.6
+    }
+  },
+  "gradient_blue_square": {
+    "seconds": 4.388,
+    "stats": {
+      "shape": [
+        3,
+        128,
+        128
+      ],
+      "finite": true,
+      "abs_mean": 0.04352615401148796,
+      "abs_max": 4.761023998260498,
+      "nonzero_fraction": 1.0,
+      "nonzero": true
+    },
+    "memory": {
+      "device": "mps",
+      "peak_rss_mb": 602.0,
+      "current_rss_mb": 602.0,
+      "os_available_mb": 5718.1,
+      "mps_driver_allocated_mb": 4131.7,
+      "mps_current_allocated_mb": 1965.6
+    }
+  },
+  "gradient_comparison": {
+    "repeat_max_abs_diff": 0.0,
+    "image_max_abs_diff": 4.779532432556152
+  },
+  "memory_after_gradients": {
+    "device": "mps",
+    "peak_rss_mb": 602.0,
+    "current_rss_mb": 602.0,
+    "os_available_mb": 5718.1,
+    "mps_driver_allocated_mb": 4131.7,
+    "mps_current_allocated_mb": 1965.6
+  },
+  "generation": {
+    "text": "Red.",
+    "parsed_answer": "red",
+    "invalid": false
+  },
+  "generation_is_accuracy_claim": false,
+  "checks": {
+    "device_is_requested": true,
+    "revision_pinned": true,
+    "float32": true,
+    "multi_token": true,
+    "logprob_finite": true,
+    "library_mean_nll_matches_sum": true,
+    "gradient_finite": true,
+    "gradient_nonzero": true,
+    "gradient_image_dependent": true,
+    "qwen_weights_not_loaded": true,
+    "preprocess_shapes_match": true
+  },
+  "passed": true,
+  "wall_seconds": 24.177
+}
