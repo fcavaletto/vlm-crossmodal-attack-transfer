@@ -586,10 +586,13 @@ def _ancestor_pids() -> set[int]:
     return ancestors
 
 
-def _other_model_processes() -> list[str]:
-    ancestors = _ancestor_pids()
-    completed = subprocess.run(["ps", "-ax", "-o", "pid=,command="], check=True, capture_output=True, text=True)
-    hits = []
+def _is_other_model_command(command: str) -> bool:
+    """True for a Python model runner. A caffeinate or shell wrapper is not one."""
+    parts = command.split()
+    if not parts:
+        return False
+    if "python" not in Path(parts[0]).name:
+        return False
     markers = (
         " -m dev_pilot",
         "qwen_rgb.measure",
@@ -602,6 +605,13 @@ def _other_model_processes() -> list[str]:
         " -m development_attack",
         "development_attack.run",
     )
+    return any(marker in command for marker in markers)
+
+
+def _other_model_processes() -> list[str]:
+    ancestors = _ancestor_pids()
+    completed = subprocess.run(["ps", "-ax", "-o", "pid=,command="], check=True, capture_output=True, text=True)
+    hits = []
     for line in completed.stdout.splitlines():
         text = line.strip()
         if not text:
@@ -613,7 +623,7 @@ def _other_model_processes() -> list[str]:
             continue
         if pid in ancestors:
             continue
-        if any(marker in command for marker in markers):
+        if _is_other_model_command(command):
             hits.append(text)
     return hits
 

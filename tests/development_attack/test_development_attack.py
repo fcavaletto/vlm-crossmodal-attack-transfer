@@ -27,7 +27,7 @@ from development_attack.protocol import (
     step_size,
 )
 from development_attack.report import render_report
-from development_attack.run import _ancestor_pids
+from development_attack.run import _ancestor_pids, _is_other_model_command
 from development_attack.select import select_development
 from development_attack.verify import (
     assert_memory_lines,
@@ -349,6 +349,20 @@ def test_ancestor_pids_include_this_process():
     import os
 
     assert os.getpid() in _ancestor_pids()
+
+
+def test_caffeinate_wrapper_is_not_another_model():
+    wrapped = (
+        "caffeinate -dimsu -- /Users/fedecava/Development/_c0-work/venv-vlm/bin/python "
+        "-u -m development_attack"
+    )
+    assert _is_other_model_command(wrapped) is False
+    assert _is_other_model_command(
+        "/Users/fedecava/Development/_c0-work/venv-vlm/bin/python -u -m development_attack"
+    )
+    assert _is_other_model_command(
+        "/Users/fedecava/Development/_c0-work/venv-vlm/bin/python -m attack_calibration"
+    )
 
 
 def test_fewer_than_six_groups_stops(monkeypatch):
