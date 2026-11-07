@@ -1,50 +1,160 @@
 {
-  "status": "stopped_budget",
-  "stopped_reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget. Available bytes entering the decision: 11093655552. Fresh available bytes: 11093655552. BF16 required bytes: 11509447200. The guard was not lowered.",
-  "stage_b_ran": false,
-  "stage_a_judgment": null,
+  "status": "completed",
+  "stopped_reason": "The listed Stage B budgets finished. No further epsilon was added.",
+  "stage_b_ran": true,
+  "stage_a_judgment": {
+    "passed": true,
+    "meaningful_advantage": true,
+    "budgets": {
+      "0.5/255": {
+        "budget": "0.5/255",
+        "n_scenes": 8,
+        "n_valid": 8,
+        "invalid_scene_ids": [],
+        "min_scenes": 6,
+        "passed": true,
+        "n_raised": 8,
+        "n_beat_negative": 8,
+        "n_beat_random": 8,
+        "median_positive": 0.06979331048205495,
+        "median_negative": -0.013961607590317726,
+        "median_random": 0.0026508388109505177,
+        "reason": null
+      },
+      "1/255": {
+        "budget": "1/255",
+        "n_scenes": 8,
+        "n_valid": 8,
+        "invalid_scene_ids": [],
+        "min_scenes": 6,
+        "passed": true,
+        "n_raised": 8,
+        "n_beat_negative": 8,
+        "n_beat_random": 8,
+        "median_positive": 0.03149448777548969,
+        "median_negative": -0.011547391302883625,
+        "median_random": -0.00023121811682358384,
+        "reason": null
+      },
+      "2/255": {
+        "budget": "2/255",
+        "n_scenes": 8,
+        "n_valid": 8,
+        "invalid_scene_ids": [],
+        "min_scenes": 6,
+        "passed": true,
+        "n_raised": 8,
+        "n_beat_negative": 8,
+        "n_beat_random": 8,
+        "median_positive": 0.050847664941102266,
+        "median_negative": -0.005786403082311153,
+        "median_random": -8.727423846721649e-05,
+        "reason": null
+      },
+      "4/255": {
+        "budget": "4/255",
+        "n_scenes": 8,
+        "n_valid": 8,
+        "invalid_scene_ids": [],
+        "min_scenes": 6,
+        "passed": true,
+        "n_raised": 7,
+        "n_beat_negative": 8,
+        "n_beat_random": 7,
+        "median_positive": 0.024711708538234234,
+        "median_negative": -0.011616974137723446,
+        "median_random": -0.000895233650226146,
+        "reason": null
+      }
+    },
+    "stage_b_allowed": true,
+    "rule": "Every budget needs 6 of 8 strict rises, 6 of 8 strict wins over each control, and a positive median strictly above both control medians. One invalid cell fails that budget."
+  },
   "stage_a_description": {
     "0.5/255": {
-      "n_positive_records": 0,
-      "n_float_loss_increased": 0,
-      "n_directional_agreement": 0,
-      "n_uint8_loss_increased": 0,
-      "n_float_answer_changed": 0,
-      "n_uint8_answer_changed": 0
+      "n_positive_records": 8,
+      "n_float_loss_increased": 8,
+      "n_directional_agreement": 8,
+      "n_uint8_loss_increased": 8,
+      "n_float_answer_changed": 2,
+      "n_uint8_answer_changed": 2
     },
     "1/255": {
-      "n_positive_records": 0,
-      "n_float_loss_increased": 0,
-      "n_directional_agreement": 0,
-      "n_uint8_loss_increased": 0,
-      "n_float_answer_changed": 0,
-      "n_uint8_answer_changed": 0
+      "n_positive_records": 8,
+      "n_float_loss_increased": 8,
+      "n_directional_agreement": 8,
+      "n_uint8_loss_increased": 8,
+      "n_float_answer_changed": 2,
+      "n_uint8_answer_changed": 2
     },
     "2/255": {
-      "n_positive_records": 0,
-      "n_float_loss_increased": 0,
-      "n_directional_agreement": 0,
-      "n_uint8_loss_increased": 0,
-      "n_float_answer_changed": 0,
-      "n_uint8_answer_changed": 0
+      "n_positive_records": 8,
+      "n_float_loss_increased": 8,
+      "n_directional_agreement": 8,
+      "n_uint8_loss_increased": 8,
+      "n_float_answer_changed": 2,
+      "n_uint8_answer_changed": 2
     },
     "4/255": {
-      "n_positive_records": 0,
-      "n_float_loss_increased": 0,
-      "n_directional_agreement": 0,
-      "n_uint8_loss_increased": 0,
-      "n_float_answer_changed": 0,
-      "n_uint8_answer_changed": 0
+      "n_positive_records": 8,
+      "n_float_loss_increased": 7,
+      "n_directional_agreement": 7,
+      "n_uint8_loss_increased": 7,
+      "n_float_answer_changed": 1,
+      "n_uint8_answer_changed": 1
     },
     "gradient_sha256_matches_checkpoint_1_8": {
-      "n_recorded": 0,
-      "n_match": 0,
+      "n_recorded": 8,
+      "n_match": 8,
       "n_mismatch": 0
     }
   },
-  "stage_b_judgment": null,
+  "stage_b_judgment": {
+    "budgets": {
+      "1/255": {
+        "budget": "1/255",
+        "effective": true,
+        "source_eligible": 16,
+        "source_flips": 14,
+        "source_flip_rate": 0.875,
+        "median_uint8_nll_increase": 8.49582623806782,
+        "median_fgsm": 0.07012440008111298,
+        "median_random": -0.0009109118254855275,
+        "median_beats_both_controls": true,
+        "reason": null
+      },
+      "2/255": {
+        "budget": "2/255",
+        "effective": true,
+        "source_eligible": 16,
+        "source_flips": 14,
+        "source_flip_rate": 0.875,
+        "median_uint8_nll_increase": 8.634222473250702,
+        "median_fgsm": 0.1278338455595076,
+        "median_random": 8.137337863445282e-05,
+        "median_beats_both_controls": true,
+        "reason": null
+      },
+      "4/255": {
+        "budget": "4/255",
+        "effective": true,
+        "source_eligible": 16,
+        "source_flips": 15,
+        "source_flip_rate": 0.9375,
+        "median_uint8_nll_increase": 9.107082045869902,
+        "median_fgsm": 0.06751788407564163,
+        "median_random": -0.004925061017274857,
+        "median_beats_both_controls": true,
+        "reason": null
+      }
+    },
+    "effective_at_any_listed_budget": true,
+    "ineffective_at_every_listed_budget": false,
+    "raise_epsilon": false,
+    "objective_changed": false
+  },
   "summary_counts": {
-    "stage_a_scenes_finished": 0,
+    "stage_a_scenes_finished": 8,
     "stage_a_scene_ids": [
       "dev4-ref-01-a",
       "dev4-ref-09-b",
@@ -55,16 +165,23 @@
       "dev4-ref-17-b",
       "dev4-ref-45-b"
     ],
-    "stage_b_ran": false,
+    "stage_b_ran": true,
     "h_star_fitted": false
   },
   "protocol_commit": "fce3480d158298851587a692c56b6e4eebb554a7",
   "protocol_sha256": "2676683793d908c9f5c8af9a46867d39d0ecea18cd5dbbe54144196153c78648",
-  "loaded_model": null,
+  "loaded_model": {
+    "device": "mps",
+    "dtype": "torch.bfloat16",
+    "commit_hash": null,
+    "revision_argument": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "parameters_require_grad": false
+  },
   "budget_recheck_immediately_before_load": {
     "float32": {
       "resident_bytes": 8510128128,
-      "available_bytes": 11093655552,
+      "available_bytes": 15463792640,
       "required_available_bytes": 20871410752,
       "lines_bytes": {
         "os_floor": 6442450944,
@@ -74,18 +191,17 @@
       },
       "binding_line": "calibrated_projection",
       "failed_lines": [
-        "spare_above_weights",
         "calibrated_projection",
         "staging_double_copy"
       ],
       "mps_available": true,
       "permitted": false,
-      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection, staging_double_copy.",
       "dtype": "float32"
     },
     "bfloat16": {
       "resident_bytes": 4255064064,
-      "available_bytes": 11093655552,
+      "available_bytes": 15463792640,
       "required_available_bytes": 11509447200,
       "lines_bytes": {
         "os_floor": 6442450944,
@@ -94,31 +210,42 @@
         "staging_double_copy": 8510128128
       },
       "binding_line": "calibrated_projection",
-      "failed_lines": [
-        "calibrated_projection"
-      ],
+      "failed_lines": [],
       "mps_available": true,
-      "permitted": false,
-      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+      "permitted": true,
+      "reason": "OS-available memory clears every pre-load line.",
       "dtype": "bfloat16"
     }
   },
   "dtype_selection_immediately_before_load": {
-    "dtype": null,
-    "permitted": false,
-    "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+    "dtype": "bfloat16",
+    "permitted": true,
+    "reason": "Float32 failed. The BF16 budget passed and the MPS BF16 probe ran."
   },
-  "available_bytes_entering_decision": 11093655552,
-  "available_bytes_at_decision": 11093655552,
-  "peak_memory": null,
-  "load_seconds": null,
-  "wall_seconds": 1.24,
+  "available_bytes_entering_decision": 15463792640,
+  "available_bytes_at_decision": 15463792640,
+  "peak_memory": {
+    "peak_rss_mb": 692.6,
+    "peak_mps_current_allocated_mb": 4072.9,
+    "peak_mps_driver_allocated_mb": 4749.7,
+    "min_os_available_bytes": 7071186944,
+    "last_snapshot": {
+      "device": "mps",
+      "peak_rss_mb": 692.6,
+      "current_rss_mb": 682.0,
+      "os_available_mb": 10196.2,
+      "mps_driver_allocated_mb": 4749.7,
+      "mps_current_allocated_mb": 4072.9
+    }
+  },
+  "load_seconds": 3.626,
+  "wall_seconds": 7447.295,
   "checkpoint_1_8_finite_difference": {
     "kept": true,
     "replaced_with_a_passing_result": false,
     "note": "Checkpoint 1.8 confirmed one of eight gate pairs, and only at the smaller step. This checkpoint does not rerun that check to overturn it."
   },
   "h_star_fitted": false,
-  "model_from_pretrained_called": false,
+  "model_from_pretrained_called": true,
   "stage_a_sample": "exploratory"
 }
