@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuda-readiness"
+version = "0.1.0"
+description = "Checkpoint 2.0 CUDA environment and run bookkeeping. Does not run attacks."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cuda_readiness*"]
