@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "checksums_ok": true,
+  "checksum_files": 100,
+  "checksum_error": null,
+  "bounds_ok": true,
+  "bound_violations": [],
+  "n_bound_violations": 0,
+  "decisions_ok": true,
+  "illegal_decisions": [],
+  "n_illegal_decisions": 0,
+  "preserved_ok": true,
+  "preserved_changes": [],
+  "attack_constants_ok": true,
+  "attack_constant_errors": [],
+  "memory_lines_ok": true,
+  "memory_line_errors": [],
+  "held_out_scenes_opened": false,
+  "float32_loaded": false,
+  "calibration_overlap": {
+    "present": true,
+    "compared": 128,
+    "n_decision_mismatches": 0,
+    "decision_mismatches": [],
+    "max_abs_linf_after_round_trip": 0.0
+  }
+}
