@@ -1,0 +1,64 @@
+{
+  "answer_prefix": "<|im_end|>\n<|im_start|>assistant\n",
+  "attacks_run": false,
+  "attn_implementation": "eager",
+  "base_commit": "0cd2f2a8e566b6530dcfd4dd7021961b2fc17990",
+  "cuda_numerical_validation": "not_executed",
+  "cuda_wheel": "cu132",
+  "dependency_pins": {
+    "accelerate": "1.15.0",
+    "huggingface_hub": "2.4.0",
+    "num2words": "0.5.14",
+    "numpy": "2.5.4",
+    "pillow": "13.0.0",
+    "psutil": "7.2.2",
+    "pytest": "9.2.0",
+    "python": "3.12.14",
+    "torch": "2.15.0",
+    "torchvision": "0.29.2",
+    "transformers": "5.22.1"
+  },
+  "development_checksums_sha256": "0de22c1f6fe255fd3efa25a4fd80962475df257d5433d3dabb8b2e2a96c2d993",
+  "development_manifest": "fixtures/development_v4/manifest.jsonl",
+  "development_manifest_sha256": "0d9d592b6700acf610453e4f4adf639fc778b4efb24530f60deb01045440d597",
+  "development_scene_count": 96,
+  "dtype": "bfloat16",
+  "h_star_fitted": false,
+  "held_out_scenes_opened": false,
+  "images_opened": false,
+  "label": "DEVELOPMENT ONLY",
+  "model_from_pretrained_called": false,
+  "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "nvidia_driver_minimum": "580",
+  "protocol_commit": "fce3480d158298851587a692c56b6e4eebb554a7",
+  "protocol_sha256": "2676683793d908c9f5c8af9a46867d39d0ecea18cd5dbbe54144196153c78648",
+  "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+  "schema": "cuda_readiness.manifest.v1",
+  "science_sha256": {
+    "src/attack_feasibility/attack_feasibility/score.py": "c60c9ef6b2f53d0ae3e384ebf86dd7793bbf59cc5ce791c6fb7662812b5c84f4",
+    "src/attack_feasibility/attack_feasibility/stage_a.py": "737ad280b8047fe33e5f1a49b27a5a11f2e2a8aafed2f4936b45bbd1f016a9c9",
+    "src/attack_feasibility/attack_feasibility/stage_b.py": "43a1b97a23ba2b64a7f7fb5d9382c8e7fa1e8f59c651719d5bf7f8c2608bdc58",
+    "src/attack_feasibility/attack_feasibility/steps.py": "9ef03ff8a1f687bc861586c0550719d263a26c0843e54d133ad911bed87bc29e",
+    "src/choice_eval/choice_eval/decision.py": "42675180cf37b3fccb122f418fe9863615d30b3229a1b44a8d0f2f5025d5dd19",
+    "src/dev_pilot/dev_pilot/lock.py": "7e2f928dca457d611863eda9fd24c70c2378491f5208a0780b8e3a180a0c4382",
+    "src/dev_pilot/dev_pilot/scoring.py": "9362182f1f1c598af13939a1a788de14cf0e89c694a6e1ce12b0653b5d2c749c",
+    "src/qwen_rgb/qwen_rgb/constraints.py": "1d89e8f8a9a60165ba29b04f268048497d0fc6e417b9205f1905e3cb2ce381c8",
+    "src/qwen_rgb/qwen_rgb/loss.py": "425e0ba0e1fd4b493fc128cb615c56a4502f0bf4aedb001acaf3c28198832c7b",
+    "src/qwen_rgb/qwen_rgb/rgb_path.py": "c3bbdaa7527d02a8e33f08cbd6d139836639ed0ca7555d885b62783d54bcfd4b"
+  },
+  "token_ids": {
+    "blue": [
+      12203
+    ],
+    "green": [
+      13250
+    ],
+    "red": [
+      1151
+    ],
+    "yellow": [
+      27869
+    ]
+  },
+  "torch_index_url": "https://download.pytorch.org/whl/cu132"
+}

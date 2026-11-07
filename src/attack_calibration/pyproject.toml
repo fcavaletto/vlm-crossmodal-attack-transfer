@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attack-calibration"
+version = "0.1.0"
+description = "Checkpoint 2.0 development attack calibration. Does not fit H*."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["attack_calibration*"]
