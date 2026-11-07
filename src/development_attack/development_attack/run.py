@@ -569,8 +569,25 @@ def _resident_alive(path: Path) -> bool:
     return True
 
 
+def _ancestor_pids() -> set[int]:
+    """This process and the wrappers that launched it. They are not a second model."""
+    ancestors = set()
+    pid = os.getpid()
+    for _ in range(8):
+        ancestors.add(pid)
+        try:
+            parent_text = subprocess.check_output(["ps", "-o", "ppid=", "-p", str(pid)], text=True).strip()
+            parent = int(parent_text)
+        except (subprocess.CalledProcessError, ValueError, OSError):
+            break
+        if parent <= 1 or parent in ancestors:
+            break
+        pid = parent
+    return ancestors
+
+
 def _other_model_processes() -> list[str]:
-    me = os.getpid()
+    ancestors = _ancestor_pids()
     completed = subprocess.run(["ps", "-ax", "-o", "pid=,command="], check=True, capture_output=True, text=True)
     hits = []
     markers = (
@@ -594,7 +611,7 @@ def _other_model_processes() -> list[str]:
             pid = int(pid_text)
         except ValueError:
             continue
-        if pid == me:
+        if pid in ancestors:
             continue
         if any(marker in command for marker in markers):
             hits.append(text)

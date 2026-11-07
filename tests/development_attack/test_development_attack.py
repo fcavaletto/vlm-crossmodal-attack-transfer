@@ -27,6 +27,7 @@ from development_attack.protocol import (
     step_size,
 )
 from development_attack.report import render_report
+from development_attack.run import _ancestor_pids
 from development_attack.select import select_development
 from development_attack.verify import (
     assert_memory_lines,
@@ -342,6 +343,12 @@ def test_an_unfinished_run_does_not_apply_the_floor():
     assert result["h_star_estimated"] is False
     assert result["stop_reason"] == "stopped_budget"
     assert "did not finish" in result["h_star_statement"]
+
+
+def test_ancestor_pids_include_this_process():
+    import os
+
+    assert os.getpid() in _ancestor_pids()
 
 
 def test_fewer_than_six_groups_stops(monkeypatch):
