@@ -1,0 +1,10 @@
+{
+  "header": "dev4-ref-00-a  PGD  4/255  7 steps",
+  "display_gain": 32,
+  "stage": "B",
+  "scene_id": "dev4-ref-00-a",
+  "budget": "4/255",
+  "mode": "pgd",
+  "replaced_by_stage_b": true,
+  "steps": 7
+}
