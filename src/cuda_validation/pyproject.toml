@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cuda-validation"
+version = "0.1.0"
+description = "Checkpoint 2.1 one-scene MPS versus CUDA validation. Does not launch a pod and does not change the attack."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cuda_validation*"]

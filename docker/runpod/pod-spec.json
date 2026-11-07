@@ -1,0 +1,76 @@
+{
+  "schema": "study2.runpod_pod_spec.v1",
+  "launched": false,
+  "billable_gpu_launched": false,
+  "apiCallMade": false,
+  "doNotPost": true,
+  "name": "study2-checkpoint-2.1-cuda-validation",
+  "provider": "RunPod",
+  "cloud": "Secure Cloud",
+  "gpu": {
+    "name": "NVIDIA L4",
+    "count": 1,
+    "vram": "24 GB",
+    "hostRamListing": "50 GB",
+    "vcpusListing": 12,
+    "computeCapability": "8.9",
+    "hourlyRateUsd": "0.59",
+    "pageUpdated": "2026-11-04",
+    "priceReadOn": "2026-11-07",
+    "source": "https://www.runpod.io/pricing",
+    "corroboration": "https://cirrun.com/providers/runpod.html",
+    "minCudaVersion": "13.2",
+    "nvidiaDriverMinimum": 580
+  },
+  "rest": {
+    "method": "POST",
+    "path": "/v2/pods",
+    "doNotPost": true,
+    "body": {
+      "name": "study2-checkpoint-2.1-cuda-validation",
+      "cloudType": "SECURE",
+      "gpuCount": 1,
+      "gpuType": "NVIDIA L4",
+      "gpu": {
+        "type": "NVIDIA L4",
+        "count": 1,
+        "minCudaVersion": "13.2"
+      },
+      "containerDiskInGb": 40,
+      "volumeInGb": 0,
+      "env": {
+        "HF_HOME": "/models",
+        "HF_HUB_OFFLINE": "1"
+      }
+    }
+  },
+  "networkVolume": {
+    "createdByThisCommit": false,
+    "mountPath": "/models",
+    "note": "Mount a cache that already contains Qwen/Qwen3-VL-2B-Instruct revision 89644892e4d85e24eaac8bacfd4f463576704203. The image does not download weights."
+  },
+  "image": {
+    "dockerfile": "docker/cuda/Dockerfile",
+    "tag": "study2-cuda-readiness",
+    "built": false,
+    "pushed": false,
+    "defaultCommand": ["preflight"]
+  },
+  "entrypoint": ["python"],
+  "startCommand": ["-m", "cuda_validation", "protocol"],
+  "experimentCommand": [
+    "python",
+    "-m",
+    "cuda_validation",
+    "measure",
+    "--device",
+    "cuda",
+    "--output",
+    "/opt/study/docs/checkpoint-2.1/cuda_validation/cuda_scene.json"
+  ],
+  "experimentCommandExecuted": false,
+  "forbiddenCommands": [
+    "python -m attack_feasibility",
+    "python -m attack_calibration"
+  ]
+}
