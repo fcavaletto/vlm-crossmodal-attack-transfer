@@ -80,6 +80,7 @@ def _run(tmp_path: Path, *, sidecar: bool = True, **fake: str) -> tuple[int, lis
         "STUDY_ROOT": str(study),
         "JOB_PYTHON": str(bin_dir / "python"),
         "JOB_EXIT_AFTER": "1",
+        "JOB_RESULT_GRACE_SECONDS": "0",
         "JOB_DEADLINE_SECONDS": fake.pop("deadline", "60"),
         **fake,
     }
@@ -158,6 +159,35 @@ def test_weight_check_rejects_a_changed_file(tmp_path):
     (folder / "config.json").write_text('{"changed": 1}')
     assert fetch.verify(tmp_path, {"config.json": good})["all_match"] is False
     assert fetch.verify(tmp_path, {"missing.json": good})["all_match"] is False
+
+
+def test_terminal_line_comes_before_the_grace_and_the_self_stop(tmp_path):
+    _, lines = _run(tmp_path)
+    order = [i for i, line in enumerate(lines) if line.startswith(("=== JOB_DONE", "=== RESULT_GRACE", "self_stop: fake"))]
+    assert [lines[i].split()[0] + " " + lines[i].split()[1] for i in order] == ["=== JOB_DONE", "=== RESULT_GRACE", "self_stop: fake"]
+
+
+def _self_stop_module():
+    spec = importlib.util.spec_from_file_location("self_stop", ROOT / "docker/cuda/self_stop.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.mark.parametrize(("codes", "rc", "tried"), [
+    ({"stop": 200}, 0, ["stop"]),
+    ({"stop": 403, "terminate": 204}, 0, ["stop", "terminate"]),
+    ({"stop": 403, "terminate": 403}, 1, ["stop", "terminate"]),
+])
+def test_self_stop_tries_stop_before_terminate_and_never_prints_the_key(monkeypatch, capsys, codes, rc, tried):
+    module = _self_stop_module()
+    calls = []
+    monkeypatch.setattr(module, "_action", lambda pod, key, action: calls.append(action) or codes[action])
+    monkeypatch.setenv("RUNPOD_POD_ID", "pod123")
+    monkeypatch.setenv("RUNPOD_API_KEY", "rpa_SECRETVALUE")
+    assert module.main() == rc
+    assert calls == tried
+    assert "SECRETVALUE" not in capsys.readouterr().out
 
 
 def test_bash_is_available():

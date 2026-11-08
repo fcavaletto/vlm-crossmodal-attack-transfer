@@ -92,12 +92,15 @@
     "python -m attack_feasibility",
     "python -m attack_calibration"
   ],
-  "resultExport": "Pod log stream (stream-pod-logs or the console). Sections are delimited by '=== BEGIN <file>' and '=== END <file>'. The last job line is exactly one of '=== JOB_DONE status=ok' or '=== JOB_FAILED step=<s> rc=<n> reason=<r>'. Only JOB_DONE status=ok is a usable result.",
+  "resultExport": "Pod log stream only. Sections are delimited by '=== BEGIN <file>' and '=== END <file>'. The terminal job line is exactly one of '=== JOB_DONE status=ok' or '=== JOB_FAILED step=<s> rc=<n> reason=<r>'. Only JOB_DONE status=ok is a usable result. docker/runpod/capture_logs.sh saves the stream on the operator machine; the job then waits JOB_RESULT_GRACE_SECONDS (120) before stopping itself. RunPod does not document that pod logs outlive termination.",
   "shutdown": {
-    "inPod": "Every step runs under timeout against JOB_DEADLINE_MINUTES (45). A watchdog calls self_stop.py 5 minutes after that. After the terminal line the job calls self_stop.py: REST v2 terminate, then stop, with the pod-scoped RUNPOD_API_KEY. If both are refused it prints SELF_STOP_FAILED and sleeps instead of exiting, so the container never reruns the job.",
-    "operator": "Start docker/runpod/deadline_guard.sh <pod-id> 60 on the operator machine right after create. It terminates that pod id at 60 minutes.",
-    "notAvailable": "REST v2 has no stop timer. runpodctl --stop-after/--terminate-after were never enforced by the backend and were removed in runpodctl v2.12.0; they are not a cost cap.",
-    "unverified": "Whether the pod-scoped key may terminate (not only stop) has not been checked on a live pod. Either action ends GPU billing."
+    "inPod": "Every step runs under timeout against JOB_DEADLINE_MINUTES (45). A watchdog calls self_stop.py 5 minutes after that. After the terminal line and the 120 s result grace, self_stop.py asks REST v2 to stop the pod, then to terminate it, with the pod-scoped RUNPOD_API_KEY. If both are refused it prints SELF_STOP_FAILED and sleeps instead of exiting, so the container never reruns the job.",
+    "whyStopFirst": "The pod has no volume mount, and RunPod does not bill a stopped pod's container disk, so a stopped pod costs $0. Stopping keeps the pod record (and its log) for the operator, who terminates it after the log is saved.",
+    "operator": "Right after create, start docker/runpod/capture_logs.sh <pod-id> <file> and docker/runpod/deadline_guard.sh <pod-id> 60. The guard terminates that pod id at 60 minutes.",
+    "accountCap": "The prepaid balance is the hard ceiling: at $0 RunPod stops all pods, and pods without a network volume are terminated. RunPod requires one hour of credit to create the pod (about $0.59 here). The account spend limit ($80/h by default) is not a useful cap at this scale.",
+    "notAvailable": "REST v2 has no stop timer. runpodctl --stop-after/--terminate-after are not relied on (see CUDA_VALIDATION.md).",
+    "documented": "In-pod stop: RunPod documents `runpodctl pod stop $RUNPOD_POD_ID` from inside the pod (docs.runpod.io/pods/manage-pods).",
+    "unverified": "Whether the pod-scoped key may call the REST v2 action route (stop or terminate) has not been checked on a live pod. If it is refused, the deadline guard and the balance cap remain."
   },
   "estimatedCostUsd": {
     "ratePerHour": "0.59",

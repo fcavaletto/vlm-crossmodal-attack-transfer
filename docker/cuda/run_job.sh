@@ -15,7 +15,12 @@
 #   1. Every step runs under `timeout` against one deadline (JOB_DEADLINE_MINUTES).
 #   2. A separate watchdog calls self_stop.py 5 minutes after that deadline,
 #      even if this shell is stuck.
-#   3. After the terminal line the job calls self_stop.py (terminate, then stop).
+#   3. After the terminal line the job waits JOB_RESULT_GRACE_SECONDS (120) so the
+#      operator's log capture (docker/runpod/capture_logs.sh) can read every
+#      line, then calls self_stop.py (stop, then terminate). Stop comes first:
+#      with no volume mounted a stopped pod costs nothing, and the pod record,
+#      and with it the log, survives for the operator. RunPod does not document
+#      that logs outlive termination.
 #   4. If RunPod refuses both, the job sleeps instead of exiting (an exit could
 #      restart the container and repeat the run) and prints SELF_STOP_FAILED.
 #      The operator-side docker/runpod/deadline_guard.sh is the last guard.
@@ -38,6 +43,9 @@ stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 section() { echo "=== BEGIN $1"; cat "$2" 2>/dev/null || echo "(missing)"; echo "=== END $1"; }
 
 end_pod() {
+  local grace="${JOB_RESULT_GRACE_SECONDS:-120}"
+  echo "=== RESULT_GRACE seconds=$grace $(stamp): the log is the only copy of this run; capture it now"
+  sleep "$grace"
   if "$PY" "$TOOLS/self_stop.py"; then
     echo "=== SELF_STOP_REQUESTED $(stamp)"
   else

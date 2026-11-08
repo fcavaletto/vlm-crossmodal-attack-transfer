@@ -226,3 +226,17 @@ Not yet verified on a live pod:
 The comparison now requires the MPS sidecar to be in the image, so the local MPS one-scene measurement must come first.
 
 **Why the weights moved to run time.** Qwen3-VL-2B-Instruct is Apache-2.0 and not gated, so redistribution is allowed. Baking it in would still republish 4.3 GB of third-party weights under this account's public GHCR package. The Hugging Face repository has no LICENSE file to ship alongside them. It would also make a standard Actions runner's disk tight with the CUDA wheels. Pinning is no weaker: the revision plus a sha256 for every file is checked before loading. The costs are a dependency on Hugging Face at run time and about 1–3 minutes of download at $0.59/hr, which is under $0.03. A download failure ends as `JOB_FAILED step=weights`.
+
+## Result preservation and stop order, 2026-11-08 (third pass)
+
+A defect in the second pass: the job terminated the pod right after the terminal line. The log stream is the only copy of the results, and RunPod documents no log retention after termination. Worker logs are documented as deleted when the worker terminates. A fast self-terminate could therefore have destroyed a successful run before anyone read it.
+
+Fixes, in `run_job.sh`, `self_stop.py`, and the new `docker/runpod/capture_logs.sh`:
+- **Stop before terminate.** The pod mounts no volume, and RunPod does not bill a stopped pod's container disk, so a stopped pod costs $0. Stopping keeps the pod record for the operator. Terminate is now the fallback.
+- **Result grace.** After the terminal line the job prints `=== RESULT_GRACE seconds=120` and waits before stopping itself.
+- **Operator capture.** `capture_logs.sh <pod-id> <file>` follows the REST v2 SSE log stream with a 5,000-line backfill, writes every event, resumes on a dropped connection, and exits at the terminal line. It only reads.
+- **Tests.** The terminal line comes before the grace, which comes before the self-stop. `self_stop.py` tries `stop` before `terminate` and never prints the key.
+
+What is documented and what is not:
+- **Documented:** an in-pod stop through `runpodctl pod stop $RUNPOD_POD_ID` (docs.runpod.io/pods/manage-pods). Every pod gets a pod-scoped `RUNPOD_API_KEY`. A stopped pod's container disk is not billed. At a $0 balance, RunPod stops all pods and terminates those without a network volume.
+- **Not documented:** whether the pod-scoped key may call `POST /v2/pods/{id}/action`. If it may not, the job prints `SELF_STOP_FAILED` and sleeps, and the 60-minute operator guard and the account balance remain.
