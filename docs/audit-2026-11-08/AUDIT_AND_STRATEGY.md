@@ -117,3 +117,20 @@ What not to do: refit H* on 2.1 with fewer covariates, Firth, or a lower floor; 
 | Still open | The MPS sidecar must be measured locally first (loads weights; needs your OK). `measure` refuses any GPU but an L4. |
 
 GPU choice, from a live RunPod capacity read on 2026-11-08 (Secure Cloud): L4 24 GB and RTX A6000 48 GB are both $0.59/hr, both `Low` stock on CUDA 13.2 hosts and `Out` on 12.8/13.0. At the same price the A6000 has twice the memory and about 2.5× the memory bandwidth (768 vs 300 GB/s), which usually decides speed for a 2B model at batch 1. It would also fit 7–8B VLMs in bf16 for Option E. It is Ampere (8.6), so bf16 works. The current gate refuses it. Allowing it is a protocol amendment to write before any CUDA measurement. Expected cost of the one-scene validation: under $0.50.
+
+## 8. Corrections, 2026-11-08 (second pass)
+
+Found while preparing the Checkpoint 2.2 draft. The sections above are left as written.
+
+- **§1 and §3.1, ties.** There are 9 exact ties in 1,536 decisions, not 6.
+  - The label won 6 and lost 3: `dev4-ref-02-a` FGSM, `dev4-ref-27-b` PGD-7, `dev4-ref-28-b` FGSM. "Every tie went to the label" is wrong.
+  - The PGD-3 figures are right: 3 ties, all won by the label, and 57/91 and 54/57 under "a tie is not the label."
+  - Under that rule, PGD-7 is 84/91 source and 84/84 transfer, and FGSM is 18/91 and 11/18.
+  - All 9 ties are listed in `precision_check.json`.
+- **§3.1, float32.** "Upcast the final logits row" would not remove the ties. The scorer already does it (`src/dev_pilot/dev_pilot/scoring.py:25`).
+  - The grid is created when the final projection writes its output in bf16. Every recorded margin is a multiple of 1/8, most of 1/4.
+  - Removing the grid needs the final projection computed in float32. Even then, the bf16 error inside the network remains.
+  - See `precision_check.py`.
+- **§4, continuous power at 128 groups.** It was interpolated as "about 0.6–0.9 at R² 0.02." The dedicated simulation (`docs/checkpoint-2.2-draft/power_continuous.py`) gives about 0.50 at R² 0.02 and about 0.89 at R² 0.05, with a wild cluster bootstrap and development-shaped errors.
+- **§6.2, sample.** "The proposal's 256 sealed scenes fit" assumed a generator that can draw them. `scene_v4` is a closed-form 48-group design with no sampling, so a sampled generator is needed first. See `docs/checkpoint-2.2-draft/PROTOCOL_DRAFT.md` §4.
+- **§2, tests.** The two stale assertions were corrected after confirming they are obsolete: the fixture allowlist predates `development_v4` (commit `44aafcf`). Every test directory on this branch now passes.
