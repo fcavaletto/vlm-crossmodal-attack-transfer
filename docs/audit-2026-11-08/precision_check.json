@@ -1,0 +1,138 @@
+{
+  "schema": "audit.precision_check.v1",
+  "records": {
+    "margins": 1536,
+    "finest_grid_1_over_k": {
+      "1": 391,
+      "2": 326,
+      "4": 682,
+      "8": 137
+    },
+    "off_every_grid_to_1_over_128": 0,
+    "exact_ties": 9,
+    "ties_label_won": 6,
+    "ties_label_lost": 3,
+    "ties": [
+      {
+        "scene_id": "dev4-ref-02-a",
+        "method": "fgsm",
+        "steps": 1,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "red",
+        "decision": "green",
+        "label_won_tie_break": false
+      },
+      {
+        "scene_id": "dev4-ref-06-a",
+        "method": "fgsm",
+        "steps": 1,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "blue",
+        "decision": "blue",
+        "label_won_tie_break": true
+      },
+      {
+        "scene_id": "dev4-ref-11-a",
+        "method": "fgsm",
+        "steps": 1,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "blue",
+        "decision": "blue",
+        "label_won_tie_break": true
+      },
+      {
+        "scene_id": "dev4-ref-21-a",
+        "method": "pgd",
+        "steps": 7,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "green",
+        "decision": "green",
+        "label_won_tie_break": true
+      },
+      {
+        "scene_id": "dev4-ref-27-b",
+        "method": "pgd",
+        "steps": 7,
+        "part": "perturbed",
+        "context": "neutral",
+        "label": "yellow",
+        "decision": "red",
+        "label_won_tie_break": false
+      },
+      {
+        "scene_id": "dev4-ref-28-b",
+        "method": "fgsm",
+        "steps": 1,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "yellow",
+        "decision": "green",
+        "label_won_tie_break": false
+      },
+      {
+        "scene_id": "dev4-ref-29-b",
+        "method": "pgd",
+        "steps": 3,
+        "part": "perturbed",
+        "context": "neutral",
+        "label": "green",
+        "decision": "green",
+        "label_won_tie_break": true
+      },
+      {
+        "scene_id": "dev4-ref-33-b",
+        "method": "pgd",
+        "steps": 3,
+        "part": "perturbed",
+        "context": "helpful_nonrevealing",
+        "label": "green",
+        "decision": "green",
+        "label_won_tie_break": true
+      },
+      {
+        "scene_id": "dev4-ref-38-a",
+        "method": "pgd",
+        "steps": 3,
+        "part": "perturbed",
+        "context": "neutral",
+        "label": "green",
+        "decision": "green",
+        "label_won_tie_break": true
+      }
+    ]
+  },
+  "synthetic": {
+    "trials": 20000,
+    "true_margin_sd": 0.9920765539612323,
+    "current_path_exact_ties": 1946,
+    "current_path_on_quarter_grid": 1,
+    "upcast_after_rounding_identical_to_current": true,
+    "fp32_readout_exact_ties": 0,
+    "sign_flips_vs_reference": {
+      "current_path": 1946,
+      "fp32_readout": 16
+    },
+    "abs_error_vs_reference_sd": {
+      "current_path": 0.10233505832819063,
+      "fp32_readout": 0.003180271278633781
+    },
+    "note": "fp32_readout still carries the error from rounding W and h to bf16. In Qwen, h is also the output of 28 bf16 layers, whose accumulated error this toy does not model."
+  },
+  "endpoint_resolution": {
+    "scenes": 96,
+    "delta_helpful_nll_sd": 2.9634382767920857,
+    "delta_helpful_nll_quantiles": {
+      "0.1": 0.10331998416222632,
+      "0.25": 0.2841018093749881,
+      "0.5": 2.178157673217356,
+      "0.75": 4.905749295605347,
+      "0.9": 7.905694432556629
+    },
+    "rounding_sd_upper_bound_per_delta": 0.07987704052814545,
+    "rounding_share_of_variance_upper_bound": 0.0007265276702431326
+  }
+}

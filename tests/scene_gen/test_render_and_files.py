@@ -135,7 +135,8 @@ def test_committed_sample_matches_regeneration_and_checksums(repo_root: Path, ge
     names = sorted(path.name for path in (repo_root / "fixtures").iterdir())
     # development is Checkpoint 1. development_v2 is Checkpoint 1.5.
     # development_simple is Checkpoint 1.6. A sealed, test, or held-out directory still fails.
-    assert names == ["development", "development_simple", "development_v2"]
+    # development_v4 is the Checkpoint 1.7 referent-color sample (commit 44aafcf), all rows `development`.
+    assert names == ["development", "development_simple", "development_v2", "development_v4"]
 
 
 def test_package_does_not_sample_download_or_import_models(repo_root: Path) -> None:
