@@ -1,0 +1,63 @@
+{
+ "schema": "checkpoint-2.2-draft.spline_check.v1",
+ "seed": 20261110,
+ "c": 0.25,
+ "results": [
+  {
+   "world": "null, linear magnitude",
+   "G": 256,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.0233,
+   "M1s_wcr_rejection": 0.0253
+  },
+  {
+   "world": "null, linear magnitude",
+   "G": 384,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.028,
+   "M1s_wcr_rejection": 0.0247
+  },
+  {
+   "world": "null + quadratic magnitude (1 nat/SD)",
+   "G": 256,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.106,
+   "M1s_wcr_rejection": 0.0273
+  },
+  {
+   "world": "null + quadratic magnitude (1 nat/SD)",
+   "G": 384,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.118,
+   "M1s_wcr_rejection": 0.0233
+  },
+  {
+   "world": "null + tanh magnitude (1 nat/SD)",
+   "G": 256,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.006,
+   "M1s_wcr_rejection": 0.0233
+  },
+  {
+   "world": "null + tanh magnitude (1 nat/SD)",
+   "G": 384,
+   "reps": 1500,
+   "M1_wcr_rejection": 0.004,
+   "M1s_wcr_rejection": 0.02
+  },
+  {
+   "world": "M1 world, r = 1",
+   "G": 256,
+   "reps": 800,
+   "M1_wcr_rejection": 0.71,
+   "M1s_wcr_rejection": 0.7087
+  },
+  {
+   "world": "M1 world, r = 1",
+   "G": 384,
+   "reps": 800,
+   "M1_wcr_rejection": 0.8775,
+   "M1s_wcr_rejection": 0.8688
+  }
+ ]
+}

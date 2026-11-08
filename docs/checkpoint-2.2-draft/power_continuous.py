@@ -1,4 +1,6 @@
-"""Power for the draft Checkpoint 2.2 continuous endpoint. PLANNING ONLY.
+"""SUPERSEDED by sample_size.py (draft v2). Kept for the record.
+
+Power for the draft Checkpoint 2.2 continuous endpoint. PLANNING ONLY.
 
 Inputs, all already committed:
 - Predictors: the Checkpoint 1.8 clean-image scalars for the 96 development_v4
