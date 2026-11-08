@@ -26,38 +26,50 @@
     "method": "POST",
     "path": "/v2/pods",
     "doNotPost": true,
+    "schemaReadOn": "2026-11-08 (describe-tool create-pod, RunPod MCP)",
+    "note": "v2 field names. The previous body used v1/GraphQL names (gpuType, gpuCount, cloudType, containerDiskInGb, volumeInGb) and had no image, which v2 requires.",
     "body": {
       "name": "study2-checkpoint-2.1-cuda-validation",
-      "cloudType": "SECURE",
-      "gpuCount": 1,
-      "gpuType": "NVIDIA L4",
+      "cloud": "SECURE",
+      "image": "ghcr.io/fcavaletto/study2-cuda-readiness@sha256:<digest from the build workflow>",
       "gpu": {
-        "type": "NVIDIA L4",
+        "id": "NVIDIA L4",
         "count": 1,
         "minCudaVersion": "13.2"
       },
-      "containerDiskInGb": 40,
-      "volumeInGb": 0,
+      "disk": 40,
+      "args": "{\"entrypoint\":[\"/bin/bash\"],\"cmd\":[\"/opt/study/run_job.sh\"]}",
       "env": {
         "HF_HOME": "/models",
-        "HF_HUB_OFFLINE": "1"
+        "HF_HUB_OFFLINE": "1",
+        "TRANSFORMERS_OFFLINE": "1"
       }
     }
   },
   "networkVolume": {
+    "required": false,
     "createdByThisCommit": false,
-    "mountPath": "/models",
-    "note": "Mount a cache that already contains Qwen/Qwen3-VL-2B-Instruct revision 89644892e4d85e24eaac8bacfd4f463576704203. The image does not download weights."
+    "note": "Weights are baked into the image at /models (pinned revision, sha256-checked at build). No network volume or paid storage is needed."
   },
   "image": {
     "dockerfile": "docker/cuda/Dockerfile",
     "tag": "study2-cuda-readiness",
     "built": false,
     "pushed": false,
-    "defaultCommand": ["preflight"]
+    "defaultCommand": [
+      "preflight"
+    ],
+    "weightsBaked": true,
+    "jobScript": "docker/cuda/run_job.sh",
+    "buildWorkflow": ".github/workflows/cuda-image.yml",
+    "registry": "ghcr.io (public package, so no registry credential)"
   },
-  "entrypoint": ["python"],
-  "startCommand": ["-m", "cuda_validation", "protocol"],
+  "entrypoint": [
+    "/bin/bash"
+  ],
+  "startCommand": [
+    "/opt/study/run_job.sh"
+  ],
   "experimentCommand": [
     "python",
     "-m",
@@ -72,5 +84,12 @@
   "forbiddenCommands": [
     "python -m attack_feasibility",
     "python -m attack_calibration"
-  ]
+  ],
+  "resultExport": "Pod log stream (stream-pod-logs or the console). Sections are delimited by '=== BEGIN <file>' and '=== END <file>'. The job prints JOB_DONE when finished.",
+  "shutdown": "The job sleeps after JOB_DONE so the container never exits and reruns. Delete the pod as soon as JOB_DONE and the sections are saved. REST v2 has no stop timer; a pod created with runpodctl can set --terminate-after as a hard cost cap.",
+  "estimatedCostUsd": {
+    "ratePerHour": "0.59",
+    "expectedMinutes": "15-30 including image pull",
+    "expectedTotal": "under 0.50"
+  }
 }

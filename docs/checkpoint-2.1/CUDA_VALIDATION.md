@@ -183,3 +183,24 @@ python -m cuda_validation compare \
 ```
 
 Stop the pod after the CUDA sidecar is copied off. The GPU-hour rate applies until the machine is shut down.
+
+## Deployment fixes, 2026-11-08 (before any measurement)
+
+Added in review, before any pod, image build, or measurement. They change how the image is built and run, not the attack, the scene, the gate, or the comparison.
+
+| Blocker | Evidence | Fix |
+| --- | --- | --- |
+| Weights had no provisioning path. `/models` needed a network volume that nothing created, and `HF_HUB_OFFLINE=1` blocks a download. | Pod spec `volumeInGb: 0`, `networkVolume.createdByThisCommit: false`. | A build stage downloads revision `89644892…` and checks `model.safetensors` against sha256 `7de1838c…` (the LFS blob id in the Mac cache). The final image holds it at `/models`. No network volume or paid storage. |
+| The scene and prompt-hash files were not in the image. | `measure` opens `fixtures/development_v4/images/dev4-ref-00-a.png` and the Checkpoint 1.7 `predictions.jsonl`. Neither was copied. | Both are copied. |
+| The start command crashed. | `cuda_validation protocol` in the image layout raised `FileNotFoundError` for `docs/checkpoint-2.0/cuda/manifest.json`. | That file and `docker/runpod/pod-spec.json` are copied. `tests/cuda_validation/test_container_layout.py` rebuilds the image tree from the COPY lines and runs `protocol` inside it. It fails on the old Dockerfile and passes on this one. |
+| The pod body was not a v2 request. | It used `gpuType`, `gpuCount`, `cloudType`, `containerDiskInGb`, `volumeInGb` and had no `image`, which v2 requires. | Rewritten with v2 fields from the live `create-pod` schema: `image`, `gpu.id`, `gpu.minCudaVersion`, `disk`, `args`, `env`. |
+| No way to get results off the pod, and no shutdown plan. | The container disk is wiped on stop or restart. REST v2 has no stop timer. | `docker/cuda/run_job.sh` runs preflight, `measure`, and, if an MPS sidecar was baked in, `compare` on the pod. It prints each JSON between `=== BEGIN`/`=== END` markers in the pod log, prints `JOB_DONE`, then sleeps so an exit cannot restart the job. The operator saves the log and deletes the pod. |
+| No image registry or build machine. | This Mac has no Docker client. | `.github/workflows/cuda-image.yml` builds and pushes to GHCR, manual trigger only. Pin the printed digest in the pod body. GHCR packages start private: make the package public or add a registry credential. |
+
+The image default command is still `preflight`. The job runs only through the pod's `args` override.
+
+Still open:
+
+- The MPS sidecar must be measured on the Mac first and placed in `docs/checkpoint-2.1/cuda_validation/` before the image is built, so that `compare` runs on the pod. The 2.4 MB gradient is too large to move reliably through the log.
+- `measure` accepts only an L4 at capability 8.9 (`is_quoted_l4`). An RTX A6000 (capability 8.6, 48 GB, same $0.59 rate in the 2026-11-08 read) would be refused. Allowing it is a protocol change. It should be written down before any measurement, not after.
+- Secure Cloud L4 and RTX A6000 stock was `Low` on CUDA 13.2 hosts and `Out` on 12.8 and 13.0 in the 2026-11-08 capacity read. The image needs 13.2 or newer.
