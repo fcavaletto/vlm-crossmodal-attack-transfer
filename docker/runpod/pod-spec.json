@@ -42,14 +42,15 @@
       "env": {
         "HF_HOME": "/models",
         "HF_HUB_OFFLINE": "1",
-        "TRANSFORMERS_OFFLINE": "1"
+        "TRANSFORMERS_OFFLINE": "1",
+        "JOB_DEADLINE_MINUTES": "45"
       }
     }
   },
   "networkVolume": {
     "required": false,
     "createdByThisCommit": false,
-    "note": "Weights are baked into the image at /models (pinned revision, sha256-checked at build). No network volume or paid storage is needed."
+    "note": "No network volume or paid storage. The pod downloads the pinned Qwen files to its container disk and checks every sha256 against docker/cuda/qwen_files.sha256 before measuring."
   },
   "image": {
     "dockerfile": "docker/cuda/Dockerfile",
@@ -59,10 +60,16 @@
     "defaultCommand": [
       "preflight"
     ],
-    "weightsBaked": true,
+    "weightsBaked": false,
     "jobScript": "docker/cuda/run_job.sh",
     "buildWorkflow": ".github/workflows/cuda-image.yml",
-    "registry": "ghcr.io (public package, so no registry credential)"
+    "registry": "ghcr.io (public package, so no registry credential)",
+    "weights": {
+      "source": "Hugging Face Qwen/Qwen3-VL-2B-Instruct, revision 89644892e4d85e24eaac8bacfd4f463576704203, license apache-2.0, not gated",
+      "fetchedBy": "docker/cuda/fetch_weights.py",
+      "manifest": "docker/cuda/qwen_files.sha256",
+      "downloadGb": 4.3
+    }
   },
   "entrypoint": [
     "/bin/bash"
@@ -85,11 +92,17 @@
     "python -m attack_feasibility",
     "python -m attack_calibration"
   ],
-  "resultExport": "Pod log stream (stream-pod-logs or the console). Sections are delimited by '=== BEGIN <file>' and '=== END <file>'. The job prints JOB_DONE when finished.",
-  "shutdown": "The job sleeps after JOB_DONE so the container never exits and reruns. Delete the pod as soon as JOB_DONE and the sections are saved. REST v2 has no stop timer; a pod created with runpodctl can set --terminate-after as a hard cost cap.",
+  "resultExport": "Pod log stream (stream-pod-logs or the console). Sections are delimited by '=== BEGIN <file>' and '=== END <file>'. The last job line is exactly one of '=== JOB_DONE status=ok' or '=== JOB_FAILED step=<s> rc=<n> reason=<r>'. Only JOB_DONE status=ok is a usable result.",
+  "shutdown": {
+    "inPod": "Every step runs under timeout against JOB_DEADLINE_MINUTES (45). A watchdog calls self_stop.py 5 minutes after that. After the terminal line the job calls self_stop.py: REST v2 terminate, then stop, with the pod-scoped RUNPOD_API_KEY. If both are refused it prints SELF_STOP_FAILED and sleeps instead of exiting, so the container never reruns the job.",
+    "operator": "Start docker/runpod/deadline_guard.sh <pod-id> 60 on the operator machine right after create. It terminates that pod id at 60 minutes.",
+    "notAvailable": "REST v2 has no stop timer. runpodctl --stop-after/--terminate-after were never enforced by the backend and were removed in runpodctl v2.12.0; they are not a cost cap.",
+    "unverified": "Whether the pod-scoped key may terminate (not only stop) has not been checked on a live pod. Either action ends GPU billing."
+  },
   "estimatedCostUsd": {
     "ratePerHour": "0.59",
-    "expectedMinutes": "15-30 including image pull",
-    "expectedTotal": "under 0.50"
+    "expectedMinutes": "15-30 including image pull and the 4.3 GB weight download",
+    "expectedTotal": "under 0.50",
+    "worstCaseWithGuards": "about 0.59 (operator guard at 60 minutes)"
   }
 }

@@ -204,3 +204,25 @@ Still open:
 - The MPS sidecar must be measured on the Mac first and placed in `docs/checkpoint-2.1/cuda_validation/` before the image is built, so that `compare` runs on the pod. The 2.4 MB gradient is too large to move reliably through the log.
 - `measure` accepts only an L4 at capability 8.9 (`is_quoted_l4`). An RTX A6000 (capability 8.6, 48 GB, same $0.59 rate in the 2026-11-08 read) would be refused. Allowing it is a protocol change. It should be written down before any measurement, not after.
 - Secure Cloud L4 and RTX A6000 stock was `Low` on CUDA 13.2 hosts and `Out` on 12.8 and 13.0 in the 2026-11-08 capacity read. The image needs 13.2 or newer.
+
+## Failure handling, cost cap, and weights, 2026-11-08 (second pass, before any measurement)
+
+Review of the first pass found that `run_job.sh` printed `JOB_DONE` after any outcome. A crashed `measure`, a `measure` that exited 0 with a `stopped_*` status, or a missing comparison all looked like a finished job. It also had no time limit. The pod spec named runpodctl `--terminate-after` as a cost cap, but RunPod documents that the backend never enforced it and runpodctl v2.12.0 removed it.
+
+| Change | What it does |
+| --- | --- |
+| One terminal line | Exactly one of `=== JOB_DONE status=ok` or `=== JOB_FAILED step=<s> rc=<n> reason=<r>`. `JOB_DONE` requires: weights hash check passed, `preflight --require-cuda` exit 0, `measure` exit 0 with `status: completed` and a gradient file, an MPS sidecar present, and `compare` exit 0 with `status: differences_recorded`. |
+| Deadline | Every step runs under `timeout` against `JOB_DEADLINE_MINUTES` (45 in the pod spec). Running out of time is `JOB_FAILED reason=deadline`. |
+| Watchdog | A separate process requests a self-stop 5 minutes after the deadline, even if the job shell hangs. |
+| Self-stop | After the terminal line, `self_stop.py` calls REST v2 `terminate`, then `stop`, with the pod-scoped `RUNPOD_API_KEY`. If both are refused, the job prints `SELF_STOP_FAILED` and sleeps rather than exiting, so the job never reruns. |
+| Operator cap | `docker/runpod/deadline_guard.sh <pod-id> 60` runs on the operator machine. It terminates only that pod id, after 60 minutes. |
+| Weights at run time | Removed from the image. `fetch_weights.py` downloads the 10 files the Mac study cache holds at the pinned revision. Measurement is refused unless every sha256 matches `docker/cuda/qwen_files.sha256`, which was hashed from that cache. |
+| Tests | `tests/cuda_validation/test_run_job.py` runs the real script under bash with a fake `python` and a fake `timeout`. It covers 9 failure paths (none print `JOB_DONE`), the success path, a refused self-stop, and the weights check. |
+
+Not yet verified on a live pod:
+- whether the pod-scoped key may `terminate` or only `stop` (either one ends GPU billing);
+- the weight download time.
+
+The comparison now requires the MPS sidecar to be in the image, so the local MPS one-scene measurement must come first.
+
+**Why the weights moved to run time.** Qwen3-VL-2B-Instruct is Apache-2.0 and not gated, so redistribution is allowed. Baking it in would still republish 4.3 GB of third-party weights under this account's public GHCR package. The Hugging Face repository has no LICENSE file to ship alongside them. It would also make a standard Actions runner's disk tight with the CUDA wheels. Pinning is no weaker: the revision plus a sha256 for every file is checked before loading. The costs are a dependency on Hugging Face at run time and about 1–3 minutes of download at $0.59/hr, which is under $0.03. A download failure ends as `JOB_FAILED step=weights`.

@@ -78,13 +78,12 @@ def test_protocol_start_command_runs_inside_the_image_layout(tmp_path):
     json.loads(completed.stdout)
 
 
-def test_weights_are_baked_at_the_pinned_revision_and_checked():
+def test_weights_are_fetched_at_run_time_not_baked():
     text = DOCKERFILE.read_text(encoding="utf-8")
-    assert "89644892e4d85e24eaac8bacfd4f463576704203" in text
-    assert "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0" in text
-    assert "sha256sum -c" in text
-    assert "COPY --from=weights /models /models" in text
+    assert "--from=weights" not in text and "snapshot_download" not in text
     assert "HF_HOME=/models" in text
+    for helper in ("fetch_weights.py", "self_stop.py", "qwen_files.sha256"):
+        assert f"COPY docker/cuda/{helper} /opt/study/docker/cuda/{helper}" in text
 
 
 def test_pod_body_uses_v2_fields_and_runs_the_job():
@@ -98,9 +97,10 @@ def test_pod_body_uses_v2_fields_and_runs_the_job():
     assert pod["doNotPost"] is True
 
 
-def test_job_prints_results_and_never_exits_into_a_rerun():
+def test_job_has_one_success_marker_and_never_exits_into_a_rerun():
     text = JOB.read_text(encoding="utf-8")
     assert "measure --device cuda" in text
-    assert "=== BEGIN" in text and "=== JOB_DONE" in text
-    assert text.rstrip().endswith("exec sleep infinity")
+    assert text.count('echo "=== JOB_DONE') == 1
+    assert "=== JOB_FAILED" in text and "timeout --kill-after" in text
+    assert "exec sleep infinity" in text
     assert os.access(JOB, os.X_OK)

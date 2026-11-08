@@ -4,21 +4,16 @@
 # Build context is the repository root:
 #   docker build -f docker/cuda/Dockerfile -t study2-cuda-readiness .
 
-# Stage 1 bakes the pinned Qwen weights into the image so the pod needs no
-# network volume and stays offline at run time. The safetensors sha256 is the
-# Hugging Face LFS blob id already present in the Mac study cache.
-FROM python:3.12.14-slim-bookworm AS weights
-ARG QWEN_REVISION=89644892e4d85e24eaac8bacfd4f463576704203
-ARG QWEN_SAFETENSORS_SHA256=7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0
-RUN pip install --no-cache-dir "huggingface_hub==2.4.0" \
-    && HF_HOME=/models python -c "from huggingface_hub import snapshot_download; snapshot_download('Qwen/Qwen3-VL-2B-Instruct', revision='${QWEN_REVISION}')" \
-    && echo "${QWEN_SAFETENSORS_SHA256}  /models/hub/models--Qwen--Qwen3-VL-2B-Instruct/snapshots/${QWEN_REVISION}/model.safetensors" | sha256sum -c -
-
+# The Qwen weights are not in the image. run_job.sh downloads the pinned
+# revision on the pod (docker/cuda/fetch_weights.py) and refuses to measure
+# unless every file matches docker/cuda/qwen_files.sha256, which was hashed
+# from the Mac study cache. This keeps third-party weights out of a public
+# registry and keeps the image small enough for a standard Actions runner.
 FROM python:3.12.14-slim-bookworm
 
 ENV HF_HOME=/models \
     TRANSFORMERS_OFFLINE=1 \
-     PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     HF_HUB_OFFLINE=1 \
@@ -52,7 +47,9 @@ COPY docs/checkpoint-2.0/cuda/manifest.json /opt/study/docs/checkpoint-2.0/cuda/
 COPY docker/runpod/pod-spec.json /opt/study/docker/runpod/pod-spec.json
 COPY docs/checkpoint-2.1/cuda_validation/ /opt/study/docs/checkpoint-2.1/cuda_validation/
 COPY docker/cuda/run_job.sh /opt/study/run_job.sh
-COPY --from=weights /models /models
+COPY docker/cuda/fetch_weights.py /opt/study/docker/cuda/fetch_weights.py
+COPY docker/cuda/self_stop.py /opt/study/docker/cuda/self_stop.py
+COPY docker/cuda/qwen_files.sha256 /opt/study/docker/cuda/qwen_files.sha256
 
 ENTRYPOINT ["python", "-m", "cuda_readiness"]
 CMD ["preflight"]
