@@ -1,0 +1,484 @@
+{
+ "note": "Planning simulation. Effect sizes are assumptions. Reads no attack outcome.",
+ "predictor_sd_raw": {
+  "alignment": 0.1305,
+  "neutral_margin": 3.8495,
+  "helpful_margin": 3.0255,
+  "log_l1": 1.8508
+ },
+ "predictor_corr": [
+  [
+   1.0,
+   -0.231,
+   -0.15,
+   0.234
+  ],
+  [
+   -0.231,
+   1.0,
+   0.845,
+   -0.894
+  ],
+  [
+   -0.15,
+   0.845,
+   1.0,
+   -0.729
+  ],
+  [
+   0.234,
+   -0.894,
+   -0.729,
+   1.0
+  ]
+ ],
+ "binary": [
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": 0.0,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": 0.0,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": 0.0,
+   "n_groups": 500,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": 0.0,
+   "n_groups": 1000,
+   "p_gate": 0.33,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": 0.0,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 0.015
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.4,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.4,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.4,
+   "n_groups": 500,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.4,
+   "n_groups": 1000,
+   "p_gate": 0.48,
+   "power": 0.2975
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.4,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 0.8925
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.7,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.7,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.7,
+   "n_groups": 500,
+   "p_gate": 0.001,
+   "power": 0.001
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.7,
+   "n_groups": 1000,
+   "p_gate": 0.805,
+   "power": 0.8025
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -0.7,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -1.1,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -1.1,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -1.1,
+   "n_groups": 500,
+   "p_gate": 0.039,
+   "power": 0.039
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -1.1,
+   "n_groups": 1000,
+   "p_gate": 0.9975,
+   "power": 0.9975
+  },
+  {
+   "p_fail": 0.026,
+   "log_or_per_sd": -1.1,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": 0.0,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": 0.0,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": 0.0,
+   "n_groups": 500,
+   "p_gate": 0.923,
+   "power": 0.005
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": 0.0,
+   "n_groups": 1000,
+   "p_gate": 1.0,
+   "power": 0.0075
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": 0.0,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 0.015
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.4,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.4,
+   "n_groups": 200,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.4,
+   "n_groups": 500,
+   "p_gate": 0.936,
+   "power": 0.58
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.4,
+   "n_groups": 1000,
+   "p_gate": 1.0,
+   "power": 0.8775
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.4,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 0.995
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.7,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.7,
+   "n_groups": 200,
+   "p_gate": 0.001,
+   "power": 0.001
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.7,
+   "n_groups": 500,
+   "p_gate": 0.986,
+   "power": 0.982
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.7,
+   "n_groups": 1000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -0.7,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -1.1,
+   "n_groups": 48,
+   "p_gate": 0.0,
+   "power": 0.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -1.1,
+   "n_groups": 200,
+   "p_gate": 0.003,
+   "power": 0.003
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -1.1,
+   "n_groups": 500,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -1.1,
+   "n_groups": 1000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": 0.073,
+   "log_or_per_sd": -1.1,
+   "n_groups": 2000,
+   "p_gate": 1.0,
+   "power": 1.0
+  },
+  {
+   "p_fail": "Beta(1.5,38.5)",
+   "log_or_per_sd": -0.7,
+   "n_groups": 500,
+   "p_gate": 0.27725,
+   "power": 0.27399999999999997
+  },
+  {
+   "p_fail": "Beta(1.5,38.5)",
+   "log_or_per_sd": -0.7,
+   "n_groups": 1000,
+   "p_gate": 0.59325,
+   "power": 0.5927500000000001
+  },
+  {
+   "p_fail": "Beta(1.5,38.5)",
+   "log_or_per_sd": -0.7,
+   "n_groups": 2000,
+   "p_gate": 0.85625,
+   "power": 0.85625
+  }
+ ],
+ "continuous": [
+  {
+   "partial_r2": 0.02,
+   "icc": 0.3,
+   "n_groups": 48,
+   "power": 0.336
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.3,
+   "n_groups": 96,
+   "power": 0.492
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.3,
+   "n_groups": 150,
+   "power": 0.691
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.3,
+   "n_groups": 250,
+   "power": 0.897
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.6,
+   "n_groups": 48,
+   "power": 0.368
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.6,
+   "n_groups": 96,
+   "power": 0.506
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.6,
+   "n_groups": 150,
+   "power": 0.697
+  },
+  {
+   "partial_r2": 0.02,
+   "icc": 0.6,
+   "n_groups": 250,
+   "power": 0.869
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.3,
+   "n_groups": 48,
+   "power": 0.581
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.3,
+   "n_groups": 96,
+   "power": 0.833
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.3,
+   "n_groups": 150,
+   "power": 0.963
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.3,
+   "n_groups": 250,
+   "power": 0.999
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.6,
+   "n_groups": 48,
+   "power": 0.576
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.6,
+   "n_groups": 96,
+   "power": 0.879
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.6,
+   "n_groups": 150,
+   "power": 0.961
+  },
+  {
+   "partial_r2": 0.05,
+   "icc": 0.6,
+   "n_groups": 250,
+   "power": 0.997
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.3,
+   "n_groups": 48,
+   "power": 0.855
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.3,
+   "n_groups": 96,
+   "power": 0.989
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.3,
+   "n_groups": 150,
+   "power": 0.999
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.3,
+   "n_groups": 250,
+   "power": 1.0
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.6,
+   "n_groups": 48,
+   "power": 0.863
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.6,
+   "n_groups": 96,
+   "power": 0.986
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.6,
+   "n_groups": 150,
+   "power": 0.998
+  },
+  {
+   "partial_r2": 0.1,
+   "icc": 0.6,
+   "n_groups": 250,
+   "power": 1.0
+  }
+ ]
+}
