@@ -183,3 +183,60 @@ python -m cuda_validation compare \
 ```
 
 Stop the pod after the CUDA sidecar is copied off. The GPU-hour rate applies until the machine is shut down.
+
+## Deployment fixes, 2026-11-08 (before any measurement)
+
+Added in review, before any pod, image build, or measurement. They change how the image is built and run, not the attack, the scene, the gate, or the comparison.
+
+| Blocker | Evidence | Fix |
+| --- | --- | --- |
+| Weights had no provisioning path. `/models` needed a network volume that nothing created, and `HF_HUB_OFFLINE=1` blocks a download. | Pod spec `volumeInGb: 0`, `networkVolume.createdByThisCommit: false`. | A build stage downloads revision `89644892…` and checks `model.safetensors` against sha256 `7de1838c…` (the LFS blob id in the Mac cache). The final image holds it at `/models`. No network volume or paid storage. |
+| The scene and prompt-hash files were not in the image. | `measure` opens `fixtures/development_v4/images/dev4-ref-00-a.png` and the Checkpoint 1.7 `predictions.jsonl`. Neither was copied. | Both are copied. |
+| The start command crashed. | `cuda_validation protocol` in the image layout raised `FileNotFoundError` for `docs/checkpoint-2.0/cuda/manifest.json`. | That file and `docker/runpod/pod-spec.json` are copied. `tests/cuda_validation/test_container_layout.py` rebuilds the image tree from the COPY lines and runs `protocol` inside it. It fails on the old Dockerfile and passes on this one. |
+| The pod body was not a v2 request. | It used `gpuType`, `gpuCount`, `cloudType`, `containerDiskInGb`, `volumeInGb` and had no `image`, which v2 requires. | Rewritten with v2 fields from the live `create-pod` schema: `image`, `gpu.id`, `gpu.minCudaVersion`, `disk`, `args`, `env`. |
+| No way to get results off the pod, and no shutdown plan. | The container disk is wiped on stop or restart. REST v2 has no stop timer. | `docker/cuda/run_job.sh` runs preflight, `measure`, and, if an MPS sidecar was baked in, `compare` on the pod. It prints each JSON between `=== BEGIN`/`=== END` markers in the pod log, prints `JOB_DONE`, then sleeps so an exit cannot restart the job. The operator saves the log and deletes the pod. |
+| No image registry or build machine. | This Mac has no Docker client. | `.github/workflows/cuda-image.yml` builds and pushes to GHCR, manual trigger only. Pin the printed digest in the pod body. GHCR packages start private: make the package public or add a registry credential. |
+
+The image default command is still `preflight`. The job runs only through the pod's `args` override.
+
+Still open:
+
+- The MPS sidecar must be measured on the Mac first and placed in `docs/checkpoint-2.1/cuda_validation/` before the image is built, so that `compare` runs on the pod. The 2.4 MB gradient is too large to move reliably through the log.
+- `measure` accepts only an L4 at capability 8.9 (`is_quoted_l4`). An RTX A6000 (capability 8.6, 48 GB, same $0.59 rate in the 2026-11-08 read) would be refused. Allowing it is a protocol change. It should be written down before any measurement, not after.
+- Secure Cloud L4 and RTX A6000 stock was `Low` on CUDA 13.2 hosts and `Out` on 12.8 and 13.0 in the 2026-11-08 capacity read. The image needs 13.2 or newer.
+
+## Failure handling, cost cap, and weights, 2026-11-08 (second pass, before any measurement)
+
+Review of the first pass found that `run_job.sh` printed `JOB_DONE` after any outcome. A crashed `measure`, a `measure` that exited 0 with a `stopped_*` status, or a missing comparison all looked like a finished job. It also had no time limit. The pod spec named runpodctl `--terminate-after` as a cost cap, but RunPod documents that the backend never enforced it and runpodctl v2.12.0 removed it.
+
+| Change | What it does |
+| --- | --- |
+| One terminal line | Exactly one of `=== JOB_DONE status=ok` or `=== JOB_FAILED step=<s> rc=<n> reason=<r>`. `JOB_DONE` requires: weights hash check passed, `preflight --require-cuda` exit 0, `measure` exit 0 with `status: completed` and a gradient file, an MPS sidecar present, and `compare` exit 0 with `status: differences_recorded`. |
+| Deadline | Every step runs under `timeout` against `JOB_DEADLINE_MINUTES` (45 in the pod spec). Running out of time is `JOB_FAILED reason=deadline`. |
+| Watchdog | A separate process requests a self-stop 5 minutes after the deadline, even if the job shell hangs. |
+| Self-stop | After the terminal line, `self_stop.py` calls REST v2 `terminate`, then `stop`, with the pod-scoped `RUNPOD_API_KEY`. If both are refused, the job prints `SELF_STOP_FAILED` and sleeps rather than exiting, so the job never reruns. |
+| Operator cap | `docker/runpod/deadline_guard.sh <pod-id> 60` runs on the operator machine. It terminates only that pod id, after 60 minutes. |
+| Weights at run time | Removed from the image. `fetch_weights.py` downloads the 10 files the Mac study cache holds at the pinned revision. Measurement is refused unless every sha256 matches `docker/cuda/qwen_files.sha256`, which was hashed from that cache. |
+| Tests | `tests/cuda_validation/test_run_job.py` runs the real script under bash with a fake `python` and a fake `timeout`. It covers 9 failure paths (none print `JOB_DONE`), the success path, a refused self-stop, and the weights check. |
+
+Not yet verified on a live pod:
+- whether the pod-scoped key may `terminate` or only `stop` (either one ends GPU billing);
+- the weight download time.
+
+The comparison now requires the MPS sidecar to be in the image, so the local MPS one-scene measurement must come first.
+
+**Why the weights moved to run time.** Qwen3-VL-2B-Instruct is Apache-2.0 and not gated, so redistribution is allowed. Baking it in would still republish 4.3 GB of third-party weights under this account's public GHCR package. The Hugging Face repository has no LICENSE file to ship alongside them. It would also make a standard Actions runner's disk tight with the CUDA wheels. Pinning is no weaker: the revision plus a sha256 for every file is checked before loading. The costs are a dependency on Hugging Face at run time and about 1–3 minutes of download at $0.59/hr, which is under $0.03. A download failure ends as `JOB_FAILED step=weights`.
+
+## Result preservation and stop order, 2026-11-08 (third pass)
+
+A defect in the second pass: the job terminated the pod right after the terminal line. The log stream is the only copy of the results, and RunPod documents no log retention after termination. Worker logs are documented as deleted when the worker terminates. A fast self-terminate could therefore have destroyed a successful run before anyone read it.
+
+Fixes, in `run_job.sh`, `self_stop.py`, and the new `docker/runpod/capture_logs.sh`:
+- **Stop before terminate.** The pod mounts no volume, and RunPod does not bill a stopped pod's container disk, so a stopped pod costs $0. Stopping keeps the pod record for the operator. Terminate is now the fallback.
+- **Result grace.** After the terminal line the job prints `=== RESULT_GRACE seconds=120` and waits before stopping itself.
+- **Operator capture.** `capture_logs.sh <pod-id> <file>` follows the REST v2 SSE log stream with a 5,000-line backfill, writes every event, resumes on a dropped connection, and exits at the terminal line. It only reads.
+- **Tests.** The terminal line comes before the grace, which comes before the self-stop. `self_stop.py` tries `stop` before `terminate` and never prints the key.
+
+What is documented and what is not:
+- **Documented:** an in-pod stop through `runpodctl pod stop $RUNPOD_POD_ID` (docs.runpod.io/pods/manage-pods). Every pod gets a pod-scoped `RUNPOD_API_KEY`. A stopped pod's container disk is not billed. At a $0 balance, RunPod stops all pods and terminates those without a network volume.
+- **Not documented:** whether the pod-scoped key may call `POST /v2/pods/{id}/action`. If it may not, the job prints `SELF_STOP_FAILED` and sleeps, and the 60-minute operator guard and the account balance remain.

@@ -180,7 +180,8 @@ def test_committed_sample_matches_regeneration_and_checksums(repo_root: Path, ge
         assert path.stat().st_size == info["bytes"]
     names = sorted(path.name for path in (repo_root / "fixtures").iterdir())
     # development_simple is the Checkpoint 1.6 sample. A sealed or held-out name still fails.
-    assert names == ["development", "development_simple", "development_v2"]
+    # development_v4 is the Checkpoint 1.7 referent-color sample (commit 44aafcf), all rows `development`.
+    assert names == ["development", "development_simple", "development_v2", "development_v4"]
 
 
 def test_package_does_not_sample_download_or_import_models(repo_root: Path) -> None:
