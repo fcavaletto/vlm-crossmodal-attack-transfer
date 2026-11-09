@@ -2,6 +2,8 @@
 
 **EXPLORATORY, DEVELOPMENT ONLY.** Approved by the research lead on 2026-11-09. Budget: about one hour of local computation. This plan was committed before any mask-control output existed. Frozen checkpoints and all Checkpoint 2.3 outputs in `paths/` are read only. No sealed or new samples, no paid infrastructure, no merges.
 
+> **Terminology note added 2026-11-09 (after the run; the plan text below is unchanged).** "Pixels" in §1 and §2 means RGB channel coordinates (one channel of one pixel). §8 and §9 discuss real 8-bit pixel values and use the word correctly.
+
 ## 1. Question
 
 In the 2.3 run, the official PGD-3 perturbation does 2.55× FGSM's margin damage. After the 8-bit round trip it is a subset of FGSM's pixels with identical signs. Does PGD's advantage come from:

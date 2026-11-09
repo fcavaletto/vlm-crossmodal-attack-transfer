@@ -211,3 +211,7 @@ At preload, the frozen 1.5 guard would also have permitted bf16 on this occasion
 ## 9. Random-mask control (2.3b, 2026-11-09)
 
 Same EMP-1 / M1 policy, unchanged; forward passes only, no fp32 vision. Preload 12.09 GiB available; peak footprint 5.17 GiB; minimum available 6.09 GiB; 3,326 pressure samples, all normal; swap growth 0; no abort; 28.2 min after load, no unit skipped.
+
+## 10. Held-out confirmation run (Checkpoint 2.4, 2026-11-09)
+
+Same EMP-1 / M1 policy, unchanged. bf16 only (no fp32 vision); clean, FGSM and PGD-3 gradients plus 22 forward scorings per group. 12.10 GiB available at preload; peak footprint 8.54 GiB; minimum available 4.36 GiB; 19,177 pressure samples, all normal; swap growth 0; no abort. 48/48 groups in 162.6 min against the 180-min cap set before the freeze; no group skipped. Records: [`../checkpoint-2.4-confirm/run/progress.json`](../checkpoint-2.4-confirm/run/progress.json).
