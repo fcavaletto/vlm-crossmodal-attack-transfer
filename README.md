@@ -41,7 +41,7 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 | **Confirmed** (pre-registered, held-out) | Selection, not sparsity, explains PGD-3's advantage. Top-\|∇\| selection is worse than random. | [Checkpoint 2.4 report](docs/checkpoint-2.4-confirm/REPORT.md) |
 | **Structural** (arithmetic) | Under these settings the PGD-3 image is a sign-preserving FGSM subset. The only exceptions are 0–7 half-level ties per image, at coordinates with exactly zero gradient. | Report §3, §5.6 |
 | **Exploratory** (development data) | Gradients decorrelate after one ε/4 step. bf16 vision rotates the gradient but not the attack outcome. A slight cross-context asymmetry. | [Checkpoint 2.3 report](docs/checkpoint-2.3-exploratory/REPORT.md) |
-| **In progress** (development-only pilot) | Does gradient sign consensus at random nearby points reproduce PGD's selection? | [Checkpoint 3 plan](docs/checkpoint-3-mechanism/PLAN.md) |
+| **Exploratory negative** (16 development scenes) | Gradient sign consensus at attack-independent nearby points does **not** reproduce PGD's selection: it recovers 5% of the selection gain [−5%, 14%]. Smoothed-gradient magnitude is worse than random. About a fifth of the gain is regional at 16-pixel scale. | [Checkpoint 3 pilot report](docs/checkpoint-3-mechanism/PILOT_REPORT.md) |
 | **Not established** | The mechanism; generality to other models, budgets and precisions. | Report §7 |
 
 ## Read next
@@ -101,7 +101,7 @@ Every checkpoint keeps its plan, frozen records and deviations. Earlier results 
 |---|---|
 | `docs/checkpoint-2.4-confirm/` | **Held-out confirmation:** protocol, freeze, records, analysis, report, figure |
 | `docs/checkpoint-2.3-exploratory/` | Exploratory path, precision and mask-control studies |
-| `docs/checkpoint-3-mechanism/` | Mechanism plan and development-only pilot |
+| `docs/checkpoint-3-mechanism/` | Mechanism plan, development-only pilot and its report (negative) |
 | `docs/checkpoint-0` … `2.2-draft` | Study 2 design, measurement and attack protocols, H\*, audits |
 | `docs/research/` | Literature review and prior-art matrix |
 | `src/` | Scene generators, scoring, attack and probe code |

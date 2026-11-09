@@ -17,7 +17,7 @@ A development study suggested that PGD's advantage is coordinate *selection* rat
 - **Saliency.** Subsets chosen by clean-gradient magnitude were worse than random (−1.38, CI −1.71 to −1.06).
 - **First-order prediction.** The clean first-order prediction ranked the subsets in the reverse of their true order.
 
-On this model, single-step evaluations and magnitude saliency therefore misjudge both how much and where the model is vulnerable. We describe the limits of the evidence, and a development-only study of whether gradient sign consensus at random nearby inputs explains PGD's selection.
+On this model, single-step evaluations and magnitude saliency therefore misjudge both how much and where the model is vulnerable. We describe the limits of the evidence. A development-only pilot finds that gradient sign consensus at attack-independent nearby inputs does not explain PGD's selection.
 
 ---
 
@@ -194,7 +194,7 @@ For safety evaluation, two consequences follow:
 - **Saliency** means raw clean-gradient magnitude. Smoothed or integrated attributions were not tested.
 - **Hypothesis origin.** The hypotheses were formed on development data. Only the held-out split is confirmatory.
 
-## 8. Ongoing work: is PGD's selection gradient-sign consensus?
+## 8. Exploratory follow-up: is PGD's selection gradient-sign consensus?
 
 **Hypothesis.** PGD's selection rule is a three-way vote on gradient signs along its path. If a gradient decomposes into a component that is stable across the ε-ball and a rough component that decorrelates quickly, the vote enriches the stable component.
 
@@ -203,7 +203,16 @@ For safety evaluation, two consequences follow:
 - 8-bit grid effects;
 - spatial clustering, via patch-matched random masks.
 
-Neighbourhood gradient averaging itself is established [Smilkov et al., 2017; Athalye et al., 2018b; Wang & He, 2021]. The open question is whether it *explains* the coordinate selection of an existing iterative attack at matched count. Any positive pilot result will be confirmed on a new, independently seeded split before it is claimed.
+Neighbourhood gradient averaging itself is established [Smilkov et al., 2017; Athalye et al., 2018b; Wang & He, 2021]. The open question is whether it *explains* the coordinate selection of an existing iterative attack at matched count. Any positive pilot result would have needed confirmation on a new, independently seeded split before being claimed.
+
+**Pilot result (exploratory, 16 development scenes; [`PILOT_REPORT.md`](../checkpoint-3-mechanism/PILOT_REPORT.md)).** The pre-specified reading is *consensus fails*.
+- The strongest consensus mask (8 random points, 9 gradient evaluations) recovers R = 0.05 [−0.05, 0.14] of PGD-3's selection gain over random.
+- At PGD's own budget of 3 evaluations, R = 0.08 [0.01, 0.15]. More points do not help.
+- Smoothed-gradient magnitude ranking is worse than random, like clean top-|∇|.
+- Shuffling PGD's coordinates within 16×16 patches keeps R ≈ 0.22, so about a fifth of the advantage is regional.
+- Even an ε/16 move rotates the gradient to a cosine of 0.30 with the clean one.
+
+The selection signal is therefore not a stable local sign field that attack-independent sampling can estimate; it appears to depend on the attack's own path. This is consistent with, but does not establish, a hypothesis that many damaging subsets exist and PGD finds one of them. No confirmation was run, because the pilot was negative. The pilot does not show that every function of local gradients fails.
 
 ## Pre-registration, data and code availability
 

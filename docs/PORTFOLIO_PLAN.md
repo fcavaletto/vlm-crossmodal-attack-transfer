@@ -41,4 +41,4 @@ Steps 1–2 are public, and they are what makes the work visible.
 1. Done today: README, manuscript, summary, wording audit, pushed on the working branch.
 2. Your review of the README and manuscript text.
 3. With approval: PR to `main`, merge, tag.
-4. Only if time remains: Checkpoint 3 pilot write-up as an exploratory appendix.
+4. Done (2026-11-09): Checkpoint 3 pilot run and written up as an exploratory negative ([`PILOT_REPORT.md`](checkpoint-3-mechanism/PILOT_REPORT.md)); README, manuscript §8 and summary updated.

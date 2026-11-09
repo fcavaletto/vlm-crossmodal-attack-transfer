@@ -29,7 +29,7 @@ For safety evaluation, this means single-step attacks and gradient saliency can 
 
 **Limits.** One model, one synthetic task family, one ε, one precision. The mechanism is not established, and only two clean-gradient rules were tested.
 
-**Next.** A development-only pilot tests whether gradient sign *consensus* at random nearby inputs, sampled independently of the attack, reproduces PGD's selection. It includes controls for bf16 numerics, 8-bit quantization and spatial clustering, and compares methods at equal gradient-evaluation budgets. If it holds, it suggests a principled fix for cheap evaluations ("vote before you rank") and a parallel one-shot attack. Either would need its own held-out confirmation.
+**Mechanism pilot (exploratory, negative).** A pre-specified development-only pilot tested whether gradient sign *consensus* at nearby inputs sampled independently of the attack reproduces PGD's selection. It used controls for bf16 numerics, 8-bit quantization and spatial clustering, at equal gradient budgets. It does not: consensus recovers about 5% of PGD's selection gain, and smoothed-gradient magnitude is worse than random. The signal seems to depend on the attack's own path. Path-specific curvature is the next candidate.
 
 ## Skills this demonstrates
 
