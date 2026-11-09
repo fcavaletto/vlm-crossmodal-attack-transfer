@@ -138,9 +138,9 @@ Unattended overnight runs often meet it without closing anything: the 2.0 and 2.
 
 | Attempt | Commit | Outcome |
 | --- | --- | --- |
-| 1 | `4917f63`, `a2f…` | The EMP-1 preload passed, but the frozen loader received the frozen refusal and refused again. **No weights were loaded.** Fixed: EMP-1 now hands the frozen loader its own recorded permit. The loader is unchanged. |
-| 2 (`paths_smoke_attempt2/`) | `ebb6f7b` | Stage B completed. Stage 3 crashed on my bug: the vision tower is `model.model.visual` in transformers 5.22. |
-| 3 (`paths_smoke/`) | this commit | Completed, all stages |
+| 1 | `a7102b4` | The EMP-1 preload passed, but the frozen loader received the frozen refusal and refused again. **No weights were loaded.** Fixed: EMP-1 now hands the frozen loader its own recorded permit. The loader is unchanged. |
+| 2 (`paths_smoke_attempt2/`) | `ef1c4d3` | Stage B completed. Stage 3 crashed on my bug: the vision tower is `model.model.visual` in transformers 5.22. |
+| 3 (`paths_smoke/`) | `5779894` | Completed, all stages |
 
 Attempts 2 and 3, against the §4 criteria:
 
