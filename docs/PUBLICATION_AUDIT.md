@@ -1,4 +1,4 @@
-# Publication-readiness audit (2026-11-10)
+# Publication-readiness audit (2026-11-09)
 
 Scope: the whole tree and full history of `checkpoint-2.3/exploratory-paths` relative to `main`: 113 commits, 866 files, 16.3 MB tracked. Files beyond GitHub's comparison display limit are included.
 
@@ -16,7 +16,7 @@ No frozen experimental file, record or historical result was changed by this aud
 | Hardware identifiers | Search for hostnames and serial numbers | Only the laptop model (MacBook Air M4, `Mac16,12`), kept as reproduction metadata. No hostname or serial number. |
 | Committed bytecode | History | 32 `__pycache__/*.pyc` files were committed in early checkpoints and later deleted. They contain only local source paths. They remain in history; rewriting history is not recommended. |
 | Infrastructure and billing | Search for RunPod, pod IDs and IP addresses | Only public price-list references in planning documents. No account or pod identifiers. |
-| Personal planning content | Read | `PORTFOLIO_PLAN.md`, `RESEARCH_STRATEGY.md` and the 2026-11-08 audit discuss applications and deadlines openly. Nothing private, but the author may prefer to move them. |
+| Personal planning content | Read | `PORTFOLIO_PLAN.md`, `RESEARCH_STRATEGY.md` and the 2026-11-08 audit discuss applications and deadlines openly. Nothing private. Resolved in §5. |
 
 ## 2. Consistency and reproducibility
 
@@ -52,3 +52,20 @@ The 2.4 report carries a dated note for these. No number changed.
 - **"Clean decomposition / no confounds".** The comparison controls magnitude, sign and count. It does not separate individual coordinates from their spatial arrangement or interactions. The sparsity share is a ratio of mean differences, not an additive decomposition.
 - **Checkpoint 3 scope.** Conclusions are restricted to the samplers and consensus rules actually tested. Untested estimators are explicitly not excluded.
 - **2.4 report §9.** A remaining "not visible in the clean gradient" sentence is narrowed.
+
+## 5. Resolutions (2026-11-09, approved by the author)
+
+No frozen file, preserved file, record or historical result was changed. All history is kept.
+
+| Item | Resolution |
+|---|---|
+| Fixture guards (§3.3) | Both tests now use an exact allowlist: the four development sets plus `trackB_confirm_v1`. The held-out split is accepted only as the hash-frozen one: its three frozen files must match `FROZEN.json`, every file must match `checksums.json`, and no unlisted file may be present. Any other directory in `fixtures/` still fails; this was checked by adding one. |
+| Duplicate test-module names (§2) | Eleven test files in `tests/scene_v4`, `tests/scene_simple` and `tests/choice_eval` were renamed with a suite prefix (`git mv`, contents unchanged). A root `conftest.py` puts every `src/<package>` on the path. `python -m pytest` now runs every suite in one call. |
+| Hard-coded `HF_HOME` (§3.2) | Added the opt-in `study_cache` launcher and `VLM_STUDY_MODEL_CACHE`. The original guards are **not edited**: `src/qwen_rgb` and `src/dev_pilot` are preserved paths under the Checkpoint 2.1 attack protocol (a test compares them with the protocol commit), and `dev_pilot/lock.py` is hashed in the Checkpoint 2.0 manifest. The launcher repoints the guard for one process, only when asked by name. Default behaviour, model id and pinned revision are unchanged. Not yet exercised with a full model run on a second machine. |
+| Pillow pin (§3.1) | `src/scene_confirm/pyproject.toml` (not a frozen file) now pins `Pillow==13.0.0`, the version that built the split. The four development generators keep `Pillow==11.3.0`, which is what their committed checksums record. That difference is historical and documented in the README. |
+| Planning documents (§1) | `docs/PORTFOLIO_PLAN.md` is removed from the tree and remains in history (last present in `fab773f`). `RESEARCH_STRATEGY.md` is kept, with a dated note marking it a historical record. |
+| Continuous integration | `.github/workflows/ci.yml` runs the model-free tests and `tools/verify_reproduction.py` (frozen hashes, split regeneration, analysis outputs, Figure 1). It sets `HF_HUB_OFFLINE=1` and downloads no weights. Twenty `tests/vlm_iface` tests need the pinned processor files from a local Hub cache and skip in CI, with the reason printed. |
+| Dates | This audit and the second wording note in the 2.4 report were first committed dated 2026-11-10. The work was done on 2026-11-09, as the commit timestamps show. The dates are corrected. |
+| Analysis JSON path (§3.4) | Unchanged. The verifier compares every field except `input`. |
+
+Test suites after these changes, in one call: see the CI result on the pull request.

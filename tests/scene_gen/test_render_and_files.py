@@ -119,6 +119,31 @@ def test_cli_refuses_sealed_split(repo_root: Path, tmp_path: Path) -> None:
     assert not (tmp_path / "out").exists()
 
 
+DEVELOPMENT_FIXTURES = ["development", "development_simple", "development_v2", "development_v4"]
+# The only held-out split allowed in fixtures/. It was committed on purpose at the
+# Checkpoint 2.4 freeze (commit c35b02c), and it is allowed only while it is the
+# hash-frozen split: its name, its FROZEN.json hashes and its per-file checksums must match.
+AUTHORIZED_HELD_OUT = {"trackB_confirm_v1": "docs/checkpoint-2.4-confirm/FROZEN.json"}
+
+
+def _assert_fixture_directories_are_authorized(repo_root: Path) -> None:
+    """Exact allowlist. Any other sealed, test or held-out directory still fails."""
+    names = sorted(path.name for path in (repo_root / "fixtures").iterdir())
+    assert names == sorted(DEVELOPMENT_FIXTURES + list(AUTHORIZED_HELD_OUT))
+    for name, frozen_relative in AUTHORIZED_HELD_OUT.items():
+        split = repo_root / "fixtures" / name
+        frozen = json.loads((repo_root / frozen_relative).read_text(encoding="utf-8"))["files"]
+        frozen_here = {key: value for key, value in frozen.items() if key.startswith(f"fixtures/{name}/")}
+        assert sorted(frozen_here) == [f"fixtures/{name}/{leaf}" for leaf in ("checksums.json", "manifest.jsonl", "metadata.json")]
+        for relative, digest in frozen_here.items():
+            assert hashlib.sha256((repo_root / relative).read_bytes()).hexdigest() == digest
+        listed = json.loads((split / "checksums.json").read_text(encoding="utf-8"))["files"]
+        for relative, info in listed.items():
+            assert hashlib.sha256((split / relative).read_bytes()).hexdigest() == info["sha256"]
+        on_disk = sorted(str(path.relative_to(split)) for path in split.rglob("*") if path.is_file())
+        assert on_disk == sorted(set(listed) | {"checksums.json"}), "unlisted file in the held-out split"
+
+
 def test_committed_sample_matches_regeneration_and_checksums(repo_root: Path, generated: Path) -> None:
     committed = repo_root / "fixtures" / "development"
     assert _load_jsonl(committed / "manifest.jsonl") == _load_jsonl(generated / "manifest.jsonl")
@@ -132,11 +157,11 @@ def test_committed_sample_matches_regeneration_and_checksums(repo_root: Path, ge
         path = committed / relative
         assert hashlib.sha256(path.read_bytes()).hexdigest() == info["sha256"]
         assert path.stat().st_size == info["bytes"]
-    names = sorted(path.name for path in (repo_root / "fixtures").iterdir())
     # development is Checkpoint 1. development_v2 is Checkpoint 1.5.
     # development_simple is Checkpoint 1.6. A sealed, test, or held-out directory still fails.
     # development_v4 is the Checkpoint 1.7 referent-color sample (commit 44aafcf), all rows `development`.
-    assert names == ["development", "development_simple", "development_v2", "development_v4"]
+    # trackB_confirm_v1 is the Checkpoint 2.4 held-out split, allowed only as hash-frozen (see helper).
+    _assert_fixture_directories_are_authorized(repo_root)
 
 
 def test_package_does_not_sample_download_or_import_models(repo_root: Path) -> None:

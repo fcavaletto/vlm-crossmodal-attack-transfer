@@ -46,7 +46,12 @@ class _Logits:
 def processor():
     from transformers import AutoProcessor
 
-    return AutoProcessor.from_pretrained(MODEL_ID, revision=PINNED_REVISION)
+    try:
+        return AutoProcessor.from_pretrained(MODEL_ID, revision=PINNED_REVISION)
+    except OSError as error:
+        # Offline with no cached processor files (for example CI, which never contacts the Hub).
+        # These tests need the pinned tokenizer and image-processor config, not model weights.
+        pytest.skip(f"pinned processor files for {MODEL_ID} are not in the local Hub cache: {type(error).__name__}")
 
 
 @pytest.fixture

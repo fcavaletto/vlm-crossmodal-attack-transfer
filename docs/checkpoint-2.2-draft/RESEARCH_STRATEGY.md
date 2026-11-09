@@ -1,5 +1,7 @@
 # Research strategy after Checkpoint 2.2: two tracks (DRAFT, 2026-11-09)
 
+> **Historical record (note added 2026-11-09).** This is the strategy proposal as written on 2026-11-09, kept unedited below. It is not the current plan. Track B of this proposal became Checkpoints 2.3 and 2.4; the current roadmap is [`docs/research/ROADMAP.md`](../research/ROADMAP.md).
+
 For research lead Federico Cavaletto. This is a proposal. Nothing in it has run, and it needs approval (§6).
 
 Since the last review:

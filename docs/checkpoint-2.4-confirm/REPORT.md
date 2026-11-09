@@ -20,7 +20,7 @@ The three subsets have **exactly the same number of RGB channel coordinates** (k
 
 > **Wording note (2026-11-09, after the results).** Three sentences that said the damaging coordinates are "invisible to" or "not in" the clean gradient were narrowed to what was tested: magnitude ranking and the first-order prediction. No number changed.
 >
-> **Second wording note (2026-11-10, publication audit).** No number, protocol or record changed.
+> **Second wording note (2026-11-09, publication audit; first committed with the date 2026-11-10 by mistake).** No number, protocol or record changed.
 > - The subset relationship is now stated as near-exact. Up to 7 zero-gradient rounding ties per image lie outside FGSM's support, as §3 and §5.6 already reported.
 > - "No confound" is narrowed: the comparison controls magnitude, sign and count, but not spatial arrangement or interactions among the kept coordinates.
 > - A fourth "not visible in the clean gradient" sentence in §9, missed by the first note, is narrowed.

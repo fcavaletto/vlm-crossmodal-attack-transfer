@@ -53,33 +53,57 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 
 ## Reproduce
 
-**Without the model (any machine with Python 3.12 and numpy).** Every reported table and Figure 1 can be regenerated from the committed records; no tensors, weights or GPU are needed. The steps below were checked on a fresh clone. The held-out split regenerates byte-identically under the recorded environment.
+**Without the model (Python 3.12, numpy and Pillow).** Every reported table and Figure 1 can be regenerated from the committed records; no tensors, weights or GPU are needed. One command checks all of it and writes nothing into the repository:
 
-**Recorded environment** (`docs/models/measured-environment.txt`): Python 3.12.14, torch 2.15.0, torchvision 0.29.2, transformers 5.22.1, numpy 2.5.4, **Pillow 13.0.0**, accelerate 1.15.0, huggingface_hub 2.4.0, pytest 9.2.0.
-- `src/scene_confirm/pyproject.toml` and the earlier generators pin `Pillow==11.3.0`. Those pins date from the Linux development generators.
-- Install the versions above directly, rather than `pip install -e src/scene_confirm`, or the PNG bytes may differ.
+```bash
+python tools/verify_reproduction.py
+```
+
+It verifies that:
+- the 15 frozen Checkpoint 2.4 files match `FROZEN.json`, and none changed after the freeze commit;
+- the held-out split regenerates byte-for-byte;
+- the frozen confirmation analysis, the per-group table, Figure 1 and the Checkpoint 3 pilot analysis regenerate from committed records. The table, figure and pilot analysis must be byte-identical; the confirmation JSON may differ only in its `input` field, which records an absolute path.
+
+Continuous integration ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs this check and the model-free tests on every pull request. It never downloads model weights.
+
+**Recorded environment** ([`requirements-ci.txt`](requirements-ci.txt), from `docs/models/measured-environment.txt`): Python 3.12.14, torch 2.15.0, torchvision 0.29.2, transformers 5.22.1, numpy 2.5.4, **Pillow 13.0.0**, accelerate 1.15.0, huggingface_hub 2.4.0, pytest 9.2.0.
+
+```bash
+python -m pip install -r requirements-ci.txt
+```
+
+All test suites run in one call, with no `PYTHONPATH` to set and no model:
+
+```bash
+python -m pytest -q
+```
+
+**Pillow versions.** The held-out split was generated with Pillow 13.0.0, as its `metadata.json` records, and `src/scene_confirm/pyproject.toml` now pins that version. The four development generators (`scene_gen`, `scene_v2`, `scene_simple`, `scene_v4`) still pin `Pillow==11.3.0`, the version their committed `checksums.json` files record. That historical difference is left as it is. The test suite regenerates all four development sets under Pillow 13.0.0 and compares them with the committed images pixel for pixel.
 
 **With the model.** You need Apple silicon with about 12 GiB free and the pinned Qwen3-VL-2B weights (revision `89644892`) already in a local Hugging Face cache. The scripts never download them.
-- Model-loading entry points refuse any `HF_HOME` other than the author's path, which is set in `src/qwen_rgb/qwen_rgb/pins.py`.
-- That guard protected the original runs. Rerunning elsewhere currently requires editing `REQUIRED_HF_HOME` locally.
+- By default, model-loading entry points refuse any `HF_HOME` other than the path the study used (`REQUIRED_HF_HOME` in `src/qwen_rgb/qwen_rgb/pins.py`). That is the configuration of every recorded run, and those files are unchanged.
+- On another machine, opt in to your own cache by name and start the entry point through the `study_cache` launcher. The model id and revision stay pinned; only the cache directory changes, and the run's `environment` record shows the directory that was read:
+
+```bash
+VLM_STUDY_MODEL_CACHE=/absolute/path/to/hf-cache python -m study_cache path_probe confirm
+```
+
+- Setting `HF_HOME` alone is still refused. Without `VLM_STUDY_MODEL_CACHE`, `python -m study_cache <module>` behaves exactly like `python -m <module>`.
+- The override has unit tests ([`tests/study_cache/`](tests/study_cache/)) but has not been exercised with a full model run on a second machine.
+
+For commands below that import the packages directly, put them on the path:
 
 ```bash
 export PYTHONPATH=$(ls -d src/*/ | tr '\n' ':')
 ```
 
-Model-free tests (generator, masks, structure, toy model):
-
-```bash
-python -m pytest -q tests/scene_confirm tests/path_probe tests/scene_v4
-```
-
-Regenerate the held-out split, which is byte-identical to `fixtures/trackB_confirm_v1/checksums.json`:
+The individual steps that `verify_reproduction.py` runs, if you want the outputs. Regenerate the held-out split:
 
 ```bash
 python -m scene_confirm --output /tmp/confirm_check
 ```
 
-Re-run the frozen analysis on the committed records, and redraw Figure 1. On a fresh clone the per-group CSV and the SVG come out byte-identical. The JSON differs only in its `input` field, which records the absolute path of the records file:
+Re-run the frozen analysis on the committed records, and redraw Figure 1 (these two overwrite the committed outputs in place; the JSON's `input` field will then hold your path):
 
 ```bash
 python docs/checkpoint-2.4-confirm/analyze_confirm.py
