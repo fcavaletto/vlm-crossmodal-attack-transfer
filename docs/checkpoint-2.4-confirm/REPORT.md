@@ -18,6 +18,8 @@ The three subsets have **exactly the same number of RGB channel coordinates** (k
 
 ---
 
+> **Wording note (2026-11-09, after the results).** Three sentences that said the damaging coordinates are "invisible to" or "not in" the clean gradient were narrowed to what was tested: magnitude ranking and the first-order prediction. No number changed.
+
 ## Abstract
 
 On a vision-language model (Qwen3-VL-2B, bf16) attacked at the smallest 8-bit budget (L∞ ε = 1/255), 3-step PGD does about three times the damage of FGSM. Because of 8-bit rounding, the PGD-3 image is exactly FGSM's own perturbation restricted to about 30% of its RGB channel coordinates. We asked whether PGD's advantage comes from perturbing fewer coordinates (sparsity) or the right ones (selection), by comparing PGD's subset with random and clean-gradient-ranked subsets of exactly the same size, built from FGSM's own values and signs.
@@ -28,7 +30,7 @@ On 48 newly generated counterfactual groups, separated from all development data
 - **Saliency.** The k coordinates with the largest clean-gradient magnitude are **worse than random** (−1.38 logits, CI −1.71 to −1.06).
 - **Linear model.** The clean first-order model ranks the masks the wrong way round. It predicts PGD's subset does slightly *less* than random (0.92×) and the top-gradient subset 2.8× *more*.
 
-The development estimates replicate closely. The coordinates that make the iterative attack strong are invisible to, and anti-ranked by, the clean gradient. Single-step evaluations and gradient saliency misjudge both how vulnerable this model is and where the vulnerability lives. We propose a mechanism study that tests whether PGD acts as a majority-vote denoiser of a rough gradient, and whether that can be exploited as a one-shot "consensus" attack.
+The development estimates replicate closely. The two clean-gradient rules we tested, magnitude ranking and the first-order prediction, both rank the coordinates that make the iterative attack strong *below random*. This does not show that no function of the clean gradient could identify them. Single-step evaluations and gradient saliency misjudge both how vulnerable this model is and where the vulnerability lives. We propose a mechanism study that tests whether PGD acts as a majority-vote denoiser of a rough gradient, and whether that can be exploited as a one-shot "consensus" attack.
 
 ## 1. Why this question
 
@@ -42,7 +44,7 @@ After 8-bit rounding, the official PGD-3 image turned out to be FGSM restricted 
 
 This matters for safety evaluation:
 - If sparsity alone explained the gap, any thinning of FGSM would close it. That would be a quirk of rounding.
-- If selection explains it, then the set of damaging coordinates is invisible to the clean gradient and only appears after taking further gradient steps. Evaluations and attributions built on single-step or saliency information then miss the vulnerability, and miss where it lives.
+- If selection explains it, then the damaging coordinates are chosen by information that standard clean-gradient summaries may not expose, and that only shows up after further gradient steps. Evaluations and attributions built on single-step or saliency information then miss the vulnerability, and miss where it lives.
 
 ## 2. Setup
 
@@ -169,7 +171,7 @@ The first-order prediction of each mask's source-margin drop is −g_M · r, usi
 | Top-\|∇\| subset | 119.1 (2.81× random) | 141.0 (2.84× random) | 2.16 (0.61× random) |
 | PGD-3 subset | 39.4 (0.93× random) | 45.7 (0.92× random) | 10.04 (2.83× random) |
 
-The linear model overestimates every mask's damage by an order of magnitude, which is expected at a scale where it is not valid. It also gets the **ordering** wrong. It rates PGD's coordinates as slightly *below* random and the saliency subset as nearly 3× better. The truth is the reverse. Development gave the same ratios (0.93/0.91 and 2.82/2.87). So the information that makes PGD's coordinates damaging is not in the clean gradient, not even in its sign-and-magnitude combination over the mask.
+The linear model overestimates every mask's damage by an order of magnitude, which is expected at a scale where it is not valid. It also gets the **ordering** wrong. It rates PGD's coordinates as slightly *below* random and the saliency subset as nearly 3× better. The truth is the reverse. Development gave the same ratios (0.93/0.91 and 2.82/2.87). So neither the clean gradient's magnitude nor its first-order prediction (its signed dot product with the masked perturbation) identifies what makes PGD's coordinates damaging. This does not rule out other functions of the clean gradient, which were not tested.
 
 ### 5.6 The structural property on the new scenes
 
