@@ -1,0 +1,188 @@
+{
+ "status": "completed",
+ "stopped_reason": null,
+ "error": null,
+ "memory": {
+  "process_peak_footprint_GiB": 9.412,
+  "footprint_end_lifetime_max_GiB": 9.412,
+  "footprint_before_load_GiB": 0.434,
+  "min_available_GiB": 4.075,
+  "pressure_samples_by_level": {
+   "1": 627
+  },
+  "max_pressure_level": 1,
+  "seconds_at_warn_or_worse": 0.0,
+  "swap_growth_GiB": 0.0,
+  "samples": 627,
+  "abort_reason": null,
+  "emp1_preload_available_GiB": 12.335,
+  "frozen_guard_bf16_permitted": true
+ },
+ "reproduction": {
+  "clean": [
+   {
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.003945068921893835,
+     0.003945068921893835
+    ]
+   },
+   {
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.004694630391895771,
+     0.004694630391895771
+    ]
+   }
+  ],
+  "attacks": [
+   {
+    "attack": "fgsm",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.07049663364887238,
+     0.07049663364887238
+    ]
+   },
+   {
+    "attack": "fgsm",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.4463183581829071,
+     0.4463183581829071
+    ]
+   },
+   {
+    "attack": "random",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.007745826151221991,
+     0.007745826151221991
+    ]
+   },
+   {
+    "attack": "random",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.0116827841848135,
+     0.0116827841848135
+    ]
+   },
+   {
+    "attack": "3",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     2.210921049118042,
+     2.210921049118042
+    ]
+   },
+   {
+    "attack": "3",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     1.9508886337280273,
+     1.9508886337280273
+    ]
+   }
+  ],
+  "n_compared": 8,
+  "n_bit_exact": 8,
+  "determinism_repeat_max_abs_diff": 0.0,
+  "prog_reproduction_check": {
+   "compared": 6,
+   "exact_nll": 6,
+   "exact_margin": 6,
+   "same_decision": 6,
+   "max_abs_nll_diff": 0.0,
+   "mismatches": []
+  }
+ },
+ "fp32_vision": {
+  "skipped": null,
+  "measured": [
+   "dev4-ref-00-a"
+  ],
+  "pressure_at_check": 1,
+  "available_at_check_GiB": 7.842,
+  "required_GiB": 3.258,
+  "converted": 406957056,
+  "restored": 406957056,
+  "dtype_after": "torch.float32",
+  "dtype_restored": "torch.bfloat16",
+  "restore_check": {
+   "scene": "dev4-ref-00-a",
+   "nll_before": 0.003945068921893835,
+   "nll_after": 0.003945068921893835,
+   "margin_before": 8.75000016298145,
+   "margin_after": 8.75000016298145,
+   "exact": true
+  },
+  "grad_agreement_with_B": {
+   "L_helpful_nonrevealing": {
+    "cos": 0.6310282234678628,
+    "l1_ratio": 1.58948936465756,
+    "sign_agree": 0.8431779801829785,
+    "sign_agree_weighted": 0.9047423782000262
+   },
+   "L_neutral": {
+    "cos": 0.5057504975088349,
+    "l1_ratio": 2.3057266185287206,
+    "sign_agree": 0.8213754048051001,
+    "sign_agree_weighted": 0.8819858393509321
+   },
+   "M_neutral": {
+    "cos": 0.5101893119464906,
+    "l1_ratio": 1.4174741275811722,
+    "sign_agree": 0.8227013004628766,
+    "sign_agree_weighted": 0.8720440017512211
+   }
+  },
+  "n_B_cross_rows": 2,
+  "seconds": 121.0
+ },
+ "runtime": {
+  "load_seconds": 5.034,
+  "elapsed_seconds_after_load": 313.9,
+  "scene_seconds_B": {
+   "dev4-ref-00-a": 184.7
+  },
+  "scene_seconds_V32": {
+   "dev4-ref-00-a": 121.0
+  },
+  "pgd_gradient_seconds": [
+   17.504,
+   17.525,
+   17.56,
+   17.657,
+   17.662,
+   17.908
+  ]
+ },
+ "limitations": [
+  "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 13244481536 were available (float32 permitted: False). The guard was not lowered."
+ ]
+}

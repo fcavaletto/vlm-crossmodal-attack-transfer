@@ -133,3 +133,46 @@ If check 2 fails, the run stops. A mismatch would mean the numerical configurati
 The smallest change that runs under the **frozen** guard is about 1.2 GiB more available memory: 11.51 GB needed against 9.5–10.4 GB measured today. Closing one large application, for example Chrome or Cursor, before the run would do it.
 
 Unattended overnight runs often meet it without closing anything: the 2.0 and 2.1 runs started with 11.6 and 12.5 GiB available.
+
+## 6. Smoke results (2026-11-09, scene `dev4-ref-00-a`)
+
+| Attempt | Commit | Outcome |
+| --- | --- | --- |
+| 1 | `4917f63`, `a2f…` | The EMP-1 preload passed, but the frozen loader received the frozen refusal and refused again. **No weights were loaded.** Fixed: EMP-1 now hands the frozen loader its own recorded permit. The loader is unchanged. |
+| 2 (`paths_smoke_attempt2/`) | `ebb6f7b` | Stage B completed. Stage 3 crashed on my bug: the vision tower is `model.model.visual` in transformers 5.22. |
+| 3 (`paths_smoke/`) | this commit | Completed, all stages |
+
+Attempts 2 and 3, against the §4 criteria:
+
+| # | Criterion | Attempt 2 (started at 10.02 GiB available; frozen guard refused) | Attempt 3 (started at 12.33 GiB; frozen guard would have permitted) | Result |
+| --- | --- | --- | --- | --- |
+| 1 | Completes | Stage B only | yes | pass (3) |
+| 2 | Bit-exact against frozen 2.1 (clean, FGSM, random, PGD-3; both contexts) | 8 / 8 | 8 / 8 | **pass** |
+| 3 | Determinism repeat | 0 | 0 | pass |
+| 4 | Pressure | level 1, except one 0.5 s sample at level 2 | level 1 throughout | pass |
+| 5 | Swap growth | 0 | 0 | pass |
+| 6 | Peak footprint ≤ 7.5 GiB | **8.41 GiB** | **8.41 GiB** in stage B; **9.41 GiB** in fp32 vision | **FAIL** |
+| 7 | fp32-vision restore exact | — | 406,957,056 elements converted and restored; clean NLL and margin identical after restore | pass |
+| 8 | Scene time ≤ 1.5× the estimate | 184 s (estimate 198) | B 185 s; V32 121 s (estimate 138) | pass |
+
+Minimum available memory was 4.32 GiB in attempt 2 and 4.08 GiB in attempt 3.
+
+**Why criterion 6 failed.**
+- The process footprint reaches 8.3–8.4 GiB during **every** backward pass, and falls to about 5.1 GiB between passes. The value is identical across attempts 2 and 3.
+- EMP-1's 6.29 GiB "observed working set" came from between-scene samples in the frozen runs. Those samples missed in-backward peaks. That is the caveat §1 flagged.
+- The frozen runs ran the same code, so they almost certainly peaked at the same level, unseen.
+- The criterion is **not** relaxed here. Recalibrating it is a decision for the research lead (decision M1, below).
+
+**Observation, one scene, not a result.** The bf16 and fp32-vision NLL gradients at the clean image differ a lot:
+- cosine 0.51 (neutral) and 0.63 (helpful);
+- sign agreement 82–84%;
+- L1 ratio 2.3 and 1.6.
+
+This is the kind of precision effect the experiment is designed to measure. Nothing should be read into a single scene.
+
+**Decision M1 (pending).** Recalibrate EMP-1 to the measured peaks:
+- the preload line becomes available ≥ 8.41 + 1.5 = **9.91 GiB**;
+- criterion 6 becomes a monitor abort if the footprint exceeds **10.0 GiB**;
+- the fp32-vision gate is unchanged.
+
+Every other rule stays as written.
