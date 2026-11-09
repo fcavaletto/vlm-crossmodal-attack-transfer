@@ -149,8 +149,12 @@ def main(argv: list[str]) -> None:
             vals = sorted(rr[i]["frac_changed_bf16_among_moved"] for rr in t1)
             print(f"t={t}: median frac of moved coords whose bf16 value changes = {vals[len(vals)//2]:.4f}")
         return
+    if argv[:1] in (["masks"], ["masks-smoke"]):
+        from .mask_stage import execute_masks
+        execute_masks(root, smoke=argv[:1] == ["masks-smoke"])
+        return
     if argv[:1] not in (["run"], ["smoke"]):
-        raise SystemExit("usage: python -m path_probe {q0|smoke|run}")
+        raise SystemExit("usage: python -m path_probe {q0|smoke|run|masks|masks-smoke}")
     from .stages import execute
     policy = "frozen"
     if "--memory-policy" in argv:

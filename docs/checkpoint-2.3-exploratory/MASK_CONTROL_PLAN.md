@@ -95,3 +95,22 @@ For margin drop D (clean official margin minus perturbed official margin), on th
 - No other densities, no complement mask, no new PGD runs, no gradients.
 - No fp32 vision.
 - No sealed data.
+
+## 8. Amendment before any model output (2026-11-09)
+
+The toy test and a CPU-only check of the stored 2.3 tensors found an exception to §2 at **saturated pixels**. The exception arises at a pixel already at 255:
+
+1. FGSM's +ε step is clipped, so FGSM makes no change there.
+2. PGD's first step is clipped the same way.
+3. If steps 2 and 3 go down, the iterate sits at 255 − ½ level. Half-to-even rounding takes 254.5 to 254, a one-level decrease where FGSM did nothing.
+
+The symmetric case at 0 rounds 0.5 to 0, so it changes nothing. In the real data, every one of the 96 units has such coordinates: median 10 and at most 18 of about 176k PGD-3 coordinates, at most 0.011%. **There are zero sign reversals anywhere, and all changes are a single level.**
+
+The precise statement is therefore: the official PGD-3 perturbation is a sign-preserving subset of FGSM on all non-saturated pixels, plus at most 18 one-level decreases at saturated white pixels per unit.
+
+Changes to the plan:
+- `pgd_mask` scores the official PGD-3 image x + r_P itself, not r_F ⊙ (S_P ∩ S_F), so the pipeline check is exact.
+- k = |S_P| counts every coordinate PGD-3 changes, including the saturated ones, so the matched count is exact.
+- Random and top-k masks are still drawn from S_F.
+
+Nothing else changes.
