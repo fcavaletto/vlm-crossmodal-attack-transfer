@@ -153,8 +153,12 @@ def main(argv: list[str]) -> None:
         from .mask_stage import execute_masks
         execute_masks(root, smoke=argv[:1] == ["masks-smoke"])
         return
+    if argv[:1] in (["confirm"], ["confirm-smoke-dev"]):
+        from .confirm_stage import execute_confirm
+        execute_confirm(root, smoke_dev=argv[:1] == ["confirm-smoke-dev"])
+        return
     if argv[:1] not in (["run"], ["smoke"]):
-        raise SystemExit("usage: python -m path_probe {q0|smoke|run|masks|masks-smoke}")
+        raise SystemExit("usage: python -m path_probe {q0|smoke|run|masks|masks-smoke|confirm-smoke-dev|confirm}")
     from .stages import execute
     policy = "frozen"
     if "--memory-policy" in argv:

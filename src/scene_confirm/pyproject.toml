@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scene-confirm"
+version = "0.1.0"
+description = "Track B confirmation split: seeded independent v4-family counterfactual groups"
+requires-python = ">=3.11"
+dependencies = ["Pillow==11.3.0", "numpy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scene_confirm*"]

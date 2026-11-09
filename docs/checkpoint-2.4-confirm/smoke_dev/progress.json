@@ -1,0 +1,478 @@
+{
+  "schema": "checkpoint-2.4.confirm.progress.v1",
+  "label": "SMOKE ON ONE DEVELOPMENT SCENE (pipeline reproduction and timing; not a result)",
+  "freeze": null,
+  "git_head_at_start": "bce4d8a385b40fe0ea0b7c796a9ec3b778000bc3",
+  "scene_order": [
+    "dev4-ref-00-a"
+  ],
+  "seed_prefix": "checkpoint-2.3b-mask",
+  "n_seeds": 8,
+  "epsilon": 0.00392156862745098,
+  "cap_seconds": 7200,
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "pid": 80705,
+  "memory_policy": "EMP-1 with M1 (unchanged; MEMORY_ASSESSMENT.md section 7)",
+  "earlier_outputs_written": false,
+  "reserved_h_samples_used": false,
+  "scenes": {
+    "dev4-ref-00-a": 187.8
+  },
+  "limitations": [],
+  "budget": {
+    "available_bytes": 11482152960,
+    "decisions": {
+      "float32": {
+        "resident_bytes": 8510128128,
+        "available_bytes": 11482152960,
+        "required_available_bytes": 20871410752,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 13878837248,
+          "calibrated_projection": 20871410752,
+          "staging_double_copy": 17020256256
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "spare_above_weights",
+          "calibrated_projection",
+          "staging_double_copy"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+        "dtype": "float32"
+      },
+      "bfloat16": {
+        "resident_bytes": 4255064064,
+        "available_bytes": 11482152960,
+        "required_available_bytes": 11509447200,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 9623773184,
+          "calibrated_projection": 11509447200,
+          "staging_double_copy": 8510128128
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "calibrated_projection"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+        "dtype": "bfloat16"
+      }
+    },
+    "bf16_probe": {
+      "mps_available": true,
+      "mps_built": true,
+      "add_ok": true,
+      "matmul_ok": true,
+      "is_model_forward": false
+    },
+    "guard_lowered": false
+  },
+  "emp1_preload": {
+    "policy": "EMP-1",
+    "lines": {
+      "available_bytes": 10640781475,
+      "pressure_level_max": 1,
+      "free_disk_bytes": 10737418240
+    },
+    "sample": {
+      "t": 1794240794.181209,
+      "pressure": 1,
+      "available": 11482152960,
+      "swap_used": 524288,
+      "footprint": 464159944,
+      "footprint_max": 472548552
+    },
+    "free_disk_bytes": 32920141824,
+    "failed": [],
+    "permitted": true
+  },
+  "footprint_before_load": {
+    "current": 464192712,
+    "lifetime_max": 472548552
+  },
+  "load_permit": {
+    "permitted": true,
+    "policy": "EMP-1",
+    "frozen_bf16_decision_permitted": false,
+    "emp1_preload": {
+      "policy": "EMP-1",
+      "lines": {
+        "available_bytes": 10640781475,
+        "pressure_level_max": 1,
+        "free_disk_bytes": 10737418240
+      },
+      "sample": {
+        "t": 1794240794.181209,
+        "pressure": 1,
+        "available": 11482152960,
+        "swap_used": 524288,
+        "footprint": 464159944,
+        "footprint_max": 472548552
+      },
+      "free_disk_bytes": 32920141824,
+      "failed": [],
+      "permitted": true
+    }
+  },
+  "loaded_model": {
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 3.499
+  },
+  "elapsed_seconds": 188.9,
+  "memory_monitor": {
+    "samples": 379,
+    "by_level": {
+      "1": 377,
+      "2": 2
+    },
+    "min_available": 4660756480,
+    "max_swap_used": 524288,
+    "max_swap_growth": 0,
+    "timeline": [
+      {
+        "t": 1794240794.181545,
+        "pressure": 1,
+        "available": 11482152960,
+        "swap_used": 524288,
+        "footprint": 464192712,
+        "footprint_max": 472548552
+      },
+      {
+        "t": 1794240804.33295,
+        "pressure": 1,
+        "available": 4997775360,
+        "swap_used": 524288,
+        "footprint": 8908473688,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240814.488605,
+        "pressure": 1,
+        "available": 6589415424,
+        "swap_used": 524288,
+        "footprint": 8908457304,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240824.6440241,
+        "pressure": 1,
+        "available": 5304205312,
+        "swap_used": 524288,
+        "footprint": 8869905800,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240834.794566,
+        "pressure": 1,
+        "available": 6124011520,
+        "swap_used": 524288,
+        "footprint": 8869905800,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240844.9342499,
+        "pressure": 1,
+        "available": 5425299456,
+        "swap_used": 524288,
+        "footprint": 8887289224,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240855.0788999,
+        "pressure": 1,
+        "available": 6781190144,
+        "swap_used": 524288,
+        "footprint": 8887223688,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240865.2344801,
+        "pressure": 1,
+        "available": 5378981888,
+        "swap_used": 524288,
+        "footprint": 8895841696,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240875.3967261,
+        "pressure": 1,
+        "available": 5785583616,
+        "swap_used": 524288,
+        "footprint": 7967671736,
+        "footprint_max": 8970372440
+      },
+      {
+        "t": 1794240885.576169,
+        "pressure": 1,
+        "available": 6141444096,
+        "swap_used": 524288,
+        "footprint": 8909342136,
+        "footprint_max": 8971617720
+      },
+      {
+        "t": 1794240895.7552562,
+        "pressure": 1,
+        "available": 4925751296,
+        "swap_used": 524288,
+        "footprint": 8912389560,
+        "footprint_max": 8974878136
+      },
+      {
+        "t": 1794240905.92257,
+        "pressure": 1,
+        "available": 5654134784,
+        "swap_used": 524288,
+        "footprint": 8912356792,
+        "footprint_max": 8974878136
+      },
+      {
+        "t": 1794240916.099811,
+        "pressure": 1,
+        "available": 8304263168,
+        "swap_used": 524288,
+        "footprint": 5543478736,
+        "footprint_max": 8974878136
+      },
+      {
+        "t": 1794240926.305953,
+        "pressure": 1,
+        "available": 8240594944,
+        "swap_used": 524288,
+        "footprint": 5526848976,
+        "footprint_max": 8974878136
+      },
+      {
+        "t": 1794240936.484871,
+        "pressure": 1,
+        "available": 5734547456,
+        "swap_used": 524288,
+        "footprint": 8924005840,
+        "footprint_max": 8988034512
+      },
+      {
+        "t": 1794240946.6468182,
+        "pressure": 1,
+        "available": 6521503744,
+        "swap_used": 524288,
+        "footprint": 8924005840,
+        "footprint_max": 8988034512
+      },
+      {
+        "t": 1794240956.8017259,
+        "pressure": 1,
+        "available": 5912723456,
+        "swap_used": 524288,
+        "footprint": 8932410832,
+        "footprint_max": 9000437200
+      },
+      {
+        "t": 1794240966.955112,
+        "pressure": 1,
+        "available": 8322646016,
+        "swap_used": 524288,
+        "footprint": 5546870224,
+        "footprint_max": 9000437200
+      },
+      {
+        "t": 1794240977.1242151,
+        "pressure": 1,
+        "available": 8213692416,
+        "swap_used": 524288,
+        "footprint": 5530109392,
+        "footprint_max": 9000437200
+      }
+    ],
+    "process_peak_footprint": 9000437200
+  },
+  "last_memory": {
+    "tag": "dev4-ref-00-a",
+    "device": "mps",
+    "peak_rss_mb": 611.3,
+    "current_rss_mb": 563.0,
+    "os_available_mb": 8299.0,
+    "mps_driver_allocated_mb": 4749.7,
+    "mps_current_allocated_mb": 4072.9,
+    "footprint": {
+      "current": 5436802512,
+      "lifetime_max": 9000437200
+    }
+  },
+  "n_measured": 1,
+  "mean_scene_seconds": 187.8,
+  "drift_check": {
+    "scene": "dev4-ref-00-a",
+    "exact": true
+  },
+  "reproduction_check": {
+    "clean": true,
+    "codes_equal_2_3": {
+      "neutral__fgsm": true,
+      "neutral__pgd1": true,
+      "neutral__pgd2": true,
+      "neutral__pgd3": true,
+      "helpful_nonrevealing__fgsm": true,
+      "helpful_nonrevealing__pgd1": true,
+      "helpful_nonrevealing__pgd2": true,
+      "helpful_nonrevealing__pgd3": true
+    },
+    "grads_equal_2_3": {
+      "L_neutral": true,
+      "M_neutral": true,
+      "L_helpful_nonrevealing": true,
+      "M_helpful_nonrevealing": true
+    },
+    "scores": [
+      {
+        "kind": "fgsm",
+        "source": "neutral",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "pgd3",
+        "source": "neutral",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "topk_grad",
+        "source": "neutral",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 0,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 1,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 2,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 3,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 4,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 5,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 6,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "neutral",
+        "seed_index": 7,
+        "bit_exact": true
+      },
+      {
+        "kind": "fgsm",
+        "source": "helpful_nonrevealing",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "pgd3",
+        "source": "helpful_nonrevealing",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "topk_grad",
+        "source": "helpful_nonrevealing",
+        "seed_index": null,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 0,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 1,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 2,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 3,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 4,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 5,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 6,
+        "bit_exact": true
+      },
+      {
+        "kind": "random",
+        "source": "helpful_nonrevealing",
+        "seed_index": 7,
+        "bit_exact": true
+      }
+    ],
+    "all_bit_exact": true
+  },
+  "runtime_estimate_48_scenes_min": 150.2,
+  "status": "completed",
+  "footprint_end": {
+    "current": 5541103056,
+    "lifetime_max": 9000437200
+  }
+}
