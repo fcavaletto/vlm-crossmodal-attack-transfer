@@ -71,3 +71,21 @@ No frozen file, preserved file, record or historical result was changed. All his
 Test suites after these changes, in one call: 551 passed on the study machine.
 
 First CI run (`ce5c763`): macOS passed. Ubuntu had one failure, `test_process_footprint_reads_this_process`, which calls the macOS-only `proc_pid_rusage` syscall through the hash-frozen `path_probe/memory.py`. The test is now marked macOS-only, with the reason printed when it is skipped. No assertion was changed. The reproduction step now runs even if a test fails, so the two checks report separately.
+
+## 6. Open discrepancy: the held-out split is not byte-identical on Linux (2026-11-09)
+
+Found by the new CI, reported here, **not resolved**.
+
+- On macOS (Apple silicon, the study platform) every check passes: `python -m scene_confirm` regenerates all 100 files byte-for-byte.
+- On Ubuntu 24.04 x86-64, with the same Python, numpy and Pillow 13.0.0:
+  - all tests pass (529 passed, 22 skipped);
+  - the frozen hashes, analysis outputs and Figure 1 are byte-identical;
+  - the 97 regenerated PNGs have **identical decoded pixels** but different file bytes. `checksums.json` differs only because it records those file hashes.
+- Cause, as far as diagnosed: PNG compression. The Linux Pillow wheel reports zlib 1.3; the compressed stream differs from the macOS wheel's while the image content is the same. The macOS wheel's zlib build was not compared directly.
+- Consequence: the images the model would see are the same on both platforms. The earlier statement "regenerates byte-identically" is true only on the study platform. The README now says so.
+- The check was not changed. `tools/verify_reproduction.py` gained a diagnostic that prints what differs; a mismatch is still a failure, so the Ubuntu CI job is red.
+
+Options for the author:
+1. On platforms other than the study platform, compare decoded pixels exactly (still no tolerance) and keep the byte check on macOS.
+2. Keep the byte check everywhere and run the reproduction step only on macOS.
+3. Leave the Ubuntu job failing, as now.

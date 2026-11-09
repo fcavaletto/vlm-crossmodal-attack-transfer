@@ -61,7 +61,7 @@ python tools/verify_reproduction.py
 
 It verifies that:
 - the 15 frozen Checkpoint 2.4 files match `FROZEN.json`, and none changed after the freeze commit;
-- the held-out split regenerates byte-for-byte;
+- the held-out split regenerates byte-for-byte. This holds on Apple silicon macOS, the platform it was built on. On Linux x86-64 (CI, 2026-11-09) all 97 regenerated PNGs decode to **identical pixels**, but their compressed bytes differ, so the check fails there. It is left failing rather than relaxed; see [`docs/PUBLICATION_AUDIT.md`](docs/PUBLICATION_AUDIT.md) §6;
 - the frozen confirmation analysis, the per-group table, Figure 1 and the Checkpoint 3 pilot analysis regenerate from committed records. The table, figure and pilot analysis must be byte-identical; the confirmation JSON may differ only in its `input` field, which records an absolute path.
 
 Continuous integration ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) runs this check and the model-free tests on every pull request. It never downloads model weights.
