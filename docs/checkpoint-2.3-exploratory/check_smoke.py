@@ -12,7 +12,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-SMOKE = ROOT / "docs/checkpoint-2.3-exploratory/paths_smoke"
+import sys
+
+SMOKE = ROOT / "docs/checkpoint-2.3-exploratory" / (sys.argv[1] if len(sys.argv) > 1 else "paths_smoke")
 GIB = 1024**3
 CTX = ("neutral", "helpful_nonrevealing")
 FROZEN_KEY = {"fgsm": ("fgsm", 1), "random": ("random", 1), 3: ("pgd", 3)}

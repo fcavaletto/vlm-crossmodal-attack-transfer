@@ -288,7 +288,9 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
 
         # Stage 3, mode V32, on S16 measured in B.
         targets = [s for s in s16 if progress["scenes"].get(s, {}).get("mode_B")]
-        vp = VisionPrecision(model.visual)
+        # transformers 5.x: the vision tower is model.model.visual (get_image_features casts to its dtype).
+        visual = getattr(model, "visual", None) or model.model.visual
+        vp = VisionPrecision(visual)
         need = (6 * GIB + 2 * vp.fp32_bytes() + GIB) if monitor is None else (EMP1_V32_AVAILABLE_BYTES + vp.fp32_bytes() // 2)
         avail = available_bytes()
         pressure_now = os_sample()["pressure"]
@@ -308,7 +310,7 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
             _, x_ref, b_ref = scene_setup(reference_sid)
             before = b_ref.score_official(x_ref, "neutral")
             stage3["converted_elements"] = vp.to_fp32()
-            stage3["visual_dtype_after"] = str(next(model.visual.parameters()).dtype)
+            stage3["visual_dtype_after"] = str(next(visual.parameters()).dtype)
             v_durations: list[float] = []
             done: list[str] = []
             try:
@@ -349,7 +351,7 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
                     store.save_progress(progress)
             finally:
                 stage3["restored_elements"] = vp.restore()
-                stage3["visual_dtype_restored"] = str(next(model.visual.parameters()).dtype)
+                stage3["visual_dtype_restored"] = str(next(visual.parameters()).dtype)
             after = b_ref.score_official(x_ref, "neutral")
             stage3["restore_check"] = {"scene": reference_sid, "nll_before": before["nll"], "nll_after": after["nll"],
                                        "margin_before": before["margin"], "margin_after": after["margin"],
