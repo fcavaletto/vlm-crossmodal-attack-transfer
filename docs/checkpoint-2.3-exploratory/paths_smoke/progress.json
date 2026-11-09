@@ -1,0 +1,96 @@
+{
+  "schema": "checkpoint-2.3.paths.progress.v1",
+  "label": "EXPLORATORY, DEVELOPMENT ONLY (SMOKE, not a result)",
+  "plan_commit": "0c6f17631e5dbdcc5dc0f8f5ea1b2ac5b9c7e7b9",
+  "git_head_at_start": "fe96256c25f160c6908ee8928da894cfeaccee77",
+  "locked_inputs": {
+    "manifest_rows": 96,
+    "checksum_files": 100,
+    "prediction_rows": 384,
+    "primary_rows": 192,
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "predictions_rewritten": false,
+    "decision_rule": "lowest summed NLL, then color name"
+  },
+  "scene_order": [
+    "dev4-ref-00-a"
+  ],
+  "subset_s16": [
+    "dev4-ref-00-a"
+  ],
+  "epsilon": 0.00392156862745098,
+  "caps_seconds": {
+    "stage12": 14040.0,
+    "stage3_start": 14400.0,
+    "total": 16560.0
+  },
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "pid": 69842,
+  "frozen_outputs_written": false,
+  "sealed_or_new_samples_used": false,
+  "stages": {},
+  "scenes": {},
+  "limitations": [
+    "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 10250665984 were available (float32 permitted: False). The guard was not lowered."
+  ],
+  "budget": {
+    "available_bytes": 10250665984,
+    "decisions": {
+      "float32": {
+        "resident_bytes": 8510128128,
+        "available_bytes": 10250665984,
+        "required_available_bytes": 20871410752,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 13878837248,
+          "calibrated_projection": 20871410752,
+          "staging_double_copy": 17020256256
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "spare_above_weights",
+          "calibrated_projection",
+          "staging_double_copy"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+        "dtype": "float32"
+      },
+      "bfloat16": {
+        "resident_bytes": 4255064064,
+        "available_bytes": 10250665984,
+        "required_available_bytes": 11509447200,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 9623773184,
+          "calibrated_projection": 11509447200,
+          "staging_double_copy": 8510128128
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "calibrated_projection"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+        "dtype": "bfloat16"
+      }
+    },
+    "bf16_probe": {
+      "mps_available": true,
+      "mps_built": true,
+      "add_ok": true,
+      "matmul_ok": true,
+      "is_model_forward": false
+    },
+    "guard_lowered": false
+  },
+  "status": "stopped_budget"
+}
