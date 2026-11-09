@@ -16,7 +16,7 @@ from .precision import Fp32Projection
 
 
 class QwenBackend:
-    def __init__(self, *, model, processor, image_processor, prompts, texts, token_ids, label, device, projection: Fp32Projection):
+    def __init__(self, *, model, processor, image_processor, prompts, texts, token_ids, label, device, projection: Fp32Projection, guard=None):
         self.model = model
         self.processor = processor
         self.image_processor = image_processor
@@ -26,6 +26,7 @@ class QwenBackend:
         self.label = label
         self.device = device
         self.projection = projection
+        self.guard = guard or (lambda: None)
 
     def _with_projection(self, score: dict[str, Any]) -> dict[str, Any]:
         if score.get("loss_identity_agreed") is not True:
@@ -36,12 +37,14 @@ class QwenBackend:
         return out
 
     def score_float(self, image: torch.Tensor, ctx: str) -> dict[str, Any]:
+        self.guard()
         self.projection.clear()
         score = score_differentiable(model=self.model, image_processor=self.image_processor, prompt=self.prompts[ctx],
                                      image=image, token_ids=self.token_ids, label=self.label, device=self.device)
         return self._with_projection(score)
 
     def score_official(self, image: torch.Tensor, ctx: str) -> dict[str, Any]:
+        self.guard()
         self.projection.clear()
         score = score_official(model=self.model, processor=self.processor, image=image, user_text=self.texts[ctx],
                                token_ids=self.token_ids, label=self.label, device=self.device)
@@ -49,6 +52,7 @@ class QwenBackend:
         return self._with_projection(score)
 
     def grad_nll(self, image: torch.Tensor, ctx: str) -> torch.Tensor:
+        self.guard()
         public, gradient = backward_at_image(model=self.model, image_processor=self.image_processor, prompt=self.prompts[ctx],
                                              image=image, token_ids=self.token_ids, label=self.label, device=self.device)
         self.projection.clear()
@@ -60,6 +64,7 @@ class QwenBackend:
 
     def grad_margin(self, image: torch.Tensor, ctx: str, comp: str) -> torch.Tensor:
         """RGB gradient of z_label - z_comp on the same differentiable path as the frozen gradient."""
+        self.guard()
         a = int(self.token_ids[self.label][0])
         b = int(self.token_ids[comp][0])
         leaf = image.detach().to(dtype=torch.float32, device="cpu").requires_grad_(True)

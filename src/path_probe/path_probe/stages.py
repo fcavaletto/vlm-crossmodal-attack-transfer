@@ -53,7 +53,7 @@ def _check_residents(root: Path) -> None:
         raise Stop(f"a model is resident according to {mine}")
 
 
-def execute(root: Path, smoke: bool = False) -> None:
+def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
     import json
 
     import torch
@@ -75,7 +75,11 @@ def execute(root: Path, smoke: bool = False) -> None:
     from . import geometry as geo
     from .backend import QwenBackend
     from .precision import Fp32Projection, VisionPrecision
+    from .memory import EMP1_V32_AVAILABLE_BYTES, MemoryMonitor, emp1_preload, os_sample, process_footprint
     from .probe import CONTEXTS, clean_block, cross_evaluate, direction_block
+
+    if policy not in ("frozen", "emp1"):
+        raise Stop(f"unknown memory policy {policy!r}")
 
     commit = plan_commit(root)
     out_rel = SMOKE_RELATIVE if smoke else OUT_RELATIVE
@@ -107,6 +111,8 @@ def execute(root: Path, smoke: bool = False) -> None:
         "stages": {},
         "scenes": {},
         "limitations": [],
+        "memory_policy": "frozen Checkpoint 1.5 guard" if policy == "frozen" else "EMP-1 (exploratory; MEMORY_ASSESSMENT.md)",
+        "numerical_configuration": "identical to Checkpoint 2.1: bf16 weights on MPS, eager attention, frozen load call, frozen gradient/step/score functions",
     }
     (root / out_rel / "resident.json").write_text(json.dumps({"pid": os.getpid(), "model_key": MODEL_KEY}) + "\n")
     store.save_progress(progress)
@@ -138,10 +144,30 @@ def execute(root: Path, smoke: bool = False) -> None:
         "Full fp32 was not attempted: the frozen guard requires "
         f"{decisions['float32'].get('required_available_bytes')} available bytes, and {available} were available "
         f"(float32 permitted: {decisions['float32'].get('permitted')}). The guard was not lowered.")
-    if not (decisions["bfloat16"].get("permitted") and probe.get("matmul_ok")):
-        progress["status"] = "stopped_budget"
+    monitor = None
+    progress["frozen_guard_bf16_permitted"] = bool(decisions["bfloat16"].get("permitted"))
+    if policy == "frozen":
+        if not (decisions["bfloat16"].get("permitted") and probe.get("matmul_ok")):
+            progress["status"] = "stopped_budget"
+            store.save_progress(progress)
+            raise Stop("the bf16 budget did not permit a load")
+    else:
+        import shutil
+
+        emp = emp1_preload(os_sample(), shutil.disk_usage(root).free)
+        progress["emp1_preload"] = emp
+        if not (emp["permitted"] and probe.get("matmul_ok")):
+            progress["status"] = "stopped_budget_emp1"
+            store.save_progress(progress)
+            raise Stop("EMP-1 did not permit a load: " + ", ".join(emp["failed"]))
+        if not decisions["bfloat16"].get("permitted"):
+            progress["limitations"].append(
+                "The frozen Checkpoint 1.5 guard refused this bf16 load; it ran under EMP-1 with pressure monitoring. "
+                "Numerics are unchanged; only the memory headroom rule differs.")
+        monitor = MemoryMonitor()
+        monitor.start()
+        progress["footprint_before_load"] = process_footprint()
         store.save_progress(progress)
-        raise Stop("the bf16 budget did not permit a load")
 
     t_load = time.perf_counter()
     model = load_model_after_budget(decisions["bfloat16"], "bfloat16")
@@ -163,7 +189,16 @@ def execute(root: Path, smoke: bool = False) -> None:
     def elapsed() -> float:
         return time.perf_counter() - t0
 
+    def guard() -> None:
+        if monitor is not None:
+            monitor.check()
+
     def memory_ok(tag: str) -> None:
+        if monitor is not None:
+            monitor.check()
+            progress["memory_monitor"] = monitor.snapshot()
+            progress["last_memory"] = {"tag": tag, **memory_snapshot(device), "footprint": process_footprint()}
+            return
         avail = available_bytes()
         progress.setdefault("min_available_bytes", avail)
         progress["min_available_bytes"] = min(progress["min_available_bytes"], avail)
@@ -185,7 +220,7 @@ def execute(root: Path, smoke: bool = False) -> None:
             prompts[ctx] = prepare_prompt(processor, image_processor, image, text)
         backend = QwenBackend(model=model, processor=processor, image_processor=image_processor, prompts=prompts,
                               texts=texts, token_ids=token_ids, label=str(record["answer"]), device=device,
-                              projection=projection)
+                              projection=projection, guard=guard)
         return record, image, backend
 
     def tag(rows, sid, mode):
@@ -235,9 +270,13 @@ def execute(root: Path, smoke: bool = False) -> None:
         # Stage 3, mode V32, on S16 measured in B.
         targets = [s for s in s16 if progress["scenes"].get(s, {}).get("mode_B")]
         vp = VisionPrecision(model.visual)
-        need = 6 * GIB + 2 * vp.fp32_bytes() + GIB
+        need = (6 * GIB + 2 * vp.fp32_bytes() + GIB) if monitor is None else (EMP1_V32_AVAILABLE_BYTES + vp.fp32_bytes() // 2)
         avail = available_bytes()
-        stage3: dict[str, Any] = {"available_bytes": avail, "required_bytes": need, "vision_fp32_bytes": vp.fp32_bytes()}
+        pressure_now = os_sample()["pressure"]
+        if monitor is not None and pressure_now != 1:
+            avail = -1  # EMP-1: fp32 vision only at normal pressure
+        stage3: dict[str, Any] = {"available_bytes": avail, "required_bytes": need, "vision_fp32_bytes": vp.fp32_bytes(),
+                                  "pressure_level_at_check": pressure_now}
         progress["stages"]["V32"] = stage3
         if elapsed() >= STAGE3_START_CAP_S:
             stage3["skipped"] = "the stage 3 start cap was reached"
@@ -311,6 +350,7 @@ def execute(root: Path, smoke: bool = False) -> None:
                 release_cache(device)
             stage3["seconds"] = round(sum(v_durations), 1)
         progress["status"] = "completed"
+        progress["reproduction_check"] = reproduction_check(root, store)
     except Stop as exc:
         progress["status"] = "stopped"
         progress["stopped_reason"] = str(exc)
@@ -321,6 +361,10 @@ def execute(root: Path, smoke: bool = False) -> None:
         raise
     finally:
         progress["elapsed_seconds"] = round(elapsed(), 1)
+        if monitor is not None:
+            monitor.stop()
+            progress["memory_monitor"] = monitor.snapshot()
+            progress["footprint_end"] = process_footprint()
         projection.remove()
         store.save_progress(progress)
         try:
@@ -331,3 +375,40 @@ def execute(root: Path, smoke: bool = False) -> None:
         gc.collect()
         if torch.backends.mps.is_available():
             torch.mps.empty_cache()
+
+
+FROZEN_KEYS = {("fgsm", None): ("fgsm", 1), ("random", None): ("random", 1), ("pgd", 3): ("pgd", 3), ("pgd", 7): ("pgd", 7)}
+
+
+def reproduction_check(root: Path, store: Store) -> dict[str, Any]:
+    """Neutral-source official scores against the frozen Checkpoint 2.1 records (read only)."""
+    import json
+
+    frozen = {}
+    for line in (root / "docs/checkpoint-2.1/development/records.jsonl").read_text().splitlines():
+        r = json.loads(line)
+        frozen[(r["scene_id"], r["method"], r["steps"])] = r
+    rows = [json.loads(x) for x in store.records.read_text().splitlines()] if store.records.exists() else []
+    out = {"compared": 0, "exact_nll": 0, "exact_margin": 0, "same_decision": 0, "max_abs_nll_diff": 0.0, "mismatches": []}
+    for r in rows:
+        if r.get("mode") != "B" or r.get("source") != "neutral":
+            continue
+        key = FROZEN_KEYS.get((r["kind"], r.get("k") if r["kind"] == "pgd" else None))
+        if key is None or "official" not in r["scores"]["neutral"]:
+            continue
+        f = frozen.get((r["scene_id"], *key))
+        if f is None:
+            continue
+        for ctx in ("neutral", "helpful_nonrevealing"):
+            mine = r["scores"][ctx]["official"]
+            theirs = f["perturbed"][ctx]
+            out["compared"] += 1
+            d = abs(mine["nll"] - theirs["nll"])
+            out["max_abs_nll_diff"] = max(out["max_abs_nll_diff"], d)
+            out["exact_nll"] += int(d == 0)
+            out["exact_margin"] += int(mine["margin"] == theirs["margin"])
+            out["same_decision"] += int(mine["chosen"] == theirs["decision"])
+            if d != 0 or mine["chosen"] != theirs["decision"]:
+                out["mismatches"].append({"scene_id": r["scene_id"], "method": key, "context": ctx,
+                                          "nll_diff": d, "decision": [mine["chosen"], theirs["decision"]]})
+    return out

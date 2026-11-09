@@ -215,3 +215,85 @@ def test_select_scenes_rule():
     assert len(s16) == 16 and len(order) == 48 and order[:16] == s16
     assert all(s.endswith("-a") for s in order)
     assert "dev4-ref-00-a" in s16 and "dev4-ref-47-a" in s16
+
+
+# --- EMP-1 memory policy and monitor -------------------------------------------------------------
+from path_probe.memory import (  # noqa: E402
+    EMP1_PRELOAD_AVAILABLE_BYTES,
+    GIB,
+    Limits,
+    MemoryMonitor,
+    emp1_preload,
+    process_footprint,
+)
+from path_probe.run import Stop  # noqa: E402
+
+
+def _s(t, pressure=1, available=8 * GIB, swap=0):
+    return {"t": float(t), "pressure": pressure, "available": int(available), "swap_used": int(swap),
+            "footprint": None, "footprint_max": None}
+
+
+def test_emp1_preload_lines():
+    assert 7.5 * GIB < EMP1_PRELOAD_AVAILABLE_BYTES < 8.0 * GIB
+    ok = emp1_preload(_s(0, available=8.89 * GIB), 31 * GIB)
+    assert ok["permitted"] and ok["failed"] == []
+    bad = emp1_preload(_s(0, pressure=2, available=7 * GIB), 5 * GIB)
+    assert set(bad["failed"]) == {"available_bytes", "pressure_level", "free_disk_bytes"}
+
+
+def _monitor():
+    exits = []
+    m = MemoryMonitor(limits=Limits(), sampler=lambda: _s(0), exit_fn=exits.append)
+    m.baseline = _s(0)
+    return m, exits
+
+
+def test_monitor_normal_never_aborts():
+    m, exits = _monitor()
+    for i in range(1000):
+        m.observe(_s(i * 0.5, available=3 * GIB, swap=1 * GIB))
+    m.check()
+    assert exits == [] and m.snapshot()["by_level"] == {"1": 1000}
+
+
+def test_monitor_critical_aborts_then_hard_exits():
+    m, exits = _monitor()
+    m.observe(_s(0, pressure=4))
+    with pytest.raises(Stop):
+        m.check()
+    m.observe(_s(30, pressure=4))
+    assert exits == []
+    m.observe(_s(61, pressure=4))
+    assert exits == [3]
+
+
+def test_monitor_warn_must_be_sustained():
+    m, _ = _monitor()
+    m.observe(_s(0, pressure=2))
+    m.observe(_s(100, pressure=2))
+    m.observe(_s(110, pressure=1))
+    m.observe(_s(200, pressure=2))
+    m.check()
+    m.observe(_s(321, pressure=2))
+    with pytest.raises(Stop, match="warn"):
+        m.check()
+
+
+def test_monitor_swap_growth_and_low_available():
+    m, _ = _monitor()
+    m.observe(_s(0, swap=7 * GIB))
+    with pytest.raises(Stop, match="swap"):
+        m.check()
+    m2, _ = _monitor()
+    m2.observe(_s(0, available=0.5 * GIB))
+    m2.observe(_s(29, available=0.5 * GIB))
+    m2.check()
+    m2.observe(_s(31, available=0.5 * GIB))
+    with pytest.raises(Stop, match="0.75"):
+        m2.check()
+
+
+def test_process_footprint_reads_this_process():
+    fp = process_footprint()
+    assert fp is not None and 0 < fp["current"] <= fp["lifetime_max"]

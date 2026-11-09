@@ -152,7 +152,10 @@ def main(argv: list[str]) -> None:
     if argv[:1] not in (["run"], ["smoke"]):
         raise SystemExit("usage: python -m path_probe {q0|smoke|run}")
     from .stages import execute
-    execute(root, smoke=argv[:1] == ["smoke"])
+    policy = "frozen"
+    if "--memory-policy" in argv:
+        policy = argv[argv.index("--memory-policy") + 1]
+    execute(root, smoke=argv[:1] == ["smoke"], policy=policy)
 
 
 if __name__ == "__main__":
