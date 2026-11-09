@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "path-probe"
+version = "0.1.0"
+description = "Checkpoint 2.3 exploratory perturbation-path, precision, and direction probe (development only)."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["path_probe*"]
