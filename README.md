@@ -16,7 +16,7 @@ All three subsets have exactly the same number of coordinates and FGSM's own sig
 
 ## What we found
 
-At the smallest meaningful budget, one 8-bit level per channel, 3-step PGD does about **3× the damage** of FGSM on a 2B-parameter vision-language model. After the official 8-bit rounding, the PGD-3 image is *exactly* FGSM restricted to about 30% of its RGB channel coordinates, with the same signs. This follows from the arithmetic of three ε/4 sign steps (see [the report, §3](docs/checkpoint-2.4-confirm/REPORT.md#3-a-structural-fact-that-is-not-the-finding)). It allows a clean decomposition: hold the perturbation values, signs and count fixed, and change only *which* coordinates are kept.
+At the smallest meaningful budget, one 8-bit level per channel, 3-step PGD does about **3× the damage** of FGSM on a 2B-parameter vision-language model. After the official 8-bit rounding, the PGD-3 image is FGSM restricted to about 30% of its RGB channel coordinates, with the same signs, apart from at most 7 zero-gradient rounding ties per image (out of about 175,000 kept coordinates). This follows from the arithmetic of three ε/4 sign steps (see [the report, §3](docs/checkpoint-2.4-confirm/REPORT.md#3-a-structural-fact-that-is-not-the-finding)). It allows a matched comparison: hold the perturbation values, signs and count fixed, and vary *which* coordinates are kept. It controls perturbation magnitude, sign and count. It does not separate a coordinate's individual effect from its spatial arrangement or from interactions among the kept coordinates.
 
 On **48 newly generated scene groups**, analyzed under a protocol hash-frozen and pushed before any inference ([`PROTOCOL.md`](docs/checkpoint-2.4-confirm/PROTOCOL.md), commit `c35b02c`):
 
@@ -41,7 +41,7 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 | **Confirmed** (pre-registered, held-out) | Selection, not sparsity, explains PGD-3's advantage. Top-\|∇\| selection is worse than random. | [Checkpoint 2.4 report](docs/checkpoint-2.4-confirm/REPORT.md) |
 | **Structural** (arithmetic) | Under these settings the PGD-3 image is a sign-preserving FGSM subset. The only exceptions are 0–7 half-level ties per image, at coordinates with exactly zero gradient. | Report §3, §5.6 |
 | **Exploratory** (development data) | Gradients decorrelate after one ε/4 step. bf16 vision rotates the gradient but not the attack outcome. A slight cross-context asymmetry. | [Checkpoint 2.3 report](docs/checkpoint-2.3-exploratory/REPORT.md) |
-| **Exploratory negative** (16 development scenes) | Gradient sign consensus at attack-independent nearby points does **not** reproduce PGD's selection: it recovers 5% of the selection gain [−5%, 14%]. Smoothed-gradient magnitude is worse than random. About a fifth of the gain is regional at 16-pixel scale. | [Checkpoint 3 pilot report](docs/checkpoint-3-mechanism/PILOT_REPORT.md) |
+| **Exploratory negative** (16 development scenes) | The sign-consensus masks tested (sign votes over 1–8 random points at ±ε/4, 4 sparse on-grid points, 2 points at ±ε/16, and an fp32 vote) do **not** reproduce PGD's selection: the strongest recovers 5% of the selection gain [−5%, 14%]. Smoothed-gradient magnitude is worse than random. Matching PGD's per-patch density (16 px) recovers about a fifth of the gain. Other samplers and consensus rules were not tested. | [Checkpoint 3 pilot report](docs/checkpoint-3-mechanism/PILOT_REPORT.md) |
 | **Not established** | The mechanism; generality to other models, budgets and precisions. | Report §7 |
 
 ## Read next
@@ -53,7 +53,15 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 
 ## Reproduce
 
-You need Apple silicon with about 12 GiB free, Python with torch, transformers and Pillow 11.3.0, and the pinned Qwen3-VL-2B weights present locally. The scripts never download them.
+**Without the model (any machine with Python 3.12 and numpy).** Every reported table and Figure 1 can be regenerated from the committed records; no tensors, weights or GPU are needed. The steps below were checked on a fresh clone. The held-out split regenerates byte-identically under the recorded environment.
+
+**Recorded environment** (`docs/models/measured-environment.txt`): Python 3.12.14, torch 2.15.0, torchvision 0.29.2, transformers 5.22.1, numpy 2.5.4, **Pillow 13.0.0**, accelerate 1.15.0, huggingface_hub 2.4.0, pytest 9.2.0.
+- `src/scene_confirm/pyproject.toml` and the earlier generators pin `Pillow==11.3.0`. Those pins date from the Linux development generators.
+- Install the versions above directly, rather than `pip install -e src/scene_confirm`, or the PNG bytes may differ.
+
+**With the model.** You need Apple silicon with about 12 GiB free and the pinned Qwen3-VL-2B weights (revision `89644892`) already in a local Hugging Face cache. The scripts never download them.
+- Model-loading entry points refuse any `HF_HOME` other than the author's path, which is set in `src/qwen_rgb/qwen_rgb/pins.py`.
+- That guard protected the original runs. Rerunning elsewhere currently requires editing `REQUIRED_HF_HOME` locally.
 
 ```bash
 export PYTHONPATH=$(ls -d src/*/ | tr '\n' ':')
@@ -71,7 +79,7 @@ Regenerate the held-out split, which is byte-identical to `fixtures/trackB_confi
 python -m scene_confirm --output /tmp/confirm_check
 ```
 
-Re-run the frozen analysis on the committed records, and redraw Figure 1:
+Re-run the frozen analysis on the committed records, and redraw Figure 1. On a fresh clone the per-group CSV and the SVG come out byte-identical. The JSON differs only in its `input` field, which records the absolute path of the records file:
 
 ```bash
 python docs/checkpoint-2.4-confirm/analyze_confirm.py
@@ -81,7 +89,13 @@ python docs/checkpoint-2.4-confirm/analyze_confirm.py
 python docs/checkpoint-2.4-confirm/make_figure.py
 ```
 
-The full confirmation run takes about 2.7 h. It refuses to start unless every frozen hash matches, and it refuses to overwrite earlier records:
+Re-run the Checkpoint 3 pilot analysis (exploratory) from its committed records:
+
+```bash
+python docs/checkpoint-3-mechanism/analyze_pilot.py
+```
+
+The full confirmation run takes about 2.7 h and needs the model. It refuses to start unless every frozen hash matches, and it refuses to overwrite earlier records:
 
 ```bash
 python -m path_probe confirm

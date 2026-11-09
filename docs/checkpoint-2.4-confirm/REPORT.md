@@ -19,10 +19,17 @@ The three subsets have **exactly the same number of RGB channel coordinates** (k
 ---
 
 > **Wording note (2026-11-09, after the results).** Three sentences that said the damaging coordinates are "invisible to" or "not in" the clean gradient were narrowed to what was tested: magnitude ranking and the first-order prediction. No number changed.
+>
+> **Second wording note (2026-11-10, publication audit).** No number, protocol or record changed.
+> - The subset relationship is now stated as near-exact. Up to 7 zero-gradient rounding ties per image lie outside FGSM's support, as §3 and §5.6 already reported.
+> - "No confound" is narrowed: the comparison controls magnitude, sign and count, but not spatial arrangement or interactions among the kept coordinates.
+> - A fourth "not visible in the clean gradient" sentence in §9, missed by the first note, is narrowed.
+> - §8 named Pillow 11.3.0. The confirmation split was generated, and regenerates byte-identically, under Pillow 13.0.0, as `fixtures/trackB_confirm_v1/metadata.json` records.
+> - §9's working hypothesis was later tested in a development-only pilot. The consensus masks tested did not reproduce PGD's selection ([Checkpoint 3 pilot report](../checkpoint-3-mechanism/PILOT_REPORT.md)).
 
 ## Abstract
 
-On a vision-language model (Qwen3-VL-2B, bf16) attacked at the smallest 8-bit budget (L∞ ε = 1/255), 3-step PGD does about three times the damage of FGSM. Because of 8-bit rounding, the PGD-3 image is exactly FGSM's own perturbation restricted to about 30% of its RGB channel coordinates. We asked whether PGD's advantage comes from perturbing fewer coordinates (sparsity) or the right ones (selection), by comparing PGD's subset with random and clean-gradient-ranked subsets of exactly the same size, built from FGSM's own values and signs.
+On a vision-language model (Qwen3-VL-2B, bf16) attacked at the smallest 8-bit budget (L∞ ε = 1/255), 3-step PGD does about three times the damage of FGSM. Because of 8-bit rounding, the PGD-3 image is FGSM's own perturbation restricted to about 30% of its RGB channel coordinates, apart from at most 7 zero-gradient rounding ties per image. We asked whether PGD's advantage comes from perturbing fewer coordinates (sparsity) or the right ones (selection), by comparing PGD's subset with random and clean-gradient-ranked subsets of exactly the same size, built from FGSM's own values and signs.
 
 On 48 newly generated counterfactual groups, separated from all development data and analyzed under a protocol hash-frozen before inference:
 - **Selection.** PGD's coordinates cause **+6.50 logits** more margin damage than matched random coordinates (95% CI 6.08–6.92). This holds with either context as source, and PGD's subset beats all 8 random subsets in **96 of 96** group–source units.
@@ -204,7 +211,7 @@ This confirms a *decomposition* on one model and task family. It does not explai
 
 **What this experiment might add.** These are claims about our evidence, not a literature-wide novelty claim. A limited web search on 2026-11-09 (not a systematic review) did not find these specific results; a reviewer may know of closer work.
 
-1. **A matched-count decomposition of the PGD-versus-FGSM gap at the 8-bit floor.** The PGD-3 image is *exactly* a subset of FGSM's perturbation, for structural reasons (§3). That lets "sparsity" be separated from "selection" with no confound in perturbation values or signs: same values, same signs, same count, different coordinates. We know of no prior work that isolates the iterative-attack advantage this way. The closest framings (local-linearity work, sparse attacks) measure different quantities.
+1. **A matched-count decomposition of the PGD-versus-FGSM gap at the 8-bit floor.** The PGD-3 image is a subset of FGSM's perturbation for structural reasons, up to 0–7 zero-gradient rounding ties per image (§3, §5.6). That lets "sparsity" be separated from "selection" with perturbation values, signs and count held fixed: same values, same signs, same count, different coordinates. "Selection" still includes the spatial arrangement of the kept coordinates and their interactions. We know of no prior work that isolates the iterative-attack advantage this way. The closest framings (local-linearity work, sparse attacks) measure different quantities.
 2. **A held-out, pre-registered estimate** that on a production-style VLM the advantage is mostly *selection*. Development estimate: sparsity share 8% (1–14%); held-out confirmation: 3% (−2% to 9%), §5.
 3. **An inverted saliency ranking.** The coordinates with the largest clean-gradient magnitude are *worse than random*, and the clean linear model rates PGD's coordinates as no better than random. The general fragility of gradient saliency is known. A *reversed* ranking for the attack-relevant coordinate set, with a matched-count control and held-out confirmation, is the specific addition.
 4. **A reproducible pipeline.** Bit-exact cross-checks against frozen records, a generator with provable separation from development data, and a hash-frozen analysis. This kind of scaffolding is uncommon in adversarial-VLM work.
@@ -225,7 +232,7 @@ This confirms a *decomposition* on one model and task family. It does not explai
 
 ## 8. Reproducibility
 
-The environment is the one used throughout the repo: Python venv with torch, transformers, and Pillow 11.3.0; pinned Qwen3-VL-2B weights present locally (never downloaded by these scripts); Apple silicon with about 12 GiB available at load. Set:
+The environment is the one used throughout the repo: Python venv with torch, transformers, and Pillow 13.0.0 (see the second wording note); pinned Qwen3-VL-2B weights present locally (never downloaded by these scripts); Apple silicon with about 12 GiB available at load. Set:
 
 ```bash
 export PYTHONPATH=$(ls -d src/*/ | tr '\n' ':')
@@ -279,7 +286,7 @@ On the same machine and software, the run is deterministic: the smoke reproduced
 - After a single ε/4 sign step, the input gradient is almost orthogonal to the clean gradient: cosine 0.002, sign agreement 53%. This is still true with an fp32 vision tower (cosine −0.010), so bf16 rounding alone does not explain it.
 - Changing only the vision tower's precision rotates the clean gradient more than changing the prompt does (cosine about 0.3, against 0.87 across prompts), yet attack damage is unchanged.
 - PGD-3 keeps exactly the coordinates where three gradients (at x and at two nearby points) agree in sign. Those coordinates are far more damaging than chance, while the clean gradient's own magnitude ranking is worse than chance. **Both facts are now confirmed on held-out scenes (§5).**
-- The clean linear model rates PGD's coordinates as 0.92× random, while they do 2.8× random (§5.5). Whatever makes them damaging is not visible in the clean gradient.
+- The clean linear model rates PGD's coordinates as 0.92× random, while they do 2.8× random (§5.5). Whatever makes them damaging is not captured by the clean first-order prediction or by magnitude ranking.
 
 A simple model fits all three. Write the input gradient as g(x) = s(x) + n(x):
 - s(x) is a smooth, damage-relevant component that is stable across an ε-ball;

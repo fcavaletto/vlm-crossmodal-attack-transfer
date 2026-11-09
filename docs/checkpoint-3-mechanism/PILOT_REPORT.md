@@ -1,4 +1,4 @@
-# Checkpoint 3 pilot: gradient sign consensus does not explain PGD's selection
+# Checkpoint 3 pilot: the tested sign-consensus masks do not explain PGD's selection
 
 **Status: EXPLORATORY, development data only (16 scenes).**
 - Nothing here is confirmed.
@@ -100,15 +100,15 @@ Clean and smoothed gradient magnitude concentrate on the referent object's cell 
 
 ## 4. Interpretation
 
-**What this rules out on development data.** A sign-stability account in which PGD's 3-step vote approximates a sign field that is stable across the ε-ball, and which random neighbourhood samples could therefore also estimate. That account predicts R near 1 for vote_R8. The observed R is 0.05.
+**What this argues against, on development data and for the estimators tested.** A sign-stability account in which PGD's 3-step vote approximates a sign field that is stable across the ε-ball, and which the tested neighbourhood samplers (uniform-sign points at ±ε/4, ±ε on 1/16 of coordinates, ±ε/16, and an fp32 vote; 1–8 points; agreement-count and mean-gradient aggregation) could therefore also estimate. That account predicts R near 1 for vote_R8. The observed R is 0.05. Other sampling distributions, radii, point counts and aggregation rules were not tested and are not excluded.
 
 **What it does not rule out.**
 - Functions of the clean gradient other than those tested. The pilot adds three more clean-neighbourhood rules: sign voting, smoothed magnitude and the averaged-sign dense step. All three fail. That still does not show that *every* function of local gradients fails.
-- A path-specific account. PGD's second and third gradients are taken at points chosen *by the attack*, and the attack's own moves change the gradient. The pilot was designed to separate exactly this. Attack-independent points carry essentially none of the selection signal, so the signal seems to come from the path.
+- A path-specific account. PGD's second and third gradients are taken at points chosen *by the attack*, and the attack's own moves change the gradient. The pilot was designed to separate exactly this. The tested attack-independent points carry little of the selection signal, which is consistent with a path-dependent account but does not establish one.
 
 **A hypothesis for later, not a claim.** Damaging subsets may be many and not unique, so PGD finds one by moving along a direction that the model's response is curved along. Two observations point that way: the fp32-vision PGD set barely overlaps the bf16 one yet does similar damage, and only about 22% of the advantage is regional. Testing this needs path-specific second-order quantities, the planned next candidate (PLAN §8), and a damage comparison of fp32 and bf16 PGD sets on the same scenes.
 
-**Novelty.** Neighbourhood gradient averaging (SmoothGrad, EOT, VMI-FGSM) is established as a way to *improve* attacks or saliency. The narrow point here is diagnostic: at matched count and sign, attack-independent neighbourhood consensus does not reproduce an iterative attack's coordinate choice on this model. This is exploratory and from 16 development scenes.
+**Novelty.** Neighbourhood gradient averaging (SmoothGrad, EOT, VMI-FGSM) is established as a way to *improve* attacks or saliency. The narrow point here is diagnostic: at matched count and sign, the attack-independent neighbourhood consensus masks tested here do not reproduce an iterative attack's coordinate choice on this model. This is exploratory and from 16 development scenes.
 
 ## 5. Limitations
 

@@ -9,7 +9,7 @@ Preprint draft, November 2026. Code, data, frozen protocols and records: <https:
 
 Single-step attacks and gradient saliency are the cheapest tools for estimating how vulnerable a model is to adversarial inputs and which input features matter. Both assume the model is locally close to linear. We study the gap between FGSM and 3-step PGD on a 2B-parameter vision-language model (Qwen3-VL-2B, bf16) at the smallest 8-bit budget, L∞ ε = 1/255. There, PGD-3 does about three times FGSM's damage to the answer margin.
 
-We first show that, after the 8-bit rounding every valid image undergoes, the PGD-3 image is *exactly* FGSM's perturbation restricted to about 30% of its RGB channel coordinates, with identical signs. This structural fact allows a decomposition with no confounds: subsets of FGSM's own perturbation with the same values, signs and count, differing only in which coordinates are kept.
+We first show that, after the 8-bit rounding every valid image undergoes, the PGD-3 image is FGSM's perturbation restricted to about 30% of its RGB channel coordinates, with identical signs, apart from at most 7 zero-gradient rounding ties per image (out of about 175,000 kept coordinates). This near-exact subset relationship allows a matched comparison: subsets of FGSM's own perturbation with the same values, signs and count, differing in which coordinates are kept. The comparison controls magnitude, sign and count; it does not separate a coordinate's individual effect from its spatial arrangement or from interactions among the kept coordinates.
 
 A development study suggested that PGD's advantage is coordinate *selection* rather than sparsity. We then confirmed this on 48 newly generated counterfactual scene groups, under a protocol and analysis that were hash-frozen and published before any inference:
 - **Selection.** PGD's subset caused +6.50 logits more margin damage than random subsets of the same size (95% CI 6.08–6.92). It exceeded all eight random subsets in 96 of 96 group-by-source cases.
@@ -17,7 +17,7 @@ A development study suggested that PGD's advantage is coordinate *selection* rat
 - **Saliency.** Subsets chosen by clean-gradient magnitude were worse than random (−1.38, CI −1.71 to −1.06).
 - **First-order prediction.** The clean first-order prediction ranked the subsets in the reverse of their true order.
 
-On this model, single-step evaluations and magnitude saliency therefore misjudge both how much and where the model is vulnerable. We describe the limits of the evidence. A development-only pilot finds that gradient sign consensus at attack-independent nearby inputs does not explain PGD's selection.
+On this model, single-step evaluations and magnitude saliency therefore misjudge both how much and where the model is vulnerable. We describe the limits of the evidence. In a development-only pilot, the sign-consensus masks we tested, built from gradients at attack-independent nearby inputs, did not reproduce PGD's selection.
 
 ---
 
@@ -32,14 +32,14 @@ All three treat the model as locally linear around the clean input. When that fa
 
 We ask a narrower question that, as far as a limited search found, has not been isolated before: **when PGD beats FGSM, is it because PGD perturbs fewer coordinates, or because it perturbs the right ones?**
 
-In general the question is confounded. PGD and FGSM differ in values, signs and support at once. We identify a setting where they do not. At ε equal to one 8-bit level, with PGD steps of ε/4, the 8-bit rounding that every valid image undergoes turns the PGD-3 image into an exact, sign-preserving subset of FGSM's perturbation (§3). PGD can then be compared with other subsets of FGSM's perturbation that have the same count and signs:
+In general the question is confounded. PGD and FGSM differ in values, signs and support at once. We identify a setting where values and signs coincide, up to a handful of rounding ties. At ε equal to one 8-bit level, with PGD steps of ε/4, the 8-bit rounding that every valid image undergoes turns the PGD-3 image into a sign-preserving subset of FGSM's perturbation, up to at most 7 zero-gradient ties per image (§3). PGD can then be compared with other subsets of FGSM's perturbation that have the same count and signs:
 - uniformly random subsets;
 - the subset with the largest clean-gradient magnitude.
 
-Any difference in damage is attributable to *which coordinates* are kept.
+Any difference in damage is then attributable to *which coordinates* are kept, rather than to perturbation magnitude, sign or count. "Which coordinates" includes where they sit relative to one another; the comparison does not separate individual coordinates from their spatial arrangement or interactions.
 
 **Contributions.**
-1. **A matched-count, sign-matched decomposition** of the iterative-versus-single-step gap, available exactly at the 8-bit floor.
+1. **A matched-count, sign-matched decomposition** of the iterative-versus-single-step gap, available at the 8-bit floor up to a handful of zero-gradient rounding ties.
 2. **A pre-registered held-out confirmation** on a VLM. Selection explains nearly all of PGD's advantage, sparsity about 3%, and clean-gradient-magnitude selection is worse than random.
 3. **A reversal of the first-order ranking.** The clean linear prediction rates PGD's subset below random and the saliency subset nearly 3× above random. The truth is the reverse.
 4. **A reproducible pipeline.** It includes bit-exact cross-checks against earlier records, a scene generator with provable separation from development data, and a hash-frozen analysis.
@@ -108,7 +108,7 @@ Four images are compared:
 | FGSM | all of S_F | r_F |
 | Random subset (8 seeds) | k coordinates drawn uniformly from S_F | r_F |
 | Top-\|∇\| subset | the k coordinates of S_F with the largest \|clean NLL gradient\| | r_F |
-| PGD-3 (official) | k | r_F on PGD's agreement set (§3) |
+| PGD-3 (official) | k | r_F on PGD's agreement set (§3), plus 0–7 zero-gradient tie coordinates outside S_F |
 
 The decomposition uses three contrasts:
 - **selection**, D_PGD − D_rand;
@@ -188,7 +188,8 @@ For safety evaluation, two consequences follow:
 
 **Limitations.**
 - **Scope.** One model at one precision (bf16 on MPS), one budget and step schedule, and one synthetic task family with two non-revealing contexts.
-- **Structural property.** The exact subset property depends on ε being one 8-bit level and on steps of ε/4. Other settings need a different control.
+- **Structural property.** The subset property depends on ε being one 8-bit level and on steps of ε/4, and holds up to 0–7 zero-gradient rounding ties per image, which lie outside FGSM's support. Other settings need a different control.
+- **What "selection" covers.** The matched comparison holds magnitude, sign and count fixed. "Selection" therefore includes the spatial arrangement of the kept coordinates and their interactions; it is not a per-coordinate importance claim. The sparsity share is a ratio of mean differences, not an additive decomposition of a nonlinear response.
 - **Held-out split.** It shares the development distribution family. It is out-of-sample, not out-of-distribution.
 - **The random null** is uniform within FGSM's support. Spatially structured nulls were not part of the confirmation.
 - **Saliency** means raw clean-gradient magnitude. Smoothed or integrated attributions were not tested.
@@ -212,7 +213,7 @@ Neighbourhood gradient averaging itself is established [Smilkov et al., 2017; At
 - Shuffling PGD's coordinates within 16×16 patches keeps R ≈ 0.22, so about a fifth of the advantage is regional.
 - Even an ε/16 move rotates the gradient to a cosine of 0.30 with the clean one.
 
-The selection signal is therefore not a stable local sign field that attack-independent sampling can estimate; it appears to depend on the attack's own path. This is consistent with, but does not establish, a hypothesis that many damaging subsets exist and PGD finds one of them. No confirmation was run, because the pilot was negative. The pilot does not show that every function of local gradients fails.
+For the samplers and consensus rules tested, attack-independent neighbourhood gradients therefore carry little of PGD's selection signal. Other sampling distributions, radii and aggregation rules were not tested, so this does not exclude a stable sign field that a different estimator could recover. A path-dependent account remains a hypothesis. This is consistent with, but does not establish, a hypothesis that many damaging subsets exist and PGD finds one of them. No confirmation was run, because the pilot was negative. The pilot does not show that every function of local gradients fails.
 
 ## Pre-registration, data and code availability
 
