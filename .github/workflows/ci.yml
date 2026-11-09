@@ -47,4 +47,6 @@ jobs:
       - name: Model-free tests (all suites in one call)
         run: python -m pytest -q -rs
       - name: Frozen protocol, held-out split, analysis outputs and Figure 1
+        # Run even when a test fails, so each check reports independently.
+        if: ${{ !cancelled() }}
         run: python tools/verify_reproduction.py

@@ -295,6 +295,12 @@ def test_monitor_swap_growth_and_low_available():
         m2.check()
 
 
+@pytest.mark.skipif(
+    __import__("sys").platform != "darwin",
+    reason="process_footprint() calls the macOS-only proc_pid_rusage syscall "
+    "(the study machine is Apple silicon); memory.py is hash-frozen, so the "
+    "test is limited to the platform it measures",
+)
 def test_process_footprint_reads_this_process():
     fp = process_footprint()
     assert fp is not None and 0 < fp["current"] <= fp["lifetime_max"]

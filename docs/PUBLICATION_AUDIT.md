@@ -68,4 +68,6 @@ No frozen file, preserved file, record or historical result was changed. All his
 | Dates | This audit and the second wording note in the 2.4 report were first committed dated 2026-11-10. The work was done on 2026-11-09, as the commit timestamps show. The dates are corrected. |
 | Analysis JSON path (§3.4) | Unchanged. The verifier compares every field except `input`. |
 
-Test suites after these changes, in one call: see the CI result on the pull request.
+Test suites after these changes, in one call: 551 passed on the study machine.
+
+First CI run (`ce5c763`): macOS passed. Ubuntu had one failure, `test_process_footprint_reads_this_process`, which calls the macOS-only `proc_pid_rusage` syscall through the hash-frozen `path_probe/memory.py`. The test is now marked macOS-only, with the reason printed when it is skipped. No assertion was changed. The reproduction step now runs even if a test fails, so the two checks report separately.
