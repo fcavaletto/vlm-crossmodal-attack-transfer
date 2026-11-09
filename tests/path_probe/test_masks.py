@@ -28,12 +28,24 @@ def test_three_random_sign_steps_round_to_a_sign_preserving_subset_of_fgsm():
         st = mk.structure(r_f, r_p)
         assert st["sign_reversals"] == 0 and st["pgd_levels_max"] <= 1, st
         assert 0.15 < st["density_in_fgsm_support"] < 0.35  # about 1/4 for independent signs
-        # The only exceptions: saturated pixels at 255 where FGSM's +step was clipped and
-        # steps 2-3 went down by eps/2, which half-to-even rounds to one level down.
+        # The only exceptions: coordinates FGSM left unchanged (clipped at 0/1, or zero gradient)
+        # where steps 2-3 moved the pixel by exactly eps/2, a half-level tie that half-to-even rounding can move.
         outside = mk.support(r_p) & ~mk.support(r_f)
-        assert bool((x[outside] == 1.0).all()) and bool((r_p[outside] < 0).all())
-        interior = (x > 0) & (x < 1)
-        assert not bool((outside & interior).any())
+        assert bool((((cur - x).abs()[outside] - EPS / 2).abs() < 1e-3 * EPS).all())
+
+
+def test_replay_reproduces_the_accumulated_iterate_bit_exactly():
+    from path_probe import geometry as geo
+    for seed in range(10):
+        x = _image(seed)
+        g = torch.Generator().manual_seed(2000 + seed)
+        grads = [torch.randn(x.shape, generator=g) for _ in range(3)]
+        grads[0][0, 0, :4] = 0.0  # zero-gradient coordinates, as in the real data
+        cur, codes = x.clone(), {}
+        for k, gk in enumerate(grads, 1):
+            cur = pgd_update(cur, x, gk, EPS / 4, EPS)
+            codes[f"pgd{k}"] = geo.encode_delta(cur - x, EPS)
+        assert torch.equal(mk.replay_pgd(x, codes, 3, EPS), cur)
 
 
 def test_random_mask_is_exact_count_subset_and_deterministic():

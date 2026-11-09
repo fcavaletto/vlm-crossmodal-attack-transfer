@@ -195,23 +195,33 @@ def execute_masks(root: Path, smoke: bool = False) -> None:
     def unit(sid, x, backend, grads, source, seeds, with_fixed):
         d = src.load_tensors(f"{sid}__B__{source}__deltas")
         r_f = mk.rounded_delta(x, geo.decode_delta(d["fgsm"], EPS))
-        r_p = mk.rounded_delta(x, geo.decode_delta(d["pgd3"], EPS))
+        pgd_float = mk.replay_pgd(x, d, 3, EPS)  # bit-identical to the 2.3 float iterate (see masks.replay_pgd)
+        if not torch.equal(geo.encode_delta(pgd_float - x, EPS), d["pgd3"]):
+            raise Stop(f"{sid} {source}: PGD replay does not reproduce the stored iterate")
+        r_p = mk.rounded_delta(x, pgd_float - x)
         st = mk.structure(r_f, r_p)
         s_f, s_p = mk.support(r_f), mk.support(r_p)
         k = st["n_pgd_support"]
         base = {"scene_id": sid, "source": source, "target": other(source), "n_fgsm_support": st["n_fgsm_support"]}
         rows = []
         if with_fixed:
+            outside = s_p & ~s_f
+            tie = ((pgd_float - x).abs() - 0.5 * EPS).abs() < 1e-3 * EPS
+            st["outside_all_half_level_ties"] = bool((tie | ~outside).all())
+            st["outside_where_clean_grad_zero"] = int((outside & (grads[f"L_{source}"] == 0)).sum())
             rows.append({"kind": "structure", **base, **st})
             # The official PGD-3 image itself (S_P may hold a few saturated-pixel coordinates outside S_F).
-            row = score_mask(backend, x, r_f, s_p, grads, "pgd_mask", base, image=x + r_p)
-            same_image = bool(torch.equal(mk.rounded_delta(x, r_p), r_p))
+            row = score_mask(backend, x, r_f, s_p, grads, "pgd_mask", base, image=pgd_float)
+            same_image = bool(torch.equal(mk.rounded_delta(x, pgd_float - x), r_p))
             rec = recorded_pgd3.get((sid, source))
             row["pipeline_check"] = {
                 "same_image_as_official_pgd3": same_image,
                 "bit_exact_vs_recorded": None if rec is None else all(
                     row["scores"][c]["nll"] == rec[c]["nll"] and row["scores"][c]["margin"] == rec[c]["margin"]
                     and row["scores"][c]["chosen"] == rec[c]["chosen"] for c in CONTEXTS)}
+            if row["pipeline_check"]["bit_exact_vs_recorded"] is not True or not same_image:
+                store.append(rows + [row])
+                raise Stop(f"{sid} {source}: re-scored PGD-3 is not bit-exact against the recorded 2.3 scores")
             rows.append(row)
             rows.append(score_mask(backend, x, r_f, mk.topk_mask(s_f, grads[f"L_{source}"], k), grads, "topk_grad", base))
         for s in seeds:

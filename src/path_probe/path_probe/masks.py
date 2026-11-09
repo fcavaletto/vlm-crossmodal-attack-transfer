@@ -63,3 +63,23 @@ def topk_mask(s_f: torch.Tensor, g: torch.Tensor, k: int) -> torch.Tensor:
 
 def apply(x: torch.Tensor, r_f: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
     return x + r_f * mask.to(r_f.dtype)
+
+
+def replay_pgd(x: torch.Tensor, codes: dict[str, torch.Tensor], steps: int, epsilon: float) -> torch.Tensor:
+    """Rebuild the float PGD iterate with the frozen update, from the stored int8 iterates.
+
+    x + decode(pgd_k) is not bit-identical to the accumulated float iterate, and at
+    half-level ties (a clipped pixel moved by eps/2) the 8-bit rounding can differ.
+    Step k's sign is the sign of (pgd_k - pgd_{k-1}); it is 0 only where the step was
+    clipped at 0 or 1, where a zero step leaves the same float value.
+    """
+    from attack_feasibility.steps import pgd_update
+
+    current = x.detach().clone()
+    previous = torch.zeros_like(codes["pgd1"])
+    for k in range(1, steps + 1):
+        code = codes[f"pgd{k}"]
+        sigma = torch.sign((code.to(torch.int16) - previous.to(torch.int16)).to(torch.float32))
+        current = pgd_update(current, x, sigma, epsilon / 4.0, epsilon)
+        previous = code
+    return current

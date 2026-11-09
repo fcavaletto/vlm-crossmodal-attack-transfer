@@ -114,3 +114,21 @@ Changes to the plan:
 - Random and top-k masks are still drawn from S_F.
 
 Nothing else changes.
+
+## 9. Correction to §8, still before any result (2026-11-09)
+
+**§8's diagnosis was wrong.** It came from rebuilding PGD-3 as x + decode(int8 iterate). That is not bit-identical to PGD's accumulated float iterate, and at half-level ties the 8-bit rounding can go the other way.
+
+A one-scene smoke run found the problem. Its re-scored PGD-3 image was not bit-exact against the recorded 2.3 scores, so the run was stopped and nothing was used.
+
+PGD-3 is now **replayed** with the frozen `pgd_update`, using step signs recovered from the stored iterates. The replay reproduces the stored int8 iterate exactly, and it matches the recorded rounded count and L2 in **96/96 units**.
+
+On the replayed images:
+- **Sign reversals:** zero anywhere.
+- **Changes:** every change is a single level.
+- **Coordinates outside FGSM's support:** 86 of 96 units have some, at most 7 per unit. All are coordinates where **the clean gradient is exactly 0**, so FGSM leaves them unchanged. Steps 2 and 3 agreed there, which moves the pixel by exactly ε/2. Half-to-even rounding sends an odd 8-bit value up or down by one level and leaves an even value unchanged. No saturated pixel is involved: the scenes contain no pixels at 255.
+
+Changes to the plan:
+- `pgd_mask` scores the replayed float iterate, which is the image 2.3 scored. Its scores must be bit-exact against the recorded PGD-3 scores; the run stops otherwise.
+- k = |S_P| as in §8.
+- The smoke attempt that exposed the problem is kept in `masks_smoke_attempt1/`.

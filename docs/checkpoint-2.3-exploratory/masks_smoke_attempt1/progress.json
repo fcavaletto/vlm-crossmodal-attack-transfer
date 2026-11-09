@@ -1,0 +1,236 @@
+{
+  "schema": "checkpoint-2.3b.masks.progress.v1",
+  "label": "EXPLORATORY, DEVELOPMENT ONLY (SMOKE, not a result)",
+  "plan_commit": "f6f8b364bb804babf73a5fa51b981122be7d99fa",
+  "git_head_at_start": "f6f8b364bb804babf73a5fa51b981122be7d99fa",
+  "locked_inputs": {
+    "manifest_rows": 96,
+    "checksum_files": 100,
+    "prediction_rows": 384,
+    "primary_rows": 192,
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "predictions_rewritten": false,
+    "decision_rule": "lowest summed NLL, then color name"
+  },
+  "scene_order": [
+    "dev4-ref-00-a"
+  ],
+  "epsilon": 0.00392156862745098,
+  "cap_seconds": 3600,
+  "seeds_pass_A": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "seeds_pass_B": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "pid": 77685,
+  "frozen_outputs_written": false,
+  "checkpoint_2_3_outputs_written": false,
+  "sealed_or_new_samples_used": false,
+  "memory_policy": "EMP-1 with M1 (unchanged; MEMORY_ASSESSMENT.md section 7)",
+  "units": {
+    "dev4-ref-00-a|neutral": {
+      "A": 10.35,
+      "B": 6.62
+    },
+    "dev4-ref-00-a|helpful_nonrevealing": {
+      "A": 10.08,
+      "B": 6.58
+    }
+  },
+  "limitations": [],
+  "budget": {
+    "available_bytes": 13030440960,
+    "decisions": {
+      "float32": {
+        "resident_bytes": 8510128128,
+        "available_bytes": 13030440960,
+        "required_available_bytes": 20871410752,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 13878837248,
+          "calibrated_projection": 20871410752,
+          "staging_double_copy": 17020256256
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "spare_above_weights",
+          "calibrated_projection",
+          "staging_double_copy"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+        "dtype": "float32"
+      },
+      "bfloat16": {
+        "resident_bytes": 4255064064,
+        "available_bytes": 13030440960,
+        "required_available_bytes": 11509447200,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 9623773184,
+          "calibrated_projection": 11509447200,
+          "staging_double_copy": 8510128128
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [],
+        "mps_available": true,
+        "permitted": true,
+        "reason": "OS-available memory clears every pre-load line.",
+        "dtype": "bfloat16"
+      }
+    },
+    "bf16_probe": {
+      "mps_available": true,
+      "mps_built": true,
+      "add_ok": true,
+      "matmul_ok": true,
+      "is_model_forward": false
+    },
+    "guard_lowered": false
+  },
+  "frozen_guard_bf16_permitted": true,
+  "emp1_preload": {
+    "policy": "EMP-1",
+    "lines": {
+      "available_bytes": 10640781475,
+      "pressure_level_max": 1,
+      "free_disk_bytes": 10737418240
+    },
+    "sample": {
+      "t": 1794233404.170242,
+      "pressure": 1,
+      "available": 13030440960,
+      "swap_used": 524288,
+      "footprint": 467240160,
+      "footprint_max": 467240160
+    },
+    "free_disk_bytes": 32945745920,
+    "failed": [],
+    "permitted": true
+  },
+  "footprint_before_load": {
+    "current": 467305720,
+    "lifetime_max": 467305720
+  },
+  "load_permit": {
+    "permitted": true,
+    "policy": "EMP-1",
+    "frozen_bf16_decision_permitted": true,
+    "emp1_preload": {
+      "policy": "EMP-1",
+      "lines": {
+        "available_bytes": 10640781475,
+        "pressure_level_max": 1,
+        "free_disk_bytes": 10737418240
+      },
+      "sample": {
+        "t": 1794233404.170242,
+        "pressure": 1,
+        "available": 13030440960,
+        "swap_used": 524288,
+        "footprint": 467240160,
+        "footprint_max": 467240160
+      },
+      "free_disk_bytes": 32945745920,
+      "failed": [],
+      "permitted": true
+    }
+  },
+  "loaded_model": {
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 5.157
+  },
+  "memory_monitor": {
+    "samples": 77,
+    "by_level": {
+      "1": 76,
+      "2": 1
+    },
+    "min_available": 5105975296,
+    "max_swap_used": 524288,
+    "max_swap_growth": 0,
+    "timeline": [
+      {
+        "t": 1794233404.170806,
+        "pressure": 1,
+        "available": 13030506496,
+        "swap_used": 524288,
+        "footprint": 467305720,
+        "footprint_max": 467305720
+      },
+      {
+        "t": 1794233414.322526,
+        "pressure": 1,
+        "available": 8188821504,
+        "swap_used": 524288,
+        "footprint": 5536597336,
+        "footprint_max": 5536597336
+      },
+      {
+        "t": 1794233424.5494132,
+        "pressure": 1,
+        "available": 8178761728,
+        "swap_used": 524288,
+        "footprint": 5537203544,
+        "footprint_max": 5537203544
+      },
+      {
+        "t": 1794233434.7459168,
+        "pressure": 1,
+        "available": 8173387776,
+        "swap_used": 524288,
+        "footprint": 5520508248,
+        "footprint_max": 5537285464
+      }
+    ],
+    "process_peak_footprint": 5537367384
+  },
+  "last_memory": {
+    "tag": "B dev4-ref-00-a helpful_nonrevealing",
+    "device": "mps",
+    "peak_rss_mb": 604.3,
+    "current_rss_mb": 511.5,
+    "os_available_mb": 7689.5,
+    "mps_driver_allocated_mb": 4749.7,
+    "mps_current_allocated_mb": 4072.9,
+    "footprint": {
+      "current": 5520475480,
+      "lifetime_max": 5537367384
+    }
+  },
+  "elapsed_seconds": 33.6,
+  "passes": {
+    "A": {
+      "done": 2,
+      "skipped_by_cap": [],
+      "seconds": 20.4
+    },
+    "B": {
+      "done": 2,
+      "skipped_by_cap": [],
+      "seconds": 13.2
+    }
+  },
+  "status": "completed",
+  "footprint_end": {
+    "current": 5520442712,
+    "lifetime_max": 5537367384
+  }
+}
