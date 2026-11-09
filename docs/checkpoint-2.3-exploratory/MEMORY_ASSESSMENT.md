@@ -176,3 +176,18 @@ This is the kind of precision effect the experiment is designed to measure. Noth
 - the fp32-vision gate is unchanged.
 
 Every other rule stays as written.
+
+## 7. M1, approved 2026-11-09 (a later calibration, not a retroactive pass)
+
+The original 7.5 GiB criterion **remains failed** (§6). M1 recalibrates EMP-1 to the peaks measured in the smoke runs. It is used for the full run.
+
+| Rule | Value | Basis |
+| --- | --- | --- |
+| bf16 preload | available ≥ **9.91 GiB**, pressure normal, disk ≥ 10 GiB | 8.41 GiB measured bf16 peak + 1.5 GiB |
+| fp32-vision gate, checked at conversion **and before every fp32-vision scene** | pressure normal and available ≥ **5.81 GiB** | 9.41 GiB fp32-vision peak − 5.1 GiB between-pass footprint + 1.5 GiB. If it fails, the stage stops and each skip is recorded. |
+| Footprint abort | process lifetime peak > **10.0 GiB** | approved |
+| Unchanged | critical pressure; warn for 120 s; available < 0.75 GiB for 30 s; swap growth > 6 GiB; 3.9 h / 4.0 h / 4.6 h time caps | §4 |
+
+Thresholds are never raised automatically. An exceeded threshold stops the run, and completed scenes are kept.
+
+**Limit of the method:** monitoring samples every 0.5 s and acts only between model calls. It **cannot prevent** a transient out-of-memory failure inside a single forward or backward pass. That would surface as an MPS `RuntimeError` (recorded as `stopped_oom`) or, at worst, as a killed process. Records are flushed per scene, so completed observations survive either case.

@@ -235,8 +235,9 @@ def _s(t, pressure=1, available=8 * GIB, swap=0):
 
 
 def test_emp1_preload_lines():
-    assert 7.5 * GIB < EMP1_PRELOAD_AVAILABLE_BYTES < 8.0 * GIB
-    ok = emp1_preload(_s(0, available=8.89 * GIB), 31 * GIB)
+    assert 9.9 * GIB < EMP1_PRELOAD_AVAILABLE_BYTES < 9.92 * GIB
+    assert not emp1_preload(_s(0, available=9.5 * GIB), 31 * GIB)['permitted']
+    ok = emp1_preload(_s(0, available=10.5 * GIB), 31 * GIB)
     assert ok["permitted"] and ok["failed"] == []
     bad = emp1_preload(_s(0, pressure=2, available=7 * GIB), 5 * GIB)
     assert set(bad["failed"]) == {"available_bytes", "pressure_level", "free_disk_bytes"}
@@ -297,3 +298,16 @@ def test_monitor_swap_growth_and_low_available():
 def test_process_footprint_reads_this_process():
     fp = process_footprint()
     assert fp is not None and 0 < fp["current"] <= fp["lifetime_max"]
+
+
+def test_monitor_footprint_abort_and_v32_line():
+    from path_probe.memory import EMP1_V32_AVAILABLE_BYTES, FOOTPRINT_ABORT_BYTES
+    assert FOOTPRINT_ABORT_BYTES == 10 * GIB
+    assert 5.8 * GIB < EMP1_V32_AVAILABLE_BYTES < 5.82 * GIB
+    m, _ = _monitor()
+    s = _s(0); s["footprint_max"] = int(9.41 * GIB)
+    m.observe(s); m.check()
+    s = _s(1); s["footprint_max"] = int(10.01 * GIB)
+    m.observe(s)
+    with pytest.raises(Stop, match="footprint"):
+        m.check()

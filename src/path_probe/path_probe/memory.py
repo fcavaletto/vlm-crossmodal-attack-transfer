@@ -25,12 +25,17 @@ from typing import Any, Callable
 
 GIB = 1024**3
 
-# Largest observed Qwen bf16 working set: MPS driver 5.61 GiB (1.8) + RSS 0.68 GiB (1.9).
-OBSERVED_QWEN_BF16_WORKING_SET_BYTES = int(5.61 * GIB + 0.68 * GIB)
+# M1 (approved 2026-11-09): calibrated on the measured smoke peaks, not on between-scene samples.
+# The original EMP-1 line (5.61 + 0.68 + 1.5 = 7.79 GiB) and its 7.5 GiB smoke criterion failed and stay documented.
+MEASURED_BF16_PEAK_FOOTPRINT_BYTES = int(8.41 * GIB)   # smoke attempts 2 and 3, every backward pass
+MEASURED_V32_PEAK_FOOTPRINT_BYTES = int(9.41 * GIB)    # smoke attempt 3, fp32 vision tower
+MEASURED_BETWEEN_PASSES_FOOTPRINT_BYTES = int(5.1 * GIB)
 PRELOAD_MARGIN_BYTES = int(1.5 * GIB)
-EMP1_PRELOAD_AVAILABLE_BYTES = OBSERVED_QWEN_BF16_WORKING_SET_BYTES + PRELOAD_MARGIN_BYTES
+EMP1_PRELOAD_AVAILABLE_BYTES = MEASURED_BF16_PEAK_FOOTPRINT_BYTES + PRELOAD_MARGIN_BYTES  # 9.91 GiB
 EMP1_MIN_FREE_DISK_BYTES = 10 * GIB
-EMP1_V32_AVAILABLE_BYTES = int(2.5 * GIB)
+# fp32 vision: the backward rises 4.3 GiB above the between-pass footprint (9.41 - 5.1); plus the same margin.
+EMP1_V32_AVAILABLE_BYTES = MEASURED_V32_PEAK_FOOTPRINT_BYTES - MEASURED_BETWEEN_PASSES_FOOTPRINT_BYTES + PRELOAD_MARGIN_BYTES  # 5.81 GiB
+FOOTPRINT_ABORT_BYTES = 10 * GIB
 
 PRESSURE_NORMAL, PRESSURE_WARN, PRESSURE_CRITICAL = 1, 2, 4
 
@@ -42,6 +47,7 @@ class Limits:
     low_available_bytes: int = int(0.75 * GIB)
     low_available_sustained_seconds: float = 30.0
     max_swap_growth_bytes: int = 6 * GIB
+    max_footprint_bytes: int = FOOTPRINT_ABORT_BYTES
     hard_exit_after_abort_seconds: float = 60.0
 
 
@@ -163,6 +169,9 @@ class MemoryMonitor:
                     self._request("available memory stayed below 0.75 GiB", now)
             else:
                 self._low_since = None
+            peak = s.get("footprint_max")
+            if peak is not None and peak > lim.max_footprint_bytes:
+                self._request(f"process footprint peak {peak / GIB:.2f} GiB exceeded {lim.max_footprint_bytes / GIB:.1f} GiB", now)
             if growth > lim.max_swap_growth_bytes:
                 self._request(f"swap grew by more than {lim.max_swap_growth_bytes / GIB:.0f} GiB", now)
             if (self._abort_at is not None and p is not None and p >= PRESSURE_CRITICAL

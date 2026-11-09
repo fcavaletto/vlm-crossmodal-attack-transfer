@@ -291,7 +291,7 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
         # transformers 5.x: the vision tower is model.model.visual (get_image_features casts to its dtype).
         visual = getattr(model, "visual", None) or model.model.visual
         vp = VisionPrecision(visual)
-        need = (6 * GIB + 2 * vp.fp32_bytes() + GIB) if monitor is None else (EMP1_V32_AVAILABLE_BYTES + vp.fp32_bytes() // 2)
+        need = (6 * GIB + 2 * vp.fp32_bytes() + GIB) if monitor is None else EMP1_V32_AVAILABLE_BYTES
         avail = available_bytes()
         pressure_now = os_sample()["pressure"]
         if monitor is not None and pressure_now != 1:
@@ -317,7 +317,17 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
                 for sid in targets:
                     mean = sum(v_durations) / len(v_durations) if v_durations else 0.0
                     if elapsed() + mean > TOTAL_CAP_S:
+                        stage3.setdefault("skips", []).append({"scene": sid, "reason": "total time cap"})
                         break
+                    if monitor is not None:
+                        now_s = os_sample()
+                        if now_s["pressure"] != 1 or now_s["available"] < EMP1_V32_AVAILABLE_BYTES:
+                            stage3.setdefault("skips", []).append(
+                                {"scene": sid, "reason": "fp32-vision headroom insufficient before scene",
+                                 "pressure": now_s["pressure"], "available_bytes": now_s["available"],
+                                 "required_bytes": EMP1_V32_AVAILABLE_BYTES})
+                            progress["limitations"].append(f"fp32 vision stopped before {sid}: insufficient headroom.")
+                            break
                     started = time.perf_counter()
                     print(f"[V32] {sid} elapsed {elapsed()/60:.1f} min", flush=True)
                     record, x, backend = scene_setup(sid)
