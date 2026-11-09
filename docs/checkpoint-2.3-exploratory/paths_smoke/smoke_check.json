@@ -1,0 +1,153 @@
+{
+ "status": "error",
+ "stopped_reason": null,
+ "error": "AttributeError: 'Qwen3VLForConditionalGeneration' object has no attribute 'visual'",
+ "memory": {
+  "process_peak_footprint_GiB": 8.411,
+  "footprint_end_lifetime_max_GiB": 8.411,
+  "footprint_before_load_GiB": 0.435,
+  "min_available_GiB": 4.324,
+  "pressure_samples_by_level": {
+   "1": 373,
+   "2": 1
+  },
+  "max_pressure_level": 2,
+  "seconds_at_warn_or_worse": 0.5,
+  "swap_growth_GiB": 0.0,
+  "samples": 374,
+  "abort_reason": null,
+  "emp1_preload_available_GiB": 10.018,
+  "frozen_guard_bf16_permitted": false
+ },
+ "reproduction": {
+  "clean": [
+   {
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.003945068921893835,
+     0.003945068921893835
+    ]
+   },
+   {
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.004694630391895771,
+     0.004694630391895771
+    ]
+   }
+  ],
+  "attacks": [
+   {
+    "attack": "fgsm",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.07049663364887238,
+     0.07049663364887238
+    ]
+   },
+   {
+    "attack": "fgsm",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.4463183581829071,
+     0.4463183581829071
+    ]
+   },
+   {
+    "attack": "random",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.007745826151221991,
+     0.007745826151221991
+    ]
+   },
+   {
+    "attack": "random",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     0.0116827841848135,
+     0.0116827841848135
+    ]
+   },
+   {
+    "attack": "3",
+    "context": "neutral",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     2.210921049118042,
+     2.210921049118042
+    ]
+   },
+   {
+    "attack": "3",
+    "context": "helpful_nonrevealing",
+    "nll_equal": true,
+    "margin_equal": true,
+    "decision_equal": true,
+    "nll": [
+     1.9508886337280273,
+     1.9508886337280273
+    ]
+   }
+  ],
+  "n_compared": 8,
+  "n_bit_exact": 8,
+  "determinism_repeat_max_abs_diff": 0.0,
+  "prog_reproduction_check": null
+ },
+ "fp32_vision": {
+  "skipped": null,
+  "measured": null,
+  "pressure_at_check": null,
+  "available_at_check_GiB": null,
+  "required_GiB": 0.0,
+  "converted": null,
+  "restored": null,
+  "dtype_after": null,
+  "dtype_restored": null,
+  "restore_check": null,
+  "grad_agreement_with_B": null,
+  "n_B_cross_rows": 0,
+  "seconds": null
+ },
+ "runtime": {
+  "load_seconds": 5.678,
+  "elapsed_seconds_after_load": 184.4,
+  "scene_seconds_B": {
+   "dev4-ref-00-a": 184.38
+  },
+  "scene_seconds_V32": {
+   "dev4-ref-00-a": null
+  },
+  "pgd_gradient_seconds": [
+   17.512,
+   17.597,
+   17.586,
+   17.586
+  ]
+ },
+ "limitations": [
+  "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 10756521984 were available (float32 permitted: False). The guard was not lowered.",
+  "The frozen Checkpoint 1.5 guard refused this bf16 load; it ran under EMP-1 with pressure monitoring. Numerics are unchanged; only the memory headroom rule differs."
+ ]
+}
