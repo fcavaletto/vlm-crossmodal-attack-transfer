@@ -98,7 +98,7 @@ def main() -> None:
                       "scene_seconds_V32": {k: v.get("seconds_V32") for k, v in sc.items()},
                       "pgd_gradient_seconds": [r.get("seconds") for r in rows if r["kind"] == "pgd_gradient"]}
     out["limitations"] = prog.get("limitations")
-    (SMOKE / "smoke_check.json").write_text(json.dumps(out, indent=1) + "\n")
+    (SMOKE / ("smoke_check.json" if SMOKE.name.startswith("paths_smoke") else "run_check.json")).write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(out, indent=1))
 
 

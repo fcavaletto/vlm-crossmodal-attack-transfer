@@ -191,3 +191,19 @@ The original 7.5 GiB criterion **remains failed** (§6). M1 recalibrates EMP-1 t
 Thresholds are never raised automatically. An exceeded threshold stops the run, and completed scenes are kept.
 
 **Limit of the method:** monitoring samples every 0.5 s and acts only between model calls. It **cannot prevent** a transient out-of-memory failure inside a single forward or backward pass. That would surface as an MPS `RuntimeError` (recorded as `stopped_oom`) or, at worst, as a killed process. Records are flushed per scene, so completed observations survive either case.
+
+## 8. Full run under M1 (2026-11-09)
+
+The 48-scene run completed without an abort. These are the protections set in §7, measured; no threshold was changed during or after the run.
+
+| | Value | M1 line |
+|---|---|---|
+| Available at preload | 11.71 GiB | ≥ 9.91 GiB |
+| Peak process footprint (lifetime max, includes fp32 vision) | 9.45 GiB | abort > 10 GiB |
+| Minimum available during run | 3.93 GiB | abort < 0.75 GiB for 30 s |
+| Pressure samples | 29,938 normal, 1 warn (0.5 s), 0 critical | abort at critical, or warn for 120 s |
+| Swap growth | 0 | abort > 6 GiB |
+| V32 gate | 7.94 GiB available at conversion, pressure normal; all 16 scenes measured, none skipped | ≥ 5.81 GiB |
+| Runtime after load | 4.23 h; no scene was dropped by a cap | total 4.6 h |
+
+At preload, the frozen 1.5 guard would also have permitted bf16 on this occasion (more memory was free than at the smoke attempts). It was computed and recorded, not edited. The original 7.5 GiB smoke criterion stays failed (§6). Results: [`REPORT.md`](REPORT.md).
