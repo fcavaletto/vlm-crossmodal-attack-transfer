@@ -10,6 +10,8 @@ Nothing was run on the model:
 
 Every number below comes from committed development artifacts or from simulation.
 
+> **Update 2026-11-09:** `RESEARCH_STRATEGY.md` proposes a two-track strategy. Its decisions S1–S6 come first. If S2 is approved, it replaces D3 and D5 below. D1 (M1s), D2, D4, and D6–D10 stand.
+
 ## 1. Summary
 
 1. **Q is already in hand on development, and it adds nothing detectable there.**
@@ -242,6 +244,8 @@ Plus:
 
 ## 8. Decisions requiring your approval
 
+See `RESEARCH_STRATEGY.md` §6 for S1–S6, which take precedence where they overlap.
+
 Protocol (before freezing):
 
 | # | Decision | Recommendation | Alternative |
@@ -300,5 +304,7 @@ CUDA (not needed for 2.2):
 | `spline_check.py`, `.json` | M1 against M1s under magnitude misspecification |
 | `V5_GENERATOR_SPEC.md` | v5 generator specification |
 | `CUDA_READINESS.md` | Self-termination review and the spending plan |
+| `RESEARCH_STRATEGY.md` | Two-track strategy (2026-11-09), decisions S1–S6 |
+| `track_b_existing.py`, `.json` | Post-hoc description of committed dev records for Track B |
 | `power_continuous.py`, `.json` | Draft v1 simulation, kept for the record and superseded |
 | PR 27 branch: `docker/cuda/run_job.sh`, `self_stop.py`, `docker/runpod/capture_logs.sh`, tests | CUDA fixes |

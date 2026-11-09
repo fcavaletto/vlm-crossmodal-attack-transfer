@@ -2,6 +2,8 @@
 
 Status: **draft for review, not frozen.** Revised 2026-11-08 for research lead Federico Cavaletto. It replaces draft v1 (commit `2127206`), which stays in git history. It becomes binding only after the decisions in `REVIEW_PACKET.md` are approved and its sha256 is recorded.
 
+Update 2026-11-09: `RESEARCH_STRATEGY.md` (decision S2) proposes that this protocol be frozen with M1s and deferred, and that its primary deliverable be an interval estimate of r at 256 groups. Pending approval, the text below is unchanged.
+
 Nothing in it has run:
 - no model was loaded, and no attack was run;
 - no v5 scene was generated or rendered;
