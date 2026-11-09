@@ -207,3 +207,7 @@ The 48-scene run completed without an abort. These are the protections set in §
 | Runtime after load | 4.23 h; no scene was dropped by a cap | total 4.6 h |
 
 At preload, the frozen 1.5 guard would also have permitted bf16 on this occasion (more memory was free than at the smoke attempts). It was computed and recorded, not edited. The original 7.5 GiB smoke criterion stays failed (§6). Results: [`REPORT.md`](REPORT.md).
+
+## 9. Random-mask control (2.3b, 2026-11-09)
+
+Same EMP-1 / M1 policy, unchanged; forward passes only, no fp32 vision. Preload 12.09 GiB available; peak footprint 5.17 GiB; minimum available 6.09 GiB; 3,326 pressure samples, all normal; swap growth 0; no abort; 28.2 min after load, no unit skipped.

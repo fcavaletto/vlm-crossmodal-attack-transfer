@@ -4,6 +4,8 @@
 
 Model: Qwen3-VL-2B-Instruct, bf16 on Apple MPS, eager attention. Attack: the frozen Checkpoint 2.0 attack: L∞ ε = 1/255, sign steps of ε/4, on the labeled-color summed NLL. Official scores use an 8-bit round trip. Scenes: arm a of all 48 development groups (S48). A fixed 16-scene subset (S16) also gets PGD-7 and the fp32 vision tower. Plan: [`EXPLORATORY_PLAN.md`](EXPLORATORY_PLAN.md), commit 0c6f176, written before any full-run data existed.
 
+**Revised 2026-11-09** after the pre-registered random-mask control (Checkpoint 2.3b, [`MASK_CONTROL_PLAN.md`](MASK_CONTROL_PLAN.md); results in §2b). The control replaced the §2 interpretation of *why* PGD's sparse perturbation wins. Earlier text that the control superseded is marked.
+
 Intervals are 95% percentile bootstraps over scenes: 9,999 draws, seed 20261109, one scene per group. "Paired" means the difference is computed within each scene before bootstrapping. Margin is z_label − z_best-other in bf16 logits, which are quantized to steps of 0.125. Three scenes (dev4-ref-20, 26, 31) are not clean-correct in both contexts; they stay in continuous measures and drop out only of ratios that need a positive clean margin.
 
 ---
@@ -12,10 +14,13 @@ Intervals are 95% percentile bootstraps over scenes: 9,999 draws, seed 20261109,
 
 | Question | Answer, on these 48 scenes | Strength |
 |---|---|---|
-| Why does PGD-3 beat FGSM on the same ε-ball? | FGSM spends most of its budget past the point of useful damage. One ε/4 step in FGSM's direction does as much damage as the full ε step (ratio 1.00, CI 0.89–1.37). The gradient becomes **uncorrelated with the clean gradient after a single ε/4 step** (cosine 0.002, CI −0.007 to 0.008). After the 8-bit round trip, **the official PGD-3 perturbation is FGSM with 70% of its pixels reverted** (sign disagreement with FGSM 0.000). That sparser perturbation does **2.55× the damage** (CI 2.30–3.28). | Robust observation. The mechanism is a hypothesis. |
+| Why does PGD-3 beat FGSM on the same ε-ball? | FGSM spends most of its budget past the point of useful damage. One ε/4 step in FGSM's direction does as much damage as the full ε step (ratio 1.00, CI 0.89–1.37). The gradient becomes **uncorrelated with the clean gradient after a single ε/4 step** (cosine 0.002, CI −0.007 to 0.008). After the 8-bit round trip, **the official PGD-3 perturbation is FGSM restricted to about 30% of its pixels**, with no sign reversals. This follows from the attack's arithmetic and is not evidence of anything by itself (§2.5). That sparser perturbation does **2.55× the damage** (CI 2.30–3.28). | Robust observation |
+| Is it sparsity or PGD's choice of pixels? (2.3b) | **Choice of pixels.** A random mask of exactly the same number of FGSM pixels recovers only **8% of PGD's advantage** (CI 1–14%). PGD's mask beats **all 8 random masks in 95 of 96 scene–source units**. It flips **60–69%** of clean-correct answers; random masks flip 28%. Selecting the pixels with the largest clean-gradient magnitude does **worse than random** (−1.6 margin units), although the linear model predicts 2.8× more damage for it. PGD's pixels look slightly *less* important than random to the clean linear model (0.92×). | Robust observation, pre-registered. Why those pixels matter is open. |
 | Does the clean linear model rank attacks correctly? | No. It predicts that FGSM beats PGD-3 by 3.6×, and it ranks them the wrong way round in **98% of neutral scenes and 100% of helpful scenes**. FGSM achieves 2.3% of its first-order predicted margin drop; PGD-3 achieves 27%. | Robust |
 | How much does bf16 matter? | The output projection does not matter: fp32 projection moves margins by 0.07 (median), and every first-order ratio is unchanged. The vision-tower precision **changes the gradient direction a lot**: the clean-gradient cosine between bf16 and fp32 vision is **0.29–0.36**. That is less than the 0.87 cosine between the two text contexts. **It does not change the attack outcome**: PGD-3 damage differs by −0.31 (CI −0.88 to 0.56), and attacks cross-evaluate between precisions with no loss. The FGSM/PGD gap and the one-step decorrelation both persist with an fp32 vision tower. | Robust for the vision tower. The bf16 language model is untested. |
 | Is neutral→helpful transfer asymmetric? | Slightly, and only at higher damage. Both sources are equally strong (paired difference 0.5, CI −0.75 to 1.0). Helpful-crafted attacks hurt the neutral context **1.1 margin units more** than the reverse (CI 0.5–2.0). At matched source damage the gap grows with strength: 0.22 at a drop of 2, 0.67 at 4, and **1.35 at 6 (CI 0.61–1.88)**. Binary flip-based "conditional transfer" points the **opposite** way (100% vs 85%). | Modest. The continuous measure and the binary measure disagree. |
+
+The strongest claim the evidence supports, and the next experiment that would most raise its credibility, are in §9.
 
 The main safety lesson is that the cheap, gradient-local tools are misleading on this model: single-step attacks, first-order damage predictions, and gradient-direction diagnostics. The expensive, outcome-level measure is stable: iterative attacks scored after quantization.
 
@@ -90,13 +95,17 @@ Damage along the FGSM direction is **non-monotone**. It reaches its full value b
 
 After one sign step of L∞ = 1/1020, **the gradient is essentially orthogonal to the clean gradient**, with 53% sign agreement against 50% for chance. The same holds with an fp32 vision tower (cos −0.010, CI −0.030 to 0.006) and in the helpful context. The step-to-step cosine becomes slightly *negative* from step 3 onward (about −0.03 to −0.06; CIs exclude 0 at steps 3, 4 and 6, not at 5), which is a mild sign of oscillation. The growth in gradient norm is expected for an NLL leaving saturation; the direction change is not.
 
-**2.5 The official PGD-3 perturbation is a masked FGSM.** Three sign steps of ε/4 sum to ±ε/4 or ±3ε/4 on each coordinate. The 8-bit round trip maps these to 0 or ±1/255. After rounding:
+**2.5 The official PGD-3 perturbation is a masked FGSM, by construction.** Three sign steps of ε/4 sum to ±ε/4 or ±3ε/4 on each coordinate. The 8-bit round trip maps these to 0 or ±1/255. The full argument is in [`MASK_CONTROL_PLAN.md`](MASK_CONTROL_PLAN.md) §2 and §9. In short, a coordinate survives rounding exactly when all three step signs agree, and its sign is then the first step's sign, which is FGSM's. **This holds for any second and third steps, including random ones.** So "subset of FGSM with no sign reversal" is a structural property of 3 × ε/4 steps with ε = one 8-bit level. It is not evidence that PGD selects pixels. With independent random steps 2–3, the subset would be a uniform random ~25% of FGSM's support.
+
+One exact exception was found when the replay was verified, and it is described in plan §9. At most 7 coordinates per unit, where the clean gradient is exactly 0 (FGSM leaves them alone), move by exactly ε/2. Half-to-even rounding turns that into one level at odd pixel values. This affects under 0.005% of PGD's support, and there are no sign reversals anywhere.
+
+After rounding:
 
 - 70.1% of coordinates are 0 and 29.9% are at ±ε;
 - **sign disagreement with FGSM is 0.000 in every scene**, because the first step *is* the FGSM sign;
 - L2 is 1.65, against FGSM's 3.01.
 
-So the official PGD-3 image equals the FGSM image with 70% of its pixels reverted to clean. The kept 30% are *not* the coordinates where the clean gradient is largest: the linear prediction for the kept set is 0.28 of FGSM's, slightly *below* the 0.30 that a random 30% would give. The kept set is about what three independent signs would agree on (25%), plus a small excess (consistent with the 53% step-to-step sign agreement).
+So the official PGD-3 image is, apart from those ≤ 7 tie coordinates, the FGSM image with 70% of its pixels reverted to clean. The kept 30% are *not* the coordinates where the clean gradient is largest: the linear prediction for the kept set is 0.28 of FGSM's, slightly *below* the 0.30 that a random 30% would give. The kept set is about what three independent signs would agree on (25%), plus a small excess (consistent with the 53% step-to-step sign agreement).
 
 ### Interpretation (hypotheses, not established)
 
@@ -105,9 +114,77 @@ The observations fit one picture. The margin, as a function of the image, behave
 1. The clean gradient's *sign* finds the smooth trend well enough to beat random by about 6× in damage. In about 590k input dimensions, a gradient whose trend component is small relative to the rough component still gives a sign vector that is well correlated with the trend.
 2. The rough component changes completely within 1/1020 in L∞ (§2.4). The first-order prediction counts the rough component as damage that FGSM never realizes, which explains why FGSM achieves only 2% of its prediction.
 3. Along any fixed sign direction, damage saturates and then reverses within about ε/2 (§2.3). PGD gains by **re-measuring the gradient and moving in fresh directions**, not by refining one direction.
-4. The quantization step then keeps only the coordinates where the three sampled directions agree. This acts like a crude average of the trend that discards much of the rough part. That may be why a perturbation that is 70% zeros does 2.5× FGSM's damage.
+4. *(Superseded by §2b.)* This paragraph originally offered two candidate explanations for the 2.5×: sparsity, or the agreement-based coordinate selection acting as an average. The random-mask control now shows the gain is almost entirely selection: sparsity alone gives 8% of it. The "weak trend under a rough component" picture is *compatible* with that result, but the control does not test it. The gradient decorrelation is not evidence for it either.
 
-**What is not shown.** The obvious control was not run, because it is outside the pre-registered plan: an FGSM perturbation with a *random* 30% mask. Some of the gain may come from sparsity or a smaller norm alone. The ε/2 line point (L2 ≈ 1.5) already gives 1.21× FGSM, so a large part of the 2.55× might be "smaller is better along this direction". Only the remainder would be attributable to PGD's coordinate selection. The source of the rough component is also open. It could be bf16 rounding inside the language model, the bilinear resize and patching in preprocessing, or genuine high-frequency structure (activation kinks, attention). §3 rules out the vision tower and the output projection as its *main* source.
+The source of the rough component is also open. It could be bf16 rounding inside the language model, the bilinear resize and patching in preprocessing, or genuine high-frequency structure (activation kinks, attention). §3 rules out the vision tower and the output projection as its *main* source.
+
+---
+
+## 2b. Random-mask control: sparsity or adaptive selection? (Checkpoint 2.3b)
+
+Pre-registered in [`MASK_CONTROL_PLAN.md`](MASK_CONTROL_PLAN.md) (commit 107f087, amended before any result in f6f8b36 and c7e5f10). The setup:
+
+- **Units:** 48 scenes × 2 source contexts = 96 units; the scene is the statistical unit.
+- **Masks:** for each unit, the FGSM signs restricted to exactly k = |PGD-3 support| coordinates, chosen in three ways:
+  - **PGD's own mask** (the official PGD-3 image);
+  - **8 uniformly random masks** from FGSM's support, with pre-determined seeds;
+  - **top-k by |clean NLL gradient|**.
+- **Scoring:** the frozen official 8-bit path, in both contexts.
+- **Baseline:** dense FGSM is read from the 2.3 records.
+
+**Integrity.**
+- The re-scored PGD-3 images are **bit-exact against the recorded 2.3 scores in 96/96 units**.
+- The first smoke attempt failed this check. It rebuilt PGD-3 as x + int8 perturbation, which flips half-level ties. The cause was found and fixed by replaying PGD with the frozen update, and the failed attempt is kept in `masks_smoke_attempt1/`.
+- Runtime: 28 min. Peak footprint: 5.2 GiB. Pressure: normal in all 3,326 samples. Swap growth: 0. No unit was skipped.
+
+**Margin drop on the source context.** Each cell is the mean over 48 scenes with its CI. "Rand" is the mean of the 8 seeds within each unit.
+
+| | Neutral source | Helpful source | Pooled |
+|---|---|---|---|
+| Dense FGSM | 3.36 (2.72–3.99) | 3.67 (3.09–4.29) | 3.52 (2.94–4.10) |
+| Random mask, same k | 4.01 (3.38–4.65) | 3.99 (3.46–4.55) | 4.00 (3.46–4.56) |
+| Top-k \|g\| mask | 2.36 (1.84–2.87) | 2.45 (1.93–3.01) | 2.41 (1.91–2.91) |
+| **PGD-3 mask** | **9.81 (8.75–10.82)** | **9.91 (8.97–10.87)** | **9.86 (8.98–10.74)** |
+| Sparsity: rand − FGSM | 0.65 (0.19–1.11) | 0.31 (−0.11 to 0.73) | 0.48 (0.07–0.89) |
+| **Selection: PGD − rand** | **5.80 (5.04–6.56)** | **5.93 (5.19–6.62)** | **5.87 (5.24–6.50)** |
+| Magnitude: top-k − rand | −1.65 (−2.17 to −1.15) | −1.54 (−1.94 to −1.14) | −1.59 (−2.03 to −1.18) |
+| **Share of PGD−FGSM gap from sparsity** | 0.10 (0.03–0.17) | 0.05 (−0.02 to 0.11) | **0.08 (0.01–0.14)** |
+
+**Per unit.** PGD's mask beats all 8 random masks in 48/48 neutral units and 47/48 helpful units. Its median rank among the seeds is 1.0. The seed-to-seed SD of a random mask's damage is about 0.3 within a unit, against a PGD − random gap of about 5.9.
+
+**Attack success.** Flip rate on the 45 clean-correct scenes, source context:
+
+| | FGSM | Random mask | Top-k \|g\| | PGD-3 mask | PGD − rand, paired |
+|---|---|---|---|---|---|
+| Neutral | 0.16 | 0.28 | 0.13 | **0.60** | +0.32 (0.19–0.46) |
+| Helpful | 0.24 | 0.28 | 0.11 | **0.69** | +0.41 (0.26–0.57) |
+
+**Cross-context target damage.** The same pattern holds. Pooled selection effect: 5.32 (4.68–5.97). Sparsity share: 0.05 (−0.02 to 0.12). Top-k − rand: −1.42. PGD − rand target flips: +0.41 to +0.44. The pixels PGD selects under one prompt are also the damaging ones under the other.
+
+**What the clean linear model expects.** The predicted margin drop is −g_M · r with the clean margin gradient. Relative to a random mask of the same size:
+- PGD's mask is predicted to do **0.92×** (CI 0.90–0.94 neutral, 0.90–1.01 helpful);
+- the top-k mask is predicted to do **2.79×**.
+
+In reality, PGD's mask does 2.5× random, and top-k does 0.6×. The ordering is inverted again: by the clean model's standard, the pixels PGD keeps are slightly *less* important than average.
+
+### Reading against the pre-registered rule
+
+Pooled sparsity share = 0.08, below the 0.25 threshold, so this is **"selection primarily"**. The criterion for "PGD selects better than chance" is also met:
+- the pooled selection CI excludes 0;
+- the effect is positive in both sources.
+
+The criterion for "magnitude selection beats chance" is met in the *negative* direction: the clean-gradient magnitude is **anti-informative**.
+
+### What this does and does not establish
+
+- **Established, on these 48 scenes:** the advantage of official PGD-3 over FGSM on this model comes from **which** FGSM coordinates are kept, not from keeping fewer of them. A random subset of the same size is about as damaging as dense FGSM, with a small benefit at most. The agreement-based subset that PGD's later steps produce is about 2.5× as damaging. The subset that the clean gradient's magnitude ranks highest is *less* damaging than random.
+- **Not established:**
+  - *why* the agreement subset is damaging;
+  - whether the individual pixels are special, or only the set acting together;
+  - whether the information comes from g₁ and g₂ as directions or from something incidental to the path.
+
+  The one-step gradient decorrelation is consistent with "the later gradients carry information the clean gradient lacks", but it does not prove a mechanism, and none is claimed.
+- **Scope.** This is not a statement about PGD in general. The subset structure depends on 3 steps of ε/4 with ε equal to one 8-bit level. Other step counts or sizes need not produce a subset, and were not tested here.
 
 ---
 
@@ -194,18 +271,21 @@ Clean margins are similar: neutral 7.75 and helpful 6.75 at the median, with a p
 2. FGSM achieves about 2% of its first-order predicted margin drop, and PGD-3 about 25%.
 3. One ε/4 step along FGSM's direction already achieves all of FGSM's damage.
 4. The gradient is uncorrelated with the clean gradient after one ε/4 step.
-5. The official PGD-3 perturbation is a 30%-sparse subset of FGSM, with identical signs.
+5. The official PGD-3 perturbation is a 30%-sparse subset of FGSM, with identical signs. This is structural (§2.5).
+8. **Selection, not sparsity (2.3b, pre-registered):** a random subset of FGSM of exactly PGD's size recovers 8% of PGD's advantage, and PGD's subset beats all 8 random subsets in 95/96 units. This holds for source damage, cross-context damage and flips.
+9. **The clean-gradient magnitude is anti-informative:** top-|g| subsets do worse than random, although the linear model predicts 2.8× more.
 6. Output-projection precision is irrelevant to all of the above.
 7. The vision-tower precision rotates gradients (cosine about 0.3) but does not change attack damage or transfer.
 
 **Surprising.**
 - The decorrelation scale: the gradient "forgets" its direction within 1/1020 in L∞, in about 590k dimensions, yet sign steps still make steady progress.
-- A perturbation that is FGSM with 70% of its pixels *reverted* is 2.5× more damaging than FGSM.
+- Keeping the *right* 30% of FGSM's pixels makes it 2.5× more damaging, while keeping a random 30% changes almost nothing. The "right" pixels are the ones where two further gradient steps happen to agree. To the clean gradient they look slightly less important than average, and the pixels it ranks highest are worse than random.
 - Precision changes the gradient more than the prompt does.
 
 **Relevant to safety.**
 - **Evaluation.** Robustness numbers from single-step attacks, or from gradient-norm and linearization arguments, understate this VLM's vulnerability by a large and *scene-inconsistent* factor. They also mis-order perturbations, so they can't be used even for ranking. Multi-step attacks scored after realistic quantization should be the minimum.
 - **Defense claims.** Precision differences cause gradient mismatch without any robustness gain. A defense that changes numerical precision, or that makes gradients look different, should be expected to show apparent robustness against single-step or transfer-from-gradient tests that disappears under PGD. This is the familiar gradient-masking failure, here produced by bf16 rather than by design.
+- **Saliency-guided defenses and evaluations.** Methods that rank pixels by clean-gradient magnitude would protect, monitor or attack the wrong pixels here: top-|g| is worse than random. The damaging pixel set becomes visible only after taking further gradient steps.
 - **Interpretability.** Gradient-based attributions on bf16 VLMs are dominated by a component that depends on precision and on the exact input. Conclusions drawn from them need a precision-robustness check.
 - **Prompt-side mitigations.** A helpful, non-revealing system instruction does not reduce, and does not isolate, image-borne attacks. Transfer between the two contexts is high in both directions.
 
@@ -216,7 +296,8 @@ Clean margins are similar: neutral 7.75 and helpful 6.75 at the median, with a p
 - **One model, one size, one hardware stack.** Qwen3-VL-2B on Apple MPS in bf16. MPS kernels differ from CUDA, and the rough gradient component may be specific to this stack.
 - **Synthetic color-naming scenes**, 48 development groups and one arm each. The two contexts are neutral and helpful-non-revealing. These are not open-ended or harmful-content tasks.
 - **The language model stays bf16 in all modes.** "Precision doesn't matter" is established only for the vision tower and the output projection.
-- **Missing controls.** There was no random-mask FGSM at matched sparsity, so §2.5's "selection" story is not separated from a pure sparsity or norm effect. There was no smaller-step gradient-decorrelation curve, so the decorrelation length scale is only bounded above by ε/4.
+- **Controls.** The random-mask control (§2b) separates sparsity from selection, but only at PGD-3's own sparsity. There was no smaller-step gradient-decorrelation curve, so the decorrelation length scale is only bounded above by ε/4. No experiment here identifies *why* PGD's subset is damaging.
+- **A reconstruction pitfall, caught.** Rebuilding iterates from int8 storage is not bit-exact at half-level ties. The pre-registered bit-exact check caught it, and the analysis uses replayed iterates.
 - **Small subsets.** PGD-7 and V32 use 16 scenes, and their CIs are wide.
 - **Multiplicity and post-hoc framing.** Many contrasts were examined without multiplicity correction. The interpretive paragraphs were written after seeing the data. Every claim here is hypothesis-generating. Confirmation needs the reserved split `study2-trackB-confirm-v1`, which has not been drawn.
 - **Quantized margins.** bf16 logits move in steps of 0.125, so small drops (FGSM, the random controls) are coarse.
@@ -226,12 +307,14 @@ Clean margins are similar: neutral 7.75 and helpful 6.75 at the median, with a p
 
 ## 7. Next experiments (not run, not approved)
 
-Each is small: one hour or less on the same machine, development scenes only.
+The random-mask control is done (§2b). The rest are small, on the same machine.
 
-1. **Random-mask FGSM control.** FGSM with random masks at 30% density, against PGD-3's mask. This separates sparsity from selection.
+1. **Confirmation on fresh scenes (most valuable for credibility; see §9).**
 2. **Decorrelation curve.** cos(g(x + t·sign g₀), g₀) for t from ε/64 to ε/4. This finds the length scale of the rough component and checks it against the bf16 ulp scale.
 3. **Language-model precision.** Run one or two scenes with the language model in fp32 on CPU (slow but feasible). This tests whether the language model's rounding is the rough component.
 4. **Gradient smoothing.** Average the gradient over a few nearby points before taking the sign. If the "weak trend + rough component" picture holds, a single smoothed step should close much of the FGSM/PGD gap.
+5. **Which step carries the selection?** Use the stored iterates, plus masks where step 2 or step 3 is replaced by a random sign, and score the resulting subsets. This is mostly forward passes and takes under an hour. It tests whether the damaging subset comes from g₁, from g₂, or only from their agreement.
+6. **A second model.** Repeat the minimal design on another local VLM: dense FGSM, PGD-3, and the matched random-mask control. This tests whether the selection effect is a property of Qwen3-VL on MPS or of sign-step attacks under 8-bit storage.
 
 ---
 
@@ -245,9 +328,13 @@ PY=/path/to/venv/bin/python   # torch 2.15.0, transformers 5.22.1
 # Full run (~4.3 h on a 24 GB M-series Mac; needs ≥ 9.91 GiB available and normal memory pressure at start)
 caffeinate -i $PY -m path_probe run --memory-policy emp1
 
+# Random-mask control, 2.3b (~30 min; reads paths/tensors, writes masks/)
+caffeinate -i $PY -m path_probe masks
+
 # Integrity checks and analysis (read-only, seconds)
 $PY docs/checkpoint-2.3-exploratory/check_smoke.py paths
 $PY docs/checkpoint-2.3-exploratory/analyze_paths.py paths
+$PY docs/checkpoint-2.3-exploratory/analyze_masks.py masks
 $PY -m pytest tests/path_probe -q
 ```
 
@@ -255,6 +342,42 @@ Outputs:
 - [`paths/records.jsonl`](paths/records.jsonl): 1,632 rows.
 - [`paths/progress.json`](paths/progress.json): run state, memory monitor timeline, and limitations.
 - [`paths/run_check.json`](paths/run_check.json).
-- [`analysis/analysis.json`](analysis/analysis.json): every number in this report.
+- [`analysis/analysis.json`](analysis/analysis.json): every 2.3 number in this report.
+- [`masks/records.jsonl`](masks/records.jsonl), [`masks/progress.json`](masks/progress.json), [`analysis/masks_analysis.json`](analysis/masks_analysis.json): the 2.3b control.
 
 Perturbation tensors (313 MB, int8 multiples of ε/4) are kept locally and are not committed. The analysis does not need them. Code is in `src/path_probe/path_probe/`, and the frozen scoring and attack functions are imported unchanged.
+
+---
+
+## 9. The strongest claim the evidence supports
+
+> **On Qwen3-VL-2B, a 3-step sign-gradient attack is 2.5× more damaging than FGSM because of *which* pixels it perturbs, not how many. Those pixels are invisible to, and in fact ranked below average by, the model's clean gradient.**
+>
+> Under an 8-bit-stored L∞ attack with ε = 1/255 and steps of ε/4, PGD-3's perturbation is, by arithmetic, a ~30% subset of FGSM's signs.
+> - A random subset of exactly the same size recovers only 8% (CI 1–14%) of PGD's advantage.
+> - PGD's subset beats all 8 random subsets in 95 of 96 scene–context units.
+> - It raises the flip rate from 28% to 60–69%, and the effect carries across prompts.
+> - The subset that the clean gradient's magnitude ranks highest does worse than random.
+> - Single-step attacks and first-order, saliency-style reasoning therefore misjudge both which attacks and which pixels matter.
+
+**Qualifiers that must travel with it:**
+- exploratory;
+- 48 development scenes of one synthetic color task;
+- one 2B model in bf16 on Apple MPS;
+- one ε and step grid.
+
+The structural part (subset, no sign reversal) is arithmetic and holds anywhere. The empirical part (selection ≫ sparsity, magnitude anti-informative) is shown only here. Nothing here establishes *why* the subset is damaging. The gradient decorrelation is a consistent observation, not an explanation.
+
+**Why it is interesting for safety.** It is a concrete, quantified case where the cheapest evaluation and attribution tools give the wrong answer, and specifically the *wrong ranking*, not just a noisy one. A pipeline that ranks pixels by clean-gradient saliency picks pixels that are worse than random. A robustness evaluation based on FGSM or linearization would rank perturbations backwards. The finding is cheap to reproduce: 48 scenes, one laptop, a bit-exact pipeline check against frozen records.
+
+**The next experiment that would most improve credibility before 16 November: a pre-registered confirmation on scenes never used before.**
+
+| | |
+|---|---|
+| Fixed in advance | The 2.3b claim, as directional predictions: sparsity share ≤ 0.25, PGD − random > 0 in both sources, top-k − random < 0. |
+| Run | Dense FGSM, PGD-3, and the matched mask control. |
+| Compute | About 1–1.5 h locally. |
+| Scenes | Not available today. The only fresh scenes are the reserved split `study2-trackB-confirm-v1` (not yet drawn), or a newly generated development batch. Either needs the research lead's approval, because it uses samples not touched before. |
+| What it changes | Every number here comes from the scenes on which the question was formed. A successful directional confirmation turns "exploratory" into "confirmed on held-out data" for the headline claim, which is the change a reviewer will weigh most. |
+
+A second-model replication (§7, item 6) would do more for *generality*. It needs porting the scoring pipeline, and it would not finish with the same rigor in the time available.
