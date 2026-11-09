@@ -90,6 +90,35 @@ def held_out_split(tmp: Path) -> None:
     check(committed == regenerated, "regenerated file list equals the committed one")
     differing = [name for name in committed if (out / name).is_file() and (out / name).read_bytes() != (SPLIT / name).read_bytes()]
     check(not differing, "every regenerated file is byte-identical to the committed one", ", ".join(differing[:5]))
+    if differing:
+        describe_differences(out, differing)
+
+
+def describe_differences(out: Path, differing: list[str]) -> None:
+    """Diagnostic only. It prints what differs and never turns a failure into a pass."""
+    import numpy as np
+    import PIL.features
+    from PIL import Image
+
+    print(f"  info  platform {sys.platform}, zlib {PIL.features.version('zlib')}, "
+          f"freetype {PIL.features.version('freetype2')}, {len(differing)} file(s) differ")
+    same_pixels, worst = 0, []
+    pngs = [name for name in differing if name.endswith(".png")]
+    for name in pngs:
+        with Image.open(out / name) as a, Image.open(SPLIT / name) as b:
+            if a.mode != b.mode or a.size != b.size:
+                worst.append((name, "mode or size differs", 0))
+                continue
+            x, y = np.asarray(a).astype(np.int16), np.asarray(b).astype(np.int16)
+        if np.array_equal(x, y):
+            same_pixels += 1
+        else:
+            worst.append((name, int(np.abs(x - y).max()), int((x != y).any(axis=-1).sum()) if x.ndim == 3 else int((x != y).sum())))
+    print(f"  info  PNG files with different bytes: {len(pngs)}; of these, decoded pixels identical: {same_pixels}")
+    for name, peak, count in worst[:10]:
+        print(f"  info  pixels differ in {name}: largest channel difference {peak}, pixels affected {count}")
+    for name in [n for n in differing if not n.endswith(".png")][:5]:
+        print(f"  info  non-image file differs: {name}")
 
 
 def analyses(tmp: Path) -> None:
