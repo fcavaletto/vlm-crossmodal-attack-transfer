@@ -136,3 +136,7 @@ Spatial association, meaning token-density correlation and referent-region enric
 - **Reading A or B with a clear effect.** Draft a confirmatory protocol on a **new, independently seeded split** (`study2-trackB-confirm-v2`). Its seed string will be refused for every earlier split, and it will be separated from all development **and** from all `confirm-v1` scenes (both arms). The protocol will cover the primary comparisons, the k-matching, budget fairness, and the decision rules. **Report to the research lead before generating it.**
 - **Reading C.** Write up the negative result. The next candidate is path-specific curvature, meaning the second-order change along the FGSM direction.
 - **Not before 16 November.** A second model, fp32-vision gradient sampling, and any GPU use. GPU use needs approval.
+
+## 9. Implementation notes (dated, before any pilot outcome)
+
+- **2026-11-09, smoke attempt 1.** It stopped on a guard before writing any record: `pgd_patch_s0` had k − 7 coordinates. PGD-3's rounded support contains a few zero-gradient half-level ties outside S_F (§3 of the 2.4 report), and the patch shuffle draws only from S_F. The fix pads patch-matched masks to k with seeded random coordinates of S_F (at most 7 of about 170,000), so every mask keeps exactly PGD-3's count. Before stopping, the smoke had already passed its bit-exact re-score checks. Its files are kept in `pilot_smoke_attempt1/`. No outcome was computed or seen.

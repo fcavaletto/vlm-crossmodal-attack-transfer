@@ -111,9 +111,9 @@ def pilot_block(backend, x, sid: str, record: dict, stored: dict, smoke_ref: dic
     masks["vote_Q4"] = (cs.vote_mask(r_f, s_f, [g0, *[g[f"Q{m}"] for m in range(N_Q)]], k, seed("tie|vote_Q4")), 1 + N_Q)
     masks["vote_J2"] = (cs.vote_mask(r_f, s_f, [g0, *[g[f"J{m}"] for m in range(N_J)]], k, seed("tie|vote_J2")), 1 + N_J)
     masks["vote_P32"] = (cs.vote_mask(r_f, s_f, [g0, sign32], k, seed("tie|vote_P32")), 2)
-    masks["pgd_patch_s0"] = (cs.patch_matched_random(P, s_f, seed("patch|pgd|0")), 3)
-    masks["pgd_patch_s1"] = (cs.patch_matched_random(P, s_f, seed("patch|pgd|1")), 3)
-    masks["voteR8_patch"] = (cs.patch_matched_random(masks["vote_R8"][0], s_f, seed("patch|voteR8")), 9)
+    masks["pgd_patch_s0"] = (cs.patch_matched_random(P, s_f, seed("patch|pgd|0"), k=k), 3)
+    masks["pgd_patch_s1"] = (cs.patch_matched_random(P, s_f, seed("patch|pgd|1"), k=k), 3)
+    masks["voteR8_patch"] = (cs.patch_matched_random(masks["vote_R8"][0], s_f, seed("patch|voteR8"), k=k), 9)
 
     def describe(A):
         return {**cs.overlap(A, P, s_f), "token_spearman_vs_pgd": cs.spearman(cs.token_density(A), tok_P),

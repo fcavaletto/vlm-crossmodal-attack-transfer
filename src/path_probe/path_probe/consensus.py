@@ -78,8 +78,11 @@ def patch_ids(shape, side: int) -> np.ndarray:
     return np.broadcast_to(pid, (c, h, w)).reshape(-1)
 
 
-def patch_matched_random(mask: torch.Tensor, s_f: torch.Tensor, seed: int, side: int = PATCH) -> torch.Tensor:
-    """Random coordinates of S_F with the same count as `mask` in every side x side patch."""
+def patch_matched_random(mask: torch.Tensor, s_f: torch.Tensor, seed: int, side: int = PATCH, k: int | None = None) -> torch.Tensor:
+    """Random coordinates of S_F with the same count as `mask & S_F` in every side x side patch.
+
+    If `k` is given and `mask` has coordinates outside S_F (PGD-3's few zero-gradient ties), the
+    result is padded to k with seeded random coordinates of S_F, so the count matches PGD-3."""
     m = (mask & s_f).flatten().numpy()
     sf = s_f.flatten().numpy()
     pid = patch_ids(tuple(mask.shape), side)
@@ -92,6 +95,9 @@ def patch_matched_random(mask: torch.Tensor, s_f: torch.Tensor, seed: int, side:
     rank = np.arange(idx.size) - start[p]
     out = np.zeros(sf.size, dtype=bool)
     out[idx[rank < need[p]]] = True
+    if k is not None and int(out.sum()) < k:  # pad to k with seeded random coordinates of S_F
+        free = np.flatnonzero(sf & ~out)
+        out[free[np.argsort(_keys(free.size, seed + 1), kind="stable")[: k - int(out.sum())]]] = True
     return torch.from_numpy(out).view_as(mask)
 
 

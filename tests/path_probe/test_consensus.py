@@ -50,6 +50,10 @@ def test_patch_matched_random_keeps_counts_per_patch():
     assert np.array_equal(np.bincount(pid[mask.flatten().numpy()], minlength=6),
                           np.bincount(pid[out.flatten().numpy()], minlength=6))
     assert not bool((out & ~s_f).any()) and not torch.equal(out, mask)
+    outside = mask.clone()
+    outside[0, 0, 0], s_f[0, 0, 0] = True, False  # one mask coordinate outside S_F
+    padded = cs.patch_matched_random(outside, s_f, seed=4, side=16, k=int(outside.sum()))
+    assert int(padded.sum()) == int(outside.sum()) and not bool((padded & ~s_f).any())
 
 
 def test_spearman_and_referent():
