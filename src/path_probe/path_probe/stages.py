@@ -169,18 +169,37 @@ def execute(root: Path, smoke: bool = False, policy: str = "frozen") -> None:
         progress["footprint_before_load"] = process_footprint()
         store.save_progress(progress)
 
+    # The frozen load function takes the permit as its only authority. Under the frozen policy that
+    # is the frozen bf16 decision. Under EMP-1 it is EMP-1's own decision, recorded in full.
+    if policy == "frozen":
+        permit = decisions["bfloat16"]
+    else:
+        permit = {"permitted": bool(progress["emp1_preload"]["permitted"]), "policy": "EMP-1",
+                  "frozen_bf16_decision_permitted": bool(decisions["bfloat16"].get("permitted")),
+                  "emp1_preload": progress["emp1_preload"]}
+    progress["load_permit"] = permit
     t_load = time.perf_counter()
-    model = load_model_after_budget(decisions["bfloat16"], "bfloat16")
-    device = torch.device("mps")
-    model.to(device)
-    model.eval()
-    for p in model.parameters():
-        p.requires_grad_(False)
-    param = next(model.parameters())
-    if param.device.type != "mps" or param.dtype != torch.bfloat16:
-        raise Stop("the model is not bf16 on MPS")
-    if getattr(model.config, "_commit_hash", None) not in (None, PINNED_REVISION):
-        raise Stop("the loaded revision is not the pinned one")
+    try:
+        model = load_model_after_budget(permit, "bfloat16")
+        device = torch.device("mps")
+        model.to(device)
+        model.eval()
+        for p in model.parameters():
+            p.requires_grad_(False)
+        param = next(model.parameters())
+        if param.device.type != "mps" or param.dtype != torch.bfloat16:
+            raise Stop("the model is not bf16 on MPS")
+        if getattr(model.config, "_commit_hash", None) not in (None, PINNED_REVISION):
+            raise Stop("the loaded revision is not the pinned one")
+    except BaseException as exc:
+        progress["status"] = "stopped_load"
+        progress["error"] = f"{type(exc).__name__}: {exc}"
+        if monitor is not None:
+            monitor.stop()
+            progress["memory_monitor"] = monitor.snapshot()
+        store.save_progress(progress)
+        (root / out_rel / "resident.json").unlink(missing_ok=True)
+        raise
     progress["loaded_model"] = {"model_id": MODEL_ID, "revision": PINNED_REVISION, "dtype": str(param.dtype),
                                 "load_seconds": round(time.perf_counter() - t_load, 3)}
     projection = Fp32Projection(model.lm_head, token_ids)

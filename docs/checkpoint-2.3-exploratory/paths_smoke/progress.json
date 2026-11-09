@@ -2,7 +2,7 @@
   "schema": "checkpoint-2.3.paths.progress.v1",
   "label": "EXPLORATORY, DEVELOPMENT ONLY (SMOKE, not a result)",
   "plan_commit": "0c6f17631e5dbdcc5dc0f8f5ea1b2ac5b9c7e7b9",
-  "git_head_at_start": "fe96256c25f160c6908ee8928da894cfeaccee77",
+  "git_head_at_start": "cd683e033a0ae7d99e0740e68bfabb390e542291",
   "locked_inputs": {
     "manifest_rows": 96,
     "checksum_files": 100,
@@ -31,20 +31,23 @@
     "HF_HUB_OFFLINE_was_set": false,
     "HF_HUB_OFFLINE_set_by_script": false
   },
-  "pid": 69842,
+  "pid": 71248,
   "frozen_outputs_written": false,
   "sealed_or_new_samples_used": false,
   "stages": {},
   "scenes": {},
   "limitations": [
-    "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 10250665984 were available (float32 permitted: False). The guard was not lowered."
+    "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 10805821440 were available (float32 permitted: False). The guard was not lowered.",
+    "The frozen Checkpoint 1.5 guard refused this bf16 load; it ran under EMP-1 with pressure monitoring. Numerics are unchanged; only the memory headroom rule differs."
   ],
+  "memory_policy": "EMP-1 (exploratory; MEMORY_ASSESSMENT.md)",
+  "numerical_configuration": "identical to Checkpoint 2.1: bf16 weights on MPS, eager attention, frozen load call, frozen gradient/step/score functions",
   "budget": {
-    "available_bytes": 10250665984,
+    "available_bytes": 10805821440,
     "decisions": {
       "float32": {
         "resident_bytes": 8510128128,
-        "available_bytes": 10250665984,
+        "available_bytes": 10805821440,
         "required_available_bytes": 20871410752,
         "lines_bytes": {
           "os_floor": 6442450944,
@@ -65,7 +68,7 @@
       },
       "bfloat16": {
         "resident_bytes": 4255064064,
-        "available_bytes": 10250665984,
+        "available_bytes": 10805821440,
         "required_available_bytes": 11509447200,
         "lines_bytes": {
           "os_floor": 6442450944,
@@ -92,5 +95,28 @@
     },
     "guard_lowered": false
   },
-  "status": "stopped_budget"
+  "frozen_guard_bf16_permitted": false,
+  "emp1_preload": {
+    "policy": "EMP-1",
+    "lines": {
+      "available_bytes": 8364448808,
+      "pressure_level_max": 1,
+      "free_disk_bytes": 10737418240
+    },
+    "sample": {
+      "t": 1794213418.966339,
+      "pressure": 1,
+      "available": 10805821440,
+      "swap_used": 524288,
+      "footprint": 466453680,
+      "footprint_max": 466453680
+    },
+    "free_disk_bytes": 33371340800,
+    "failed": [],
+    "permitted": true
+  },
+  "footprint_before_load": {
+    "current": 466486448,
+    "lifetime_max": 466486448
+  }
 }
