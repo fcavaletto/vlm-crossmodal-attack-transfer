@@ -31,6 +31,12 @@ class CudaGuard:
     deadline_epoch: float | None = None
     peaks: list[dict[str, Any]] = field(default_factory=list)
 
+    def __post_init__(self) -> None:
+        # torch.cuda memory calls reject a device without an index (found on the first CUDA run,
+        # 2026-11-10: "Expected a torch.device with a specified index"). The pod has one GPU.
+        if self.device.type == "cuda" and self.device.index is None:
+            self.device = torch.device("cuda", 0)
+
     def arm(self) -> dict[str, Any]:
         torch.cuda.set_per_process_memory_fraction(self.memory_fraction, self.device)
         torch.cuda.reset_peak_memory_stats(self.device)

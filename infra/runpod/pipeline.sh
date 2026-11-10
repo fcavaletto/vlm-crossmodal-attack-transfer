@@ -27,8 +27,8 @@ checkpoint() {  # $1 = label. Snapshot of the records without tensors, offered f
 }
 export_results() {  # RunPod's supported transfer: send the output folder; the one-time code goes to the log
   if [ -x "$RPC" ]; then
-    (cd /workspace/checkpoint-5 && find "${RUN_ID}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > "${RUN_ID}.SHA256SUMS" || true
-     echo "EXPORT_MANIFEST=/workspace/checkpoint-5/${RUN_ID}.SHA256SUMS"
+    (cd /workspace/checkpoint-5 && find "${RUN_ID}" -type f ! -name SHA256SUMS -print0 | sort -z | xargs -0 sha256sum > "${RUN_ID}/SHA256SUMS" || true
+     echo "EXPORT_MANIFEST=/workspace/checkpoint-5/${RUN_ID}/SHA256SUMS (inside the sent folder)"; cat "${RUN_ID}/SHA256SUMS"
      [ -n "$SEND_PID" ] && kill "$SEND_PID" 2>/dev/null || true
      nohup "$RPC" send "/workspace/checkpoint-5/${RUN_ID}" > /workspace/checkpoint-5/${RUN_ID}.send.log 2>&1 &
      sleep 15; echo "EXPORT_SEND_LOG_BEGIN"; head -5 /workspace/checkpoint-5/${RUN_ID}.send.log; echo "EXPORT_SEND_LOG_END") || true
