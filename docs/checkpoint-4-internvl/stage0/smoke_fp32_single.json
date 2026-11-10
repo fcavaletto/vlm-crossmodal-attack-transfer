@@ -1,0 +1,100 @@
+{
+ "device": "mps",
+ "dtype": "fp32",
+ "footprint_peak_after_forwards_gib": 6.5,
+ "git_head": "c3f264aa8af45fc89a3dbd8c794a19f19aea5a82",
+ "gradient": {
+  "nonzero_frac": 1.0,
+  "norm": 14.94271183013916,
+  "repeat_bit_identical": true,
+  "repeat_max_abs_diff": 0.0,
+  "repeat_value_identical": true,
+  "value": 0.47485238313674927
+ },
+ "label": "EXPLORATORY, DEVELOPMENT ONLY, NO ATTACKS",
+ "load": {
+  "attn_implementation": "sdpa",
+  "footprint_after_load_gib": 5.474,
+  "load_seconds": 2.1,
+  "n_params": 1060897792,
+  "param_dtypes": [
+   "torch.float32"
+  ],
+  "token_ids": {
+   "blue": 12203,
+   "green": 13250,
+   "red": 1151,
+   "yellow": 27869
+  }
+ },
+ "memory": {
+  "abort_line_gib": 10.0,
+  "by_level": {
+   "1": 28
+  },
+  "lifetime_peak_footprint_gib": 9.714,
+  "max_swap_growth": 0,
+  "max_swap_used": 524288,
+  "min_available": 6283280384,
+  "process_peak_footprint": 10430695848,
+  "samples": 28
+ },
+ "model": "OpenGVLab/InternVL3_5-1B-HF",
+ "mps_cap_bytes": 10737418240,
+ "n_input_tokens": 302,
+ "official": {
+  "chosen": "red",
+  "label_nll": 0.483711302280426,
+  "margin": 4.670694291591644,
+  "nll": {
+   "blue": 7.802839279174805,
+   "green": 5.15440559387207,
+   "red": 0.483711302280426,
+   "yellow": 10.921768188476562
+  },
+  "top_token": 1151
+ },
+ "official_repeat_identical": true,
+ "outcome": "completed",
+ "part": "smoke",
+ "preload": {
+  "failed": [],
+  "free_disk_bytes": 28781404160,
+  "lines": {
+   "available_bytes": 10640781475,
+   "free_disk_bytes": 10737418240,
+   "pressure_level_max": 1
+  },
+  "permitted": true,
+  "policy": "EMP-1",
+  "sample": {
+   "available": 16333733888,
+   "footprint": 157303480,
+   "footprint_max": 157926072,
+   "pressure": 1,
+   "swap_used": 524288,
+   "t": 1794289060.0642471
+  }
+ },
+ "revision": "9191dbccf312b537016f041b25d61c72e7c5c9f3",
+ "scene": "dev4-ref-00-a",
+ "schema": "checkpoint-4.stage0.v1",
+ "seconds": 14.0,
+ "started": "2026-11-10T06:37:40+0100",
+ "surrogate": {
+  "chosen": "red",
+  "label_nll": 0.474853515625,
+  "margin": 4.801290512084961,
+  "nll": {
+   "blue": 7.832998275756836,
+   "green": 5.276144027709961,
+   "red": 0.474853515625,
+   "yellow": 10.95071792602539
+  },
+  "top_token": 1151
+ },
+ "t_backward_s": 4.54,
+ "t_forward_s": 0.95,
+ "tiling": "single",
+ "torch": "2.15.0"
+}

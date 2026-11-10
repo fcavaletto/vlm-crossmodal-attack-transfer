@@ -1,0 +1,55 @@
+{
+ "label": "EXPLORATORY, development scenes",
+ "mean": {
+  "cosine": 0.6930532649662497,
+  "norm_ratio_bf16_over_fp32": 1.0039031275992805,
+  "sign_agreement": 0.8576439751519097,
+  "top30_overlap": 0.8060925964648549,
+  "top30_overlap_chance": 0.3
+ },
+ "scenes": {
+  "dev4-ref-00-a": {
+   "cosine": 0.7102949338034367,
+   "norm_ratio_bf16_over_fp32": 0.9997894207637387,
+   "sign_agreement": 0.8740200466579862,
+   "top30_overlap": 0.8249023718966696,
+   "top30_overlap_chance": 0.3
+  },
+  "dev4-ref-03-a": {
+   "cosine": 0.8819017786422262,
+   "norm_ratio_bf16_over_fp32": 1.1367996853985656,
+   "sign_agreement": 0.8975626627604166,
+   "top30_overlap": 0.8419413722753141,
+   "top30_overlap_chance": 0.3
+  },
+  "dev4-ref-07-a": {
+   "cosine": 0.7890867703172683,
+   "norm_ratio_bf16_over_fp32": 1.0185132777318846,
+   "sign_agreement": 0.8665737575954862,
+   "top30_overlap": 0.8146055033428089,
+   "top30_overlap_chance": 0.3
+  },
+  "dev4-ref-12-a": {
+   "cosine": 0.8106238551028048,
+   "norm_ratio_bf16_over_fp32": 0.8453134695317635,
+   "sign_agreement": 0.8726298014322916,
+   "top30_overlap": 0.8042182122330416,
+   "top30_overlap_chance": 0.3
+  },
+  "dev4-ref-16-a": {
+   "cosine": 0.602130308956344,
+   "norm_ratio_bf16_over_fp32": 1.057542345401746,
+   "sign_agreement": 0.8688591851128472,
+   "top30_overlap": 0.8260270024357576,
+   "top30_overlap_chance": 0.3
+  },
+  "dev4-ref-20-a": {
+   "cosine": 0.36428194297541916,
+   "norm_ratio_bf16_over_fp32": 0.9654605667679849,
+   "sign_agreement": 0.7662183973524306,
+   "top30_overlap": 0.7248611166055372,
+   "top30_overlap_chance": 0.3
+  }
+ },
+ "tiling": "single"
+}

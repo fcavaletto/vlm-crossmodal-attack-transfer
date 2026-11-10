@@ -1,0 +1,5 @@
+[project]
+name = "internvl_probe"
+version = "0.1.0"
+description = "Checkpoint 4 Stage 0: InternVL3.5-1B integration and feasibility gates (exploratory, development data only)"
+requires-python = ">=3.12"
