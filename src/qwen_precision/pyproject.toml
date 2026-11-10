@@ -1,0 +1,5 @@
+[project]
+name = "qwen_precision"
+version = "0.1.0"
+description = "Checkpoint 5: Qwen3-VL-2B bf16 vs fp32 on one device. Reuses the frozen 2.4 pipeline unchanged."
+requires-python = ">=3.12"

@@ -1,0 +1,82 @@
+{
+ "dtype": "bf16",
+ "dtype_audit": {
+  "Conv3d": [
+   "bfloat16"
+  ],
+  "Embedding": [
+   "bfloat16"
+  ],
+  "GELU": [
+   "bfloat16"
+  ],
+  "GELUTanh": [
+   "bfloat16"
+  ],
+  "LayerNorm": [
+   "bfloat16"
+  ],
+  "Linear": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextAttention": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextDecoderLayer": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextMLP": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextRMSNorm": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextRotaryEmbedding": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionAttention": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionBlock": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionMLP": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionPatchEmbed": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionPatchMerger": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionRotaryEmbedding": [
+   "float32"
+  ],
+  "SiLUActivation": [
+   "bfloat16"
+  ]
+ },
+ "fp32_matmul_probe": {
+  "max_rel_err_vs_fp64": 1.1853044974240285e-06,
+  "passes_1e-5": true
+ },
+ "git_head": "5166ffe4c2fe64f0171a3246fd3298870f54879e",
+ "modules_not_in_dtype": {
+  "Qwen3VLVisionRotaryEmbedding": [
+   "float32"
+  ]
+ },
+ "numerics": {
+  "autocast_enabled": false,
+  "deterministic_algorithms": false,
+  "device": "mps",
+  "float32_matmul_precision": "highest",
+  "torch": "2.15.0"
+ },
+ "weights": {
+  "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+  "stored_parameter_dtypes": {
+   "BF16": 2127532032
+  }
+ }
+}
