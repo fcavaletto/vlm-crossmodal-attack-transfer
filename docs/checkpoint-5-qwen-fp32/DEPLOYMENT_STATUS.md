@@ -28,3 +28,15 @@ The author confirmed auto-pay is disabled, approved the redesigned watchdog, and
 | Pods on the account | none (`list-pods` empty after both refusals) |
 | Pod billing for the four CPU test pods | Now shown: **$0.0043 in total** (CPU only; GPU and disk $0). |
 | Retries | None further, as instructed. |
+
+## Third attempt (16:06 UTC): L40S, approved as one attempt (amendment 1)
+
+| Step | State |
+|---|---|
+| Watchdog v2 (stop-first) | Implemented and tested on CPU pods; see `infra/runpod/TERMINATION_TESTS.md`. Stop-first, a stopped pod left in place, deadline, termination fallback and status read all pass. The restart-export path was refused by RunPod for host capacity, so it is a fallback only. |
+| L40S stock before the attempt | `get-capacity`: **Out** on Secure for CUDA 12.8, 13.0, 13.1 and 13.2, and Out on Community. At 15:35 it read LOW. |
+| GPU canary create (L40S, 20 GB pod volume disk, 1 h deadline, commit `c410e97`) | Refused: "There are no longer any instances available with the requested specifications." |
+| Retries | None, as instructed. |
+| Pods on the account | none (`list-pods` empty) |
+| RTX PRO 6000 96 GB (not authorized) | Secure, CUDA 13.2: **Low**, **$2.49/h**, US-NC-2. With the 8 h deadline the GPU would cost at most $19.92, inside the $20 ceiling. A tighter deadline of 4.5 h caps it at $11.21. Expected: about $6–16 at A6000-equivalent speed, probably less, since the card is faster. G9 still stops the run above a projected $12. |
+| Network volume `0uhv9a501u` | Unchanged (50 GB, EU-SE-1). |
