@@ -27,10 +27,10 @@ echo "WATCHDOG_V2_BOOT $(ts) pod=${ID} deadline=${DEADLINE_EPOCH:-MISSING} grace
 [ -n "${RUNPOD_API_KEY:-}" ] && echo "POD_KEY_PRESENT=yes" || echo "POD_KEY_PRESENT=no"
 echo "CURL=$(command -v curl || echo MISSING)"
 auth() { printf 'Authorization: Bearer %s' "${RUNPOD_API_KEY:-}"; }
-desired_status() {
-  curl -sS --max-time 30 -H "$(auth)" "$API/v2/pods/$ID" 2>/dev/null | grep -o '"desiredStatus" *: *"[A-Z]*"' | head -1 | grep -o '[A-Z]*"$' | tr -d '"'
+pod_status() {  # REST v2 field "status": RUNNING, EXITED, ...
+  curl -sS --max-time 30 -H "$(auth)" "$API/v2/pods/$ID" 2>/dev/null | grep -o '"status" *: *"[A-Z_]*"' | head -1 | grep -o '[A-Z_]*"$' | tr -d '"'
 }
-echo "SELF_READ desiredStatus=$(desired_status)"
+echo "SELF_READ status=$(pod_status)"
 
 stop_rest() {
   if [ "${WATCHDOG_TEST_SKIP_STOP:-0}" = 1 ]; then echo "TEST_SKIP_STOP: REST stop not sent"; return; fi
@@ -55,9 +55,9 @@ terminate_pod() {
 shutdown_pod() {
   echo "WATCHDOG_FIRE reason=$1 $(ts)"
   mkdir -p "$STATE_DIR" 2>/dev/null && echo "$1 $(ts)" >> "$STATE_DIR/fired" 2>/dev/null
-  stop_rest;  sleep "$CONFIRM"; echo "STILL_RUNNING_AFTER_REST_STOP desiredStatus=$(desired_status) $(ts)"
-  stop_gql;   sleep "$CONFIRM"; echo "STILL_RUNNING_AFTER_GQL_STOP desiredStatus=$(desired_status) $(ts)"
-  if [ "$(desired_status)" = EXITED ]; then
+  stop_rest;  sleep "$CONFIRM"; echo "STILL_RUNNING_AFTER_REST_STOP status=$(pod_status) $(ts)"
+  stop_gql;   sleep "$CONFIRM"; echo "STILL_RUNNING_AFTER_GQL_STOP status=$(pod_status) $(ts)"
+  if [ "$(pod_status)" = EXITED ]; then
     echo "STOP_ACCEPTED_CONTAINER_ALIVE: waiting ${CONFIRM}s more before treating the stop as failed"
     sleep "$CONFIRM"
   fi
