@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checkpoint 5 GPU workload. Started in the background by watchdog.sh, which owns shutdown.
-#   STAGE       canary | full
+#   STAGE       canary (canary only) | full (canary, operator go, gates, main run)
 #   COMMIT      repository commit to run (the protocol commit or later)
 #   RUN_ID      output folder name on the network volume
 #   POD_START_EPOCH, DEADLINE_EPOCH, HOURLY_USD   for the runner's budget gate and deadline
@@ -65,19 +65,73 @@ rm -rf docs/checkpoint-5-qwen-fp32/audit docs/checkpoint-5-qwen-fp32/run
 ln -s "$OUT/audit" docs/checkpoint-5-qwen-fp32/audit
 ln -s "$OUT/run" docs/checkpoint-5-qwen-fp32/run
 
-if [ "$STAGE" = canary ]; then
-  python - <<'PY'
-import torch
+# ---- GPU canary (amendment 2): runs first in the same pod, before any scientific step -----------
+export OUT
+mkdir -p "$OUT/canary"
+nvidia-smi > "$OUT/canary/nvidia-smi.txt" 2>&1 || true
+python - <<'PY'
+import json, os, torch
 from qwen_precision.numerics import configure, fp32_matmul_probe
 from qwen_precision.load import weights_facts
 d = torch.device("cuda")
-print("numerics", configure(d)); print("probe", fp32_matmul_probe(d)); print("weights", weights_facts())
+cap = torch.cuda.get_device_capability(0)
+arch = torch.cuda.get_arch_list()
+need = f"sm_{cap[0]}{cap[1]}"
+rec = {"device": torch.cuda.get_device_name(0), "capability": list(cap), "arch_list": arch, "needed_arch": need,
+       "arch_supported": need in arch, "torch": torch.__version__, "cuda": torch.version.cuda,
+       "cudnn": torch.backends.cudnn.version()}
+rec["numerics"] = configure(d)
+rec["probe"] = fp32_matmul_probe(d)
+rec["weights"] = weights_facts()
+ker = {}
+for name, dt in (("bf16", torch.bfloat16), ("fp32", torch.float32)):
+    try:  # the op families Qwen3-VL uses (conv3d patch embed, attention, norms, activations), forward and backward
+        x = torch.randn(2, 3, 4, 32, 32, device=d, dtype=dt, requires_grad=True)
+        conv = torch.nn.Conv3d(3, 8, (2, 4, 4), stride=(2, 4, 4)).to(d, dt)
+        q = torch.randn(1, 4, 64, 32, device=d, dtype=dt, requires_grad=True)
+        att = torch.softmax(q @ q.transpose(-1, -2) / 32 ** 0.5, dim=-1) @ q
+        y = (conv(x).float().sum() + att.float().sum() + torch.nn.functional.layer_norm(q, (32,)).float().sum()
+             + torch.nn.functional.silu(q).float().sum() + torch.nn.functional.gelu(q).float().sum())
+        y.backward(); torch.cuda.synchronize()
+        ker[name] = {"ok": bool(torch.isfinite(x.grad).all() and torch.isfinite(q.grad).all())}
+    except Exception as e:
+        ker[name] = {"ok": False, "error": f"{type(e).__name__}: {e}"[:300]}
+rec["kernels"] = ker
+json.dump(rec, open(os.environ["OUT"] + "/canary/canary.json", "w"), indent=1, default=str)
+print("CANARY", json.dumps({k: rec[k] for k in ("device", "capability", "needed_arch", "arch_supported", "kernels")}))
+print("CANARY_PROBE", rec["probe"])
+assert rec["arch_supported"], f"{need} not in the torch build's arch list {arch}"
+assert all(v["ok"] for v in ker.values()), f"kernel smoke failed: {ker}"
 PY
-  echo "canary export test file" > "$OUT/canary_export_test.txt"
-  checkpoint canary
-  status "canary-complete"
-  exit 0
-fi
+# watchdog: PID 1, script hash, absolute deadline, boot count, and the pod key's right to call the stop endpoint
+PID1=$(tr '\0' ' ' < /proc/1/cmdline); echo "WATCHDOG_PID1=${PID1}"
+case "$PID1" in *watchdog.sh*) ;; *) echo "CANARY_FAIL watchdog is not PID 1"; exit 4;; esac
+sha256sum /tmp/watchdog.sh | tee "$OUT/canary/watchdog.sha256"
+echo "WATCHDOG_BOOTS=$(cat /workspace/.watchdog/boots 2>/dev/null)" | tee -a "$OUT/canary/watchdog.sha256"
+echo "DEADLINE_EPOCH=${DEADLINE_EPOCH} remaining_s=$((DEADLINE_EPOCH - $(date +%s)))" | tee -a "$OUT/canary/watchdog.sha256"
+code=$(curl -sS --max-time 30 -o "$OUT/canary/stop_auth_probe.json" -w '%{http_code}' -X POST -H "Authorization: Bearer ${RUNPOD_API_KEY}" \
+  -H 'content-type: application/json' --data '{"action":"canary-probe-not-an-action"}' "https://api.runpod.io/v2/pods/${RUNPOD_POD_ID}/action")
+echo "STOP_ENDPOINT_AUTH_PROBE_HTTP=${code}" | tee -a "$OUT/canary/watchdog.sha256"   # 400/422: authorised, request rejected as invalid
+case "$code" in 400|422) ;; *) echo "CANARY_FAIL the pod key cannot reach the stop endpoint"; exit 5;; esac
+status "canary-checks-passed"
+checkpoint canary
+if [ "$STAGE" = canary ]; then status "canary-complete"; exit 0; fi
+# hold until the operator has received the canary bundle off the running pod and verified its sha256.
+# Signal: infra/runpod/signals/$RUN_ID on the research branch, "go <sha256 of the canary tar>" or "nogo <reason>".
+WANT=$(cut -d' ' -f1 "/workspace/checkpoint-5/${RUN_ID}.ckpt-canary.tar.sha256")
+SIGNAL="https://api.github.com/repos/fcavaletto/vlm-crossmodal-attack-transfer/contents/infra/runpod/signals/${RUN_ID}?ref=${SIGNAL_REF:-research/qwen-fp32-gpu}"
+HOLD_END=$(( $(date +%s) + ${CANARY_HOLD_SECONDS:-2400} ))
+status "canary-hold"
+while :; do
+  if body=$(curl -fsS --max-time 30 -H 'Accept: application/vnd.github.raw' "$SIGNAL" 2>/dev/null); then
+    set -- $body
+    if [ "${1:-}" = go ] && [ "${2:-}" = "$WANT" ]; then echo "CANARY_GO verified=$WANT"; break; fi
+    echo "CANARY_NOGO_OR_MISMATCH signal='${body}' want=${WANT}"; exit 6
+  fi
+  [ "$(date +%s)" -ge "$HOLD_END" ] && { echo "CANARY_HOLD_TIMEOUT"; exit 7; }
+  sleep 90
+done
+status "canary-go"
 
 python -m qwen_precision.run inputs --out "$OUT/audit/input_hashes.json" --compare docs/checkpoint-5-qwen-fp32/reference/input_hashes.json
 python -m qwen_precision.run audit --dtype bf16 --device cuda

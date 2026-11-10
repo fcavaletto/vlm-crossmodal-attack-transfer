@@ -420,8 +420,15 @@ def cmd_main(args) -> None:
                 progress["projection_after_first_scene"] = {"seconds_per_scene_both_dtypes": round(per_scene, 1),
                                                             "projected_total_usd": round(projected, 2)}
                 write_json(out / "progress.json", progress)
+                # throughput gate (amendment 2): the remaining scenes must finish before the workload deadline
+                finish = time.time() + per_scene * (len(order) - 1)
+                progress["projection_after_first_scene"]["projected_finish_epoch"] = round(finish, 1)
+                progress["projection_after_first_scene"]["workload_deadline_epoch"] = args.deadline_epoch
+                write_json(out / "progress.json", progress)
                 if projected > args.budget_gate_usd:
                     raise Stop(f"G9 budget gate: projected ${projected:.2f} > ${args.budget_gate_usd:.2f}")
+                if finish > args.deadline_epoch:
+                    raise Stop(f"throughput gate: projected finish {finish:.0f} is after the workload deadline {args.deadline_epoch:.0f}")
         # end-of-run drift check on the first scene's clean score, both precisions
         drift = {}
         row = order[0]
