@@ -78,3 +78,19 @@ The author confirmed auto-pay is disabled, approved the redesigned watchdog, and
 | Charges | Not yet shown. At most about 4 min at $2.49/h ≈ $0.17, if RunPod bills a pod whose container never started. |
 
 **Lesson.** The in-pod safeguards depend on the container starting. When the host cannot create it, only outside monitoring can end the billing. In both GPU attempts the first container log line arrived within about 10 s of a successful start. So a pod with no container output 3 minutes after creation is treated as a host failure and terminated from outside.
+
+## Sixth attempt (20:09 UTC): A40, approved as the fallback attempt (amendment 4) — **completed**
+
+| Step | State |
+|---|---|
+| Stock | 20:07: L40S LOW at $1.09, then **Out** on the re-read immediately before creation. A40 and A6000 LOW at $0.59, so the A40 was used, as the amendment prescribes. |
+| Pod | `s3uabwvn1a10q9`, A40, CA-MTL-1, $0.59/h, created 20:09:16Z |
+| External startup check | Watchdog boot line and heartbeat (`POD_KEY_PRESENT=yes`, `SELF_READ status=RUNNING`, `BOOT_COUNT=1`) at 20:09:20Z, 4 s after creation |
+| Preflight | Canary, G3, the bf16 and fp32 audits, clean scoring, FD and `gates.py` all passed. Paired unit: 24 s bf16 + 34 s fp32, peak 15.5 GiB reserved. Projection $0.87. |
+| Bundle and go | Bundle sha256 `842a7caa…` received and verified locally; gates, memory and integrity checked, not the scientific outcome. Go pushed at 20:20; the pod verified it at 20:21:12Z. |
+| Main run | Resumed from scene 2 under the integrity manifest. Scenes 2–48 finished 21:10:59Z. Drift check exact in both precisions. |
+| Export | 1.4 GB received. 115/116 files match the pod's SHA256SUMS; `pipeline.log` matches up to the manifest line, then grows by design. Record hashes also match the pod's log stream. |
+| Shutdown | Stopped (`EXITED`) and terminated from outside at about 21:14Z. 404, `list-pods` empty. No new network volume; `0uhv9a501u` unchanged. |
+| Charges | $0.15 posted at 21:14Z (expected ≈ $0.71 for 72 min). Today's pod total so far: $0.55. |
+
+Results: [`REPORT.md`](REPORT.md).
