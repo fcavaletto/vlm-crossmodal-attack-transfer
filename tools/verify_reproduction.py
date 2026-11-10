@@ -8,7 +8,10 @@ It writes only to a temporary directory and never touches a committed file. Chec
    frozen value, FROZEN.json itself is unchanged since the freeze commit, and no frozen file
    was committed after the freeze.
 2. Held-out split: ``python -m scene_confirm`` regenerates fixtures/trackB_confirm_v1
-   byte-for-byte (needs the recorded Pillow, 13.0.0; the check says so if another is installed).
+   (needs the recorded Pillow, 13.0.0; the check says so if another is installed).
+   On macOS, the study platform, every file must be byte-identical. Elsewhere PNG bytes depend on
+   the zlib build, so each PNG must instead decode to identical RGB uint8 pixels, size and
+   metadata, and every other file must still be byte-identical.
 3. Committed analysis outputs: the frozen confirmation analysis, Figure 1 and the Checkpoint 3
    pilot analysis are re-run from committed records and compared with the committed files.
    The per-group CSV, the figure and the pilot JSON must be byte-identical. The confirmation
@@ -33,6 +36,7 @@ PILOT = ROOT / "docs" / "checkpoint-3-mechanism"
 SPLIT = ROOT / "fixtures" / "trackB_confirm_v1"
 FREEZE_COMMIT = "c35b02c"
 RECORDED_PILLOW = "13.0.0"
+STUDY_PLATFORM = "darwin"  # Apple silicon macOS, where the split was generated
 
 failures: list[str] = []
 
@@ -74,8 +78,20 @@ def frozen_protocol() -> None:
     check(not later, "no frozen file was committed after the freeze", " ".join(later))
 
 
+def decoded(path: Path):
+    """Decode a PNG without converting it: format, mode, size, metadata and the raw array."""
+    import numpy as np
+    from PIL import Image
+
+    with Image.open(path) as im:
+        im.load()
+        arr = np.asarray(im)
+        return im.format, im.mode, im.size, dict(im.info), arr
+
+
 def held_out_split(tmp: Path) -> None:
     print("2. Held-out split regeneration")
+    import numpy as np
     import PIL
 
     out = tmp / "confirm_split"
@@ -83,15 +99,50 @@ def held_out_split(tmp: Path) -> None:
     listed = json.loads((SPLIT / "checksums.json").read_text(encoding="utf-8"))["files"]
     if PIL.__version__ != RECORDED_PILLOW:
         check(False, "recorded Pillow is installed", f"found {PIL.__version__}, the split was built with {RECORDED_PILLOW}")
-    bad = [name for name, info in listed.items() if not (out / name).is_file() or sha256(out / name) != info["sha256"]]
-    check(not bad, f"{len(listed)} regenerated files match checksums.json", ", ".join(bad[:5]))
+    stale = [name for name, info in listed.items() if sha256(SPLIT / name) != info["sha256"]]
+    check(not stale, f"every committed split file matches the committed checksums.json ({len(listed)} files)", ", ".join(stale[:5]))
     committed = sorted(str(p.relative_to(SPLIT)) for p in SPLIT.rglob("*") if p.is_file())
     regenerated = sorted(str(p.relative_to(out)) for p in out.rglob("*") if p.is_file())
     check(committed == regenerated, "regenerated file list equals the committed one")
-    differing = [name for name in committed if (out / name).is_file() and (out / name).read_bytes() != (SPLIT / name).read_bytes()]
-    check(not differing, "every regenerated file is byte-identical to the committed one", ", ".join(differing[:5]))
-    if differing:
-        describe_differences(out, differing)
+    common = [name for name in committed if (out / name).is_file()]
+    pngs = [name for name in common if name.endswith(".png")]
+    others = [name for name in common if not name.endswith(".png") and name != "checksums.json"]
+
+    if sys.platform == STUDY_PLATFORM:
+        # The platform the split was built on: everything must be byte-identical, PNGs included.
+        bad = [name for name, info in listed.items() if not (out / name).is_file() or sha256(out / name) != info["sha256"]]
+        check(not bad, f"{len(listed)} regenerated files match checksums.json", ", ".join(bad[:5]))
+        differing = [name for name in common if (out / name).read_bytes() != (SPLIT / name).read_bytes()]
+        check(not differing, "every regenerated file is byte-identical to the committed one", ", ".join(differing[:5]))
+        if differing:
+            describe_differences(out, differing)
+        return
+
+    # Other platforms. PNG compression output depends on the zlib build in the Pillow wheel
+    # (docs/PUBLICATION_AUDIT.md section 6), so PNG bytes are not compared here. Everything else
+    # still is, and every PNG must decode to the same format, mode, size, metadata, dtype, shape
+    # and pixel values. No tolerance.
+    print(f"  note  platform {sys.platform}: PNG files are compared by exact decoded pixels; "
+          f"byte-exact PNG comparison runs on {STUDY_PLATFORM}")
+    differing = [name for name in others if (out / name).read_bytes() != (SPLIT / name).read_bytes()]
+    check(not differing, f"every regenerated non-PNG file is byte-identical ({len(others)} files: manifest, metadata, pixel hashes)",
+          ", ".join(differing))
+    new_sums = json.loads((out / "checksums.json").read_text(encoding="utf-8"))
+    same_keys = new_sums.get("algorithm") == "sha256" and set(new_sums["files"]) == set(listed)
+    non_png_same = same_keys and all(new_sums["files"][n] == listed[n] for n in listed if not n.endswith(".png"))
+    check(same_keys and non_png_same, "regenerated checksums.json lists the same files, with identical entries for non-PNG files")
+    mismatched = []
+    for name in pngs:
+        fa, ma, sa, ia, xa = decoded(out / name)
+        fb, mb, sb, ib, xb = decoded(SPLIT / name)
+        same = (fa, ma, sa, ia, xa.dtype, xa.shape) == (fb, mb, sb, ib, xb.dtype, xb.shape) and fa == "PNG" and ma == "RGB"
+        if not (same and xa.dtype == np.uint8 and np.array_equal(xa, xb)):
+            mismatched.append(name)
+    check(not mismatched,
+          f"every regenerated PNG decodes to identical RGB uint8 pixels, size and metadata ({len(pngs)} files)",
+          ", ".join(mismatched[:5]))
+    if mismatched:
+        describe_differences(out, mismatched)
 
 
 def describe_differences(out: Path, differing: list[str]) -> None:

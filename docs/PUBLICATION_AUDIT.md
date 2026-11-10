@@ -68,7 +68,7 @@ No frozen file, preserved file, record or historical result was changed. All his
 | Dates | This audit and the second wording note in the 2.4 report were first committed dated 2026-11-10. The work was done on 2026-11-09, as the commit timestamps show. The dates are corrected. |
 | Analysis JSON path (§3.4) | Unchanged. The verifier compares every field except `input`. |
 
-Test suites after these changes, in one call: 551 passed on the study machine.
+Test suites after these changes, in one call: 551 passed on the study machine (556 after the §6 pixel-comparison tests were added).
 
 First CI run (`ce5c763`): macOS passed. Ubuntu had one failure, `test_process_footprint_reads_this_process`, which calls the macOS-only `proc_pid_rusage` syscall through the hash-frozen `path_probe/memory.py`. The test is now marked macOS-only, with the reason printed when it is skipped. No assertion was changed. The reproduction step now runs even if a test fails, so the two checks report separately.
 
@@ -85,7 +85,9 @@ Found by the new CI, reported here, **not resolved**.
 - Consequence: the images the model would see are the same on both platforms. The earlier statement "regenerates byte-identically" is true only on the study platform. The README now says so.
 - The check was not changed. `tools/verify_reproduction.py` gained a diagnostic that prints what differs; a mismatch is still a failure, so the Ubuntu CI job is red.
 
-Options for the author:
-1. On platforms other than the study platform, compare decoded pixels exactly (still no tolerance) and keep the byte check on macOS.
-2. Keep the byte check everywhere and run the reproduction step only on macOS.
-3. Leave the Ubuntu job failing, as now.
+**Resolution (approved by the author, 2026-11-10).**
+- On macOS, the study platform, the check is unchanged: all 100 files byte-identical.
+- On other platforms, each regenerated PNG must decode to the same format, mode (RGB), size, metadata, dtype (uint8), shape and every pixel value as the committed one. No tolerance. The other split files, including `scene_graph_hashes.json`, which records a hash of each image's decoded pixels, must be byte-identical. `checksums.json` must list the same files, with identical entries for non-PNG files.
+- On every platform the committed split files must match the committed `checksums.json`.
+- Frozen hashes, analysis outputs and Figure 1 are checked as before, independently.
+- `tests/tools/test_verify_pixels.py` shows the decoded comparison accepts re-compressed PNGs and rejects a one-level change in one channel of one pixel, a channel swap, a size change and a mode change.
