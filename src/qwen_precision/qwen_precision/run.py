@@ -248,14 +248,25 @@ def cmd_audit(args) -> None:
     audit = DtypeAudit(session.models[args.dtype])
     try:
         b = session.backend(args.dtype, row, x, check, float_check=False)
-        b.score_official(x, "neutral")
-        b.grad_nll(x, "neutral")
+        s1 = b.score_official(x, "neutral")
+        g1 = b.grad_nll(x, "neutral")
     finally:
         seen = audit.remove()
+    try:  # G8: a repeated score and gradient, without hooks, must be bit-identical
+        b = session.backend(args.dtype, row, x, check, float_check=False)
+        s2, s3 = b.score_official(x, "neutral"), b.score_official(x, "neutral")
+        g2, g3 = b.grad_nll(x, "neutral"), b.grad_nll(x, "neutral")
+        determinism = {"score_repeat_identical": s2["nll"] == s3["nll"] and s2["margin"] == s3["margin"],
+                       "gradient_repeat_bit_identical": bool(torch.equal(g2, g3)),
+                       "gradient_repeat_max_abs": float((g2 - g3).abs().max()),
+                       "hooked_vs_unhooked_score_identical": s1["nll"] == s2["nll"],
+                       "hooked_vs_unhooked_gradient_identical": bool(torch.equal(g1, g2))}
+    finally:
         if hasattr(guard, "stop"):
             guard.stop()
     out = {"dtype": args.dtype, "numerics": settings(device), "fp32_matmul_probe": fp32_matmul_probe(device),
            "weights": weights_facts(), "dtype_audit": seen, "modules_not_in_dtype": non_matching(seen, args.dtype),
+           "determinism": determinism,
            "git_head": git(root, "rev-parse", "HEAD")}
     write_json(Path(args.out) if args.out else root / OUT / "audit" / f"audit_{args.dtype}_{device.type}.json", out)
     print(json.dumps({"tf32_probe": out["fp32_matmul_probe"], "not_in_dtype": list(out["modules_not_in_dtype"])}, indent=1))
