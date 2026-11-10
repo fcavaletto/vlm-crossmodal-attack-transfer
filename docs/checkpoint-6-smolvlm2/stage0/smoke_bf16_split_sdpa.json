@@ -1,0 +1,51 @@
+{
+ "attn": "sdpa",
+ "device": "mps",
+ "dtype": "bf16",
+ "git_head": "45bc625b5e8624c529a09fd7e8620b80f7794c53",
+ "label": "EXPLORATORY, DEVELOPMENT ONLY, NO ATTACKS",
+ "memory": {
+  "abort_line_gib": 10.0,
+  "abort_reason": "process footprint peak 11.53 GiB exceeded 10.0 GiB",
+  "by_level": {
+   "1": 39
+  },
+  "lifetime_peak_footprint_gib": 11.527,
+  "max_swap_growth": 0,
+  "max_swap_used": 524288,
+  "min_available": 6735364096,
+  "process_peak_footprint": 12377033008,
+  "samples": 39
+ },
+ "model": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+ "mps_cap_bytes": 10737418240,
+ "outcome": "failed: memory: RuntimeError: MPS backend out of memory (MPS allocated: 9.82 GiB, other allocations: 2.70 MiB, max allowed: 10.00 GiB). Tried to allocate 212.00 MiB on shared pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).",
+ "part": "smoke",
+ "preload": {
+  "failed": [],
+  "free_disk_bytes": 19943055360,
+  "lines": {
+   "available_bytes": 10640781475,
+   "free_disk_bytes": 10737418240,
+   "pressure_level_max": 1
+  },
+  "permitted": true,
+  "policy": "EMP-1",
+  "sample": {
+   "available": 16518381568,
+   "footprint": 157516424,
+   "footprint_max": 158139016,
+   "pressure": 1,
+   "swap_used": 524288,
+   "t": 1794327450.9458659
+  }
+ },
+ "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+ "schema": "checkpoint-6.stage0.v1",
+ "seconds": 19.4,
+ "small_steps": false,
+ "started": "2026-11-10T17:17:30+0100",
+ "tiling": "split",
+ "torch": "2.15.0",
+ "traceback": "^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/transformers/models/smolvlm/modeling_smolvlm.py\", line 252, in forward\n    hidden_states, _ = self.self_attn(\n                       ^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1787, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/torch/nn/modules/module.py\", line 1798, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/transformers/models/smolvlm/modeling_smolvlm.py\", line 201, in forward\n    attn_output, attn_weights = attention_interface(\n                                ^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/fedecava/Development/_c0-work/venv-vlm/lib/python3.12/site-packages/transformers/integrations/sdpa_attention.py\", line 174, in sdpa_attention_forward\n    attn_output = torch.nn.functional.scaled_dot_product_attention(\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: MPS backend out of memory (MPS allocated: 9.82 GiB, other allocations: 2.70 MiB, max allowed: 10.00 GiB). Tried to allocate 212.00 MiB on shared pool. Use PYTORCH_MPS_HIGH_WATERMARK_RATIO=0.0 to disable upper limit for memory allocations (may cause system failure).\n"
+}

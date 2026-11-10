@@ -1,0 +1,103 @@
+{
+ "attn": "eager",
+ "device": "mps",
+ "dtype": "bf16",
+ "footprint_peak_after_forwards_gib": 6.703,
+ "git_head": "c389f2e9aca5a5e12083ea1508a107bec33b585a",
+ "gradient": {
+  "nonzero_frac": 1.0,
+  "norm": 3.3444793224334717,
+  "repeat_bit_identical": true,
+  "repeat_max_abs_diff": 0.0,
+  "repeat_value_identical": true,
+  "value": 0.6123814582824707
+ },
+ "label": "EXPLORATORY, DEVELOPMENT ONLY, NO ATTACKS",
+ "load": {
+  "attn_implementation": "eager",
+  "footprint_after_load_gib": 6.474,
+  "load_seconds": 4.8,
+  "model_class": "SmolVLMForConditionalGeneration",
+  "n_params": 2246784880,
+  "param_dtypes": [
+   "torch.bfloat16"
+  ],
+  "token_ids": {
+   "blue": 4461,
+   "green": 2654,
+   "red": 2382,
+   "yellow": 5724
+  }
+ },
+ "memory": {
+  "abort_line_gib": 10.0,
+  "by_level": {
+   "1": 32
+  },
+  "lifetime_peak_footprint_gib": 8.615,
+  "max_swap_growth": 0,
+  "max_swap_used": 524288,
+  "min_available": 6271860736,
+  "process_peak_footprint": 9250425184,
+  "samples": 32
+ },
+ "model": "HuggingFaceTB/SmolVLM2-2.2B-Instruct",
+ "mps_cap_bytes": 10737418240,
+ "n_input_tokens": 130,
+ "official": {
+  "chosen": "red",
+  "label_nll": 0.6196737885475159,
+  "margin": 0.4999999403953552,
+  "nll": {
+   "blue": 2.744673728942871,
+   "green": 3.369673728942871,
+   "red": 0.6196737885475159,
+   "yellow": 1.119673728942871
+  },
+  "top_token": 2382
+ },
+ "official_repeat_identical": true,
+ "outcome": "completed",
+ "part": "smoke",
+ "preload": {
+  "failed": [],
+  "free_disk_bytes": 19939008512,
+  "lines": {
+   "available_bytes": 10640781475,
+   "free_disk_bytes": 10737418240,
+   "pressure_level_max": 1
+  },
+  "permitted": true,
+  "policy": "EMP-1",
+  "sample": {
+   "available": 14637006848,
+   "footprint": 157467272,
+   "footprint_max": 158073480,
+   "pressure": 1,
+   "swap_used": 524288,
+   "t": 1794327515.938997
+  }
+ },
+ "revision": "482adb537c021c86670beed01cd58990d01e72e4",
+ "scene": "dev4-ref-00-a",
+ "schema": "checkpoint-6.stage0.v1",
+ "seconds": 16.0,
+ "small_steps": false,
+ "started": "2026-11-10T17:18:35+0100",
+ "surrogate": {
+  "chosen": "red",
+  "label_nll": 0.6123347878456116,
+  "margin": 0.4999999403953552,
+  "nll": {
+   "blue": 2.862334728240967,
+   "green": 3.362334728240967,
+   "red": 0.6123347878456116,
+   "yellow": 1.1123347282409668
+  },
+  "top_token": 2382
+ },
+ "t_backward_s": 4.14,
+ "t_forward_s": 1.01,
+ "tiling": "single",
+ "torch": "2.15.0"
+}
