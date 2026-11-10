@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Checkpoint 5 GPU workload. Started in the background by watchdog.sh, which owns shutdown.
-#   STAGE       canary (canary only) | full (canary, operator go, gates, main run)
+#   STAGE       full: canary probes, real preflight (all gates + one paired unit), operator go, resumed main run
 #   COMMIT      repository commit to run (the protocol commit or later)
 #   RUN_ID      output folder name on the network volume
 #   POD_START_EPOCH, DEADLINE_EPOCH, HOURLY_USD   for the runner's budget gate and deadline
@@ -114,25 +114,8 @@ code=$(curl -sS --max-time 30 -o "$OUT/canary/stop_auth_probe.json" -w '%{http_c
 echo "STOP_ENDPOINT_AUTH_PROBE_HTTP=${code}" | tee -a "$OUT/canary/watchdog.sha256"   # 400/422: authorised, request rejected as invalid
 case "$code" in 400|422) ;; *) echo "CANARY_FAIL the pod key cannot reach the stop endpoint"; exit 5;; esac
 status "canary-checks-passed"
-checkpoint canary
-if [ "$STAGE" = canary ]; then status "canary-complete"; exit 0; fi
-# hold until the operator has received the canary bundle off the running pod and verified its sha256.
-# Signal: infra/runpod/signals/$RUN_ID on the research branch, "go <sha256 of the canary tar>" or "nogo <reason>".
-WANT=$(cut -d' ' -f1 "/workspace/checkpoint-5/${RUN_ID}.ckpt-canary.tar.sha256")
-SIGNAL="https://api.github.com/repos/fcavaletto/vlm-crossmodal-attack-transfer/contents/infra/runpod/signals/${RUN_ID}?ref=${SIGNAL_REF:-research/qwen-fp32-gpu}"
-HOLD_END=$(( $(date +%s) + ${CANARY_HOLD_SECONDS:-2400} ))
-status "canary-hold"
-while :; do
-  if body=$(curl -fsS --max-time 30 -H 'Accept: application/vnd.github.raw' "$SIGNAL" 2>/dev/null); then
-    set -- $body
-    if [ "${1:-}" = go ] && [ "${2:-}" = "$WANT" ]; then echo "CANARY_GO verified=$WANT"; break; fi
-    echo "CANARY_NOGO_OR_MISMATCH signal='${body}' want=${WANT}"; exit 6
-  fi
-  [ "$(date +%s)" -ge "$HOLD_END" ] && { echo "CANARY_HOLD_TIMEOUT"; exit 7; }
-  sleep 90
-done
-status "canary-go"
-
+# ---- real preflight (amendment 3): the production CUDA commands, then one complete paired unit ----------
+WL_DEADLINE=$((DEADLINE_EPOCH - 1800))   # workload deadline: 4 h after creation; the last 30 min are for export
 python -m qwen_precision.run inputs --out "$OUT/audit/input_hashes.json" --compare docs/checkpoint-5-qwen-fp32/reference/input_hashes.json
 python -m qwen_precision.run audit --dtype bf16 --device cuda
 python -m qwen_precision.run audit --dtype fp32 --device cuda
@@ -140,10 +123,40 @@ python -m qwen_precision.run clean --device cuda
 python -m qwen_precision.run fd --dtype fp32 --device cuda
 status "gates-evaluating"
 python -m qwen_precision.gates "$OUT/audit"          # exits non-zero on any failed gate: no main run
-status "gates-passed; main-run"
-checkpoint gates
+status "gates-passed; preflight-unit"
+python -m qwen_precision.run main --device cuda --hourly-usd "$HOURLY_USD" --max-scenes 1 \
+  --pod-start-epoch "$POD_START_EPOCH" --deadline-epoch "$WL_DEADLINE" --budget-gate-usd 12   # G4, G9, throughput after scene 1
+python - <<'PY'
+import json, os
+out = os.environ["OUT"]
+prog = json.load(open(f"{out}/run/progress.json")); man = json.load(open(f"{out}/run/integrity.json"))
+mem = {k: v for k, v in ((f, json.load(open(f"{out}/audit/{f}")).get("memory")) for f in sorted(os.listdir(f"{out}/audit")) if f.endswith(".json")) if v}
+summary = {"status": prog["status"], "projection_after_first_scene": prog["projection_after_first_scene"],
+           "units": [{k: u[k] for k in ("scene", "dtype", "seconds")} | {"peak_reserved_gib": round(u["memory"].get("peak_reserved", 0) / 2**30, 3)} for u in prog["units"]],
+           "integrity_after_scene": man["after_scene"], "audit_memory": mem}
+json.dump(summary, open(f"{out}/preflight_summary.json", "w"), indent=1)
+print("PREFLIGHT_SUMMARY", json.dumps({"status": summary["status"], **summary["projection_after_first_scene"]}))
+PY
+status "preflight-passed"
+checkpoint preflight
+# hold until the operator has received the preflight bundle off the running pod and verified its sha256.
+# Signal: infra/runpod/signals/$RUN_ID on the research branch, "go <sha256 of the preflight tar>" or "nogo <reason>".
+WANT=$(cut -d' ' -f1 "/workspace/checkpoint-5/${RUN_ID}.ckpt-preflight.tar.sha256")
+SIGNAL="https://api.github.com/repos/fcavaletto/vlm-crossmodal-attack-transfer/contents/infra/runpod/signals/${RUN_ID}?ref=${SIGNAL_REF:-research/qwen-fp32-gpu}"
+HOLD_END=$(( $(date +%s) + ${CANARY_HOLD_SECONDS:-900} ))
+status "preflight-hold"
+while :; do
+  if body=$(curl -fsS --max-time 30 -H 'Accept: application/vnd.github.raw' "$SIGNAL" 2>/dev/null); then
+    set -- $body
+    if [ "${1:-}" = go ] && [ "${2:-}" = "$WANT" ]; then echo "PREFLIGHT_GO verified=$WANT"; break; fi
+    echo "PREFLIGHT_NOGO_OR_MISMATCH signal='${body}' want=${WANT}"; exit 6
+  fi
+  [ "$(date +%s)" -ge "$HOLD_END" ] && { echo "PREFLIGHT_HOLD_TIMEOUT"; exit 7; }
+  sleep 60
+done
+status "preflight-go; main-run"
 ( i=0; while sleep "${CHECKPOINT_SECONDS:-3600}"; do i=$((i+1)); checkpoint "main-$i"; done ) & CKPT_LOOP=$!
-python -m qwen_precision.run main --device cuda --hourly-usd "$HOURLY_USD" \
-  --pod-start-epoch "$POD_START_EPOCH" --deadline-epoch $((DEADLINE_EPOCH - 1800)) --budget-gate-usd 12
+python -m qwen_precision.run main --device cuda --hourly-usd "$HOURLY_USD" --resume \
+  --pod-start-epoch "$POD_START_EPOCH" --deadline-epoch "$WL_DEADLINE" --budget-gate-usd 12   # re-checks G9 and throughput
 python -m qwen_precision.compare_grads "$OUT/run"
 status "complete"

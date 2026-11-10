@@ -131,6 +131,20 @@ class Session:
                                 float_check=float_check)
 
 
+def memory_record(guard, session=None, t0: float | None = None) -> dict[str, Any]:
+    """Peak CUDA memory (allocated, reserved), host and disk, load and elapsed seconds, for a record."""
+    rec: dict[str, Any] = {}
+    if hasattr(guard, "sample"):
+        rec.update(guard.sample())
+        rec["peak_reserved_gib"] = round(rec["peak_reserved"] / GIB, 3)
+        rec["peak_allocated_gib"] = round(rec["peak_allocated"] / GIB, 3)
+    if session is not None:
+        rec["load_seconds"] = session.load_seconds
+    if t0 is not None:
+        rec["elapsed_seconds"] = round(time.time() - t0, 1)
+    return rec
+
+
 def make_guard(device: torch.device, deadline: float | None):
     if device.type == "cuda":
         from .guard import CudaGuard
@@ -241,6 +255,7 @@ def cmd_audit(args) -> None:
 
     root = repo_root()
     device = torch.device(args.device)
+    t0 = time.time()
     guard, _, check = make_guard(device, None)  # preload lines before any load
     session = Session(args.device, (args.dtype,))
     row = scenes(root)[0]
@@ -266,7 +281,7 @@ def cmd_audit(args) -> None:
             guard.stop()
     out = {"dtype": args.dtype, "numerics": settings(device), "fp32_matmul_probe": fp32_matmul_probe(device),
            "weights": weights_facts(), "dtype_audit": seen, "modules_not_in_dtype": non_matching(seen, args.dtype),
-           "determinism": determinism,
+           "determinism": determinism, "memory": memory_record(guard, session, t0),
            "git_head": git(root, "rev-parse", "HEAD")}
     write_json(Path(args.out) if args.out else root / OUT / "audit" / f"audit_{args.dtype}_{device.type}.json", out)
     print(json.dumps({"tf32_probe": out["fp32_matmul_probe"], "not_in_dtype": list(out["modules_not_in_dtype"])}, indent=1))
@@ -277,6 +292,7 @@ def cmd_clean(args) -> None:
     root = repo_root()
     device = torch.device(args.device)
     dtypes = tuple(args.dtypes.split(","))
+    t0 = time.time()
     guard, _, check = make_guard(device, None)  # preload lines before any load
     session = Session(args.device, dtypes)
     out: dict[str, Any] = {"numerics": settings(device), "scores": {}}
@@ -292,6 +308,7 @@ def cmd_clean(args) -> None:
     finally:
         if hasattr(guard, "stop"):
             guard.stop()
+    out["memory"] = memory_record(guard, session, t0)
     write_json(Path(args.out) if args.out else root / OUT / "audit" / f"clean_{device.type}.json", out)
     print("clean scores written:", len(out["scores"]))
 
@@ -300,6 +317,7 @@ def cmd_fd(args) -> None:
     """G7: central finite differences of the frozen NLL on the frozen differentiable path."""
     root = repo_root()
     device = torch.device(args.device)
+    t0 = time.time()
     guard, _, check = make_guard(device, None)  # preload lines before any load
     session = Session(args.device, (args.dtype,))
     gen = torch.Generator().manual_seed(20261112)
@@ -329,7 +347,7 @@ def cmd_fd(args) -> None:
     by_h = {hl: float(np.median([d["steps"][i]["rel_err"] for r in res.values() for d in r["directions"]]))
             for i, hl in enumerate(FD_STEPS_LEVELS)}
     out = {"dtype": args.dtype, "numerics": settings(device), "scenes": res, "median_rel_err_by_step": by_h,
-           "G7_pass": min(by_h.values()) <= 0.05}
+           "G7_pass": min(by_h.values()) <= 0.05, "memory": memory_record(guard, session, t0)}
     write_json(Path(args.out) if args.out else root / OUT / "audit" / f"fd_{args.dtype}_{device.type}.json", out)
     print(json.dumps(by_h), "G7", out["G7_pass"])
 
@@ -381,28 +399,108 @@ def cmd_repro_mps(args) -> None:
           "| peak GiB:", round((chk["memory_monitor"].get("process_peak_footprint") or 0) / GIB, 2))
 
 
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def run_integrity(out: Path) -> dict[str, Any]:
+    """What is on disk: per dtype, the records file hash, the scene ids in order, and each tensor file hash."""
+    res: dict[str, Any] = {}
+    for d in ("bf16", "fp32"):
+        rec = out / d / "records.jsonl"
+        lines = rec.read_text().splitlines() if rec.exists() else []
+        sids: list[str] = []
+        for ln in lines:
+            sid = json.loads(ln).get("scene_id")
+            if sid and (not sids or sids[-1] != sid):
+                sids.append(sid)
+        res[d] = {"records_sha256": _sha256_file(rec) if rec.exists() else None, "n_lines": len(lines), "scenes": sids,
+                  "tensors_sha256": {sid: _sha256_file(out / d / "tensors" / f"{sid}.npz")
+                                     for sid in sids if (out / d / "tensors" / f"{sid}.npz").exists()}}
+    return res
+
+
+def verify_resume(out: Path, order: list[dict[str, Any]]) -> int:
+    """Number of completed scenes, after checking the records on disk against the integrity manifest.
+
+    Resume is allowed only if both precisions completed the same leading scenes of the frozen order,
+    each with its tensor file, and every hash equals the manifest written when those scenes finished."""
+    man_path = out / "integrity.json"
+    if not man_path.exists():
+        raise Stop("resume refused: no integrity manifest")
+    manifest = json.loads(man_path.read_text())
+    now = run_integrity(out)
+    if now != manifest["state"]:
+        raise Stop("resume refused: records or tensors differ from the integrity manifest")
+    k = len(now["bf16"]["scenes"])
+    expected = [r["scene_id"] for r in order[:k]]
+    for d in ("bf16", "fp32"):
+        if now[d]["scenes"] != expected or set(now[d]["tensors_sha256"]) != set(expected):
+            raise Stop(f"resume refused: {d} scenes {now[d]['scenes']} are not the first {k} of the frozen order")
+    if k == 0 or k >= len(order):
+        raise Stop(f"resume refused: {k} completed scenes")
+    return k
+
+
 def cmd_main(args) -> None:
-    """Main run: per scene, bf16 then fp32, both models resident. Records appended per (scene, dtype)."""
+    """Main run: per scene, bf16 then fp32, both models resident. Records appended per (scene, dtype).
+
+    --max-scenes N stops after N complete paired scenes (the preflight unit). --resume continues a run
+    whose records match their integrity manifest, from the next scene of the same frozen order. Scene
+    seeds depend only on the scene id, so a resumed run computes exactly what an uninterrupted one would."""
     root = repo_root()
     commit = protocol_commit(root)
     device = torch.device(args.device)
     out = root / OUT / "run"
-    for d in ("bf16", "fp32"):
-        if (out / d / "records.jsonl").exists():
-            raise Stop(f"{out}/{d}/records.jsonl exists. Single shot: no resume, no overwrite.")
+    order = scenes(root)
+    if args.resume:
+        start = verify_resume(out, order)
+        progress = json.loads((out / "progress.json").read_text())
+        progress.setdefault("resumes", []).append({"at_scene": start, "epoch": time.time(), "git_head": git(root, "rev-parse", "HEAD")})
+    else:
+        for d in ("bf16", "fp32"):
+            if (out / d / "records.jsonl").exists():
+                raise Stop(f"{out}/{d}/records.jsonl exists. Single shot: no overwrite (use --resume after a preflight).")
+        start = 0
+        progress = None
     guard, gconf, check = make_guard(device, args.deadline_epoch)
     session = Session(args.device, ("bf16", "fp32"))
-    order = scenes(root)
-    progress: dict[str, Any] = {"schema": "checkpoint-5.progress.v1", "label": "EXPLORATORY, DEVELOPMENT ONLY",
-                                "protocol_commit": commit, "git_head": git(root, "rev-parse", "HEAD"),
-                                "numerics": session.numerics, "guard": gconf, "load_seconds": session.load_seconds,
-                                "seed_prefix": MAIN_SEED_PREFIX, "scene_order": [r["scene_id"] for r in order],
-                                "hourly_usd": args.hourly_usd, "pod_start_epoch": args.pod_start_epoch,
-                                "budget_gate_usd": args.budget_gate_usd, "units": [], "status": "running"}
+    if progress is None:
+        progress = {"schema": "checkpoint-5.progress.v1", "label": "EXPLORATORY, DEVELOPMENT ONLY",
+                    "protocol_commit": commit, "git_head": git(root, "rev-parse", "HEAD"),
+                    "numerics": session.numerics, "guard": gconf, "load_seconds": session.load_seconds,
+                    "seed_prefix": MAIN_SEED_PREFIX, "scene_order": [r["scene_id"] for r in order],
+                    "hourly_usd": args.hourly_usd, "pod_start_epoch": args.pod_start_epoch,
+                    "budget_gate_usd": args.budget_gate_usd, "units": [], "status": "running"}
+    else:
+        if progress["scene_order"] != [r["scene_id"] for r in order] or progress["seed_prefix"] != MAIN_SEED_PREFIX:
+            raise Stop("resume refused: scene order or seed prefix differs from the preflight")
+        progress["status"] = "running"
+        progress.setdefault("resume_load_seconds", []).append(session.load_seconds)
+        # re-check G9 and the throughput gate with the preflight's measured time per paired scene
+        per_scene = progress["projection_after_first_scene"]["seconds_per_scene_both_dtypes"]
+        remaining = len(order) - start
+        since_pod = time.time() - (args.pod_start_epoch or time.time())
+        projected = args.hourly_usd * (since_pod + per_scene * remaining + 1800) / 3600
+        finish = time.time() + per_scene * remaining
+        progress["projection_at_resume"] = {"remaining_scenes": remaining, "projected_total_usd": round(projected, 2),
+                                            "projected_finish_epoch": round(finish, 1), "workload_deadline_epoch": args.deadline_epoch}
+        write_json(out / "progress.json", progress)
+        if projected > args.budget_gate_usd:
+            raise Stop(f"G9 budget gate at resume: projected ${projected:.2f} > ${args.budget_gate_usd:.2f}")
+        if finish > args.deadline_epoch:
+            raise Stop(f"throughput gate at resume: projected finish {finish:.0f} is after the workload deadline {args.deadline_epoch:.0f}")
+    stop_after = len(order) if args.max_scenes is None else min(len(order), args.max_scenes)
     t_start = time.time()
     try:
-        for i, row in enumerate(order):
+        for i in range(start, stop_after):
+            row = order[i]
             x = image(root, row)
+            t_scene = time.time()
             for d in ("bf16", "fp32"):
                 check()
                 rows, tensors = unit(session, d, row, x, check, MAIN_SEED_PREFIX)
@@ -413,22 +511,25 @@ def cmd_main(args) -> None:
                 progress["units"].append({"scene": row["scene_id"], "dtype": d, "seconds": rows[-1]["seconds"], "memory": mem})
                 write_json(out / "progress.json", progress)
                 print(f"[main] {i + 1}/48 {row['scene_id']} {d} {rows[-1]['seconds']:.0f}s", flush=True)
+            write_json(out / "integrity.json", {"after_scene": i + 1, "epoch": time.time(), "state": run_integrity(out)})
             if i == 0 and args.hourly_usd:
-                per_scene = time.time() - t_start
+                per_scene = time.time() - t_scene
                 since_pod = time.time() - (args.pod_start_epoch or t_start)
                 projected = args.hourly_usd * (since_pod + per_scene * (len(order) - 1) + 1800) / 3600  # +0.5 h teardown
-                progress["projection_after_first_scene"] = {"seconds_per_scene_both_dtypes": round(per_scene, 1),
-                                                            "projected_total_usd": round(projected, 2)}
-                write_json(out / "progress.json", progress)
-                # throughput gate (amendment 2): the remaining scenes must finish before the workload deadline
                 finish = time.time() + per_scene * (len(order) - 1)
-                progress["projection_after_first_scene"]["projected_finish_epoch"] = round(finish, 1)
-                progress["projection_after_first_scene"]["workload_deadline_epoch"] = args.deadline_epoch
+                progress["projection_after_first_scene"] = {"seconds_per_scene_both_dtypes": round(per_scene, 1),
+                                                            "projected_total_usd": round(projected, 2),
+                                                            "projected_finish_epoch": round(finish, 1),
+                                                            "workload_deadline_epoch": args.deadline_epoch}
                 write_json(out / "progress.json", progress)
                 if projected > args.budget_gate_usd:
                     raise Stop(f"G9 budget gate: projected ${projected:.2f} > ${args.budget_gate_usd:.2f}")
+                # throughput gate (amendment 2): the remaining scenes must finish before the workload deadline
                 if finish > args.deadline_epoch:
                     raise Stop(f"throughput gate: projected finish {finish:.0f} is after the workload deadline {args.deadline_epoch:.0f}")
+        if stop_after < len(order):
+            progress["status"] = f"preflight-complete after {stop_after} scene(s)"
+            return
         # end-of-run drift check on the first scene's clean score, both precisions
         drift = {}
         row = order[0]
@@ -444,7 +545,7 @@ def cmd_main(args) -> None:
         progress["stopped_reason"] = f"{type(exc).__name__}: {str(exc)[:500]}"
         raise
     finally:
-        progress["elapsed_seconds"] = round(time.time() - t_start, 1)
+        progress["elapsed_seconds_last_process"] = round(time.time() - t_start, 1)
         if hasattr(guard, "stop"):
             guard.stop()
         write_json(out / "progress.json", progress)
@@ -461,6 +562,8 @@ def main() -> None:
     s = sub.add_parser("main"); s.add_argument("--device", default="cuda"); s.add_argument("--hourly-usd", type=float, required=True)
     s.add_argument("--pod-start-epoch", type=float, required=True); s.add_argument("--deadline-epoch", type=float, required=True)
     s.add_argument("--budget-gate-usd", type=float, default=12.0)
+    s.add_argument("--max-scenes", type=int, default=None, help="stop after N paired scenes (the preflight unit)")
+    s.add_argument("--resume", action="store_true", help="continue after a preflight whose records match integrity.json")
     a = ap.parse_args()
     {"inputs": cmd_inputs, "audit": cmd_audit, "clean": cmd_clean, "fd": cmd_fd, "repro-mps": cmd_repro_mps, "main": cmd_main}[a.cmd](a)
 
