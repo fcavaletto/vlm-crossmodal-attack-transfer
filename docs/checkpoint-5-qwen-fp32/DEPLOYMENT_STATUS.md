@@ -63,3 +63,18 @@ The author confirmed auto-pay is disabled, approved the redesigned watchdog, and
 **Fixes after the attempt (no pod running):**
 - `CudaGuard` normalizes an unindexed CUDA device to `cuda:0`. A regression test with fake `torch.cuda` calls that apply torch's index rule fails on the old guard and passes on the new one.
 - The export manifest is written inside the sent folder and printed to the pod log.
+
+## Fifth attempt (19:16 UTC): RTX PRO 6000, approved as one attempt (amendment 3)
+
+**Outcome: RunPod's host never started the container, so nothing of ours ran. Terminated from outside about 4 min after creation. No data. The approved attempt is used; no further pod was created.**
+
+| Step | State |
+|---|---|
+| Engineering before the attempt | Amendment 3 committed and pushed (`c39b9f5`): real preflight, integrity-verified resume, CUDA entry-point tests (full suite 588 passed). Watchdog unchanged (`a9ad711e…`). |
+| Stock | 19:03 and 19:09: **Out** in both catalog reads, so creation was held back to avoid wasting the single attempt. 19:14: LOW, $2.49/h. |
+| Pod | `ulduogqygqs4d5`, **US-PA-1**, $2.49/h, created 19:16:07Z, deadline 23:45:10Z |
+| Host | System log: "create 20GB volume", image already present, then `error creating container: ... context deadline exceeded` (Docker socket timeout, 19:17:22Z). Then "container create: exit status 1" on every retry, 19:18:40Z–19:19:58Z. No container log line at all: the watchdog never started. |
+| Action | Terminated from outside at about 19:20Z (204), as nothing was running and nothing could stop itself. `get-pod` → 404, `list-pods` empty. |
+| Charges | Not yet shown. At most about 4 min at $2.49/h ≈ $0.17, if RunPod bills a pod whose container never started. |
+
+**Lesson.** The in-pod safeguards depend on the container starting. When the host cannot create it, only outside monitoring can end the billing. In both GPU attempts the first container log line arrived within about 10 s of a successful start. So a pod with no container output 3 minutes after creation is treated as a host failure and terminated from outside.
