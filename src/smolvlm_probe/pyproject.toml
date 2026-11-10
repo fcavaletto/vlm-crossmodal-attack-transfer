@@ -1,0 +1,5 @@
+[project]
+name = "smolvlm_probe"
+version = "0.1.0"
+description = "Checkpoint 6 Stage 0: SmolVLM2-2.2B integration and feasibility gates (exploratory, development data only)"
+requires-python = ">=3.12"
