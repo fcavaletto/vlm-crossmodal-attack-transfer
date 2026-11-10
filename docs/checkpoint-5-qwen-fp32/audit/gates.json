@@ -1,0 +1,86 @@
+{
+ "gates": {
+  "G1_environment": {
+   "pass": true,
+   "probe": {
+    "max_rel_err_vs_fp64": 5.27982073006403e-07,
+    "passes_1e-5": true
+   },
+   "gpu": "NVIDIA A40",
+   "cuda_runtime": "13.2"
+  },
+  "G2_dtype_audit": {
+   "pass": true,
+   "fp32_not_fp32": {},
+   "bf16_islands": {
+    "Qwen3VLVisionRotaryEmbedding": [
+     "float32"
+    ]
+   },
+   "bf16_islands_expected": {
+    "Qwen3VLVisionRotaryEmbedding": [
+     "float32"
+    ]
+   }
+  },
+  "G8_determinism": {
+   "pass": true,
+   "bf16": {
+    "gradient_repeat_bit_identical": true,
+    "gradient_repeat_max_abs": 0.0,
+    "hooked_vs_unhooked_gradient_identical": true,
+    "hooked_vs_unhooked_score_identical": true,
+    "score_repeat_identical": true
+   },
+   "fp32": {
+    "gradient_repeat_bit_identical": true,
+    "gradient_repeat_max_abs": 0.0,
+    "hooked_vs_unhooked_gradient_identical": true,
+    "hooked_vs_unhooked_score_identical": true,
+    "score_repeat_identical": true
+   }
+  },
+  "G3_inputs_and_weights": {
+   "pass": true,
+   "inputs_mismatched": [],
+   "weights": {
+    "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+    "stored_parameter_dtypes": {
+     "BF16": 2127532032
+    }
+   }
+  },
+  "G5_cross_device_clean": {
+   "pass": true,
+   "n": 96,
+   "median_abs": 0.24999999906867743,
+   "p95_abs": 0.7499999888241291,
+   "max_abs": 1.0000001043081284,
+   "chosen_agree": 96,
+   "thresholds": {
+    "median_abs": 0.25,
+    "p95_abs": 0.75,
+    "max_abs": 1.5,
+    "min_chosen_agree": 94
+   }
+  },
+  "G6_fp32_sanity": {
+   "pass": true,
+   "fp32_accuracy": {
+    "neutral": 0.9375,
+    "helpful_nonrevealing": 0.9791666666666666
+   }
+  },
+  "G7_fp32_gradients": {
+   "pass": true,
+   "median_rel_err_by_step": {
+    "0.0009765625": 0.013313624756340549,
+    "0.00390625": 0.004209763631653876,
+    "0.015625": 0.06176959219259105,
+    "0.0625": 0.6601972262108683
+   }
+  }
+ },
+ "missing": [],
+ "all_pass": true
+}

@@ -1,0 +1,1369 @@
+{
+ "budget_gate_usd": 12.0,
+ "drift_check_exact": {
+  "bf16": true,
+  "fp32": true
+ },
+ "elapsed_seconds_last_process": 2975.4,
+ "git_head": "a940c466e81ffec19d644b7c83aa565690e9f05c",
+ "guard": {
+  "deadline_epoch": 1794355697.0,
+  "max_reserved_bytes": 38654705664,
+  "memory_fraction": 0.75,
+  "total_bytes": 47699722240
+ },
+ "hourly_usd": 0.59,
+ "label": "EXPLORATORY, DEVELOPMENT ONLY",
+ "load_seconds": {
+  "bf16": 2.0,
+  "fp32": 9.7
+ },
+ "numerics": {
+  "autocast_enabled": false,
+  "bf16_reduced_precision_reduction": false,
+  "capability": [
+   8,
+   6
+  ],
+  "cublas_workspace_config": ":4096:8",
+  "cuda_matmul_allow_tf32": false,
+  "cuda_runtime": "13.2",
+  "cudnn_allow_tf32": false,
+  "cudnn_deterministic": true,
+  "deterministic_algorithms": true,
+  "device": "cuda",
+  "float32_matmul_precision": "highest",
+  "gpu": "NVIDIA A40",
+  "torch": "2.15.0+cu132"
+ },
+ "pod_start_epoch": 1794341297.0,
+ "projection_after_first_scene": {
+  "projected_finish_epoch": 1794344817.0,
+  "projected_total_usd": 0.87,
+  "seconds_per_scene_both_dtypes": 63.9,
+  "workload_deadline_epoch": 1794355697.0
+ },
+ "projection_at_resume": {
+  "projected_finish_epoch": 1794345090.3,
+  "projected_total_usd": 0.92,
+  "remaining_scenes": 47,
+  "workload_deadline_epoch": 1794355697.0
+ },
+ "protocol_commit": "339237fa1a22729f9c34e283b4cfb99c27d2a4d3",
+ "resume_load_seconds": [
+  {
+   "bf16": 2.0,
+   "fp32": 7.7
+  }
+ ],
+ "resumes": [
+  {
+   "at_scene": 1,
+   "epoch": 1794342074.0617182,
+   "git_head": "a940c466e81ffec19d644b7c83aa565690e9f05c"
+  }
+ ],
+ "scene_order": [
+  "dev4-ref-00-a",
+  "dev4-ref-03-a",
+  "dev4-ref-07-a",
+  "dev4-ref-12-a",
+  "dev4-ref-16-a",
+  "dev4-ref-20-a",
+  "dev4-ref-25-a",
+  "dev4-ref-27-a",
+  "dev4-ref-29-a",
+  "dev4-ref-30-a",
+  "dev4-ref-33-a",
+  "dev4-ref-37-a",
+  "dev4-ref-38-a",
+  "dev4-ref-39-a",
+  "dev4-ref-42-a",
+  "dev4-ref-47-a",
+  "dev4-ref-01-a",
+  "dev4-ref-02-a",
+  "dev4-ref-04-a",
+  "dev4-ref-05-a",
+  "dev4-ref-06-a",
+  "dev4-ref-08-a",
+  "dev4-ref-09-a",
+  "dev4-ref-10-a",
+  "dev4-ref-11-a",
+  "dev4-ref-13-a",
+  "dev4-ref-14-a",
+  "dev4-ref-15-a",
+  "dev4-ref-17-a",
+  "dev4-ref-18-a",
+  "dev4-ref-19-a",
+  "dev4-ref-21-a",
+  "dev4-ref-22-a",
+  "dev4-ref-23-a",
+  "dev4-ref-24-a",
+  "dev4-ref-26-a",
+  "dev4-ref-28-a",
+  "dev4-ref-31-a",
+  "dev4-ref-32-a",
+  "dev4-ref-34-a",
+  "dev4-ref-35-a",
+  "dev4-ref-36-a",
+  "dev4-ref-40-a",
+  "dev4-ref-41-a",
+  "dev4-ref-43-a",
+  "dev4-ref-44-a",
+  "dev4-ref-45-a",
+  "dev4-ref-46-a"
+ ],
+ "schema": "checkpoint-5.progress.v1",
+ "seed_prefix": "checkpoint-5-qwen-precision-mask",
+ "status": "completed",
+ "units": [
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12643729408,
+    "host_available": 462086053888,
+    "peak_allocated": 15550687232,
+    "peak_reserved": 15741222912,
+    "t": 1794341779.2064667,
+    "tag": "dev4-ref-00-a|bf16"
+   },
+   "scene": "dev4-ref-00-a",
+   "seconds": 24.03
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12633243648,
+    "host_available": 462958116864,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794341815.0111823,
+    "tag": "dev4-ref-00-a|fp32"
+   },
+   "scene": "dev4-ref-00-a",
+   "seconds": 34.46
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12614369280,
+    "host_available": 462803488768,
+    "peak_allocated": 15550687232,
+    "peak_reserved": 15741222912,
+    "t": 1794342115.347619,
+    "tag": "dev4-ref-03-a|bf16"
+   },
+   "scene": "dev4-ref-03-a",
+   "seconds": 24.33
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12602834944,
+    "host_available": 462701031424,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342149.9219456,
+    "tag": "dev4-ref-03-a|fp32"
+   },
+   "scene": "dev4-ref-03-a",
+   "seconds": 33.2
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12583960576,
+    "host_available": 462603866112,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342178.75219,
+    "tag": "dev4-ref-07-a|bf16"
+   },
+   "scene": "dev4-ref-07-a",
+   "seconds": 24.29
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12572426240,
+    "host_available": 462166663168,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342214.466518,
+    "tag": "dev4-ref-07-a|fp32"
+   },
+   "scene": "dev4-ref-07-a",
+   "seconds": 34.21
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12554600448,
+    "host_available": 467971858432,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342244.2722476,
+    "tag": "dev4-ref-12-a|bf16"
+   },
+   "scene": "dev4-ref-12-a",
+   "seconds": 25.91
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12543066112,
+    "host_available": 467728760832,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342280.0364695,
+    "tag": "dev4-ref-12-a|fp32"
+   },
+   "scene": "dev4-ref-12-a",
+   "seconds": 34.38
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12524191744,
+    "host_available": 466972065792,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342308.6823244,
+    "tag": "dev4-ref-16-a|bf16"
+   },
+   "scene": "dev4-ref-16-a",
+   "seconds": 23.65
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12512657408,
+    "host_available": 467594645504,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342346.6812541,
+    "tag": "dev4-ref-16-a|fp32"
+   },
+   "scene": "dev4-ref-16-a",
+   "seconds": 36.1
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12493783040,
+    "host_available": 465327951872,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342374.4544663,
+    "tag": "dev4-ref-20-a|bf16"
+   },
+   "scene": "dev4-ref-20-a",
+   "seconds": 23.29
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12483297280,
+    "host_available": 462671478784,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342402.7975051,
+    "tag": "dev4-ref-20-a|fp32"
+   },
+   "scene": "dev4-ref-20-a",
+   "seconds": 26.74
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12464422912,
+    "host_available": 463592443904,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342424.6284623,
+    "tag": "dev4-ref-25-a|bf16"
+   },
+   "scene": "dev4-ref-25-a",
+   "seconds": 17.76
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12452888576,
+    "host_available": 462986526720,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342452.4738376,
+    "tag": "dev4-ref-25-a|fp32"
+   },
+   "scene": "dev4-ref-25-a",
+   "seconds": 26.39
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12434014208,
+    "host_available": 463337025536,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342476.259959,
+    "tag": "dev4-ref-27-a|bf16"
+   },
+   "scene": "dev4-ref-27-a",
+   "seconds": 19.22
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12422479872,
+    "host_available": 463011037184,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342506.2415648,
+    "tag": "dev4-ref-27-a|fp32"
+   },
+   "scene": "dev4-ref-27-a",
+   "seconds": 28.43
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12404654080,
+    "host_available": 462601859072,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342530.5482206,
+    "tag": "dev4-ref-29-a|bf16"
+   },
+   "scene": "dev4-ref-29-a",
+   "seconds": 19.78
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12393119744,
+    "host_available": 463405535232,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342559.8917253,
+    "tag": "dev4-ref-29-a|fp32"
+   },
+   "scene": "dev4-ref-29-a",
+   "seconds": 27.8
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12374245376,
+    "host_available": 463128633344,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342583.3106937,
+    "tag": "dev4-ref-30-a|bf16"
+   },
+   "scene": "dev4-ref-30-a",
+   "seconds": 18.7
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12362711040,
+    "host_available": 465118605312,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342613.8864474,
+    "tag": "dev4-ref-30-a|fp32"
+   },
+   "scene": "dev4-ref-30-a",
+   "seconds": 29.35
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12343836672,
+    "host_available": 464236650496,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342637.0523744,
+    "tag": "dev4-ref-33-a|bf16"
+   },
+   "scene": "dev4-ref-33-a",
+   "seconds": 18.56
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12333350912,
+    "host_available": 465180884992,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342666.3453276,
+    "tag": "dev4-ref-33-a|fp32"
+   },
+   "scene": "dev4-ref-33-a",
+   "seconds": 27.73
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12314476544,
+    "host_available": 464794120192,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342688.9767234,
+    "tag": "dev4-ref-37-a|bf16"
+   },
+   "scene": "dev4-ref-37-a",
+   "seconds": 18.12
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12302942208,
+    "host_available": 464240050176,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342717.2034037,
+    "tag": "dev4-ref-37-a|fp32"
+   },
+   "scene": "dev4-ref-37-a",
+   "seconds": 26.72
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12284067840,
+    "host_available": 463479459840,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342740.2458634,
+    "tag": "dev4-ref-38-a|bf16"
+   },
+   "scene": "dev4-ref-38-a",
+   "seconds": 18.47
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12272533504,
+    "host_available": 461203091456,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342769.406843,
+    "tag": "dev4-ref-38-a|fp32"
+   },
+   "scene": "dev4-ref-38-a",
+   "seconds": 27.64
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12254707712,
+    "host_available": 460853288960,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342793.1297255,
+    "tag": "dev4-ref-39-a|bf16"
+   },
+   "scene": "dev4-ref-39-a",
+   "seconds": 19.65
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12243173376,
+    "host_available": 461226815488,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342823.0411444,
+    "tag": "dev4-ref-39-a|fp32"
+   },
+   "scene": "dev4-ref-39-a",
+   "seconds": 28.44
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12224299008,
+    "host_available": 458508595200,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342847.2516484,
+    "tag": "dev4-ref-42-a|bf16"
+   },
+   "scene": "dev4-ref-42-a",
+   "seconds": 19.98
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12212764672,
+    "host_available": 462817275904,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342883.5539658,
+    "tag": "dev4-ref-42-a|fp32"
+   },
+   "scene": "dev4-ref-42-a",
+   "seconds": 34.95
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12193890304,
+    "host_available": 463617355776,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342912.483428,
+    "tag": "dev4-ref-47-a|bf16"
+   },
+   "scene": "dev4-ref-47-a",
+   "seconds": 24.65
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12183404544,
+    "host_available": 459764465664,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342948.508066,
+    "tag": "dev4-ref-47-a|fp32"
+   },
+   "scene": "dev4-ref-47-a",
+   "seconds": 34.69
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12164530176,
+    "host_available": 460292677632,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794342981.3992682,
+    "tag": "dev4-ref-01-a|bf16"
+   },
+   "scene": "dev4-ref-01-a",
+   "seconds": 28.75
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12152995840,
+    "host_available": 459923582976,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343018.1961312,
+    "tag": "dev4-ref-01-a|fp32"
+   },
+   "scene": "dev4-ref-01-a",
+   "seconds": 35.19
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12134121472,
+    "host_available": 461661884416,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343050.3892353,
+    "tag": "dev4-ref-02-a|bf16"
+   },
+   "scene": "dev4-ref-02-a",
+   "seconds": 27.75
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12122587136,
+    "host_available": 461664997376,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343085.5600488,
+    "tag": "dev4-ref-02-a|fp32"
+   },
+   "scene": "dev4-ref-02-a",
+   "seconds": 33.8
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12104761344,
+    "host_available": 461395791872,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343116.0205934,
+    "tag": "dev4-ref-04-a|bf16"
+   },
+   "scene": "dev4-ref-04-a",
+   "seconds": 26.22
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12093227008,
+    "host_available": 463223287808,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343150.5353603,
+    "tag": "dev4-ref-04-a|fp32"
+   },
+   "scene": "dev4-ref-04-a",
+   "seconds": 33.14
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12074352640,
+    "host_available": 463257366528,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343180.2082942,
+    "tag": "dev4-ref-05-a|bf16"
+   },
+   "scene": "dev4-ref-05-a",
+   "seconds": 25.41
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12062818304,
+    "host_available": 463074004992,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343215.3333626,
+    "tag": "dev4-ref-05-a|fp32"
+   },
+   "scene": "dev4-ref-05-a",
+   "seconds": 33.75
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12043943936,
+    "host_available": 463197990912,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343244.6790936,
+    "tag": "dev4-ref-06-a|bf16"
+   },
+   "scene": "dev4-ref-06-a",
+   "seconds": 25.02
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12033458176,
+    "host_available": 463252238336,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343279.8271937,
+    "tag": "dev4-ref-06-a|fp32"
+   },
+   "scene": "dev4-ref-06-a",
+   "seconds": 33.78
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 12014583808,
+    "host_available": 463309037568,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343310.1755185,
+    "tag": "dev4-ref-08-a|bf16"
+   },
+   "scene": "dev4-ref-08-a",
+   "seconds": 25.91
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 12003049472,
+    "host_available": 463340703744,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343345.3177874,
+    "tag": "dev4-ref-08-a|fp32"
+   },
+   "scene": "dev4-ref-08-a",
+   "seconds": 33.77
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11984175104,
+    "host_available": 463283294208,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343376.2191803,
+    "tag": "dev4-ref-09-a|bf16"
+   },
+   "scene": "dev4-ref-09-a",
+   "seconds": 26.51
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11972640768,
+    "host_available": 463282774016,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343412.2704277,
+    "tag": "dev4-ref-09-a|fp32"
+   },
+   "scene": "dev4-ref-09-a",
+   "seconds": 34.7
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11954814976,
+    "host_available": 463298400256,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343441.9557388,
+    "tag": "dev4-ref-10-a|bf16"
+   },
+   "scene": "dev4-ref-10-a",
+   "seconds": 25.11
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11943280640,
+    "host_available": 463297150976,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343477.045332,
+    "tag": "dev4-ref-10-a|fp32"
+   },
+   "scene": "dev4-ref-10-a",
+   "seconds": 33.7
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11924406272,
+    "host_available": 463064817664,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343509.0221689,
+    "tag": "dev4-ref-11-a|bf16"
+   },
+   "scene": "dev4-ref-11-a",
+   "seconds": 27.12
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11912871936,
+    "host_available": 463182168064,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343544.3548741,
+    "tag": "dev4-ref-11-a|fp32"
+   },
+   "scene": "dev4-ref-11-a",
+   "seconds": 33.73
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11893997568,
+    "host_available": 463284244480,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343575.0698605,
+    "tag": "dev4-ref-13-a|bf16"
+   },
+   "scene": "dev4-ref-13-a",
+   "seconds": 26.22
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11883511808,
+    "host_available": 463312945152,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343610.4537394,
+    "tag": "dev4-ref-13-a|fp32"
+   },
+   "scene": "dev4-ref-13-a",
+   "seconds": 33.99
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11864637440,
+    "host_available": 463300546560,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343640.4956615,
+    "tag": "dev4-ref-14-a|bf16"
+   },
+   "scene": "dev4-ref-14-a",
+   "seconds": 25.52
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11853103104,
+    "host_available": 463522131968,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343675.8036942,
+    "tag": "dev4-ref-14-a|fp32"
+   },
+   "scene": "dev4-ref-14-a",
+   "seconds": 34.01
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11834228736,
+    "host_available": 463393083392,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343706.0268524,
+    "tag": "dev4-ref-15-a|bf16"
+   },
+   "scene": "dev4-ref-15-a",
+   "seconds": 25.52
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11822694400,
+    "host_available": 463539281920,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343741.0138028,
+    "tag": "dev4-ref-15-a|fp32"
+   },
+   "scene": "dev4-ref-15-a",
+   "seconds": 33.63
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11804868608,
+    "host_available": 463336534016,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343770.8151138,
+    "tag": "dev4-ref-17-a|bf16"
+   },
+   "scene": "dev4-ref-17-a",
+   "seconds": 24.41
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11793334272,
+    "host_available": 463506120704,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343806.4096653,
+    "tag": "dev4-ref-17-a|fp32"
+   },
+   "scene": "dev4-ref-17-a",
+   "seconds": 34.2
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11774459904,
+    "host_available": 463543738368,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343838.4951982,
+    "tag": "dev4-ref-18-a|bf16"
+   },
+   "scene": "dev4-ref-18-a",
+   "seconds": 26.97
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11762925568,
+    "host_available": 463516397568,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343873.655559,
+    "tag": "dev4-ref-18-a|fp32"
+   },
+   "scene": "dev4-ref-18-a",
+   "seconds": 33.74
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11744051200,
+    "host_available": 463551254528,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343903.2100801,
+    "tag": "dev4-ref-19-a|bf16"
+   },
+   "scene": "dev4-ref-19-a",
+   "seconds": 24.81
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11733565440,
+    "host_available": 463544848384,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343938.2447248,
+    "tag": "dev4-ref-19-a|fp32"
+   },
+   "scene": "dev4-ref-19-a",
+   "seconds": 33.64
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11714691072,
+    "host_available": 463325945856,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794343968.9334872,
+    "tag": "dev4-ref-21-a|bf16"
+   },
+   "scene": "dev4-ref-21-a",
+   "seconds": 25.91
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11703156736,
+    "host_available": 463532650496,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344003.60243,
+    "tag": "dev4-ref-21-a|fp32"
+   },
+   "scene": "dev4-ref-21-a",
+   "seconds": 33.32
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11684282368,
+    "host_available": 463532617728,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344033.4094572,
+    "tag": "dev4-ref-22-a|bf16"
+   },
+   "scene": "dev4-ref-22-a",
+   "seconds": 24.71
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11672748032,
+    "host_available": 463550263296,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344068.6051211,
+    "tag": "dev4-ref-22-a|fp32"
+   },
+   "scene": "dev4-ref-22-a",
+   "seconds": 33.84
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11654922240,
+    "host_available": 463502123008,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344100.573551,
+    "tag": "dev4-ref-23-a|bf16"
+   },
+   "scene": "dev4-ref-23-a",
+   "seconds": 27.01
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11643387904,
+    "host_available": 463521243136,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344135.7166371,
+    "tag": "dev4-ref-23-a|fp32"
+   },
+   "scene": "dev4-ref-23-a",
+   "seconds": 33.78
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11624513536,
+    "host_available": 463051042816,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344165.1513987,
+    "tag": "dev4-ref-24-a|bf16"
+   },
+   "scene": "dev4-ref-24-a",
+   "seconds": 24.47
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11612979200,
+    "host_available": 462988152832,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344200.3106313,
+    "tag": "dev4-ref-24-a|fp32"
+   },
+   "scene": "dev4-ref-24-a",
+   "seconds": 33.79
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11594104832,
+    "host_available": 462658404352,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344234.9966986,
+    "tag": "dev4-ref-26-a|bf16"
+   },
+   "scene": "dev4-ref-26-a",
+   "seconds": 29.89
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11583619072,
+    "host_available": 462458761216,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344270.3333948,
+    "tag": "dev4-ref-26-a|fp32"
+   },
+   "scene": "dev4-ref-26-a",
+   "seconds": 34.01
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11564744704,
+    "host_available": 462833025024,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344302.2685308,
+    "tag": "dev4-ref-28-a|bf16"
+   },
+   "scene": "dev4-ref-28-a",
+   "seconds": 26.72
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11553210368,
+    "host_available": 462020374528,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344337.3600194,
+    "tag": "dev4-ref-28-a|fp32"
+   },
+   "scene": "dev4-ref-28-a",
+   "seconds": 33.69
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11534336000,
+    "host_available": 461908344832,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344366.742504,
+    "tag": "dev4-ref-31-a|bf16"
+   },
+   "scene": "dev4-ref-31-a",
+   "seconds": 24.62
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11522801664,
+    "host_available": 458140717056,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344402.636433,
+    "tag": "dev4-ref-31-a|fp32"
+   },
+   "scene": "dev4-ref-31-a",
+   "seconds": 34.51
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11504975872,
+    "host_available": 461052137472,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344435.7004163,
+    "tag": "dev4-ref-32-a|bf16"
+   },
+   "scene": "dev4-ref-32-a",
+   "seconds": 27.92
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11493441536,
+    "host_available": 460724797440,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344470.8303583,
+    "tag": "dev4-ref-32-a|fp32"
+   },
+   "scene": "dev4-ref-32-a",
+   "seconds": 33.75
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11474567168,
+    "host_available": 463447834624,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344499.5169086,
+    "tag": "dev4-ref-34-a|bf16"
+   },
+   "scene": "dev4-ref-34-a",
+   "seconds": 23.71
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11463032832,
+    "host_available": 463477104640,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344534.6049964,
+    "tag": "dev4-ref-34-a|fp32"
+   },
+   "scene": "dev4-ref-34-a",
+   "seconds": 33.74
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11444158464,
+    "host_available": 463493230592,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344564.1562457,
+    "tag": "dev4-ref-35-a|bf16"
+   },
+   "scene": "dev4-ref-35-a",
+   "seconds": 24.31
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11433672704,
+    "host_available": 463481311232,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344599.164354,
+    "tag": "dev4-ref-35-a|fp32"
+   },
+   "scene": "dev4-ref-35-a",
+   "seconds": 33.69
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11414798336,
+    "host_available": 463495770112,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344628.571681,
+    "tag": "dev4-ref-36-a|bf16"
+   },
+   "scene": "dev4-ref-36-a",
+   "seconds": 24.27
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11403264000,
+    "host_available": 463491899392,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344663.6991572,
+    "tag": "dev4-ref-36-a|fp32"
+   },
+   "scene": "dev4-ref-36-a",
+   "seconds": 33.78
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11384389632,
+    "host_available": 463533182976,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344694.9119194,
+    "tag": "dev4-ref-40-a|bf16"
+   },
+   "scene": "dev4-ref-40-a",
+   "seconds": 25.58
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11372855296,
+    "host_available": 463517900800,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344730.3113508,
+    "tag": "dev4-ref-40-a|fp32"
+   },
+   "scene": "dev4-ref-40-a",
+   "seconds": 34.0
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11355029504,
+    "host_available": 463542628352,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344761.0773313,
+    "tag": "dev4-ref-41-a|bf16"
+   },
+   "scene": "dev4-ref-41-a",
+   "seconds": 25.11
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11343495168,
+    "host_available": 463052115968,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344796.7001047,
+    "tag": "dev4-ref-41-a|fp32"
+   },
+   "scene": "dev4-ref-41-a",
+   "seconds": 34.27
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11324620800,
+    "host_available": 462979690496,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344828.105817,
+    "tag": "dev4-ref-43-a|bf16"
+   },
+   "scene": "dev4-ref-43-a",
+   "seconds": 25.8
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11313086464,
+    "host_available": 462029942784,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344863.2097101,
+    "tag": "dev4-ref-43-a|fp32"
+   },
+   "scene": "dev4-ref-43-a",
+   "seconds": 33.74
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11294212096,
+    "host_available": 462010966016,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344894.5903082,
+    "tag": "dev4-ref-44-a|bf16"
+   },
+   "scene": "dev4-ref-44-a",
+   "seconds": 25.41
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11283726336,
+    "host_available": 460779442176,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344929.3261507,
+    "tag": "dev4-ref-44-a|fp32"
+   },
+   "scene": "dev4-ref-44-a",
+   "seconds": 33.36
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11264851968,
+    "host_available": 459872374784,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344959.2184165,
+    "tag": "dev4-ref-45-a|bf16"
+   },
+   "scene": "dev4-ref-45-a",
+   "seconds": 24.61
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11253317632,
+    "host_available": 457907580928,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794344994.7065327,
+    "tag": "dev4-ref-45-a|fp32"
+   },
+   "scene": "dev4-ref-45-a",
+   "seconds": 33.8
+  },
+  {
+   "dtype": "bf16",
+   "memory": {
+    "disk_free": 11234443264,
+    "host_available": 458668539904,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794345024.7356377,
+    "tag": "dev4-ref-46-a|bf16"
+   },
+   "scene": "dev4-ref-46-a",
+   "seconds": 24.61
+  },
+  {
+   "dtype": "fp32",
+   "memory": {
+    "disk_free": 11222908928,
+    "host_available": 459952992256,
+    "peak_allocated": 16027627008,
+    "peak_reserved": 16636706816,
+    "t": 1794345059.8523197,
+    "tag": "dev4-ref-46-a|fp32"
+   },
+   "scene": "dev4-ref-46-a",
+   "seconds": 33.71
+  }
+ ]
+}

@@ -1,0 +1,56 @@
+{
+ "device": "NVIDIA A40",
+ "capability": [
+  8,
+  6
+ ],
+ "arch_list": [
+  "sm_75",
+  "sm_80",
+  "sm_86",
+  "sm_90",
+  "sm_100",
+  "sm_120"
+ ],
+ "needed_arch": "sm_86",
+ "arch_supported": true,
+ "torch": "2.15.0+cu132",
+ "cuda": "13.2",
+ "cudnn": 92600,
+ "numerics": {
+  "device": "cuda",
+  "torch": "2.15.0+cu132",
+  "float32_matmul_precision": "highest",
+  "deterministic_algorithms": true,
+  "autocast_enabled": false,
+  "cuda_matmul_allow_tf32": false,
+  "cudnn_allow_tf32": false,
+  "bf16_reduced_precision_reduction": false,
+  "cudnn_deterministic": true,
+  "cublas_workspace_config": ":4096:8",
+  "gpu": "NVIDIA A40",
+  "cuda_runtime": "13.2",
+  "capability": [
+   8,
+   6
+  ]
+ },
+ "probe": {
+  "max_rel_err_vs_fp64": 5.27982073006403e-07,
+  "passes_1e-5": true
+ },
+ "weights": {
+  "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+  "stored_parameter_dtypes": {
+   "BF16": 2127532032
+  }
+ },
+ "kernels": {
+  "bf16": {
+   "ok": true
+  },
+  "fp32": {
+   "ok": true
+  }
+ }
+}

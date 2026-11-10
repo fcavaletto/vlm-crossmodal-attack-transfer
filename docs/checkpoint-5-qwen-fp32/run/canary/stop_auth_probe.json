@@ -1,0 +1,1 @@
+{"detail":"Request validation failed.","errors":["$.action: value must be one of 'start', 'stop', 'restart', 'terminate'"],"status":422,"title":"Unprocessable Entity"}

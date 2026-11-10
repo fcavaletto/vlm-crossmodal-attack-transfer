@@ -1,0 +1,113 @@
+{
+ "determinism": {
+  "gradient_repeat_bit_identical": true,
+  "gradient_repeat_max_abs": 0.0,
+  "hooked_vs_unhooked_gradient_identical": true,
+  "hooked_vs_unhooked_score_identical": true,
+  "score_repeat_identical": true
+ },
+ "dtype": "bf16",
+ "dtype_audit": {
+  "Conv3d": [
+   "bfloat16"
+  ],
+  "Embedding": [
+   "bfloat16"
+  ],
+  "GELU": [
+   "bfloat16"
+  ],
+  "GELUTanh": [
+   "bfloat16"
+  ],
+  "LayerNorm": [
+   "bfloat16"
+  ],
+  "Linear": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextAttention": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextDecoderLayer": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextMLP": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextRMSNorm": [
+   "bfloat16"
+  ],
+  "Qwen3VLTextRotaryEmbedding": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionAttention": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionBlock": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionMLP": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionPatchEmbed": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionPatchMerger": [
+   "bfloat16"
+  ],
+  "Qwen3VLVisionRotaryEmbedding": [
+   "float32"
+  ],
+  "SiLUActivation": [
+   "bfloat16"
+  ]
+ },
+ "fp32_matmul_probe": {
+  "max_rel_err_vs_fp64": 5.27982073006403e-07,
+  "passes_1e-5": true
+ },
+ "git_head": "a940c466e81ffec19d644b7c83aa565690e9f05c",
+ "memory": {
+  "disk_free": 12644777984,
+  "elapsed_seconds": 16.4,
+  "host_available": 463722213376,
+  "load_seconds": {
+   "bf16": 1.8
+  },
+  "peak_allocated": 6949496832,
+  "peak_allocated_gib": 6.472,
+  "peak_reserved": 7195328512,
+  "peak_reserved_gib": 6.701,
+  "t": 1794341535.616129
+ },
+ "modules_not_in_dtype": {
+  "Qwen3VLVisionRotaryEmbedding": [
+   "float32"
+  ]
+ },
+ "numerics": {
+  "autocast_enabled": false,
+  "bf16_reduced_precision_reduction": false,
+  "capability": [
+   8,
+   6
+  ],
+  "cublas_workspace_config": ":4096:8",
+  "cuda_matmul_allow_tf32": false,
+  "cuda_runtime": "13.2",
+  "cudnn_allow_tf32": false,
+  "cudnn_deterministic": true,
+  "deterministic_algorithms": true,
+  "device": "cuda",
+  "float32_matmul_precision": "highest",
+  "gpu": "NVIDIA A40",
+  "torch": "2.15.0+cu132"
+ },
+ "weights": {
+  "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+  "stored_parameter_dtypes": {
+   "BF16": 2127532032
+  }
+ }
+}

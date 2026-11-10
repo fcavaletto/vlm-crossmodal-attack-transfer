@@ -1,0 +1,79 @@
+{
+ "status": "preflight-complete after 1 scene(s)",
+ "projection_after_first_scene": {
+  "projected_finish_epoch": 1794344817.0,
+  "projected_total_usd": 0.87,
+  "seconds_per_scene_both_dtypes": 63.9,
+  "workload_deadline_epoch": 1794355697.0
+ },
+ "units": [
+  {
+   "scene": "dev4-ref-00-a",
+   "dtype": "bf16",
+   "seconds": 24.03,
+   "peak_reserved_gib": 14.66
+  },
+  {
+   "scene": "dev4-ref-00-a",
+   "dtype": "fp32",
+   "seconds": 34.46,
+   "peak_reserved_gib": 15.494
+  }
+ ],
+ "integrity_after_scene": 1,
+ "audit_memory": {
+  "audit_bf16_cuda.json": {
+   "disk_free": 12644777984,
+   "elapsed_seconds": 16.4,
+   "host_available": 463722213376,
+   "load_seconds": {
+    "bf16": 1.8
+   },
+   "peak_allocated": 6949496832,
+   "peak_allocated_gib": 6.472,
+   "peak_reserved": 7195328512,
+   "peak_reserved_gib": 6.701,
+   "t": 1794341535.616129
+  },
+  "audit_fp32_cuda.json": {
+   "disk_free": 12644777984,
+   "elapsed_seconds": 22.1,
+   "host_available": 462525440000,
+   "load_seconds": {
+    "fp32": 7.4
+   },
+   "peak_allocated": 11694865920,
+   "peak_allocated_gib": 10.892,
+   "peak_reserved": 11806965760,
+   "peak_reserved_gib": 10.996,
+   "t": 1794341560.3760505
+  },
+  "clean_cuda.json": {
+   "disk_free": 12644777984,
+   "elapsed_seconds": 98.0,
+   "host_available": 461869711360,
+   "load_seconds": {
+    "bf16": 2.1,
+    "fp32": 7.7
+   },
+   "peak_allocated": 13080555008,
+   "peak_allocated_gib": 12.182,
+   "peak_reserved": 14084472832,
+   "peak_reserved_gib": 13.117,
+   "t": 1794341661.1869602
+  },
+  "fd_fp32_cuda.json": {
+   "disk_free": 12644777984,
+   "elapsed_seconds": 66.5,
+   "host_available": 462285983744,
+   "load_seconds": {
+    "fp32": 10.0
+   },
+   "peak_allocated": 11697861120,
+   "peak_allocated_gib": 10.894,
+   "peak_reserved": 11785994240,
+   "peak_reserved_gib": 10.977,
+   "t": 1794341730.404843
+  }
+ }
+}

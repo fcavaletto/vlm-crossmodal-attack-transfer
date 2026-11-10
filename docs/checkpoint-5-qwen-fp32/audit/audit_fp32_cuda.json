@@ -1,0 +1,109 @@
+{
+ "determinism": {
+  "gradient_repeat_bit_identical": true,
+  "gradient_repeat_max_abs": 0.0,
+  "hooked_vs_unhooked_gradient_identical": true,
+  "hooked_vs_unhooked_score_identical": true,
+  "score_repeat_identical": true
+ },
+ "dtype": "fp32",
+ "dtype_audit": {
+  "Conv3d": [
+   "float32"
+  ],
+  "Embedding": [
+   "float32"
+  ],
+  "GELU": [
+   "float32"
+  ],
+  "GELUTanh": [
+   "float32"
+  ],
+  "LayerNorm": [
+   "float32"
+  ],
+  "Linear": [
+   "float32"
+  ],
+  "Qwen3VLTextAttention": [
+   "float32"
+  ],
+  "Qwen3VLTextDecoderLayer": [
+   "float32"
+  ],
+  "Qwen3VLTextMLP": [
+   "float32"
+  ],
+  "Qwen3VLTextRMSNorm": [
+   "float32"
+  ],
+  "Qwen3VLTextRotaryEmbedding": [
+   "float32"
+  ],
+  "Qwen3VLVisionAttention": [
+   "float32"
+  ],
+  "Qwen3VLVisionBlock": [
+   "float32"
+  ],
+  "Qwen3VLVisionMLP": [
+   "float32"
+  ],
+  "Qwen3VLVisionPatchEmbed": [
+   "float32"
+  ],
+  "Qwen3VLVisionPatchMerger": [
+   "float32"
+  ],
+  "Qwen3VLVisionRotaryEmbedding": [
+   "float32"
+  ],
+  "SiLUActivation": [
+   "float32"
+  ]
+ },
+ "fp32_matmul_probe": {
+  "max_rel_err_vs_fp64": 5.27982073006403e-07,
+  "passes_1e-5": true
+ },
+ "git_head": "a940c466e81ffec19d644b7c83aa565690e9f05c",
+ "memory": {
+  "disk_free": 12644777984,
+  "elapsed_seconds": 22.1,
+  "host_available": 462525440000,
+  "load_seconds": {
+   "fp32": 7.4
+  },
+  "peak_allocated": 11694865920,
+  "peak_allocated_gib": 10.892,
+  "peak_reserved": 11806965760,
+  "peak_reserved_gib": 10.996,
+  "t": 1794341560.3760505
+ },
+ "modules_not_in_dtype": {},
+ "numerics": {
+  "autocast_enabled": false,
+  "bf16_reduced_precision_reduction": false,
+  "capability": [
+   8,
+   6
+  ],
+  "cublas_workspace_config": ":4096:8",
+  "cuda_matmul_allow_tf32": false,
+  "cuda_runtime": "13.2",
+  "cudnn_allow_tf32": false,
+  "cudnn_deterministic": true,
+  "deterministic_algorithms": true,
+  "device": "cuda",
+  "float32_matmul_precision": "highest",
+  "gpu": "NVIDIA A40",
+  "torch": "2.15.0+cu132"
+ },
+ "weights": {
+  "sha256": "7de1838c87a5349b016c26a1c3f7d2bc400a3d485f95ef39a7059ffd734977a0",
+  "stored_parameter_dtypes": {
+   "BF16": 2127532032
+  }
+ }
+}
