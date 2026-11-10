@@ -1,6 +1,6 @@
 # Checkpoint 5 plan: does Qwen3-VL-2B's confirmed effect survive full fp32? (2026-11-10)
 
-**Status: PLAN FOR REVIEW. Nothing has been launched, created or bought.**
+**Status: PLAN FOR REVIEW, infrastructure revised 2026-11-10 (network storage, termination). Nothing has been launched, created or bought.**
 - Prices are live reads made on 2026-11-10 (§7).
 - This plan asks for approval of a GPU pilot with a hard ceiling of $20 (§8).
 - Everything in §5–§6 is fixed before any inference, and is frozen with the runner and analysis code before the first paid hour (§9, step 0).
@@ -53,12 +53,20 @@ New package `src/qwen_precision/`. It reuses the frozen, device-agnostic functio
 - Require **bit-exact** agreement with the frozen 2.4 development smoke and the 2.3/2.3b records for clean, FGSM, PGD-3, top-\|∇\| and random-mask scores: same device, same functions, same seeds (for that check, the 2.3b seed prefix is used).
 - This proves the new runner *is* the 2.4 pipeline before it moves to CUDA.
 
-**Order on the GPU: interleaved.** Both models are loaded at once (bf16 ≈ 4 GB, fp32 ≈ 8.5 GB). Each scene runs in bf16 and then in fp32 before the next scene. So an interruption leaves complete *pairs*, and slow drift of the machine cannot separate the arms.
+**Order on the GPU: interleaved.** Both models are loaded at once (bf16 ≈ 4 GB, fp32 ≈ 8.5 GB). Each scene runs the frozen `scene_block` (both attack sources) in bf16 and then in fp32 before the next scene. So an interruption leaves complete *pairs*, and slow drift of the machine cannot separate the arms.
+
+*Revision, 2026-11-10, implementation detail only.* The first draft ran the neutral source for all scenes before the helpful one. The frozen `scene_block` computes both sources of a scene together, and calling it unchanged was preferred over splitting it. The scene order is s16 first, then the other 32 arm-a scenes, as in 2.3. No scientific quantity changes.
+
+**Status of the local check (done 2026-11-10):**
+- On MPS bf16, scene `dev4-ref-00-a`, the new runner is **bit-exact** with the 2.3/2.3b records: clean scores, all 8 FGSM/PGD codes, all 4 clean gradients and all 22 attack scores.
+- Runtime was 203.7 s (2.4: 203 s per scene), with a peak footprint of 8.37 GiB.
+- Qwen's official and differentiable pixel tensors are bit-identical (max difference 0.0), and the float-path margins of FGSM and PGD-3 equal the official ones. So for Qwen at this size the "official vs float" comparison is a check, not a separate experiment.
+- Records: [`repro_mps/repro_mps_check.json`](repro_mps/repro_mps_check.json). References for G2/G3: [`reference/`](reference).
 
 ## 4. Data and design
 
 - **Scenes.** The 48 arm-a development scenes (`development_v4`), the same scenes as Checkpoint 2.3/2.3b and Checkpoint 4.
-- **Attack sources.** neutral (primary) and helpful_nonrevealing (secondary), as in 2.4. The neutral source of all 48 scenes runs first, in both precisions.
+- **Attack sources.** neutral (primary) and helpful_nonrevealing (secondary), as in 2.4. Both are computed per scene (§3).
 - **Budget.** ε = 1/255. FGSM; PGD-3 with ε/4 steps; 8-bit rounding.
 - **Official vs differentiable path, "where appropriate".** Qwen's processor does not resize a 512×384 image, so its differentiable path *is* the official input up to float error. The 2.1 check bounded this at 1e-3, unlike InternVL, which has a second rounding. Therefore:
   - clean, FGSM and PGD-3 images are also scored on the float path in both contexts, and the maximum pixel-tensor difference is recorded;
@@ -148,9 +156,9 @@ All RunPod figures come from a live `list-gpu-types` read today, plus the plugin
 
 | Provider and card | VRAM | $/h | Availability (read today) | Storage | Notes |
 |---|---|---|---|---|---|
-| **RunPod Secure, A40** | 48 GB | **0.59** | MEDIUM: CA-MTL-1, EU-SE-1 (CUDA 13.2 hosts) | Volume disk ≈ $0.10/GB-month running; container disk billed while running | **Recommended.** Ampere fp32 without TF32. Integrated with this session's tools. |
-| RunPod Secure, RTX A6000 | 48 GB | 0.59 | LOW: EU-SE-1 | same | Same GA102 architecture; first fallback |
-| RunPod Secure, L40S | 48 GB | 1.09 | LOW: EUR-IS-2 | same | Faster, nearly twice the price; second fallback |
+| **RunPod Secure, A40** | 48 GB | **0.59** | first read MEDIUM (CA-MTL-1, EU-SE-1); re-read restricted to Sweden: LOW in EU-SE-1, CUDA 13.2 hosts | Network volume ≈ $0.07/GB-month (§8.1); container disk billed while running | **Recommended**, in EU-SE-1 with the network volume. Ampere fp32 without TF32. |
+| RunPod Secure, RTX A6000 | 48 GB | 0.59 | LOW: EU-SE-1 | same | Same GA102 architecture; the fallback in EU-SE-1 |
+| RunPod Secure, L40S | 48 GB | 1.09 | LOW: EUR-IS-2, US-NC-1 | same | Not in EU-SE-1, so not usable with the planned volume |
 | RunPod Secure, RTX 6000 Ada | 48 GB | 0.99 | LOW: US-WA-1 | same | |
 | RunPod Community, A40 / A6000 | 48 GB | 0.35 / 0.33 | community hosts | same | About $1.5 cheaper over the run. Less predictable hosts: a mid-run host loss costs more than it saves. |
 | Lambda, A6000 | 48 GB | ≈ 0.80–1.09 (web) | not checked | | No live read. Sources disagree. |
@@ -176,23 +184,75 @@ The MPS baseline is measured: 2.4 took **203 s per scene** in bf16, both sources
 | Export and teardown | 0.2 | 0.3 |
 | **Total** | **2.5 h** | **6.3 h** |
 
-| | A40 Secure at $0.59/h |
+| | A40 Secure at $0.59/h, EU-SE-1 |
 |---|---|
-| Compute, expected range | **$1.5–3.7** |
-| Storage: 40 GB container + 20 GB volume disk for about 7 h at ≈ $0.10/GB-month | < $0.10 |
+| GPU compute, expected range | **$1.5–3.7** |
+| Container disk: 30 GB for about 7 h (billed while the pod runs) | < $0.05 |
 | With a 50% buffer (≈ 9.5 h) | ≈ $5.6 |
-| Worst case: fallback to L40S at $1.09/h, 9.5 h | ≈ $10.4 |
-| **Hard ceiling (requested)** | **$20** |
+| Worst case: fallback to RTX A6000 at the same price, 9.5 h | ≈ $5.6 |
+| Projected-spend gate (G9) | **$12** |
+| **Maximum authorized compute** | **$20** |
+| Network volume, separate and ongoing | 30 GB × ≈ $0.07/GB-month ≈ **$2.10 per month**, from creation until deletion, whether or not a pod is attached |
 
-### Spending controls
+L40S is no longer a fallback: it is not in EU-SE-1, and the network volume pins every pod to the volume's data center (§8.1).
 
-1. **Prepaid balance.** The author tops up the RunPod balance; I do not buy credits. A deposit of $20 bounds exposure, and a pod deploy requires at least one hour's balance. The exact behaviour of a running pod at zero balance is **not verified** by my reads, so the other controls do not rely on it.
-2. **Projection gate G9.** After the benchmark: stop and ask if projected total spend exceeds $12.
-3. **In-pod deadline.** The runner exits at a wall-clock deadline of 8 h from pod start, after writing records. A watchdog then removes the pod through the RunPod API.
-   - That needs an API key available inside the pod, passed as a pod secret.
-   - Whether `runpodctl` inside the pod can act on its own pod is checked in setup (`runpodctl pod get $RUNPOD_POD_ID`).
-   - If it cannot, the watchdog only ends the workload, and deletion is done from this session.
-4. **Phase-boundary checks.** I read the pod's state and cost after setup, after the benchmark, after the bf16 arm and after the fp32 arm. A pod is never left running without work.
+### 8.1 Storage: one reusable network volume (revised 2026-11-10, at the author's request)
+
+| | |
+|---|---|
+| Volume | 30 GB, **STANDARD** tier, new, in **EU-SE-1** |
+| Mount | `/workspace` on every pod that uses it |
+| Layout | `/workspace/hf-cache` (`HF_HOME`; the pinned Qwen snapshot ≈ 4.3 GB), `/workspace/checkpoint-5/` (records, audits, tensors ≈ 1–2 GB), `/workspace/manifests/` (weight and input hash references) |
+| Not on the volume | The software environment. It is installed on the container disk from the pinned requirements and the repository commit at every pod start, so it stays reproducible from code. |
+| Replaces | The planned 20 GB pod volume disk. A pod mounts a network volume *or* a volume disk, never both, so nothing is paid twice. |
+| Kept after the run | Yes. Terminating the pod detaches the volume without deleting it. It keeps billing until the author deletes it. |
+
+**Why EU-SE-1 (live reads, 2026-11-10).**
+- *Network volumes with standard storage:* `list-data-centers` reports 16 data centers.
+- *Which of those have a 48 GB card in stock:* only EU-SE-1 (RTX A6000, LOW) and US-NC-1 (L40S, LOW).
+- *The specific cards:* `list-gpu-types` restricted to Sweden shows Secure-cloud **A40 LOW** and **RTX A6000 LOW**, both in EU-SE-1, both on CUDA 13.2 hosts, both $0.59/h.
+- So EU-SE-1 is the only data center with network storage and both recommended cards in stock today.
+- *This account today:* no network volumes and no pods (`list-network-volumes` and `list-pods` both empty).
+
+**Reuse for later experiments, and the limitation.**
+- *Fits in EU-SE-1:* SmolVLM2-2.2B, and more Qwen or InternVL arms, all fit a 48 GB Ampere card.
+- *Does not fit:* EU-SE-1 showed no 80 GB card (A100, H100, H200) in today's reads. A later experiment on a 7B-class model in fp32 would need another data center.
+- *Moving is cheap:* the volume holds about 6 GB of re-creatable data (pinned weights re-download in minutes, and results are also kept locally). So a second volume in another data center can be created then, and this one deleted.
+- *Stock is LOW for both cards.* If neither is free at launch, the options are waiting, or the author choosing another data center. I will not move the volume or switch cards on my own.
+
+### 8.2 Automatic termination (revised 2026-11-10)
+
+**Finding: RunPod has no provider-side deadline that terminates a pod.** I checked it before planning around `--terminate-after`, as the author asked.
+- *REST API:* REST v2, which the MCP tools and `runpodctl` use, has no stop or terminate timer field ([Manage Pods](https://docs.runpod.io/pods/manage-pods); REST v2 `CreatePodRequest`).
+- *The CLI flags:* RunPod's official agent guide states that `runpodctl pod create --stop-after` and `--terminate-after` **were never enforced by the backend**, so a pod kept running and billing past its deadline. runpodctl v2.12.0 removed both flags.
+- *Conclusion:* I do not plan on `--terminate-after`.
+
+**What does exist.** Every pod ships with `runpodctl` and a **pod-scoped API key**, preinstalled by RunPod ([runpodctl overview](https://docs.runpod.io/runpodctl/overview)). So a deadline needs no key of ours inside the pod. The docs show this key *stopping* the pod (`runpodctl pod stop $RUNPOD_POD_ID`). I found no statement that it may *terminate* (remove) the pod.
+
+**Design.**
+
+1. **In-pod deadline, started first in the pod's start command, before any setup:**
+   `(sleep 28800; runpodctl pod remove "$RUNPOD_POD_ID" || runpodctl pod stop "$RUNPOD_POD_ID") &`
+   - This is 8 h from container start, using RunPod's own pod-scoped key.
+   - The runner's own deadline (`--deadline-epoch`) is 7.5 h, so records are flushed first.
+   - If `remove` is refused, `stop` still ends GPU billing. The network volume keeps billing as planned; a stopped pod with a network volume has no volume disk.
+2. **Verify termination before the GPU run, at negligible cost.**
+   - Create a CPU-only pod with no volume, whose start command is `sleep 90; runpodctl pod remove "$RUNPOD_POD_ID"`.
+   - Read `list-pods` from this session until it disappears, and confirm it in `list-pod-billing`.
+   - *If it is removed:* the pod-scoped key can terminate, and the GPU pod's deadline will terminate it.
+   - *If it is only stoppable or neither works:* I report it before the GPU pod. The GPU run then relies on the external controls below, with the deadline as a stop.
+3. **External verification, independent of the pod.**
+   - I terminate the GPU pod myself from this session (`delete-pod` on the id I created) as soon as the work is done.
+   - I read back that it is gone (`list-pods`) and its final cost (`list-pod-billing`).
+   - I also read the pod's state and cost at every phase boundary (after setup, the benchmark, the main run and export). During the run I stay in this session and check at least every 30 minutes.
+4. **Not relied on: the credit balance.** At $0 RunPod stops (does not terminate) pods that have a network volume, and the volume keeps accruing charges. Also, **auto-pay would reload the balance**, so it must be off for the balance to bound anything.
+
+**Provider-side limitations that prevent enforcing the safeguards reliably.**
+- No provider-side wall-clock terminate: the only automatic deadline runs inside the pod.
+- Whether the pod-scoped key can *remove* (not just stop) its pod is undocumented, so it is tested first (step 2).
+- There is no dollar cap per pod or per account. RunPod's only automatic limit is an hourly spend limit, which starts at $80/h, far above this budget. **The $12 gate and the $20 ceiling are enforced by this plan's controls (G9, the deadline, external checks), not by RunPod.**
+- A zero balance stops but does not terminate pods with a network volume, and auto-pay defeats it.
+- Network-volume storage is billed continuously and outside every GPU deadline. It ends only when the volume is deleted.
 
 ### CUDA memory safeguards and stop conditions
 
@@ -200,34 +260,36 @@ The MPS baseline is measured: 2.4 took **203 s per scene** in bf16, both sources
 - The **peak reserved** memory is recorded after every unit. If it exceeds 36 GiB the run stops: no retry, no change of precision or settings.
 - Host RAM: stop if available memory < 4 GiB. Disk: stop if free < 5 GB.
 - **Any other stop condition**: any exception, a non-finite gradient, a failed subset-identity check (coordinates outside FGSM's support beyond zero-gradient ties), or a random-mask count different from k.
-- Records are appended once per (scene, source) to the volume disk and copied off the pod at each phase boundary. An interruption keeps every completed pair.
+- Records are appended once per (scene, source) to the network volume and copied off the pod at each phase boundary. An interruption keeps every completed pair.
 
-### Teardown procedure
+### Teardown procedure (revised)
 
-1. Bundle `records.jsonl`, `progress.json`, the audit JSONs and the gradient tensors (≈ 1 GB) and compute sha256.
-2. Copy them to this machine (`runpodctl send`/`receive`, or scp) and verify the hashes locally.
-3. **Terminate** the pod. Stopping is not enough: a stopped pod keeps billing its volume disk.
+1. On the pod, bundle records, `progress.json`, audits and tensors on the network volume and compute sha256.
+2. Copy the bundle to this machine (scp over the pod's SSH, or `runpodctl send`/`receive`) and verify every hash locally. The network volume copy stays as a second copy.
+3. **Terminate** the pod from this session (`delete-pod`). Stopping is not enough.
 4. Read back:
-   - the pod list: none left from this work;
-   - no network volume (none is planned);
-   - `list-pod-billing` for the pod id: the final amount.
-5. Delete the pod-scoped API key or secret, if one was created.
-6. Commit the results and the billing figure to the repository.
+   - `list-pods`: no pod from this work;
+   - `list-network-volumes`: the volume still exists, with its size;
+   - `list-pod-billing` for the pod id: the final GPU and disk cost;
+   - `list-network-volume-billing`: storage so far.
+5. Do **not** delete the network volume. Its ongoing cost (≈ $2.10/month) is reported separately from GPU compute.
+6. Commit the results, hashes and billing figures to the repository.
 
-## 9. Execution steps after approval
+## 9. Execution steps
 
-0. **Locally, free:**
-   - implement `qwen_precision` and its tests;
-   - pass the bit-exact MPS bf16 reproduction check (§3);
-   - record the MPS dtype audit;
-   - commit and push this protocol with the runner and the analysis.
-1. Create one A40 Secure pod: 40 GB container disk, 20 GB volume disk, CUDA ≥ 12.8. The hourly price is re-read and quoted at create time.
-2. Setup and gates G1–G3, then benchmark and gates G4–G9. Report to the author if any gate fails. Otherwise continue, as authorized.
-3. Main run, interleaved by scene: neutral source for all 48 scenes, then helpful.
-4. Export, terminate, verify (§8).
-5. Run the committed analysis once. Write a report comparing with the MPS 2.3/2.4 results and with InternVL.
+0. **Locally, free: done 2026-11-10** (§3).
+   - `qwen_precision`, the analysis and 8 model-free tests are in; the full suite has 574 passing.
+   - The MPS bf16 reproduction check is bit-exact.
+   - Reference input hashes and the MPS dtype audit are recorded.
+1. *(paid, about $0.01)* Termination test with a CPU pod (§8.2, step 2).
+2. *(paid, ongoing)* Create the 30 GB STANDARD network volume in EU-SE-1.
+3. *(paid)* Create one A40 Secure pod in EU-SE-1 with the volume at `/workspace`, a 30 GB container disk and CUDA ≥ 12.8. RTX A6000 if no A40 is free. The deadline goes first in the start command. The hourly price is re-read at create time.
+4. Setup: clone the repository at the protocol commit, install the pinned environment, download the pinned weights to `/workspace/hf-cache` and verify sha256 `7de1838c…`.
+5. Gates G1–G3, G5–G8 (`audit`, `inputs --compare`, `clean`, `fd`). If any fails, stop and report; thresholds are not changed. If CUDA bf16 differs substantially from MPS (G5), stop and investigate.
+6. Main run with `--hourly-usd`, `--pod-start-epoch` and `--deadline-epoch`. G4 and G9 are checked after the first scene.
+7. Export, terminate, verify (above). Run the committed analysis once and write the report.
 
-**What needs approval.** Steps 1–4 (paid). Step 0 is free and can start on approval of this plan. No confirmation split, no merge and no tag are involved.
+**What needs approval.** Steps 1–7 involve paid resources. This plan asks for them together, with the final deployment summary. No confirmation split, no merge and no tag are involved.
 
 ## 10. After this experiment
 
