@@ -41,9 +41,9 @@ def guarded(fn):
         from path_probe.memory import FOOTPRINT_ABORT_BYTES, MemoryMonitor, emp1_preload, os_sample, process_footprint
 
         root = repo_root()
-        name = f"{args.part}_{args.dtype}_{args.tiling}{'_smallsteps' if getattr(args, 'small_steps', False) else ''}.json"
+        name = f"{args.part}_{args.dtype}_{args.tiling}_{args.attn}{'_smallsteps' if getattr(args, 'small_steps', False) else ''}.json"
         rec: dict[str, Any] = {"small_steps": bool(getattr(args, "small_steps", False)), "schema": "checkpoint-6.stage0.v1", "label": "EXPLORATORY, DEVELOPMENT ONLY, NO ATTACKS",
-                               "part": args.part, "dtype": args.dtype, "tiling": args.tiling, "model": MODEL_ID,
+                               "part": args.part, "dtype": args.dtype, "tiling": args.tiling, "attn": args.attn, "model": MODEL_ID,
                                "revision": PINNED_REVISION, "git_head": git_head(root), "torch": torch.__version__,
                                "device": "mps", "started": time.strftime("%Y-%m-%dT%H:%M:%S%z")}
         pre = emp1_preload(os_sample(), shutil.disk_usage(root).free)
@@ -82,7 +82,7 @@ def _load(args, monitor):
 
     from .backend import SmolVLM
 
-    m = SmolVLM(args.dtype, args.tiling)
+    m = SmolVLM(args.dtype, args.tiling, attn=args.attn)
     t = time.time()
     info = m.load()
     monitor.check()
@@ -114,11 +114,14 @@ def smoke(args, root, monitor) -> dict[str, Any]:
     img = scene_image(root, row)
     p = m.prompt(img, user_text(row, "neutral"))
     out: dict[str, Any] = {"load": info, "scene": sid, "n_input_tokens": int(p["input_ids"].shape[-1])}
+    print("[smoke] loaded", info.get("footprint_after_load_gib"), "GiB", flush=True)
     t = time.time(); out["official"] = m.score(img, p, row["answer"], "official"); out["t_forward_s"] = round(time.time() - t, 2)
+    print("[smoke] forward ok", out["t_forward_s"], "s", flush=True)
     monitor.check()
     out["surrogate"] = m.score(img, p, row["answer"], "surrogate")
     out["footprint_peak_after_forwards_gib"] = round((process_footprint() or {}).get("lifetime_max", 0) / GIB, 3)
     t = time.time(); v, g = m.gradient(img, p, row["answer"]); out["t_backward_s"] = round(time.time() - t, 2)
+    print("[smoke] backward ok", out["t_backward_s"], "s", flush=True)
     monitor.check()
     v2, g2 = m.gradient(img, p, row["answer"])
     out["gradient"] = {"value": v, "norm": float(g.norm()), "nonzero_frac": float((g != 0).float().mean()),
@@ -217,7 +220,7 @@ def grad(args, root, monitor) -> dict[str, Any]:
     tdir = root / "docs/checkpoint-6-smolvlm2/stage0/tensors"
     tdir.mkdir(parents=True, exist_ok=True)
     if not args.small_steps:
-        np.savez_compressed(tdir / f"clean_grad_{args.dtype}_{args.tiling}.npz", **tensors)
+        np.savez_compressed(tdir / f"clean_grad_{args.dtype}_{args.tiling}_{args.attn}.npz", **tensors)
     return out
 
 
@@ -226,6 +229,8 @@ def main() -> None:
     ap.add_argument("part", choices=("verify", "smoke", "clean", "grad"))
     ap.add_argument("--dtype", choices=("bf16", "fp32"))
     ap.add_argument("--tiling", choices=("split", "single"))
+    ap.add_argument("--attn", choices=("sdpa", "eager"), required=True,
+                    help="sdpa = the model default (as in InternVL Stage 0); eager = as in the Qwen pipeline")
     ap.add_argument("--n-scenes", type=int, default=4)
     ap.add_argument("--small-steps", action="store_true", help="grad: finite differences at 1/1024 to 1/16 level")
     args = ap.parse_args()
