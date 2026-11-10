@@ -44,6 +44,25 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 | **Exploratory negative** (16 development scenes) | The sign-consensus masks tested (sign votes over 1–8 random points at ±ε/4, 4 sparse on-grid points, 2 points at ±ε/16, and an fp32 vote) do **not** reproduce PGD's selection: the strongest recovers 5% of the selection gain [−5%, 14%]. Smoothed-gradient magnitude is worse than random. Matching PGD's per-patch density (16 px) recovers about a fifth of the gain. Other samplers and consensus rules were not tested. | [Checkpoint 3 pilot report](docs/checkpoint-3-mechanism/PILOT_REPORT.md) |
 | **Not established** | The mechanism; generality to other models, budgets and precisions. | Report §7 |
 
+## Exploratory follow-up after the confirmation: bf16 vs full fp32 (not a confirmation)
+
+The confirmed study ran Qwen3-VL-2B in bf16. A later **exploratory** check asked whether bf16 evaluation could explain the result ([Checkpoint 5 report](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/blob/ef2b6375ad36d5b4e9f3a9e32422c48f57571f6f/docs/checkpoint-5-qwen-fp32/REPORT.md), on the separate research branch `research/qwen-fp32-gpu`).
+
+- **Design:**
+  - **48 development scenes**, not new held-out data;
+  - the unchanged 2.4 scene computation, in bf16 and in full fp32, on one CUDA GPU (NVIDIA A40, rented);
+  - the checkpoint weights are stored in bf16, so the fp32 run is an exact up-cast with fp32 arithmetic;
+  - TF32 off, no autocast;
+  - protocol, gates and analysis committed before the run.
+- **Result (pooled over both contexts, paired fp32 − bf16, 95% CI):**
+  - **Selection advantage:** −0.19 logits [−0.61, 0.22]; 90% CI [−0.54, 0.16], inside the pre-registered ±1.0 equivalence margin. It is about +6 logits in each precision (bf16 6.10, fp32 5.91).
+  - **Clean-gradient saliency inversion** (top-\|∇\| − random): −0.15 [−0.41, 0.09]; 90% CI [−0.37, 0.05], inside the ±0.5 margin. It is about −1.6 logits in each precision (bf16 −1.57, fp32 −1.73).
+  - Both effects persist in fp32 in both contexts, and every paired difference is equivalent within its margin.
+- **Caveats:**
+  - The gate requiring the GPU bf16 run to reproduce the Mac (MPS) bf16 clean margins passed **exactly at its tolerances** (median 0.25, 95th percentile 0.75 logits).
+  - One model, one GPU, development data.
+  - This is **not** an independent confirmation and **not** a general precision-independence result. The Checkpoint 2.4 held-out confirmation above remains the primary result. The manuscript and frozen protocol are unchanged.
+
 ## Read next
 
 - **Manuscript (preprint-style):** [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md)
@@ -145,7 +164,23 @@ Every checkpoint keeps its plan, frozen records and deviations. Earlier results 
 | `src/` | Scene generators, scoring, attack and probe code |
 | `fixtures/` | Rendered development and confirmation scenes, with manifests and hashes |
 
+## License
+
+| Material | License |
+|---|---|
+| Original source code and tests: `src/`, `tests/`, `tools/`, `conftest.py`, the `.py` scripts under `docs/`, CI configuration | [MIT](LICENSE) |
+| Original synthetic scenes and their manifests (`fixtures/`), experimental records, figures, and research documentation under `docs/` | [CC BY 4.0](LICENSE-CC-BY-4.0.txt) |
+| The draft manuscript, [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md) | **Not licensed for reuse yet** (all rights reserved), pending a publication decision. You may read and cite it. |
+
+**Not covered.** Nothing here relicenses third-party material:
+- **Not in the repository:** the Qwen3-VL-2B-Instruct and SmolVLM2 weights, which are downloaded from their publishers and remain under their own licenses, and the Python dependencies in `requirements-ci.txt`.
+- **Model outputs:** some records (for example the `predictions.jsonl` files) contain text and scores produced by those models. They are covered by CC BY 4.0 only to the extent we hold rights in them.
+- **Quotations:** short quotations of published work in `docs/research/` remain their authors'.
+- **CLEVR:** discussed in `docs/data/` but never downloaded or included.
+
 ## Citation
+
+Machine-readable metadata: [`CITATION.cff`](CITATION.cff).
 
 ```
 Cavaletto, F. (2026). Which coordinates, not how many: held-out evidence that 3-step PGD's
