@@ -3,7 +3,8 @@
     python docs/paper/figures/make_main_figure.py
 
 Panel A is a schematic with illustrative values: how 8-bit rounding turns PGD-3 into FGSM's perturbation
-restricted to the coordinates where all three step signs agree.
+restricted to the coordinates where all three step signs agree. The schematic shows the case in which every
+step has a nonzero gradient; zero-gradient steps can produce rounding ties, documented in the manuscript (§3).
 Panel B plots the two held-out matched contrasts from the frozen Checkpoint 2.4 outputs:
 - docs/checkpoint-2.4-confirm/analysis/confirm_analysis.json (means and 95% CIs, pooled over source contexts);
 - docs/checkpoint-2.4-confirm/analysis/confirm_per_group.csv (one point per scene group).
@@ -64,7 +65,7 @@ def contrasts(a: dict, g: list[dict]) -> list[dict]:
 def panel_a(x0: float, y0: float) -> list[str]:
     s = [text(x0, y0, "A", 18, weight="bold"),
          text(x0 + 22, y0, "8-bit rounding turns PGD-3 into a subset of FGSM", 15, weight="bold"),
-         text(x0 + 22, y0 + 19, "Schematic: six RGB-channel coordinates, illustrative values", 12, INK2, style="italic")]
+         text(x0 + 22, y0 + 19, "Schematic: six RGB-channel coordinates, illustrative values, all steps nonzero", 12, INK2, style="italic")]
 
     # One pixel = three RGB-channel coordinates.
     py = y0 + 46
@@ -123,12 +124,13 @@ def panel_a(x0: float, y0: float) -> list[str]:
 
     ny = gy + 30 + len(rows) * rh + 22
     notes = [
-        "Steps of ε/4 never reach the ε-ball boundary, so each displacement is ±¼ε or ±¾ε.",
-        "Rounding to the 8-bit grid (spacing ε) sends ±¼ε to 0 and ±¾ε to ±ε.",
-        "A coordinate survives only if all three step signs agree, and it then carries",
-        "FGSM's sign (shaded). The compared masks (PGD-3, random, top-|∇|) each keep k of",
-        "FGSM's coordinates at one level with FGSM's own sign there; only the choice of",
-        "coordinates differs, so overall counts of + and − can differ between masks.",
+        "Case shown: every step's gradient is nonzero and values stay inside [0, 1]. Then steps of ε/4",
+        "never reach the ε-ball boundary, so each displacement is ±¼ε or ±¾ε, and rounding to the 8-bit",
+        "grid (spacing ε) sends ±¼ε to 0 and ±¾ε to ±ε. A coordinate survives only if all three step",
+        "signs agree, and it then carries FGSM's sign (shaded). A zero-gradient step can leave ±½ε,",
+        "a rounding tie (observed: 0–7 coordinates per image; §3). The compared masks (PGD-3, random,",
+        "top-|∇|) each keep k of FGSM's coordinates at one level with FGSM's sign there; only the choice",
+        "of coordinates differs, so counts of + and − can differ between masks.",
     ]
     for i, n in enumerate(notes):
         s.append(text(x0, ny + i * 17, n, 12, INK2))
@@ -183,20 +185,30 @@ def panel_b(x0: float, y0: float, w: float, cs: list[dict]) -> list[str]:
     return s
 
 
+def describe(cs: list[dict]) -> str:
+    """Accessibility description; build_pdf.py reuses it as the image's alt text."""
+    def ci(c):
+        return f'mean {c["est"]:+.2f}, 95% interval {c["ci"][0]:+.2f} to {c["ci"][1]:+.2f}'
+    return ("Panel A: schematic with illustrative values for six RGB-channel coordinates in the case where all three "
+            "PGD steps have nonzero gradient. In that case, after 8-bit rounding, PGD-3 keeps FGSM's sign on the "
+            "coordinates where all three step signs agree and is zero elsewhere. Steps with zero gradient can instead "
+            "produce rounding ties; the text documents 0 to 7 such coordinates per image. Panel B: held-out contrasts "
+            "in margin drop for 48 scene groups, one dot per group. PGD-3 subset minus random subset: "
+            f"{ci(cs[0])}. Top-gradient-magnitude subset minus random subset: {ci(cs[1])}.")
+
+
 def build() -> str:
     a, g = load()
     cs = contrasts(a, g)
-    W, H = 760, 966
+    W, H = 760, 940
     out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" font-family="{FONT}" '
            f'role="img" aria-labelledby="t d">',
            '<title id="t">PGD-3 as a subset of FGSM, and the held-out matched contrasts</title>',
-           '<desc id="d">Panel A: schematic showing that after 8-bit rounding PGD-3 keeps FGSM\'s sign on coordinates where '
-           'all three step signs agree and is zero elsewhere. Panel B: per-group held-out contrasts, PGD-3 subset minus '
-           f'random subset (mean {cs[0]["est"]:+.2f}) and top-gradient subset minus random subset (mean {cs[1]["est"]:+.2f}).</desc>',
+           f'<desc id="d">{describe(cs)}</desc>',
            f'<rect width="{W}" height="{H}" fill="{SURFACE}"/>']
     out += panel_a(24, 34)
-    out.append(f'<line x1="24" y1="456" x2="{W - 24}" y2="456" stroke="{GRID}" stroke-width="1"/>')
-    out += panel_b(24, 494, W - 48, cs)
+    out.append(f'<line x1="24" y1="473" x2="{W - 24}" y2="473" stroke="{GRID}" stroke-width="1"/>')
+    out += panel_b(24, 511, W - 48, cs)
     out.append("</svg>")
     return "\n".join(out) + "\n"
 

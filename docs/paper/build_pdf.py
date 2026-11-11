@@ -32,9 +32,11 @@ body { font-family: Charter, "Bitstream Charter", Georgia, "Times New Roman", se
 h1 { font-size: 17.5pt; line-height: 1.22; margin: 0 0 8pt; font-weight: 700; }
 h2 { font-size: 12.5pt; margin: 15pt 0 5pt; font-weight: 700; break-after: avoid; }
 p { margin: 0 0 6.5pt; orphans: 3; widows: 3; }
+p:has(> strong:only-child) { break-after: avoid; }  /* bold run-in headings stay with their text */
 ul, ol { margin: 0 0 6.5pt; padding-left: 17pt; }
 li { margin: 0 0 2.5pt; }
 li > ul, li > ol { margin: 2.5pt 0 0; }
+li:has(> ul), li:has(> ol) { break-inside: avoid; }  /* a bullet stays with its sub-list */
 hr { border: none; border-top: 0.6pt solid #c9c8c2; margin: 9pt 0; }
 code { font-family: Menlo, "DejaVu Sans Mono", monospace; font-size: 8.6pt; background: #f2f1ed; padding: 0 2pt;
        border-radius: 2pt; }
@@ -47,7 +49,7 @@ figure img { width: 100%; display: block; }
 figcaption { font-size: 9pt; line-height: 1.35; color: #2b2a28; margin-top: 5pt; }
 .byline { font-size: 11pt; margin: 0 0 3pt; }
 .meta { font-size: 9.5pt; color: #52514e; }
-.abstract { background: #f7f6f3; padding: 8pt 11pt 3pt; border-radius: 3pt; }
+.abstract { background: #f7f6f3; padding: 8pt 11pt 3pt; border-radius: 3pt; font-size: 10pt; line-height: 1.38; }
 """
 
 
@@ -90,6 +92,15 @@ def render_list(lines: list[str]) -> str:
     return "".join(out)
 
 
+def alt_text(src: str) -> str:
+    """Use an SVG figure's own <desc> as the alt text, so the two descriptions cannot drift apart."""
+    path = HERE / src
+    if path.suffix != ".svg" or not path.exists():
+        return ""
+    m = re.search(r"<desc[^>]*>(.*?)</desc>", path.read_text(), re.S)
+    return html.unescape(m.group(1)) if m else ""
+
+
 def convert(md: str) -> str:
     lines = md.splitlines()
     out: list[str] = []
@@ -120,7 +131,8 @@ def convert(md: str) -> str:
             i += 1
         elif ln.startswith("!["):
             m = re.match(r"^!\[(.*)\]\(([^)]+)\)\s*$", ln)
-            out.append(f'<figure><img src="{m.group(2)}" alt=""><figcaption>{inline(m.group(1))}</figcaption></figure>')
+            out.append(f'<figure><img src="{m.group(2)}" alt="{html.escape(alt_text(m.group(2)))}">'
+                       f'<figcaption>{inline(m.group(1))}</figcaption></figure>')
             i += 1
         elif ln.lstrip().startswith("|"):
             block = []

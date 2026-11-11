@@ -8,30 +8,32 @@ Review draft, November 2026. Code, data, frozen protocols and records: <https://
 
 ## Abstract
 
-On a 2B-parameter vision–language model (Qwen3-VL-2B-Instruct, bf16), three-step PGD does about three times the damage of FGSM to the answer margin at the smallest 8-bit budget, L∞ ε = 1/255. We ask whether PGD wins because it perturbs fewer coordinates or because it perturbs particular ones.
+We study a synthetic colour-question task. A 2B-parameter vision–language model (Qwen3-VL-2B-Instruct, bf16) sees a rendered scene of eight coloured shapes and answers a question such as "What colour is the large triangle in the bottom row?". We measure an attack by its **answer-margin damage**: how much it lowers the model's score for the correct colour relative to its best-scoring wrong colour, in logits. When the margin falls below zero, a wrong colour outscores the correct one.
 
-At this budget, with steps of ε/4, the 8-bit rounding that every stored image undergoes makes the PGD-3 image equal to FGSM's perturbation restricted to about 30% of its RGB-channel coordinates, with FGSM's sign at each kept coordinate. The only exceptions are at most 7 zero-gradient rounding ties per image, out of about 175,000 kept coordinates. This allows a matched comparison. Every compared subset keeps the same number k of FGSM's coordinates, changes each by exactly one 8-bit level, and gives each kept coordinate the sign FGSM assigns there. Only the choice of coordinates differs, so the overall counts of positive and negative changes can differ between subsets.
+We perturb the image within the smallest budget that survives 8-bit image storage: each colour channel of each pixel moves by at most one 8-bit level (L∞ ε = 1/255). At this budget, three-step projected gradient descent (PGD) does about three times the margin damage of the one-step fast gradient sign method (FGSM). We ask whether PGD wins because it perturbs fewer coordinates or because it perturbs particular ones.
 
-We tested this comparison under a protocol and analysis frozen and published before any inference, on 48 newly generated, independent counterfactual scene groups. Each group was attacked from two source contexts, giving 96 group-by-source cases. Intervals bootstrap over the 48 groups.
-- **Selection.** PGD's subset caused +6.50 logits more margin damage than random subsets of the same size (95% CI 6.08 to 6.92). In every one of the 96 cases, it exceeded all eight random subsets.
+With PGD steps of ε/4, 8-bit rounding makes the PGD-3 image equal to FGSM's perturbation restricted to about 30% of its RGB-channel coordinates, up to at most 7 zero-gradient rounding ties per image. We therefore compare subsets matched in count k, in magnitude (one 8-bit level each) and in FGSM's sign at each selected location. Only the choice of coordinates differs, so the totals of positive and negative changes can differ between subsets.
+
+Under a protocol and analysis frozen and published before any inference, we tested this on 48 new, independent counterfactual scene groups, each attacked from two source contexts (96 group-by-source cases). Intervals bootstrap over the 48 groups.
+- **Selection.** PGD's subset caused +6.50 logits more margin damage than random subsets of the same size (95% CI 6.08 to 6.92). In all 96 cases it exceeded all eight random subsets.
 - **Sparsity.** Random thinning explained 3% of the PGD–FGSM gap (CI −2% to 9%).
 - **Clean-gradient magnitude.** Subsets ranked by clean-gradient magnitude did worse than random (−1.38, CI −1.71 to −1.06), and the clean first-order prediction ranked the subsets in reverse order.
 - **Answers.** Among the 45 groups answered correctly when clean, PGD's subset changed the answer in 60% and 78% of groups (by source context), against 18% and 23% for random subsets.
 
-Exploratory development-data checks support two robustness statements. The selection advantage and the saliency result persisted when Qwen was run in full fp32. A selection advantage also appeared on a second model (InternVL3.5-1B, non-standard single-tile preprocessing), but its saliency result did not: there, magnitude-ranked subsets were indistinguishable from random. We therefore state the saliency result for Qwen only.
+Exploratory checks on development scenes add two qualified statements. With Qwen's bf16 weights upcast exactly to fp32, the paired fp32 − bf16 changes in both contrasts fell within equivalence margins fixed before the run (90% intervals inside ±1.0 and ±0.5 logits). On InternVL3.5-1B (single-tile preprocessing), PGD's subset again beat random subsets (+3.98 [3.53, 4.42], pooled over source contexts), but the magnitude contrast was −0.10 [−0.24, 0.07]: the interval includes zero and no equivalence margin was set, so we state the magnitude-ranking result for Qwen only.
 
 ---
 
-![**Figure 1. The subset relationship and the held-out matched contrasts.** **(A)** Schematic with illustrative values for six RGB-channel coordinates (two pixels). After rounding, PGD-3 keeps a coordinate only where its three step signs agree, and then with FGSM's sign (shaded). The compared subsets each keep k of FGSM's coordinates at one level and with FGSM's sign at that location. **(B)** Held-out results on 48 independent scene groups (Qwen3-VL-2B, bf16). Each dot is one group's contrast in margin drop, averaged over its two source contexts. Bars show the frozen analysis's mean and 95% percentile bootstrap interval over groups. PGD-3's subset minus random: +6.50 [6.08, 6.92]. Top-|∇| subset minus random: −1.38 [−1.71, −1.06]. Source: `docs/checkpoint-2.4-confirm/analysis/` at commit `e2eb037`; drawn by `docs/paper/figures/make_main_figure.py`.](figures/figure1_main.svg)
+![**Figure 1. The subset relationship and the held-out matched contrasts.** **(A)** Schematic with illustrative values for six RGB-channel coordinates (two pixels), shown for the case in which every PGD step has a nonzero gradient and values stay inside [0, 1]. In that case, after rounding, PGD-3 keeps a coordinate only where its three step signs agree, and then with FGSM's sign (shaded). A step with zero gradient can instead leave a half-level rounding tie; held-out images had 0–7 such coordinates each, all with zero clean gradient (§3). **(B)** Held-out results on 48 independent scene groups (Qwen3-VL-2B, bf16). Each dot is one group's contrast in margin drop, averaged over its two source contexts. Bars show the frozen analysis's mean and 95% percentile bootstrap interval over groups. PGD-3's subset minus random: +6.50 [6.08, 6.92]. Top-|∇| subset minus random: −1.38 [−1.71, −1.06]. Source: `docs/checkpoint-2.4-confirm/analysis/` at commit `e2eb037`; drawn by `docs/paper/figures/make_main_figure.py`.](figures/figure1_main.svg)
 
 ## 1. Introduction
 
 Cheap first-order tools are widely used to judge adversarial vulnerability:
-- one-step attacks such as FGSM [Goodfellow et al., 2015];
+- one-step attacks such as the fast gradient sign method (FGSM) [Goodfellow et al., 2015];
 - gradient saliency, to locate the inputs a model relies on [Simonyan et al., 2014; Smilkov et al., 2017];
 - first-order estimates of how much a perturbation changes an output.
 
-All three treat the model as locally linear. Iterative attacks such as PGD [Kurakin et al., 2017; Madry et al., 2018] find much stronger perturbations in the same ball. The gap has been linked to curvature and the loss of local linearity [Qin et al., 2019; Moosavi-Dezfooli et al., 2019; Andriushchenko & Flammarion, 2020].
+All three treat the model as locally linear. Iterative attacks such as projected gradient descent (PGD) [Kurakin et al., 2017; Madry et al., 2018] find much stronger perturbations in the same ball. The gap has been linked to curvature and the loss of local linearity [Qin et al., 2019; Moosavi-Dezfooli et al., 2019; Andriushchenko & Flammarion, 2020].
 
 We ask a narrower question: **when PGD beats FGSM, is it because PGD perturbs fewer coordinates, or because it perturbs particular ones?**
 
@@ -55,23 +57,23 @@ We do **not** claim a new attack, a general property of vision–language models
 ## 2. Related work
 
 **Single-step and iterative attacks.**
-- FGSM linearizes the loss [Goodfellow et al., 2015]. Iterated, projected sign steps (BIM/PGD) give stronger L∞ adversaries [Kurakin et al., 2017; Madry et al., 2018].
+- FGSM linearizes the loss [Goodfellow et al., 2015]. Iterated, projected sign steps (the basic iterative method, BIM, and PGD) give stronger L∞ adversaries [Kurakin et al., 2017; Madry et al., 2018].
 - In adversarial training, FGSM can collapse ("catastrophic overfitting"). Regularizing local linearity or gradient alignment closes much of the gap [Wong et al., 2020; Andriushchenko & Flammarion, 2020; Qin et al., 2019; Moosavi-Dezfooli et al., 2019].
 
 These works explain single-step weakness through local geometry. They do not separate the size of the perturbed support from its location.
 
-**Coordinate selection inside single-step perturbations.** Golgooni et al. [2021] modify FGSM adversarial training by keeping only some coordinates of the FGSM perturbation.
+**Coordinate selection inside single-step perturbations.** Golgooni et al. [2021] (arXiv v1, the version cited here) modify FGSM adversarial training by keeping only some coordinates of the FGSM perturbation.
 - ZeroGrad (§3.1, Eq. 5) zeroes coordinates whose absolute input gradient falls below a per-sample lower quantile (q = 0.35 for CIFAR-10). It is a magnitude rule, related to our top-|∇| subset.
 - MultiGrad (§3.2, Eq. 6, Algorithm 2) keeps only coordinates where N = 3 random-start FGSM perturbations agree in sign. It is a sign-consensus rule, related to the hypothesis tested in §8.
 - Their Appendix C.4 (Table 10) reports how often each method's perturbation signs differ from PGD-10's.
 
 That work selects coordinates to stabilize training. It reports no random subset at matched count, and no comparison of PGD's own support with other supports at fixed values.
 
-**Restricting a fixed dense perturbation to a subset.** Zhao et al. [2022] refine the output of a dense attack (BIM, PGD or AutoAttack) as X + Z ⊙ (X^s − X): the source perturbation, unchanged, on a binary support Z (§2.1, Eq. 1). Z is sampled from a vulnerability map produced by a learned network (§2.3–2.4). They report that about 30% of the perturbed pixels often keep the attack effective (β = 0.3). Their baselines are the unrefined attack and dedicated sparse attacks. They report no random or gradient-saliency support at the same β.
+**Restricting a fixed dense perturbation to a subset.** Zhao et al. [2022] (arXiv v2) refine the output of a dense attack (BIM, PGD or AutoAttack) as X + Z ⊙ (X^s − X): the source perturbation, unchanged, on a binary support Z (§2.1, Eq. 1). Z is sampled from a vulnerability map produced by a learned network (§2.3–2.4). They report that about 30% of the perturbed pixels often keep the attack effective (β = 0.3). Their baselines are the unrefined attack and dedicated sparse attacks. They report no random or gradient-saliency support at the same β.
 
-**Location controls with fixed values.** The closest location-matched control we found is in Vargas & Su [2020], §7 and Table 1. After a successful one-pixel attack on CIFAR-10, they apply the same pixel value at a random pixel, which drops success from 59% to 4.9% (LeNet) and from 33% to 3.1% (ResNet). At the eight adjacent pixels, success stays at 33.1% and 31.3%. The value is held fixed and only the location changes, as in our comparison, but for a single pixel found by a sparse search rather than a dense iterative attack.
+**Location controls with fixed values.** The closest location-matched control we found is in Vargas & Su [2020]: §8 and Table 1 of the CEUR-WS version (the same experiment and table appear in §7 of arXiv v1). After a successful one-pixel attack on CIFAR-10, they apply the same pixel value at a random pixel, which drops success from 59% to 4.9% (LeNet) and from 33% to 3.1% (ResNet). At the eight adjacent pixels, success stays at 33.1% and 31.3%. The value is held fixed and only the location changes, as in our comparison, but for a single pixel found by a sparse search rather than a dense iterative attack.
 
-Wang et al. [2021] (§3.2) hold an adversarial perturbation fixed, mask subsets of its pixels, and measure interactions among them. Their interest is in decomposing an attack into interacting components; they do not compare against random subsets.
+Wang et al. [2021] (ICCV open-access version, §3.2) hold an adversarial perturbation fixed, mask subsets of its pixels, and measure interactions among them. Their interest is in decomposing an attack into interacting components. Random subsets enter their method only in sampling the interaction estimates; we found no random-subset baseline for the attack's own pixels.
 
 **Our specific contribution.** We fix one single-step perturbation (FGSM's, after rounding). At a matched count, we compare the support an iterative attack ends up with against random and clean-gradient-magnitude supports drawn from that same perturbation, in a pre-registered held-out test on a vision–language model. In the work we read, related controls do one of three things:
 - move a fixed single-pixel value (Vargas & Su);
@@ -106,7 +108,7 @@ Our literature search was targeted, not systematic, so we make no priority claim
 - **PGD-3** takes three sign steps of ε/4, each projected onto the ε-ball.
 - Each context serves in turn as source. The image is also scored in the other context, the *target*.
 
-**Proposition (PGD-3 is an FGSM subset after rounding).** Assume the clean image is on the 8-bit grid. Consider a coordinate whose clean value is not at the [0, 1] bounds and whose clean gradient is non-zero.
+**Proposition (PGD-3 is an FGSM subset after rounding).** Assume the clean image is on the 8-bit grid. Consider a coordinate whose clean value is not at the [0, 1] bounds and whose gradient is non-zero at each of the three steps (the case drawn in Figure 1A).
 - Three ε/4 steps never reach the ε-ball boundary, so the coordinate's PGD-3 displacement is ±ε/4 or ±3ε/4.
 - Rounding to the 8-bit grid (spacing ε) maps ±ε/4 to 0 and ±3ε/4 to ±ε.
 - The coordinate therefore survives exactly when all three step signs agree, and its sign is then the first step's sign, which is FGSM's.
@@ -115,7 +117,7 @@ Our literature search was targeted, not systematic, so we make no priority claim
 
 If steps 2 and 3 had independent random signs, the agreement set would be a uniform random 25% of FGSM's support. Empirically it is 29.8% of FGSM's support (held-out; mean over the 96 group-by-source cases, 95% CI 29.5–30.1%).
 
-**Exceptions.** The only exceptions found were coordinates whose clean gradient is exactly zero. FGSM does not move such a coordinate. If steps 2 and 3 agree, PGD moves it by ε/2, a rounding tie, and round-half-to-even can shift an odd 8-bit value by one level.
+**Exceptions.** A zero gradient at any step falls outside this case: the displacement can then be ±ε/2, a rounding tie. The only exceptions found were coordinates whose clean gradient is exactly zero. FGSM does not move such a coordinate. If steps 2 and 3 agree, PGD moves it by ε/2, a rounding tie, and round-half-to-even can shift an odd 8-bit value by one level.
 - This affected 1–7 coordinates in 84 of the 96 held-out cases, out of about 175,000 kept coordinates.
 - Every such coordinate had exactly zero gradient.
 - No sign was ever reversed.
@@ -221,21 +223,22 @@ Observed damage was 2.83× random for PGD and 0.61× random for top-|∇| (poole
 
 These checks use the 48 development scenes, not the held-out split. They were each specified before running, but they are exploratory: hypotheses had been formed on these scenes. Each estimate is labelled with its source commit. All numbers below were read from the committed analysis outputs at those commits.
 
-**Table 2. Robustness checks: selection and saliency in the source context, pooled over source contexts (logits; mean [95% CI], bootstrap over 48 scenes).**
+**Table 2. Robustness checks on the 48 development scenes: pooled estimates.** Every cell is pooled over the two source contexts (each scene's two source-context values are averaged first) and scored in the source context. Logits; mean [95% CI], bootstrap over 48 scenes. The InternVL *primary cell* discussed below (neutral source context only, bf16) is a different, unpooled quantity and is not in this table.
 
-| Check (commit) | Precision | Selection (PGD − random) | Saliency (top-\|∇\| − random) |
+| Check (commit) | Precision | Selection, pooled (PGD − random) | Saliency, pooled (top-\|∇\| − random) |
 |---|---|---|---|
 | Qwen3-VL-2B, CUDA A40 (`ef2b637`) | bf16 | +6.10 [5.43, 6.76] | −1.57 [−2.04, −1.15] |
-| | fp32 | +5.91 [5.35, 6.49] | −1.73 [−2.16, −1.31] |
-| | paired fp32 − bf16 | −0.19 [−0.61, 0.22] | −0.15 [−0.41, 0.09] |
+| | fp32 (bf16 weights upcast exactly) | +5.91 [5.35, 6.49] | −1.73 [−2.16, −1.31] |
+| | paired fp32 − bf16 | −0.19 [−0.61, 0.22]; 90% CI [−0.54, 0.16], inside the prespecified ±1.0 | −0.15 [−0.41, 0.09]; 90% CI [−0.37, 0.05], inside the prespecified ±0.5 |
 | InternVL3.5-1B, single tile, MPS (`00e8530`) | bf16 | +3.98 [3.53, 4.42] | −0.10 [−0.24, 0.07] |
 | | fp32 | +4.16 [3.69, 4.62] | −0.01 [−0.16, 0.15] |
-| | paired fp32 − bf16 | +0.18 [0.01, 0.34] | +0.09 [−0.04, 0.22] |
+| | paired fp32 − bf16 | +0.18 [0.01, 0.34]; no equivalence margin specified | +0.09 [−0.04, 0.22]; no equivalence margin specified |
 
 **Qwen in full fp32 (Checkpoint 5, `ef2b637`).**
-- **Design.** The same 48 development scenes and the same attack and scoring protocol, run on an NVIDIA A40 rather than the MPS device of the main study. The model is evaluated in bf16 and in full fp32. The weights are stored in bf16, so fp32 is an exact upcast; gradients, attacks and scores are recomputed in fp32.
-- **Result.** The paired fp32 − bf16 differences have 90% intervals inside pre-registered equivalence margins: [−0.54, 0.16] for selection (margin ±1.0) and [−0.37, 0.05] for saliency (margin ±0.5).
-- **What it supports.** On these scenes, neither the selection advantage nor Qwen's saliency result depends on evaluating the model in bf16.
+- **Design.** The same 48 development scenes and the same attack and scoring protocol, run on an NVIDIA A40 rather than the MPS device of the main study. The model is evaluated in bf16 and in full fp32. The checkpoint stores its weights in bf16, so the fp32 model uses the same weights upcast exactly; gradients, attacks and scores are recomputed in fp32.
+- **Equivalence rule, fixed in the plan before the run.** Equivalence is claimed only if the 90% interval of the paired fp32 − bf16 difference lies inside a margin of ±1.0 logit for selection or ±0.5 logit for saliency (two one-sided tests at α = 0.05).
+- **Result.** Pooled over source contexts, both 90% intervals lie inside their margins: [−0.54, 0.16] for selection and [−0.37, 0.05] for saliency (Table 2).
+- **What it supports.** On these scenes, with these exactly upcast weights, evaluating in fp32 instead of bf16 changed neither the selection advantage nor Qwen's saliency result by more than the prespecified margins. It does not test fp32-trained weights, which this checkpoint does not provide.
 - **Caveats.** A cross-device clean-margin gate passed exactly at its pre-set limits. The run covers one GPU and development scenes only.
 
 **A second model (Checkpoint 4 Stage 1, `00e8530`).**
@@ -244,10 +247,11 @@ These checks use the 48 development scenes, not the held-out split. They were ea
   - single-tile 448 × 448 preprocessing instead of the model's default 13-tile configuration, which exceeded the memory limit;
   - a resize with a second rounding step inside preprocessing; Qwen's pipeline has no resize;
   - SDPA rather than eager attention.
-- **Selection.** Present in both precisions, and in both source contexts. In the primary cell (neutral source, bf16) it was +3.39 [2.93, 3.86], and PGD's subset beat all eight random subsets in 47 of 48 scenes.
-- **Sparsity share.** Negative (neutral, bf16: −0.14 [−0.22, −0.08]): same-count random subsets did less damage than dense FGSM.
-- **Saliency.** Not distinguishable from random: neutral, bf16: −0.10 [−0.24, 0.03].
-- **What it supports.** A selection advantage of PGD-3's subset over matched random subsets is not unique to Qwen on these scenes. Qwen's saliency result, magnitude-ranked subsets worse than random, was not observed on InternVL in this configuration, so we state it for Qwen only.
+- **Two kinds of estimate.** The protocol's *primary cell* is neutral as source context, scored in that context on the official preprocessing path. It is computed for each precision; below, "primary cell" means its bf16 value. Table 2 instead pools both source contexts. Both are given where they differ.
+- **Selection.** Positive in both precisions and both source contexts. Primary cell: +3.39 [2.93, 3.86], with PGD's subset beating all eight random subsets in 47 of 48 scenes. Pooled, bf16 (Table 2): +3.98 [3.53, 4.42].
+- **Sparsity share.** Primary cell: −0.14 [−0.22, −0.08]. Same-count random subsets did less damage than dense FGSM.
+- **Saliency.** Primary cell: −0.10 [−0.24, 0.03]. Pooled, bf16 (Table 2): −0.10 [−0.24, 0.07]. Both intervals include zero. The protocol specified no equivalence margin for this contrast, so these intervals do not show that magnitude-ranked subsets match random ones; small negative or positive effects remain compatible with the data.
+- **What it supports.** A selection advantage of PGD-3's subset over matched random subsets is not unique to Qwen on these scenes. Qwen's saliency result, magnitude-ranked subsets clearly worse than random, was not reproduced on InternVL in this configuration, so we state it for Qwen only.
 - **What it does not support.** The two models differ in several respects at once, so these checks do not identify why the saliency results differ. They also do not show that selection is smaller on InternVL for architectural reasons. A paired same-scene comparison is in the Checkpoint 4 analysis; we do not interpret it causally for the same reason.
 
 ## 8. What the selected set is: exploratory notes
@@ -325,36 +329,34 @@ On the same hardware and software the pipeline is bit-for-bit deterministic. On 
 
 ## References
 
-- Adebayo, J., Gilmer, J., Muelly, M., Goodfellow, I., Hardt, M., & Kim, B. (2018). Sanity checks for saliency maps. *NeurIPS*.
-- Andriushchenko, M., & Flammarion, N. (2020). Understanding and improving fast adversarial training. *NeurIPS*.
-- Athalye, A., Carlini, N., & Wagner, D. (2018a). Obfuscated gradients give a false sense of security. *ICML*.
-- Athalye, A., Engstrom, L., Ilyas, A., & Kwok, K. (2018b). Synthesizing robust adversarial examples. *ICML*.
-- Bailey, L., Ong, E., Russell, S., & Emmons, S. (2024). Image hijacks: adversarial images can control generative models at runtime. *ICML*.
-- Balduzzi, D., Frean, M., Leary, L., Lewis, J. P., Ma, K. W.-D., & McWilliams, B. (2017). The shattered gradients problem. *ICML*.
-- Carlini, N., et al. (2023). Are aligned neural networks adversarially aligned? *NeurIPS*.
-- Croce, F., & Hein, M. (2019). Sparse and imperceivable adversarial attacks. *ICCV*.
-- Croce, F., Andriushchenko, M., Singh, N. D., Flammarion, N., & Hein, M. (2022). Sparse-RS: a versatile framework for query-efficient sparse black-box adversarial attacks. *AAAI*.
-- Ghorbani, A., Abid, A., & Zou, J. (2019). Interpretation of neural networks is fragile. *AAAI*.
-- Golgooni, Z., Saberi, M., Eskandar, M., & Rohban, M. H. (2021). ZeroGrad: Mitigating and explaining catastrophic overfitting in FGSM adversarial training. *arXiv:2103.15476* (v1). A journal article by the same authors, "ZeroGrad: Costless conscious remedies for catastrophic overfitting in the FGSM adversarial training", appeared in *Intelligent Systems with Applications* 19, 200258 (2023); the passages cited here are from the arXiv version.
-- Goodfellow, I., Shlens, J., & Szegedy, C. (2015). Explaining and harnessing adversarial examples. *ICLR*.
-- Kurakin, A., Goodfellow, I., & Bengio, S. (2017). Adversarial examples in the physical world. *ICLR Workshop*.
-- Luo, H., Gu, J., Liu, F., & Torr, P. (2024). An image is worth 1000 lies: transferability of adversarial images across prompts on vision-language models. *ICLR*.
-- Madry, A., Makelov, A., Schmidt, L., Tsipras, D., & Vladu, A. (2018). Towards deep learning models resistant to adversarial attacks. *ICLR*.
-- Modas, A., Moosavi-Dezfooli, S.-M., & Frossard, P. (2019). SparseFool: a few pixels make a big difference. *CVPR*.
-- Moosavi-Dezfooli, S.-M., Fawzi, A., Uesato, J., & Frossard, P. (2019). Robustness via curvature regularization, and vice versa. *CVPR*.
-- Papernot, N., McDaniel, P., Jha, S., Fredrikson, M., Celik, Z. B., & Swami, A. (2016). The limitations of deep learning in adversarial settings. *IEEE EuroS&P*.
-- Qi, X., Huang, K., Panda, A., Henderson, P., Wang, M., & Mittal, P. (2024). Visual adversarial examples jailbreak aligned large language models. *AAAI*.
-- Qin, C., et al. (2019). Adversarial robustness through local linearization. *NeurIPS*.
-- Schlarmann, C., & Hein, M. (2023). On the adversarial robustness of multi-modal foundation models. *ICCV Workshops*.
-- Simonyan, K., Vedaldi, A., & Zisserman, A. (2014). Deep inside convolutional networks: visualising image classification models and saliency maps. *ICLR Workshop*.
-- Smilkov, D., Thorat, N., Kim, B., Viégas, F., & Wattenberg, M. (2017). SmoothGrad: removing noise by adding noise. *arXiv:1706.03825*.
-- Su, J., Vargas, D. V., & Sakurai, K. (2019). One pixel attack for fooling deep neural networks. *IEEE TEVC*.
-- Tramèr, F., Kurakin, A., Papernot, N., Goodfellow, I., Boneh, D., & McDaniel, P. (2018). Ensemble adversarial training: attacks and defenses. *ICLR*.
-- Vargas, D. V., & Su, J. (2020). Understanding the one pixel attack: propagation maps and locality analysis. *Proceedings of the Workshop on Artificial Intelligence Safety 2020 (AISafety), co-located with IJCAI-PRICAI 2020*, CEUR-WS Vol. 2640. arXiv:1902.02947.
-- Wang, X., & He, K. (2021). Enhancing the transferability of adversarial attacks through variance tuning. *CVPR*.
-- Wang, X., Lin, S., Zhang, H., Zhu, Y., & Zhang, Q. (2021). Interpreting attributions and interactions of adversarial attacks. *ICCV*.
-- Wong, E., Rice, L., & Kolter, J. Z. (2020). Fast is better than free: revisiting adversarial training. *ICLR*.
-- Zhao, H., Nguyen, T., Le, T., Montague, P., De Vel, O., Abraham, T., & Phung, D. (2022). Learning to attack with fewer pixels: a probabilistic post-hoc framework for refining arbitrary dense adversarial attacks. *arXiv:2010.06131* (v2, February 2022).
-- Zhao, Y., et al. (2023). On evaluating adversarial robustness of large vision-language models. *NeurIPS*.
-
-*The four works added in this revision (Golgooni et al.; Vargas & Su; Wang, Lin et al.; Zhao, Nguyen et al.) were checked against arXiv, CEUR-WS, CVF and Crossref records on 2026-11-11. The other entries come from the project's literature notes and still need to be checked against publisher records before submission.*
+- Adebayo, J., Gilmer, J., Muelly, M., Goodfellow, I., Hardt, M., & Kim, B. (2018). Sanity checks for saliency maps. *Advances in Neural Information Processing Systems 31 (NeurIPS 2018)*.
+- Andriushchenko, M., & Flammarion, N. (2020). Understanding and improving fast adversarial training. *Advances in Neural Information Processing Systems 33 (NeurIPS 2020)*.
+- Athalye, A., Carlini, N., & Wagner, D. (2018a). Obfuscated gradients give a false sense of security: circumventing defenses to adversarial examples. *Proceedings of the 35th International Conference on Machine Learning (ICML)*, PMLR 80:274–283.
+- Athalye, A., Engstrom, L., Ilyas, A., & Kwok, K. (2018b). Synthesizing robust adversarial examples. *Proceedings of the 35th International Conference on Machine Learning (ICML)*, PMLR 80:284–293.
+- Bailey, L., Ong, E., Russell, S., & Emmons, S. (2024). Image hijacks: adversarial images can control generative models at runtime. *Proceedings of the 41st International Conference on Machine Learning (ICML)*, PMLR 235:2443–2455.
+- Balduzzi, D., Frean, M., Leary, L., Lewis, J. P., Ma, K. W.-D., & McWilliams, B. (2017). The shattered gradients problem: if resnets are the answer, then what is the question? *Proceedings of the 34th International Conference on Machine Learning (ICML)*, PMLR 70:342–350.
+- Carlini, N., Nasr, M., Choquette-Choo, C. A., Jagielski, M., Gao, I., Koh, P. W., Ippolito, D., Tramèr, F., & Schmidt, L. (2023). Are aligned neural networks adversarially aligned? *Advances in Neural Information Processing Systems 36 (NeurIPS 2023)*.
+- Croce, F., & Hein, M. (2019). Sparse and imperceivable adversarial attacks. *ICCV 2019*, 4723–4731. doi:10.1109/ICCV.2019.00482.
+- Croce, F., Andriushchenko, M., Singh, N. D., Flammarion, N., & Hein, M. (2022). Sparse-RS: a versatile framework for query-efficient sparse black-box adversarial attacks. *Proceedings of the AAAI Conference on Artificial Intelligence* 36(6), 6437–6445. doi:10.1609/aaai.v36i6.20595.
+- Ghorbani, A., Abid, A., & Zou, J. (2019). Interpretation of neural networks is fragile. *Proceedings of the AAAI Conference on Artificial Intelligence* 33, 3681–3688. doi:10.1609/aaai.v33i01.33013681.
+- Golgooni, Z., Saberi, M., Eskandar, M., & Rohban, M. H. (2021). ZeroGrad: mitigating and explaining catastrophic overfitting in FGSM adversarial training. arXiv:2103.15476v1. Sections cited from v1. A journal article by the same authors with a different title, "ZeroGrad: costless conscious remedies for catastrophic overfitting in the FGSM adversarial training", appeared in *Intelligent Systems with Applications* 19, 200258 (2023), doi:10.1016/j.iswa.2023.200258; we did not read it.
+- Goodfellow, I. J., Shlens, J., & Szegedy, C. (2015). Explaining and harnessing adversarial examples. *ICLR 2015*. arXiv:1412.6572.
+- Kurakin, A., Goodfellow, I. J., & Bengio, S. (2017). Adversarial examples in the physical world. *ICLR 2017 Workshop Track*. arXiv:1607.02533v4.
+- Luo, H., Gu, J., Liu, F., & Torr, P. (2024). An image is worth 1000 lies: transferability of adversarial images across prompts on vision-language models. *ICLR 2024*. (The arXiv version, 2403.09766, has a different subtitle.)
+- Madry, A., Makelov, A., Schmidt, L., Tsipras, D., & Vladu, A. (2018). Towards deep learning models resistant to adversarial attacks. *ICLR 2018*. arXiv:1706.06083.
+- Modas, A., Moosavi-Dezfooli, S.-M., & Frossard, P. (2019). SparseFool: a few pixels make a big difference. *CVPR 2019*, 9079–9088. doi:10.1109/CVPR.2019.00930.
+- Moosavi-Dezfooli, S.-M., Fawzi, A., Uesato, J., & Frossard, P. (2019). Robustness via curvature regularization, and vice versa. *CVPR 2019*, 9070–9078. doi:10.1109/CVPR.2019.00929.
+- Papernot, N., McDaniel, P., Jha, S., Fredrikson, M., Celik, Z. B., & Swami, A. (2016). The limitations of deep learning in adversarial settings. *IEEE European Symposium on Security and Privacy (EuroS&P)*, 372–387. doi:10.1109/EuroSP.2016.36.
+- Qi, X., Huang, K., Panda, A., Henderson, P., Wang, M., & Mittal, P. (2024). Visual adversarial examples jailbreak aligned large language models. *Proceedings of the AAAI Conference on Artificial Intelligence* 38(19), 21527–21536. doi:10.1609/aaai.v38i19.30150.
+- Qin, C., Martens, J., Gowal, S., Krishnan, D., Dvijotham, K., Fawzi, A., De, S., Stanforth, R., & Kohli, P. (2019). Adversarial robustness through local linearization. *Advances in Neural Information Processing Systems 32 (NeurIPS 2019)*.
+- Schlarmann, C., & Hein, M. (2023). On the adversarial robustness of multi-modal foundation models. *ICCV Workshops 2023*, 3679–3687. doi:10.1109/ICCVW60793.2023.00395.
+- Simonyan, K., Vedaldi, A., & Zisserman, A. (2014). Deep inside convolutional networks: visualising image classification models and saliency maps. *ICLR 2014 Workshop*. arXiv:1312.6034.
+- Smilkov, D., Thorat, N., Kim, B., Viégas, F., & Wattenberg, M. (2017). SmoothGrad: removing noise by adding noise. arXiv:1706.03825.
+- Su, J., Vargas, D. V., & Sakurai, K. (2019). One pixel attack for fooling deep neural networks. *IEEE Transactions on Evolutionary Computation* 23(5), 828–841. doi:10.1109/TEVC.2019.2890858.
+- Tramèr, F., Kurakin, A., Papernot, N., Goodfellow, I., Boneh, D., & McDaniel, P. (2018). Ensemble adversarial training: attacks and defenses. *ICLR 2018*. arXiv:1705.07204.
+- Vargas, D. V., & Su, J. (2020). Understanding the one-pixel attack: propagation maps and locality analysis. *Proceedings of the Workshop on Artificial Intelligence Safety 2020 (AISafety), co-located with IJCAI-PRICAI 2020*, CEUR-WS Vol. 2640, paper 4. Section cited from the CEUR-WS version; an earlier version is arXiv:1902.02947v1.
+- Wang, X., & He, K. (2021). Enhancing the transferability of adversarial attacks through variance tuning. *CVPR 2021*, 1924–1933. doi:10.1109/CVPR46437.2021.00196.
+- Wang, X., Lin, S., Zhang, H., Zhu, Y., & Zhang, Q. (2021). Interpreting attributions and interactions of adversarial attacks. *ICCV 2021*, 1075–1084. doi:10.1109/ICCV48922.2021.00113. Section cited from the CVF open-access version.
+- Wong, E., Rice, L., & Kolter, J. Z. (2020). Fast is better than free: revisiting adversarial training. *ICLR 2020*. arXiv:2001.03994.
+- Zhao, H., Nguyen, T., Le, T., Montague, P., De Vel, O., Abraham, T., & Phung, D. (2022). Learning to attack with fewer pixels: a probabilistic post-hoc framework for refining arbitrary dense adversarial attacks. arXiv:2010.06131v2 (February 2022). Sections cited from v2.
+- Zhao, Y., Pang, T., Du, C., Yang, X., Li, C., Cheung, N.-M., & Lin, M. (2023). On evaluating adversarial robustness of large vision-language models. *Advances in Neural Information Processing Systems 36 (NeurIPS 2023)*.
