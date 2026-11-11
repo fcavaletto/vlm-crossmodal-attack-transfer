@@ -1,4 +1,4 @@
-# Which coordinates, not how many
+# Which Coordinates, Not How Many: Matched-Count Evidence on the PGD–FGSM Gap in a Vision–Language Model
 
 **Pre-registered, held-out evidence that 3-step PGD's advantage over FGSM on a vision-language model comes from *which* RGB channel coordinates it perturbs, and that two standard clean-gradient rules rank those coordinates below random.**
 
@@ -183,7 +183,6 @@ Every checkpoint keeps its plan, frozen records and deviations. Earlier results 
 Machine-readable metadata: [`CITATION.cff`](CITATION.cff).
 
 ```
-Cavaletto, F. (2026). Which coordinates, not how many: held-out evidence that 3-step PGD's
-advantage over FGSM on a vision-language model is coordinate selection.
+Cavaletto, F. (2026). Which Coordinates, Not How Many: Matched-Count Evidence on the PGD–FGSM Gap in a Vision–Language Model.
 https://github.com/fcavaletto/vlm-crossmodal-attack-transfer
 ```

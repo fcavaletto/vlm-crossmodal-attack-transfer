@@ -1,4 +1,4 @@
-# Which Coordinates, Not How Many: Pre-registered Evidence that Iterative Attacks Beat Single-Step Attacks on a Vision-Language Model by Coordinate Selection
+# Which Coordinates, Not How Many: Matched-Count Evidence on the PGD–FGSM Gap in a Vision–Language Model
 
 **Federico Cavaletto**
 Preprint draft, November 2026. Code, data, frozen protocols and records: <https://github.com/fcavaletto/vlm-crossmodal-attack-transfer>
