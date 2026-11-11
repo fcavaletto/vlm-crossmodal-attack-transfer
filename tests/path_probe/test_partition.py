@@ -305,10 +305,11 @@ def test_analysis_script_runs_on_a_complete_synthetic_run(tmp_path):
 def test_a_completed_one_scene_smoke_is_rejected(tmp_path):
     # A successful smoke is marked "completed" and its progress file plans exactly its one scene.
     _write_run(tmp_path, "completed", planned=["dev4-ref-00-a"])
+    out = Path(__file__).resolve().parents[2] / "docs/checkpoint-3b-partition/analysis/partition_analysis.json"
+    before = out.read_bytes() if out.exists() else None
     with pytest.raises(SystemExit, match="frozen s16"):
         _script().analyze(tmp_path)
-    out = Path(__file__).resolve().parents[2] / "docs/checkpoint-3b-partition/analysis/partition_analysis.json"
-    assert not out.exists()
+    assert (out.read_bytes() if out.exists() else None) == before  # nothing written or changed
 
 
 def test_records_covering_other_scenes_are_rejected(tmp_path):
