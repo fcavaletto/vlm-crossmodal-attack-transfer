@@ -4,7 +4,7 @@ DEVELOPMENT ONLY. Research lead: Federico Cavaletto. Qwen3-VL-2B-Instruct, bfloa
 
 This packet integrates the three Checkpoint 2.1 workstreams and then stops. The analysis protocol is commit `481d7d9b9a18e832aad65c78a120b215e50010d0`, sha256 `9a8f28d357803c66ae67924472bdbaaf60d5e92f8387ef04f2d4946c6f47bf7a`. The development report is commit `fd59f63b04296d99b94438cc2d1697a217918a39`, sha256 `1820dedd37033d3edf024056b5aff34b5f034ad02c1452554385d096de8fabc5`. The attack-code commit recorded at the start of that run is `edfdf54e207189f4c6d89a3a9335ab607b73e81e`. `docs/checkpoint-2.1/CUDA_VALIDATION.md` is an unchanged copy from `checkpoint-2.1/cuda-validation` at `3177158b641678f57f0f001e3795af1558eec428`, sha256 `5c4fa5903720a26157f707b2496f47e472a57fffa7e3cbd838a162be5fdd4f57`. Every count below is the count printed in `docs/checkpoint-2.1/DEVELOPMENT_REPORT.md`. This packet does not change those counts and does not change `docs/checkpoint-2.1/ANALYSIS_PROTOCOL.md`.
 
-This branch is `checkpoint-2.1/review-packet`, based on `checkpoint-2.1/development-attack` at `fd59f63b04296d99b94438cc2d1697a217918a39`. Pull requests 23, 24, and 25 stay open.
+This branch is `checkpoint-2.1/review-packet`, based on `checkpoint-2.1/development-attack` at `fd59f63b04296d99b94438cc2d1697a217918a39`. Pull request: https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/pull/29. It targets `checkpoint-2.1/development-attack`. Pull requests 23, 24, and 25 stay open.
 
 ## Conclusion
 
