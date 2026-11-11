@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 966" width="760" height="966" font-family="Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">PGD-3 as a subset of FGSM, and the held-out matched contrasts</title>
+<desc id="d">Panel A: schematic showing that after 8-bit rounding PGD-3 keeps FGSM's sign on coordinates where all three step signs agree and is zero elsewhere. Panel B: per-group held-out contrasts, PGD-3 subset minus random subset (mean +6.50) and top-gradient subset minus random subset (mean -1.38).</desc>
+<rect width="760" height="966" fill="#ffffff"/>
+<text x="24.0" y="34.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">A</text>
+<text x="46.0" y="34.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">8-bit rounding turns PGD-3 into a subset of FGSM</text>
+<text x="46.0" y="53.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="italic" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Schematic: six RGB-channel coordinates, illustrative values</text>
+<text x="24.0" y="93.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">One pixel has three coordinates:</text>
+<rect x="220" y="80" width="24" height="18" rx="3" fill="#ffffff" stroke="#d9534f" stroke-width="1.6"/>
+<text x="232.0" y="93.5" font-size="11" fill="#d9534f" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">R</text>
+<rect x="250" y="80" width="24" height="18" rx="3" fill="#ffffff" stroke="#3a9d5d" stroke-width="1.6"/>
+<text x="262.0" y="93.5" font-size="11" fill="#3a9d5d" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">G</text>
+<rect x="280" y="80" width="24" height="18" rx="3" fill="#ffffff" stroke="#3b6fc4" stroke-width="1.6"/>
+<text x="292.0" y="93.5" font-size="11" fill="#3b6fc4" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">B</text>
+<text x="314.0" y="93.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">3 × 384 × 512 = 589,824 per image</text>
+<rect x="249" y="138" width="42" height="192" rx="5" fill="#e3edfa" stroke="#2a78d6" stroke-width="1.4"/>
+<text x="270.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">R</text>
+<text x="318.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">G</text>
+<text x="366.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">B</text>
+<rect x="393" y="138" width="42" height="192" rx="5" fill="#e3edfa" stroke="#2a78d6" stroke-width="1.4"/>
+<text x="414.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">R</text>
+<text x="462.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">G</text>
+<text x="510.0" y="156.0" font-size="12" fill="#52514e" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">B</text>
+<line x1="252" y1="128" x2="384" y2="128" stroke="#8a8984" stroke-width="1"/>
+<text x="318.0" y="123.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pixel 1</text>
+<line x1="396" y1="128" x2="528" y2="128" stroke="#8a8984" stroke-width="1"/>
+<text x="462.0" y="123.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">pixel 2</text>
+<text x="24.0" y="181.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Step 1 sign (= FGSM sign)</text>
+<text x="270.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="318.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="366.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="414.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="462.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="510.0" y="181.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="24.0" y="208.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Step 2 sign</text>
+<text x="270.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="318.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="366.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="414.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="462.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="510.0" y="208.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="24.0" y="235.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Step 3 sign</text>
+<text x="270.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="318.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="366.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<text x="414.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="462.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−</text>
+<text x="510.0" y="235.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+</text>
+<line x1="24" y1="245" x2="534" y2="245" stroke="#e4e3df" stroke-width="1"/>
+<text x="24.0" y="262.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">PGD-3 displacement (ε)</text>
+<text x="270.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+¾</text>
+<text x="318.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−¼</text>
+<text x="366.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+¼</text>
+<text x="414.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−¾</text>
+<text x="462.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+¼</text>
+<text x="510.0" y="262.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+¼</text>
+<text x="24.0" y="289.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">PGD-3 after rounding (levels)</text>
+<text x="270.0" y="289.0" font-size="13" fill="#2a78d6" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+1</text>
+<text x="318.0" y="289.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="366.0" y="289.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="414.0" y="289.0" font-size="13" fill="#2a78d6" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−1</text>
+<text x="462.0" y="289.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="510.0" y="289.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="24.0" y="316.0" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">FGSM after rounding (levels)</text>
+<text x="270.0" y="316.0" font-size="13" fill="#2a78d6" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+1</text>
+<text x="318.0" y="316.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−1</text>
+<text x="366.0" y="316.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+1</text>
+<text x="414.0" y="316.0" font-size="13" fill="#2a78d6" text-anchor="middle" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−1</text>
+<text x="462.0" y="316.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+1</text>
+<text x="510.0" y="316.0" font-size="13" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">−1</text>
+<text x="24.0" y="356.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Steps of ε/4 never reach the ε-ball boundary, so each displacement is ±¼ε or ±¾ε.</text>
+<text x="24.0" y="373.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Rounding to the 8-bit grid (spacing ε) sends ±¼ε to 0 and ±¾ε to ±ε.</text>
+<text x="24.0" y="390.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">A coordinate survives only if all three step signs agree, and it then carries</text>
+<text x="24.0" y="407.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">FGSM's sign (shaded). The compared masks (PGD-3, random, top-|∇|) each keep k of</text>
+<text x="24.0" y="424.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">FGSM's coordinates at one level with FGSM's own sign there; only the choice of</text>
+<text x="24.0" y="441.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">coordinates differs, so overall counts of + and − can differ between masks.</text>
+<line x1="24" y1="456" x2="736" y2="456" stroke="#e4e3df" stroke-width="1"/>
+<text x="24.0" y="494.0" font-size="18" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">B</text>
+<text x="46.0" y="494.0" font-size="15" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Held-out matched contrasts (Qwen3-VL-2B)</text>
+<text x="46.0" y="513.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="italic" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">48 independent scene groups; difference in margin drop, logits</text>
+<line x1="77.2" y1="552" x2="77.2" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="77.2" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">-4</text>
+<line x1="163.8" y1="552" x2="163.8" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="163.8" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">-2</text>
+<line x1="250.2" y1="552" x2="250.2" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="250.2" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">0</text>
+<line x1="336.8" y1="552" x2="336.8" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="336.8" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+2</text>
+<line x1="423.2" y1="552" x2="423.2" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="423.2" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+4</text>
+<line x1="509.8" y1="552" x2="509.8" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="509.8" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+6</text>
+<line x1="596.2" y1="552" x2="596.2" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="596.2" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+8</text>
+<line x1="682.8" y1="552" x2="682.8" y2="814" stroke="#e4e3df" stroke-width="1"/>
+<text x="682.8" y="831.0" font-size="11" fill="#52514e" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">+10</text>
+<line x1="250.2" y1="552" x2="250.2" y2="814" stroke="#52514e" stroke-width="1.2"/>
+<text x="380.0" y="850.0" font-size="12" fill="#0b0b0b" text-anchor="middle" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Margin-drop difference (logits); right = more damage than random</text>
+<text x="34.0" y="570.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">PGD-3 subset − random subset</text>
+<text x="34.0" y="586.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">selection</text>
+<circle cx="415.8" cy="619.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="421.2" cy="637.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="421.9" cy="626.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="421.9" cy="645.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="428.7" cy="634.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="445.6" cy="624.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="457.0" cy="642.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="459.1" cy="632.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="461.1" cy="621.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="473.3" cy="639.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="474.6" cy="629.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="479.3" cy="619.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="482.0" cy="637.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="488.1" cy="626.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="491.5" cy="645.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="495.6" cy="634.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="500.0" cy="624.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="514.5" cy="642.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="517.9" cy="632.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="528.0" cy="621.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="528.3" cy="639.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="530.7" cy="629.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="532.1" cy="619.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="534.8" cy="637.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="538.1" cy="626.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="539.8" cy="645.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="540.8" cy="634.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="543.5" cy="624.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="548.3" cy="642.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="555.7" cy="632.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="558.4" cy="621.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="560.4" cy="639.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="565.8" cy="629.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="571.2" cy="619.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="572.3" cy="637.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="572.6" cy="626.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="578.0" cy="645.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="584.1" cy="634.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="584.8" cy="624.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="584.8" cy="642.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="591.5" cy="632.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="599.0" cy="621.6" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="603.7" cy="639.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="611.8" cy="629.4" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="613.1" cy="619.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="617.2" cy="637.2" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="647.6" cy="626.8" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="713.5" cy="645.0" r="3.4" fill="#2a78d6" fill-opacity="0.28" stroke="#2a78d6" stroke-opacity="0.75" stroke-width="0.8"/>
+<line x1="513.3" y1="662" x2="549.4" y2="662" stroke="#0b0b0b" stroke-width="2.2"/>
+<line x1="513.3" y1="657" x2="513.3" y2="667" stroke="#0b0b0b" stroke-width="2"/>
+<line x1="549.4" y1="657" x2="549.4" y2="667" stroke="#0b0b0b" stroke-width="2"/>
+<circle cx="531.2" cy="662" r="5.5" fill="#2a78d6" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.3" y="666.5" font-size="12" fill="#0b0b0b" text-anchor="end" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mean +6.50  [6.08, 6.92]</text>
+<text x="34.0" y="698.0" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Top-|∇| subset − random subset</text>
+<text x="34.0" y="714.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">clean-gradient magnitude</text>
+<circle cx="61.7" cy="747.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="71.2" cy="765.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="73.2" cy="754.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="98.2" cy="773.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="100.2" cy="762.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="140.8" cy="752.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="143.5" cy="770.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="147.5" cy="760.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="161.7" cy="749.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="163.1" cy="767.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="168.8" cy="757.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="169.8" cy="747.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="173.9" cy="765.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="175.2" cy="754.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="176.6" cy="773.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="176.6" cy="762.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="179.3" cy="752.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="180.0" cy="770.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="183.3" cy="760.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="187.4" cy="749.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="188.4" cy="767.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="188.8" cy="757.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="190.1" cy="747.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="190.1" cy="765.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="193.5" cy="754.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="194.5" cy="773.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="198.9" cy="762.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="200.2" cy="752.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="207.7" cy="770.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="208.4" cy="760.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="210.4" cy="749.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="211.7" cy="767.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="212.4" cy="757.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="213.4" cy="747.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="215.4" cy="765.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="216.5" cy="754.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="222.5" cy="773.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="223.2" cy="762.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="232.0" cy="752.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="233.4" cy="770.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="236.7" cy="760.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="237.4" cy="749.6" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="248.2" cy="767.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="253.0" cy="757.4" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="261.7" cy="747.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="263.8" cy="765.2" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="276.6" cy="754.8" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<circle cx="284.0" cy="773.0" r="3.4" fill="#eb6834" fill-opacity="0.28" stroke="#eb6834" stroke-opacity="0.75" stroke-width="0.8"/>
+<line x1="176.2" y1="790" x2="204.3" y2="790" stroke="#0b0b0b" stroke-width="2.2"/>
+<line x1="176.2" y1="785" x2="176.2" y2="795" stroke="#0b0b0b" stroke-width="2"/>
+<line x1="204.3" y1="785" x2="204.3" y2="795" stroke="#0b0b0b" stroke-width="2"/>
+<circle cx="190.5" cy="790" r="5.5" fill="#eb6834" stroke="#ffffff" stroke-width="1.5"/>
+<text x="214.3" y="794.5" font-size="12" fill="#0b0b0b" text-anchor="start" font-weight="bold" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">mean −1.38  [−1.71, −1.06]</text>
+<text x="34.0" y="876.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Dots: one per scene group, averaged over the two source contexts; random = mean of 8 seeds.</text>
+<text x="34.0" y="893.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Bar: mean and 95% percentile bootstrap CI over groups (9,999 draws), from the frozen analysis.</text>
+<text x="34.0" y="910.0" font-size="12" fill="#52514e" text-anchor="start" font-weight="normal" font-style="normal" stroke="#ffffff" stroke-width="3" paint-order="stroke" stroke-linejoin="round">Within each source context, PGD-3's subset beat all 8 random subsets in 48 of 48 groups.</text>
+</svg>
