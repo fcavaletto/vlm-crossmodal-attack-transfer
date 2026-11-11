@@ -2,7 +2,7 @@
 
 **Pre-registered, held-out evidence that 3-step PGD's advantage over FGSM on a vision-language model comes from *which* RGB channel coordinates it perturbs, and that two standard clean-gradient rules rank those coordinates below random.**
 
-Federico Cavaletto · 2026 · Qwen3-VL-2B-Instruct · L∞ ε = 1/255 · Apple-silicon laptop, no paid compute
+Federico Cavaletto · 2026 · Qwen3-VL-2B-Instruct · L∞ ε = 1/255 · main study on an Apple-silicon laptop; fp32 check on one rented GPU
 
 ![Figure 1: matched-count decomposition of PGD-3 vs FGSM](docs/checkpoint-2.4-confirm/figures/figure1_selection.svg)
 
