@@ -14,7 +14,7 @@ We perturb the image within the smallest budget that survives 8-bit image storag
 
 With PGD steps of ε/4, 8-bit rounding makes the PGD-3 image equal to FGSM's perturbation restricted to about 30% of its RGB-channel coordinates, up to at most 7 zero-gradient rounding ties per image. We therefore compare subsets matched in count k, in magnitude (one 8-bit level each) and in FGSM's sign at each selected location. Only the choice of coordinates differs, so the totals of positive and negative changes can differ between subsets.
 
-Under a protocol and analysis frozen and published before any inference, we tested this on 48 new, independent counterfactual scene groups, each attacked from two source contexts (96 group-by-source cases). Intervals bootstrap over the 48 groups.
+Under a protocol and analysis frozen and published before any model inference on the held-out split, we tested this on 48 new, independent counterfactual scene groups, each attacked from two source contexts (96 group-by-source cases). Intervals bootstrap over the 48 groups.
 - **Selection.** PGD's subset caused +6.50 logits more margin damage than random subsets of the same size (95% CI 6.08 to 6.92). In all 96 cases it exceeded all eight random subsets.
 - **Sparsity.** Random thinning explained 3% of the PGD–FGSM gap (CI −2% to 9%).
 - **Clean-gradient magnitude.** Subsets ranked by clean-gradient magnitude did worse than random (−1.38, CI −1.71 to −1.06), and the clean first-order prediction ranked the subsets in reverse order.
@@ -160,7 +160,7 @@ The **sparsity share** is (D̄_rand − D̄_FGSM)/(D̄_PGD − D̄_FGSM), a rati
 - **Pooling.** Pooled estimates average each group's two source contexts first, then bootstrap over the 48 groups (percentile, 9,999 draws, seed 20261116).
 - **Generator.** A new seeded generator draws the groups from a scene distribution specified before this study. Seed strings reserved for other studies are refused in code.
 - **Separation.** Each group was checked against all 216 earlier development scenes by layout signature and its mirror images, by scene-graph hash, and by decoded-pixel hash. All three checks found zero overlap.
-- **Freeze.** The protocol, analysis code, runner and scene manifest were hash-frozen and pushed to a public repository before any model inference on these scenes (commit `c35b02c`). The runner refuses to start if any hash differs.
+- **Freeze.** The protocol, analysis code, runner and scene manifest were hash-frozen and pushed to a public repository before any model inference on the held-out split (commit `c35b02c`); earlier inference used development scenes only. The runner refuses to start if any hash differs.
 - **Pipeline check.** A smoke test on one development scene first reproduced earlier gradients, attack iterates and 22 official scores bit for bit.
 - **Execution.** One run with a time cap and no interim look at outcomes.
 

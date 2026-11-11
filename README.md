@@ -1,8 +1,16 @@
 # Which Coordinates, Not How Many: Matched-Count Evidence on the PGD–FGSM Gap in a Vision–Language Model
 
-**Pre-registered, held-out evidence that 3-step PGD's advantage over FGSM on a vision-language model comes from *which* RGB channel coordinates it perturbs, and that two standard clean-gradient rules rank those coordinates below random.**
+**Pre-registered, held-out evidence that on Qwen3-VL-2B-Instruct, 3-step PGD's advantage over FGSM comes from *which* RGB channel coordinates it perturbs, and that two standard clean-gradient rules rank those coordinates below random.**
 
 Federico Cavaletto · 2026 · Qwen3-VL-2B-Instruct · L∞ ε = 1/255 · main study on an Apple-silicon laptop; fp32 check on one rented GPU
+
+> **Research preprint (review draft, November 2026, not peer reviewed):** [**Read the manuscript (PDF)**](docs/paper/Cavaletto_2026_Which-Coordinates-Not-How-Many_review-draft.pdf) · [readable source (Markdown)](docs/paper/MANUSCRIPT.md)
+
+**At a glance**
+- **Confirmed** (pre-registered, 48 held-out scene groups, Qwen3-VL-2B in bf16): PGD-3's coordinates beat random coordinates at the same count by **+6.50 logits** of margin damage [6.08, 6.92]. Ranking coordinates by clean-gradient magnitude does worse than random, **−1.38** [−1.71, −1.06]. Details [below](#what-we-found).
+- **Exploratory, fp32** (Qwen, 48 development scenes, rented A40): rerunning in fp32 with the bf16 weights upcast exactly changed both contrasts by less than equivalence margins fixed before the run ([Checkpoint 5 report at `ef2b637`](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/blob/ef2b6375ad36d5b4e9f3a9e32422c48f57571f6f/docs/checkpoint-5-qwen-fp32/REPORT.md)).
+- **Exploratory, second model** (InternVL3.5-1B, single-tile, 48 development scenes): the selection advantage recurs, +3.98 [3.53, 4.42] pooled over source contexts. The magnitude-ranking result does not: −0.10 [−0.24, 0.07], an interval that includes zero, with no equivalence margin set ([Checkpoint 4 Stage 1 report at `00e8530`](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/blob/00e8530a5232430e1f7e5fb7111f6cb2b24db63c/docs/checkpoint-4-internvl/STAGE1_REPORT.md)).
+- **Reproduce** every reported table and Figure 1 without the model: `python tools/verify_reproduction.py` ([instructions](#reproduce)).
 
 ![Figure 1: matched-count decomposition of PGD-3 vs FGSM](docs/checkpoint-2.4-confirm/figures/figure1_selection.svg)
 
@@ -42,6 +50,7 @@ On **48 newly generated scene groups**, analyzed under a protocol hash-frozen an
 | **Structural** (arithmetic) | Under these settings the PGD-3 image is a sign-preserving FGSM subset. The only exceptions are 0–7 half-level ties per image, at coordinates with exactly zero gradient. | Report §3, §5.6 |
 | **Exploratory** (development data) | Gradients decorrelate after one ε/4 step. bf16 vision rotates the gradient but not the attack outcome. A slight cross-context asymmetry. | [Checkpoint 2.3 report](docs/checkpoint-2.3-exploratory/REPORT.md) |
 | **Exploratory negative** (16 development scenes) | The sign-consensus masks tested (sign votes over 1–8 random points at ±ε/4, 4 sparse on-grid points, 2 points at ±ε/16, and an fp32 vote) do **not** reproduce PGD's selection: the strongest recovers 5% of the selection gain [−5%, 14%]. Smoothed-gradient magnitude is worse than random. Matching PGD's per-patch density (16 px) recovers about a fifth of the gain. Other samplers and consensus rules were not tested. | [Checkpoint 3 pilot report](docs/checkpoint-3-mechanism/PILOT_REPORT.md) |
+| **Exploratory, second model** (48 development scenes) | On InternVL3.5-1B with single-tile preprocessing, PGD-3's subset again beats matched random subsets (+3.98 [3.53, 4.42], pooled). The magnitude-ranking result is not reproduced (−0.10 [−0.24, 0.07]; no equivalence margin set), so it is stated for Qwen only. | [Checkpoint 4 Stage 1 report at `00e8530`](https://github.com/fcavaletto/vlm-crossmodal-attack-transfer/blob/00e8530a5232430e1f7e5fb7111f6cb2b24db63c/docs/checkpoint-4-internvl/STAGE1_REPORT.md) (branch `research/internvl-stage0`) |
 | **Not established** | The mechanism; generality to other models, budgets and precisions. | Report §7 |
 
 ## Exploratory follow-up after the confirmation: bf16 vs full fp32 (not a confirmation)
@@ -61,11 +70,11 @@ The confirmed study ran Qwen3-VL-2B in bf16. A later **exploratory** check asked
 - **Caveats:**
   - The gate requiring the GPU bf16 run to reproduce the Mac (MPS) bf16 clean margins passed **exactly at its tolerances** (median 0.25, 95th percentile 0.75 logits).
   - One model, one GPU, development data.
-  - This is **not** an independent confirmation and **not** a general precision-independence result. The Checkpoint 2.4 held-out confirmation above remains the primary result. The manuscript and frozen protocol are unchanged.
+  - This is **not** an independent confirmation and **not** a general precision-independence result. The Checkpoint 2.4 held-out confirmation above remains the primary result. The frozen protocol is unchanged; the manuscript reports this check as exploratory (its Table 2).
 
 ## Read next
 
-- **Manuscript (preprint-style):** [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md)
+- **Manuscript (research preprint, review draft):** [PDF](docs/paper/Cavaletto_2026_Which-Coordinates-Not-How-Many_review-draft.pdf); source [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md), rendered by [`docs/paper/build_pdf.py`](docs/paper/build_pdf.py)
 - **Full confirmation report:** [`docs/checkpoint-2.4-confirm/REPORT.md`](docs/checkpoint-2.4-confirm/REPORT.md)
 - **Frozen protocol and hashes:** [`PROTOCOL.md`](docs/checkpoint-2.4-confirm/PROTOCOL.md), [`FROZEN.json`](docs/checkpoint-2.4-confirm/FROZEN.json)
 - **One-page research summary:** [`docs/RESEARCH_SUMMARY.md`](docs/RESEARCH_SUMMARY.md)
@@ -170,7 +179,7 @@ Every checkpoint keeps its plan, frozen records and deviations. Earlier results 
 |---|---|
 | Original source code and tests: `src/`, `tests/`, `tools/`, `conftest.py`, the `.py` scripts under `docs/`, CI configuration | [MIT](LICENSE) |
 | Original synthetic scenes and their manifests (`fixtures/`), experimental records, figures, and research documentation under `docs/` | [CC BY 4.0](LICENSE-CC-BY-4.0.txt) |
-| The draft manuscript, [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md) | **Not licensed for reuse yet** (all rights reserved), pending a publication decision. You may read and cite it. |
+| The draft manuscript in all its versions: the Markdown source [`docs/paper/MANUSCRIPT.md`](docs/paper/MANUSCRIPT.md), its HTML rendering `docs/paper/MANUSCRIPT.html`, and the [PDF](docs/paper/Cavaletto_2026_Which-Coordinates-Not-How-Many_review-draft.pdf) | **Not licensed for reuse yet** (all rights reserved), pending a publication decision. You may read and cite it. Its figure (`docs/paper/figures/figure1_main.svg`) and build scripts follow the rows above. |
 
 **Not covered.** Nothing here relicenses third-party material:
 - **Not in the repository:** the Qwen3-VL-2B-Instruct and SmolVLM2 weights, which are downloaded from their publishers and remain under their own licenses, and the Python dependencies in `requirements-ci.txt`.

@@ -23,5 +23,6 @@ abstract: >-
   which RGB channel coordinates it perturbs, and that two standard
   clean-gradient rules rank those coordinates below random. Source code is
   MIT-licensed; original synthetic scenes, experimental records, figures and
-  research documentation are CC BY 4.0; see the README's License section for
-  exclusions.
+  research documentation are CC BY 4.0. The draft manuscript (Markdown, HTML
+  and PDF versions) is not licensed for reuse; see the README's License
+  section for this and other exclusions.
