@@ -276,24 +276,53 @@ def _script():
     return mod
 
 
-def _write_run(tmp_path, status, n=4):
-    planned = [f"s{i:02d}" for i in range(n)]
+def _write_run(tmp_path, status, planned=None, record_scenes=None):
+    """A synthetic run (records are made up; no real smoke or pilot output is read)."""
+    planned = list(_script().FROZEN_S16) if planned is None else planned
     rows = []
-    for sid in planned:
+    for sid in (planned if record_scenes is None else record_scenes):
         rows += scene_rows(sid, 10, additive)
         rows.append({"kind": "structure", "scene_id": sid, "k_retained": 10, "n_pgd_support": 11, "n_excluded_outside_fgsm": 1,
                      "sign_disagreements_on_overlap": 0, "pgd_sign_counts": {}, "quarter_sizes": [3, 3, 2, 2]})
         rows.append({"kind": "pgd_official", "scene_id": sid, "bit_exact_vs_record": True})
     (tmp_path / "records.jsonl").write_text("".join(json.dumps(r) + "\n" for r in rows))
-    (tmp_path / "progress.json").write_text(json.dumps({"status": status, "planned_scenes": planned, "plan_commit": "x",
-                                                        "drift_check": {"exact": True}}))
+    (tmp_path / "progress.json").write_text(json.dumps({"status": status, "planned_scenes": planned, "scene_order": planned,
+                                                        "plan_commit": "x", "drift_check": {"exact": True}}))
+
+
+def test_canonical_s16_matches_the_frozen_list():
+    mod = _script()
+    assert mod.canonical_s16() == list(mod.FROZEN_S16) and len(set(mod.FROZEN_S16)) == 16
 
 
 def test_analysis_script_runs_on_a_complete_synthetic_run(tmp_path):
     _write_run(tmp_path, "completed")
     res = _script().analyze(tmp_path)
-    assert res["panel"]["n_scenes"] == 4 and res["structure"]["s00"]["n_excluded_outside_fgsm"] == 1
+    assert res["panel"]["n_scenes"] == 16 and res["structure"]["dev4-ref-00-a"]["n_excluded_outside_fgsm"] == 1
     assert res["panel"]["fixed"]["Delta"]["mean"] == pytest.approx(0, abs=1e-12)
+
+
+def test_a_completed_one_scene_smoke_is_rejected(tmp_path):
+    # A successful smoke is marked "completed" and its progress file plans exactly its one scene.
+    _write_run(tmp_path, "completed", planned=["dev4-ref-00-a"])
+    with pytest.raises(SystemExit, match="frozen s16"):
+        _script().analyze(tmp_path)
+    out = Path(__file__).resolve().parents[2] / "docs/checkpoint-3b-partition/analysis/partition_analysis.json"
+    assert not out.exists()
+
+
+def test_records_covering_other_scenes_are_rejected(tmp_path):
+    mod = _script()
+    s16 = list(mod.FROZEN_S16)
+    _write_run(tmp_path, "completed", record_scenes=s16[:15])  # one planned scene has no records
+    with pytest.raises(SystemExit, match="cover 15 scenes"):
+        mod.analyze(tmp_path)
+    _write_run(tmp_path, "completed", record_scenes=s16 + ["dev4-ref-01-a"])  # an extra scene
+    with pytest.raises(SystemExit, match="cover 17 scenes"):
+        mod.analyze(tmp_path)
+    _write_run(tmp_path, "completed", planned=s16[::-1])  # right scenes, wrong order
+    with pytest.raises(SystemExit, match="frozen s16"):
+        mod.analyze(tmp_path)
 
 
 @pytest.mark.parametrize("status", ["incomplete_time_cap", "stopped", "drift_check_failed"])
