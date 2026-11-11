@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attack-feasibility"
+version = "0.1.0"
+description = "Checkpoint 1.9 development attack feasibility. Does not fit H*."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["attack_feasibility*"]

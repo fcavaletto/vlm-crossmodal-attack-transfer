@@ -1,0 +1,104 @@
+{
+ "compared": 74,
+ "mismatches": [],
+ "dev_decisions_under_confirm_rules": {
+  "P1_selection_beats_matched_random": {
+   "rule": "mean(D_PGD3 - mean_r D_rand_r) > 0 in neutral and in helpful, and pooled 95% CI lower bound > 0",
+   "neutral": {
+    "n": 48,
+    "estimate": 5.80469,
+    "ci95": [
+     5.03411,
+     6.58366
+    ],
+    "nonfinite_draws": 0
+   },
+   "helpful_nonrevealing": {
+    "n": 48,
+    "estimate": 5.92578,
+    "ci95": [
+     5.18879,
+     6.61558
+    ],
+    "nonfinite_draws": 0
+   },
+   "pooled": {
+    "n": 48,
+    "estimate": 5.86523,
+    "ci95": [
+     5.23747,
+     6.50863
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "S1_sparsity_share_at_most_0.25": {
+   "rule": "pooled share = (mean D_rand - mean D_FGSM)/(mean D_PGD3 - mean D_FGSM); 95% CI upper bound <= 0.25",
+   "share": {
+    "n": 48,
+    "estimate": 0.07581,
+    "ci95": [
+     0.01033,
+     0.13586
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "S2_topk_gradient_worse_than_random": {
+   "rule": "mean(D_topk - D_rand) < 0 in neutral and in helpful, and pooled 95% CI upper bound < 0",
+   "neutral": {
+    "n": 48,
+    "estimate": -1.64583,
+    "ci95": [
+     -2.16927,
+     -1.1403
+    ],
+    "nonfinite_draws": 0
+   },
+   "helpful_nonrevealing": {
+    "n": 48,
+    "estimate": -1.53516,
+    "ci95": [
+     -1.93687,
+     -1.138
+    ],
+    "nonfinite_draws": 0
+   },
+   "pooled": {
+    "n": 48,
+    "estimate": -1.59049,
+    "ci95": [
+     -2.02561,
+     -1.16779
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "complete_sample": true
+ },
+ "structure": {
+  "units": 96,
+  "sign_reversals_total": 0,
+  "max_levels": 1,
+  "units_with_coords_outside_fgsm_support": 86,
+  "max_outside_coords": 7,
+  "outside_all_half_level_ties": true,
+  "outside_all_zero_clean_gradient": true,
+  "density_in_fgsm_support": {
+   "mean": {
+    "n": 96,
+    "estimate": 0.29738,
+    "ci95": [
+     0.29415,
+     0.3006
+    ],
+    "nonfinite_draws": 0
+   },
+   "median": 0.29817
+  },
+  "n_elements": 589824
+ }
+}

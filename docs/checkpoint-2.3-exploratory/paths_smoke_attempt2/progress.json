@@ -1,0 +1,349 @@
+{
+  "schema": "checkpoint-2.3.paths.progress.v1",
+  "label": "EXPLORATORY, DEVELOPMENT ONLY (SMOKE, not a result)",
+  "plan_commit": "0c6f17631e5dbdcc5dc0f8f5ea1b2ac5b9c7e7b9",
+  "git_head_at_start": "a7102b40cbbc7e31ac6d3eb2860fe4392bdf649f",
+  "locked_inputs": {
+    "manifest_rows": 96,
+    "checksum_files": 100,
+    "prediction_rows": 384,
+    "primary_rows": 192,
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "predictions_rewritten": false,
+    "decision_rule": "lowest summed NLL, then color name"
+  },
+  "scene_order": [
+    "dev4-ref-00-a"
+  ],
+  "subset_s16": [
+    "dev4-ref-00-a"
+  ],
+  "epsilon": 0.00392156862745098,
+  "caps_seconds": {
+    "stage12": 14040.0,
+    "stage3_start": 14400.0,
+    "total": 16560.0
+  },
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "pid": 71409,
+  "frozen_outputs_written": false,
+  "sealed_or_new_samples_used": false,
+  "stages": {
+    "B": {
+      "measured": 1,
+      "unmeasured_by_cap": [],
+      "seconds": 184.4
+    }
+  },
+  "scenes": {
+    "dev4-ref-00-a": {
+      "mode_B": true,
+      "seconds": 184.38,
+      "steps": 3
+    }
+  },
+  "limitations": [
+    "Full fp32 was not attempted: the frozen guard requires 20871410752 available bytes, and 10756521984 were available (float32 permitted: False). The guard was not lowered.",
+    "The frozen Checkpoint 1.5 guard refused this bf16 load; it ran under EMP-1 with pressure monitoring. Numerics are unchanged; only the memory headroom rule differs."
+  ],
+  "memory_policy": "EMP-1 (exploratory; MEMORY_ASSESSMENT.md)",
+  "numerical_configuration": "identical to Checkpoint 2.1: bf16 weights on MPS, eager attention, frozen load call, frozen gradient/step/score functions",
+  "budget": {
+    "available_bytes": 10756521984,
+    "decisions": {
+      "float32": {
+        "resident_bytes": 8510128128,
+        "available_bytes": 10756521984,
+        "required_available_bytes": 20871410752,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 13878837248,
+          "calibrated_projection": 20871410752,
+          "staging_double_copy": 17020256256
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "spare_above_weights",
+          "calibrated_projection",
+          "staging_double_copy"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+        "dtype": "float32"
+      },
+      "bfloat16": {
+        "resident_bytes": 4255064064,
+        "available_bytes": 10756521984,
+        "required_available_bytes": 11509447200,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 9623773184,
+          "calibrated_projection": 11509447200,
+          "staging_double_copy": 8510128128
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "calibrated_projection"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+        "dtype": "bfloat16"
+      }
+    },
+    "bf16_probe": {
+      "mps_available": true,
+      "mps_built": true,
+      "add_ok": true,
+      "matmul_ok": true,
+      "is_model_forward": false
+    },
+    "guard_lowered": false
+  },
+  "frozen_guard_bf16_permitted": false,
+  "emp1_preload": {
+    "policy": "EMP-1",
+    "lines": {
+      "available_bytes": 8364448808,
+      "pressure_level_max": 1,
+      "free_disk_bytes": 10737418240
+    },
+    "sample": {
+      "t": 1794213488.350555,
+      "pressure": 1,
+      "available": 10756521984,
+      "swap_used": 524288,
+      "footprint": 466781408,
+      "footprint_max": 466781408
+    },
+    "free_disk_bytes": 33372786688,
+    "failed": [],
+    "permitted": true
+  },
+  "footprint_before_load": {
+    "current": 466830560,
+    "lifetime_max": 466830560
+  },
+  "load_permit": {
+    "permitted": true,
+    "policy": "EMP-1",
+    "frozen_bf16_decision_permitted": false,
+    "emp1_preload": {
+      "policy": "EMP-1",
+      "lines": {
+        "available_bytes": 8364448808,
+        "pressure_level_max": 1,
+        "free_disk_bytes": 10737418240
+      },
+      "sample": {
+        "t": 1794213488.350555,
+        "pressure": 1,
+        "available": 10756521984,
+        "swap_used": 524288,
+        "footprint": 466781408,
+        "footprint_max": 466781408
+      },
+      "free_disk_bytes": 33372786688,
+      "failed": [],
+      "permitted": true
+    }
+  },
+  "loaded_model": {
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 5.678
+  },
+  "memory_monitor": {
+    "samples": 374,
+    "by_level": {
+      "1": 373,
+      "2": 1
+    },
+    "min_available": 4642848768,
+    "max_swap_used": 524288,
+    "max_swap_growth": 0,
+    "timeline": [
+      {
+        "t": 1794213488.350925,
+        "pressure": 1,
+        "available": 10756521984,
+        "swap_used": 524288,
+        "footprint": 466830560,
+        "footprint_max": 466830560
+      },
+      {
+        "t": 1794213498.51724,
+        "pressure": 1,
+        "available": 4878450688,
+        "swap_used": 524288,
+        "footprint": 8970012016,
+        "footprint_max": 8970012016
+      },
+      {
+        "t": 1794213508.657193,
+        "pressure": 1,
+        "available": 6918848512,
+        "swap_used": 524288,
+        "footprint": 8908113264,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213518.839649,
+        "pressure": 1,
+        "available": 5163089920,
+        "swap_used": 524288,
+        "footprint": 8869660064,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213529.0179808,
+        "pressure": 1,
+        "available": 5653463040,
+        "swap_used": 524288,
+        "footprint": 8869643680,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213539.188308,
+        "pressure": 1,
+        "available": 5217648640,
+        "swap_used": 524288,
+        "footprint": 8886584736,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213549.350424,
+        "pressure": 1,
+        "available": 6800605184,
+        "swap_used": 524288,
+        "footprint": 8886584736,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213559.5263512,
+        "pressure": 1,
+        "available": 5449302016,
+        "swap_used": 524288,
+        "footprint": 8895120800,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213569.749114,
+        "pressure": 1,
+        "available": 9426190336,
+        "swap_used": 524288,
+        "footprint": 6521144736,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213580.032963,
+        "pressure": 1,
+        "available": 8499757056,
+        "swap_used": 524288,
+        "footprint": 5546034616,
+        "footprint_max": 8970028400
+      },
+      {
+        "t": 1794213590.219738,
+        "pressure": 1,
+        "available": 5497946112,
+        "swap_used": 524288,
+        "footprint": 8967390696,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213600.393505,
+        "pressure": 1,
+        "available": 6634881024,
+        "swap_used": 524288,
+        "footprint": 8967390696,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213610.5677,
+        "pressure": 1,
+        "available": 5699272704,
+        "swap_used": 524288,
+        "footprint": 8936228328,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213620.732652,
+        "pressure": 1,
+        "available": 6226968576,
+        "swap_used": 524288,
+        "footprint": 8936228328,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213630.899232,
+        "pressure": 1,
+        "available": 8505180160,
+        "swap_used": 524288,
+        "footprint": 5535483368,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213641.063435,
+        "pressure": 1,
+        "available": 5144199168,
+        "swap_used": 524288,
+        "footprint": 8962573800,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213651.248773,
+        "pressure": 1,
+        "available": 5951389696,
+        "swap_used": 524288,
+        "footprint": 8941159912,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213661.425506,
+        "pressure": 1,
+        "available": 5429329920,
+        "swap_used": 524288,
+        "footprint": 8941127144,
+        "footprint_max": 9031550440
+      },
+      {
+        "t": 1794213671.598203,
+        "pressure": 1,
+        "available": 6642057216,
+        "swap_used": 524288,
+        "footprint": 8941127144,
+        "footprint_max": 9031550440
+      }
+    ],
+    "process_peak_footprint": 9031550440
+  },
+  "last_memory": {
+    "tag": "dev4-ref-00-a",
+    "device": "mps",
+    "peak_rss_mb": 605.0,
+    "current_rss_mb": 599.6,
+    "os_available_mb": 8270.3,
+    "mps_driver_allocated_mb": 4749.7,
+    "mps_current_allocated_mb": 4072.9,
+    "footprint": {
+      "current": 5537416680,
+      "lifetime_max": 9031550440
+    }
+  },
+  "elapsed_seconds": 184.4,
+  "status": "error",
+  "error": "AttributeError: 'Qwen3VLForConditionalGeneration' object has no attribute 'visual'",
+  "footprint_end": {
+    "current": 5537383912,
+    "lifetime_max": 9031550440
+  }
+}

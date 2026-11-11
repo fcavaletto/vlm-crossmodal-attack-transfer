@@ -1,0 +1,22 @@
+{
+  "purpose": "Checkpoint 2.4 freeze. The confirmation runner refuses to start unless each file hashes to this value and this file is committed.",
+  "frozen_on": "2026-11-09",
+  "confirmation_inference_before_freeze": false,
+  "files": {
+    "docs/checkpoint-2.4-confirm/PROTOCOL.md": "14e710194b07dd9e3cf0a71dbad1bc86d590e98023db0b7f7be7ec316ad00a98",
+    "docs/checkpoint-2.4-confirm/analyze_confirm.py": "e61d540319e2852ef6c31f305af8495dafa36d05009b581509cf484fc55663b0",
+    "src/path_probe/path_probe/confirm_stage.py": "8342a5fe23e11ddf126529d4c0bcf1f704cdf341bbb320a2fa6bbbf64bf3fa06",
+    "src/path_probe/path_probe/masks.py": "c7cfd379c083999b4fb2c501deeff2abed908d096f5ac24016814fd12239f3e0",
+    "src/path_probe/path_probe/probe.py": "cdb9628ca488e20a758946e69c51de85a66f54ee092f11421edb1612ac7550e3",
+    "src/path_probe/path_probe/backend.py": "9beb7e06819f222d1372704485874a0bda3ed1f2cee7eecdefe98ff1345ec3c7",
+    "src/path_probe/path_probe/memory.py": "8e6c6853365267f08094713b46fba15c00ab1653fc846990c3dbf20c0da617bd",
+    "src/path_probe/path_probe/precision.py": "303a4402f0bd9b1ad4ea4732eeaa3421e625f3aaaa56ac0a9c5f0582fd944a80",
+    "src/path_probe/path_probe/geometry.py": "27111b39e7740ae594ecd575bd88e2ab44791936468359f27a5be055858b008f",
+    "src/path_probe/path_probe/run.py": "89843a5832244235f1cd918a713374bd274619b81eea60fd48e7c4dc525f2228",
+    "src/scene_confirm/scene_confirm/draw.py": "96d4993abc088e19e8552b7d96fb4b480f7ef6928d1ddb6abf7f7c440852733f",
+    "src/scene_confirm/scene_confirm/generate.py": "98c1a413d78c7246934a5b03fd7d52d8dd5cf043da5441ecaa4434b9194b20ad",
+    "fixtures/trackB_confirm_v1/manifest.jsonl": "fcd8b4ef19b78dfaf6d8a18122b3d47e52ad7deacb88624741a9596aa33b5d55",
+    "fixtures/trackB_confirm_v1/checksums.json": "916923b11d1181094a1d1c95dc713289dd56f12f5c94a6089728dc369b2125de",
+    "fixtures/trackB_confirm_v1/metadata.json": "f0d25e0187c07e2606dd1d9e25c4dd48f4f8df32d4f17c7443927b1e74f32d89"
+  }
+}

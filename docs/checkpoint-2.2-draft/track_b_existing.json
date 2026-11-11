@@ -1,0 +1,271 @@
+{
+ "schema": "checkpoint-2.2-draft.track_b_existing.v1",
+ "status": "exploratory, development data, post hoc",
+ "n_scenes": 96,
+ "clamping": {
+  "min_channel": 32,
+  "max_channel": 236,
+  "any_channel_within_1_of_bounds": false,
+  "note": "renderer draws without antialiasing, so every pixel is one of these colors"
+ },
+ "output_precision": {
+  "n_margins": 1536,
+  "share_multiple_of_0.25": 0.9108,
+  "share_multiple_of_0.125": 1.0,
+  "share_multiple_of_0.0625": 1.0,
+  "smallest_nonzero_abs_margin_change": 0.125,
+  "share_of_scene_attack_context_cells_with_zero_margin_change": 0.043
+ },
+ "attacks_same_ball": {
+  "fgsm": {
+   "source_n": {
+    "dNLL": {
+     "n": 96,
+     "median": 0.127,
+     "p10": 0.0125,
+     "p90": 2.6591
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 3.125,
+     "p10": 0.4375,
+     "p90": 6.5
+    },
+    "flip_rate": 0.1875
+   },
+   "transfer_h": {
+    "dNLL": {
+     "n": 96,
+     "median": 0.0917,
+     "p10": 0.008,
+     "p90": 1.8568
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 2.75,
+     "p10": 0.75,
+     "p90": 5.875
+    },
+    "flip_rate": 0.1771
+   },
+   "linf_after_round_trip_median": 1.0,
+   "linf_before_round_trip_median": 1.0
+  },
+  "pgd3": {
+   "source_n": {
+    "dNLL": {
+     "n": 96,
+     "median": 3.6076,
+     "p10": 0.2762,
+     "p90": 9.5889
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 9.5,
+     "p10": 4.3125,
+     "p90": 14.25
+    },
+    "flip_rate": 0.5729
+   },
+   "transfer_h": {
+    "dNLL": {
+     "n": 96,
+     "median": 2.1782,
+     "p10": 0.1033,
+     "p90": 7.9057
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 8.25,
+     "p10": 4.4375,
+     "p90": 13.125
+    },
+    "flip_rate": 0.6458
+   },
+   "linf_after_round_trip_median": 1.0,
+   "linf_before_round_trip_median": 0.75
+  },
+  "pgd7": {
+   "source_n": {
+    "dNLL": {
+     "n": 96,
+     "median": 10.6696,
+     "p10": 3.7191,
+     "p90": 14.939
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 17.0,
+     "p10": 11.625,
+     "p90": 22.0
+    },
+    "flip_rate": 0.875
+   },
+   "transfer_h": {
+    "dNLL": {
+     "n": 96,
+     "median": 8.7399,
+     "p10": 2.747,
+     "p90": 12.7002
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": 14.6875,
+     "p10": 10.9375,
+     "p90": 19.375
+    },
+    "flip_rate": 0.9062
+   },
+   "linf_after_round_trip_median": 1.0,
+   "linf_before_round_trip_median": 1.0
+  },
+  "random": {
+   "source_n": {
+    "dNLL": {
+     "n": 96,
+     "median": -0.001,
+     "p10": -0.0524,
+     "p90": 0.0066
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": -0.1875,
+     "p10": -1.0,
+     "p90": 0.75
+    },
+    "flip_rate": 0.0208
+   },
+   "transfer_h": {
+    "dNLL": {
+     "n": 96,
+     "median": -0.0006,
+     "p10": -0.0264,
+     "p90": 0.0073
+    },
+    "margin_drop": {
+     "n": 96,
+     "median": -0.125,
+     "p10": -1.1875,
+     "p90": 0.75
+    },
+    "flip_rate": 0.0
+   },
+   "linf_after_round_trip_median": 1.0,
+   "linf_before_round_trip_median": 1.0
+  }
+ },
+ "pgd3_over_fgsm_source_margin_drop": {
+  "n": 87,
+  "median": 2.75,
+  "p10": 1.8749,
+  "p90": 5.85,
+  "restricted_to_fgsm_drop_gt_0.2": true
+ },
+ "first_order_nll_vs_margin": {
+  "fgsm": {
+   "realized_over_predicted_NLL": {
+    "n": 96,
+    "median": 0.0672,
+    "p10": 0.013,
+    "p90": 0.4419
+   },
+   "realized_over_predicted_margin_approx": {
+    "n": 96,
+    "median": 0.025,
+    "p10": 0.0041,
+    "p90": 0.0834
+   }
+  },
+  "pgd3": {
+   "realized_over_predicted_NLL": {
+    "n": 96,
+    "median": 0.9562,
+    "p10": 0.157,
+    "p90": 6.4513
+   },
+   "realized_over_predicted_margin_approx": {
+    "n": 96,
+    "median": 0.1143,
+    "p10": 0.0442,
+    "p90": 0.2504
+   }
+  },
+  "note": "margin prediction assumes one dominant competitor; it is an approximation, and stored margins are quantized (part 2), so small drops read as 0"
+ },
+ "alignment_asymmetry": {
+  "A_nh": {
+   "n": 96,
+   "median": 0.8557,
+   "p10": 0.7039,
+   "p90": 0.9381
+  },
+  "A_hn": {
+   "n": 96,
+   "median": 0.8616,
+   "p10": 0.7232,
+   "p90": 0.9412
+  },
+  "corr_A_nh_A_hn": 0.93,
+  "median_A_nh_minus_A_hn": 0.004,
+  "share_A_nh_gt_A_hn": 0.5938,
+  "log_L1_h_over_L1_n": {
+   "n": 96,
+   "median": -0.5313,
+   "p10": -1.7592,
+   "p90": 0.5397
+  },
+  "predicted_first_order_transfer_n_to_h_over_h_to_n": {
+   "n": 96,
+   "median": 0.5748,
+   "p10": 0.1748,
+   "p90": 1.7225
+  },
+  "note": "A(n,h) = g_h' sign(g_n)/||g_h||_1. Predicted first-order transfer n->h is eps*A(n,h)*||g_h||_1 and h->n is eps*A(h,n)*||g_n||_1. No helpful-source attack was ever run, so realized asymmetry is unknown."
+ },
+ "contexts": {
+  "clean_margin_neutral": {
+   "n": 96,
+   "median": 7.0,
+   "p10": 2.25,
+   "p90": 12.125
+  },
+  "clean_margin_helpful": {
+   "n": 96,
+   "median": 7.0,
+   "p10": 2.75,
+   "p90": 10.625
+  },
+  "share_helpful_margin_gt_neutral": 0.5,
+  "clean_L1_neutral": {
+   "n": 96,
+   "median": 549.0656,
+   "p10": 73.0433,
+   "p90": 8912.7186
+  },
+  "clean_L1_helpful": {
+   "n": 96,
+   "median": 296.7194,
+   "p10": 72.2262,
+   "p90": 4512.2953
+  },
+  "fgsm_transfer_ratio_dLh_over_dLn": {
+   "n": 66,
+   "median": 0.608,
+   "p10": 0.153,
+   "p90": 1.5492
+  },
+  "pgd3_transfer_ratio_dLh_over_dLn": {
+   "n": 96,
+   "median": 0.6619,
+   "p10": 0.2168,
+   "p90": 1.1955
+  },
+  "pgd7_transfer_ratio_dLh_over_dLn": {
+   "n": 96,
+   "median": 0.8181,
+   "p10": 0.4575,
+   "p90": 0.9893
+  },
+  "note": "transfer ratio < 1 is expected even with identical robustness, because the attack optimized the neutral loss. It is not evidence that helpful text is protective."
+ }
+}

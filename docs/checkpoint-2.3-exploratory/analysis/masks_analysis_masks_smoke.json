@@ -1,0 +1,1590 @@
+{
+ "schema": "checkpoint-2.3b.masks.analysis.v1",
+ "status": "exploratory, development data, descriptive",
+ "run_status": "completed",
+ "stopped_reason": null,
+ "limitations": [],
+ "n_units": 2,
+ "n_scenes": 1,
+ "primary_seeds": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7
+ ],
+ "n_clean_correct_scenes": 1,
+ "pipeline_check": {
+  "n": 2,
+  "bit_exact": 2,
+  "same_image": 2
+ },
+ "structure": {
+  "units": 2,
+  "sign_reversals_total": 0,
+  "max_levels": 1,
+  "units_with_outside_coords": 1,
+  "max_outside_coords": 7,
+  "outside_all_half_level_ties": true,
+  "outside_all_zero_clean_gradient": true,
+  "density_in_fgsm_support": {
+   "mean": {
+    "n": 2,
+    "estimate": 0.27272,
+    "ci95": [
+     0.25696,
+     0.28848
+    ]
+   },
+   "median": {
+    "n": 2,
+    "estimate": 0.27272,
+    "ci95": [
+     0.25696,
+     0.28848
+    ]
+   }
+  }
+ },
+ "margin_drop_source": {
+  "neutral": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.5,
+     "ci95": [
+      4.5,
+      4.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.5,
+     "ci95": [
+      4.5,
+      4.5
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 10.75,
+     "ci95": [
+      10.75,
+      10.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 10.75,
+     "ci95": [
+      10.75,
+      10.75
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.84375,
+     "ci95": [
+      4.84375,
+      4.84375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.84375,
+     "ci95": [
+      4.84375,
+      4.84375
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.34375,
+     "ci95": [
+      0.34375,
+      0.34375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.34375,
+     "ci95": [
+      0.34375,
+      0.34375
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.90625,
+     "ci95": [
+      5.90625,
+      5.90625
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.90625,
+     "ci95": [
+      5.90625,
+      5.90625
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": -0.09375,
+     "ci95": [
+      -0.09375,
+      -0.09375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -0.09375,
+     "ci95": [
+      -0.09375,
+      -0.09375
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 6.0,
+     "ci95": [
+      6.0,
+      6.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 6.0,
+     "ci95": [
+      6.0,
+      6.0
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 6.25,
+     "ci95": [
+      6.25,
+      6.25
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 6.25,
+     "ci95": [
+      6.25,
+      6.25
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": 0.055,
+    "ci95": [
+     0.055,
+     0.055
+    ]
+   },
+   "pgd_rank_among_random_seeds": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "units_pgd_beats_all_seeds": 1,
+   "units_pgd_below_all_seeds": 0,
+   "within_unit_seed_sd_median": 0.2652,
+   "flip_rate": {
+    "fgsm": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "pgd": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "topk": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "rand": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 1,
+    "estimate": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ]
+   },
+   "flip_rand_minus_fgsm": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "flip_topk_minus_rand": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "helpful_nonrevealing": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 6.0,
+     "ci95": [
+      6.0,
+      6.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 6.0,
+     "ci95": [
+      6.0,
+      6.0
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 9.0,
+     "ci95": [
+      9.0,
+      9.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 9.0,
+     "ci95": [
+      9.0,
+      9.0
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.5,
+     "ci95": [
+      5.5,
+      5.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.5,
+     "ci95": [
+      5.5,
+      5.5
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.375,
+     "ci95": [
+      4.375,
+      4.375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.375,
+     "ci95": [
+      4.375,
+      4.375
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": -1.625,
+     "ci95": [
+      -1.625,
+      -1.625
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -1.625,
+     "ci95": [
+      -1.625,
+      -1.625
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.625,
+     "ci95": [
+      4.625,
+      4.625
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.625,
+     "ci95": [
+      4.625,
+      4.625
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.125,
+     "ci95": [
+      1.125,
+      1.125
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.125,
+     "ci95": [
+      1.125,
+      1.125
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 3.5,
+     "ci95": [
+      3.5,
+      3.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 3.5,
+     "ci95": [
+      3.5,
+      3.5
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 3.0,
+     "ci95": [
+      3.0,
+      3.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 3.0,
+     "ci95": [
+      3.0,
+      3.0
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": -0.54167,
+    "ci95": [
+     -0.54167,
+     -0.54167
+    ]
+   },
+   "pgd_rank_among_random_seeds": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "units_pgd_beats_all_seeds": 1,
+   "units_pgd_below_all_seeds": 0,
+   "within_unit_seed_sd_median": 0.1336,
+   "flip_rate": {
+    "fgsm": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "pgd": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "topk": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "rand": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 1,
+    "estimate": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ]
+   },
+   "flip_rand_minus_fgsm": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "flip_topk_minus_rand": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "pooled": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.25,
+     "ci95": [
+      5.25,
+      5.25
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.25,
+     "ci95": [
+      5.25,
+      5.25
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 9.875,
+     "ci95": [
+      9.875,
+      9.875
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 9.875,
+     "ci95": [
+      9.875,
+      9.875
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.125,
+     "ci95": [
+      5.125,
+      5.125
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.125,
+     "ci95": [
+      5.125,
+      5.125
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.60938,
+     "ci95": [
+      4.60938,
+      4.60938
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.60938,
+     "ci95": [
+      4.60938,
+      4.60938
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": -0.64062,
+     "ci95": [
+      -0.64062,
+      -0.64062
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -0.64062,
+     "ci95": [
+      -0.64062,
+      -0.64062
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.26562,
+     "ci95": [
+      5.26562,
+      5.26562
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.26562,
+     "ci95": [
+      5.26562,
+      5.26562
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.51563,
+     "ci95": [
+      0.51563,
+      0.51563
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.51563,
+     "ci95": [
+      0.51563,
+      0.51563
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.625,
+     "ci95": [
+      4.625,
+      4.625
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.625,
+     "ci95": [
+      4.625,
+      4.625
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": -0.13851,
+    "ci95": [
+     -0.13851,
+     -0.13851
+    ]
+   }
+  }
+ },
+ "margin_drop_target": {
+  "neutral": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 6.25,
+     "ci95": [
+      6.25,
+      6.25
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 6.25,
+     "ci95": [
+      6.25,
+      6.25
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 8.75,
+     "ci95": [
+      8.75,
+      8.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 8.75,
+     "ci95": [
+      8.75,
+      8.75
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.3125,
+     "ci95": [
+      4.3125,
+      4.3125
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.3125,
+     "ci95": [
+      4.3125,
+      4.3125
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": -1.9375,
+     "ci95": [
+      -1.9375,
+      -1.9375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -1.9375,
+     "ci95": [
+      -1.9375,
+      -1.9375
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.4375,
+     "ci95": [
+      4.4375,
+      4.4375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.4375,
+     "ci95": [
+      4.4375,
+      4.4375
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.4375,
+     "ci95": [
+      0.4375,
+      0.4375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.4375,
+     "ci95": [
+      0.4375,
+      0.4375
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.0,
+     "ci95": [
+      4.0,
+      4.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.0,
+     "ci95": [
+      4.0,
+      4.0
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 2.5,
+     "ci95": [
+      2.5,
+      2.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 2.5,
+     "ci95": [
+      2.5,
+      2.5
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": -0.775,
+    "ci95": [
+     -0.775,
+     -0.775
+    ]
+   },
+   "pgd_rank_among_random_seeds": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "units_pgd_beats_all_seeds": 1,
+   "units_pgd_below_all_seeds": 0,
+   "within_unit_seed_sd_median": 0.2588,
+   "flip_rate": {
+    "fgsm": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "pgd": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "topk": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "rand": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 1,
+    "estimate": 1.0,
+    "ci95": [
+     1.0,
+     1.0
+    ]
+   },
+   "flip_rand_minus_fgsm": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "flip_topk_minus_rand": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "helpful_nonrevealing": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.5,
+     "ci95": [
+      5.5,
+      5.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.5,
+     "ci95": [
+      5.5,
+      5.5
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 7.25,
+     "ci95": [
+      7.25,
+      7.25
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 7.25,
+     "ci95": [
+      7.25,
+      7.25
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.15625,
+     "ci95": [
+      4.15625,
+      4.15625
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.15625,
+     "ci95": [
+      4.15625,
+      4.15625
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": -1.34375,
+     "ci95": [
+      -1.34375,
+      -1.34375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -1.34375,
+     "ci95": [
+      -1.34375,
+      -1.34375
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 3.09375,
+     "ci95": [
+      3.09375,
+      3.09375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 3.09375,
+     "ci95": [
+      3.09375,
+      3.09375
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.59375,
+     "ci95": [
+      0.59375,
+      0.59375
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.59375,
+     "ci95": [
+      0.59375,
+      0.59375
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 2.5,
+     "ci95": [
+      2.5,
+      2.5
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 2.5,
+     "ci95": [
+      2.5,
+      2.5
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.75,
+     "ci95": [
+      1.75,
+      1.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.75,
+     "ci95": [
+      1.75,
+      1.75
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": -0.76786,
+    "ci95": [
+     -0.76786,
+     -0.76786
+    ]
+   },
+   "pgd_rank_among_random_seeds": {
+    "mean": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ]
+    }
+   },
+   "units_pgd_beats_all_seeds": 1,
+   "units_pgd_below_all_seeds": 0,
+   "within_unit_seed_sd_median": 0.5165,
+   "flip_rate": {
+    "fgsm": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "pgd": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "topk": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    },
+    "rand": {
+     "n": 1,
+     "estimate": 0.0,
+     "ci95": [
+      0.0,
+      0.0
+     ]
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "flip_rand_minus_fgsm": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "flip_topk_minus_rand": {
+    "n": 1,
+    "estimate": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "pooled": {
+   "D_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 5.875,
+     "ci95": [
+      5.875,
+      5.875
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 5.875,
+     "ci95": [
+      5.875,
+      5.875
+     ]
+    }
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 8.0,
+     "ci95": [
+      8.0,
+      8.0
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 8.0,
+     "ci95": [
+      8.0,
+      8.0
+     ]
+    }
+   },
+   "D_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.75,
+     "ci95": [
+      4.75,
+      4.75
+     ]
+    }
+   },
+   "D_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 4.23438,
+     "ci95": [
+      4.23438,
+      4.23438
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 4.23438,
+     "ci95": [
+      4.23438,
+      4.23438
+     ]
+    }
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": -1.64063,
+     "ci95": [
+      -1.64063,
+      -1.64063
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": -1.64063,
+     "ci95": [
+      -1.64063,
+      -1.64063
+     ]
+    }
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 3.76562,
+     "ci95": [
+      3.76562,
+      3.76562
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 3.76562,
+     "ci95": [
+      3.76562,
+      3.76562
+     ]
+    }
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.51563,
+     "ci95": [
+      0.51563,
+      0.51563
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.51563,
+     "ci95": [
+      0.51563,
+      0.51563
+     ]
+    }
+   },
+   "pgd_minus_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 3.25,
+     "ci95": [
+      3.25,
+      3.25
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 3.25,
+     "ci95": [
+      3.25,
+      3.25
+     ]
+    }
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 1,
+     "estimate": 2.125,
+     "ci95": [
+      2.125,
+      2.125
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 2.125,
+     "ci95": [
+      2.125,
+      2.125
+     ]
+    }
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 1,
+    "estimate": -0.77206,
+    "ci95": [
+     -0.77206,
+     -0.77206
+    ]
+   }
+  }
+ },
+ "first_order_prediction_source_margin": {
+  "neutral": {
+   "pred_drop_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 42.55711,
+     "ci95": [
+      42.55711,
+      42.55711
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 42.55711,
+     "ci95": [
+      42.55711,
+      42.55711
+     ]
+    }
+   },
+   "pred_drop_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 115.90409,
+     "ci95": [
+      115.90409,
+      115.90409
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 115.90409,
+     "ci95": [
+      115.90409,
+      115.90409
+     ]
+    }
+   },
+   "pred_drop_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 43.95034,
+     "ci95": [
+      43.95034,
+      43.95034
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 43.95034,
+     "ci95": [
+      43.95034,
+      43.95034
+     ]
+    }
+   },
+   "pred_pgd_over_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.9683,
+     "ci95": [
+      0.9683,
+      0.9683
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.9683,
+     "ci95": [
+      0.9683,
+      0.9683
+     ]
+    }
+   },
+   "pred_topk_over_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 2.63716,
+     "ci95": [
+      2.63716,
+      2.63716
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 2.63716,
+     "ci95": [
+      2.63716,
+      2.63716
+     ]
+    }
+   }
+  },
+  "helpful_nonrevealing": {
+   "pred_drop_pgd": {
+    "mean": {
+     "n": 1,
+     "estimate": 40.6632,
+     "ci95": [
+      40.6632,
+      40.6632
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 40.6632,
+     "ci95": [
+      40.6632,
+      40.6632
+     ]
+    }
+   },
+   "pred_drop_topk": {
+    "mean": {
+     "n": 1,
+     "estimate": 132.09557,
+     "ci95": [
+      132.09557,
+      132.09557
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 132.09557,
+     "ci95": [
+      132.09557,
+      132.09557
+     ]
+    }
+   },
+   "pred_drop_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 45.19338,
+     "ci95": [
+      45.19338,
+      45.19338
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 45.19338,
+     "ci95": [
+      45.19338,
+      45.19338
+     ]
+    }
+   },
+   "pred_pgd_over_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 0.89976,
+     "ci95": [
+      0.89976,
+      0.89976
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 0.89976,
+     "ci95": [
+      0.89976,
+      0.89976
+     ]
+    }
+   },
+   "pred_topk_over_rand": {
+    "mean": {
+     "n": 1,
+     "estimate": 2.9229,
+     "ci95": [
+      2.9229,
+      2.9229
+     ]
+    },
+    "median": {
+     "n": 1,
+     "estimate": 2.9229,
+     "ci95": [
+      2.9229,
+      2.9229
+     ]
+    }
+   }
+  }
+ }
+}

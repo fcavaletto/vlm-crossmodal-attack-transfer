@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qwen-rgb-loss"
+version = "0.1.0"
+description = "Checkpoint 1.8 Qwen labeled-color RGB gradients. Does not run attacks."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["qwen_rgb_loss*"]

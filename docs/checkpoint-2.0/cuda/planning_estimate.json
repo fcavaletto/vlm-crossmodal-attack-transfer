@@ -1,0 +1,198 @@
+{
+  "assumptions": [
+    "Estimated CUDA scene time equals measured MPS scene time when assumed_cuda_seconds_per_mps_second is 1. No CUDA timing was measured, so 1 is a placeholder, not a benchmark.",
+    "Scene time scales linearly. The runner scores one scene at a time.",
+    "The measured MPS load of the finishing process is added once and is not scaled. It is not a CUDA load time.",
+    "The scaler is the sum of the sixteen Stage B scene seconds. Stage A is a single-step grid and is not the scaler. The finishing process wall clock excludes an earlier process and is not the scaler.",
+    "The 96-scene row is that same Stage B grid on every development_v4 scene. It is not the two-budget calibration grid.",
+    "The held-out row uses 256 scenes, the sealed-set size written in docs/research/RESEARCH_PROPOSAL.md section 12. No held-out file was opened. A different sealed count scales by the same per-scene seconds.",
+    "The hourly rate is the published on-demand Linux price. EBS, public IPv4, data transfer, and tax are not included.",
+    "Ratios 0.5 and 2 are sensitivities. They are not measurements."
+  ],
+  "attacks_run": false,
+  "cuda_numerical_validation": "not_executed",
+  "cuda_timing_measured": false,
+  "gpu": {
+    "gpu_count": 1,
+    "gpu_memory_class": "24 GB",
+    "gpu_name": "NVIDIA L4",
+    "host_memory_gib": 32,
+    "hourly_rate_usd": "0.9776",
+    "instance_type": "g6.2xlarge",
+    "operating_system": "Linux",
+    "provider": "AWS EC2",
+    "purchase": "on-demand",
+    "rate_excludes": [
+      "EBS",
+      "public IPv4",
+      "data transfer",
+      "tax"
+    ],
+    "region": "us-east-1",
+    "source_note": "Holori lists $0.9776 per hour for Linux on-demand in us-east-1, updated 2026-11-06. Vantage and Cloud Credits list the same rate.",
+    "sources": [
+      "https://calculator.holori.com/aws/ec2/g6.2xlarge",
+      "https://instances.vantage.sh/aws/ec2/g6.2xlarge",
+      "https://cloud-credits.org/prices/ec2/g6-2xlarge/us-east-1"
+    ],
+    "vcpus": 8
+  },
+  "guard_lowered": false,
+  "h_star_fitted": false,
+  "held_out_scenes_opened": false,
+  "label": "planning estimate, not a CUDA measurement",
+  "memory": {
+    "bf16_weight_bytes": 4255064064,
+    "calibrated_projection_fits_under_comparison_floor": true,
+    "comparison_floor_bytes": 23622320128,
+    "comparison_floor_note": "22 GiB, the smaller published L4 listing. AWS pages also say 24 GB. This floor was not read from a CUDA device.",
+    "cuda_numerical_validation": "not_executed",
+    "guard_lowered": false,
+    "host_memory_gib": 32,
+    "kind": "estimate",
+    "local_cuda_allocator_check": false,
+    "observed_driver_snapshot_fits_under_comparison_floor": true,
+    "observed_mps_peak_current_allocated_mb": "4072.9",
+    "observed_mps_peak_driver_allocated_mb": "4749.7",
+    "observed_mps_peak_driver_bytes": 4980421427,
+    "unchanged_bf16_lines_bytes": {
+      "calibrated_projection": 11509447200,
+      "os_floor": 6442450944,
+      "spare_above_weights": 9623773184,
+      "staging_double_copy": 8510128128
+    },
+    "unchanged_float32_required_available_bytes": 20871410752,
+    "weight_bytes_fit_under_comparison_floor": true,
+    "why_this_host_size": "g6.2xlarge has 32 GiB of host memory, so the unchanged bfloat16 line of 11,509,447,200 OS-available bytes can clear. g6.xlarge has 16 GiB of host memory and is not the quoted class. The line was not lowered and was not evaluated on either instance. The existing budget decision also requires MPS, and the Checkpoint 1.9 runner requests MPS. This estimate does not change either fact."
+  },
+  "model_from_pretrained_called": false,
+  "rows": [
+    {
+      "assumed_cuda_seconds_per_mps_second": "1",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "12.84",
+      "estimated_scene_seconds": "47269.356",
+      "estimated_wall_hours": "13.131",
+      "estimated_wall_seconds": "47272.982",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": true,
+      "region": "us-east-1",
+      "scene_count": 96,
+      "study": "development_v4"
+    },
+    {
+      "assumed_cuda_seconds_per_mps_second": "0.5",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "6.42",
+      "estimated_scene_seconds": "23634.678",
+      "estimated_wall_hours": "6.566",
+      "estimated_wall_seconds": "23638.304",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": false,
+      "region": "us-east-1",
+      "scene_count": 96,
+      "study": "development_v4"
+    },
+    {
+      "assumed_cuda_seconds_per_mps_second": "2",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "25.67",
+      "estimated_scene_seconds": "94538.712",
+      "estimated_wall_hours": "26.262",
+      "estimated_wall_seconds": "94542.338",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": false,
+      "region": "us-east-1",
+      "scene_count": 96,
+      "study": "development_v4"
+    },
+    {
+      "assumed_cuda_seconds_per_mps_second": "1",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "34.23",
+      "estimated_scene_seconds": "126051.616",
+      "estimated_wall_hours": "35.015",
+      "estimated_wall_seconds": "126055.242",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": true,
+      "region": "us-east-1",
+      "scene_count": 256,
+      "study": "held_out_planning"
+    },
+    {
+      "assumed_cuda_seconds_per_mps_second": "0.5",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "17.12",
+      "estimated_scene_seconds": "63025.808",
+      "estimated_wall_hours": "17.508",
+      "estimated_wall_seconds": "63029.434",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": false,
+      "region": "us-east-1",
+      "scene_count": 256,
+      "study": "held_out_planning"
+    },
+    {
+      "assumed_cuda_seconds_per_mps_second": "2",
+      "cuda_timing_measured": false,
+      "estimated_on_demand_usd": "68.46",
+      "estimated_scene_seconds": "252103.232",
+      "estimated_wall_hours": "70.030",
+      "estimated_wall_seconds": "252106.858",
+      "gpu_instance_type": "g6.2xlarge",
+      "gpu_name": "NVIDIA L4",
+      "hourly_rate_usd": "0.9776",
+      "quoted": false,
+      "region": "us-east-1",
+      "scene_count": 256,
+      "study": "held_out_planning"
+    }
+  ],
+  "schema": "cuda_readiness.planning_estimate.v1",
+  "source": {
+    "device": "mps",
+    "dtype": "bfloat16",
+    "finishing_process_wall_seconds": "7447.295",
+    "finishing_process_wall_used_for_scaling": false,
+    "load_seconds": "3.626",
+    "progress": "docs/checkpoint-1.9/attack_feasibility/progress.json",
+    "stage_a_scene_count": 8,
+    "stage_a_seconds_sum": "326.408",
+    "stage_a_used_for_scaling": false,
+    "stage_b_scene_count": 16,
+    "stage_b_seconds_per_scene": "492.389125",
+    "stage_b_seconds_sum": "7878.226"
+  },
+  "task": {
+    "budgets": [
+      "1/255",
+      "2/255",
+      "4/255"
+    ],
+    "controls": [
+      "one positive sign step",
+      "one matched random-sign step"
+    ],
+    "definition_changed": false,
+    "eval_contexts": [
+      "neutral",
+      "helpful_nonrevealing"
+    ],
+    "init": "clean image",
+    "name": "checkpoint-1.9 stage B grid, one scene at a time",
+    "pgd_steps": 7,
+    "restarts": 0,
+    "source_context": "neutral",
+    "step_size": "epsilon/4"
+  }
+}

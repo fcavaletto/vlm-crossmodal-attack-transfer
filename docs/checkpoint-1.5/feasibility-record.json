@@ -1,0 +1,212 @@
+{
+  "measurement_kind": "checkpoint15_model_feasibility",
+  "label": "DEVELOPMENT ONLY",
+  "checkpoint": "checkpoint-1.5",
+  "attacks_run": false,
+  "training_run": false,
+  "cloud_gpu": false,
+  "held_out_opened": false,
+  "h_star_fitted": false,
+  "from_pretrained_called": false,
+  "weights_downloaded": false,
+  "reproduction_command": "HF_HOME=/Users/fedecava/Development/models/huggingface PYTHONPATH=src/vlm_iface:src/pilot python docs/checkpoint-1.5/run_model_feasibility.py",
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "system": "Darwin",
+    "python": "3.12.14",
+    "machine": "arm64",
+    "memory_bytes": 25769803776,
+    "cpu_brand": "Apple M4",
+    "hw_memsize": 25769803776
+  },
+  "versions": {
+    "python": "3.12.14",
+    "torch": "2.15.0",
+    "transformers": "5.22.1"
+  },
+  "mps_available": true,
+  "mps_model_measurement": null,
+  "mps_model_measurement_note": "No model was placed on MPS. There is no MPS load time, MPS allocation, or MPS forward time in this record. mps_available is only a capability flag.",
+  "calibration": {
+    "source": "docs/checkpoint-1/PILOT_REPORT.md section 8",
+    "available_before_load_mb": 8074.4,
+    "available_after_load_mb": 3749.7,
+    "mps_current_allocated_mb": 1965.6,
+    "drop_per_current_allocation": 2.2001933251933252,
+    "note": "The ratio is an extrapolation from one SmolVLM2 float32 MPS load. It is a pre-load safety bound for a larger model, not a Qwen measurement. MB values are the published one-decimal figures."
+  },
+  "budget_constants_bytes": {
+    "min_available": 6442450944,
+    "spare_required": 5368709120,
+    "projected_remaining_floor": 2147483648
+  },
+  "os_memory_bytes": {
+    "total": 25769803776,
+    "available": 7508770816,
+    "used": 10970775552,
+    "free": 243466240,
+    "active": 7319257088,
+    "inactive": 6445383680,
+    "wired": 3651518464
+  },
+  "qwen_candidate": {
+    "repo_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "filename": "model.safetensors",
+    "on_disk_bytes": 4255140312,
+    "gated": false,
+    "weights_loaded": false,
+    "parameter_count": 2127532032,
+    "dtype_counts": {
+      "BF16": 2127532032
+    },
+    "float32_weight_bytes": 8510128128,
+    "header_bytes": 76240,
+    "approximate": false,
+    "header_source": "range",
+    "load_permitted_by_weight_guard": false,
+    "abort_bytes": 6442450944,
+    "reason": "float32 weight bytes exceed the guard; from_pretrained must not be called",
+    "from_pretrained_called": false
+  },
+  "qwen_dtype_decisions": {
+    "float32": {
+      "resident_bytes": 8510128128,
+      "available_bytes": 7508770816,
+      "required_available_bytes": 20871410752,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 13878837248,
+        "calibrated_projection": 20871410752,
+        "staging_double_copy": 17020256256
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "float32",
+      "from_pretrained_called": false,
+      "checkpoint0_float32_guard_bytes": 6442450944,
+      "checkpoint0_float32_guard_permits_load": false,
+      "note": "Resident size is the float32 expansion of the surveyed header, not the on-disk BF16 file.",
+      "available_plus_active_bytes": 14828027904,
+      "available_plus_active_would_clear": false
+    },
+    "bfloat16": {
+      "resident_bytes": 4255064064,
+      "available_bytes": 7508770816,
+      "required_available_bytes": 11509447200,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 9623773184,
+        "calibrated_projection": 11509447200,
+        "staging_double_copy": 8510128128
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "bfloat16",
+      "from_pretrained_called": false,
+      "checkpoint0_float32_guard_bytes": 6442450944,
+      "checkpoint0_float32_guard_permits_load": false,
+      "stored_dtype_counts": {
+        "BF16": 2127532032
+      },
+      "note": "Resident size is two bytes times the surveyed parameter count. The Checkpoint 0 file was BF16. This is the native-width load that a later checkpoint could attempt. It was not attempted here.",
+      "available_plus_active_bytes": 14828027904,
+      "available_plus_active_would_clear": true
+    }
+  },
+  "qwen_preprocessor": {
+    "downloaded": true,
+    "weights_included": false,
+    "image_processor_type": "Qwen2VLImageProcessorFast",
+    "patch_size": 16,
+    "merge_size": 2,
+    "min_pixels": 65536,
+    "max_pixels": 16777216,
+    "development_image_hw": [
+      384,
+      512
+    ],
+    "estimated_resize_hw": [
+      384,
+      512
+    ],
+    "estimated_llm_image_tokens": 192,
+    "estimate_formula": "smart_resize(384, 512, factor=patch*merge, min_pixels, max_pixels); tokens = (h/patch)*(w/patch)/(merge*merge). Not a measured forward."
+  },
+  "qwen_local_weight_file_present": false,
+  "smolvlm": {
+    "model_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+    "pinned_revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+    "weights_loaded_this_checkpoint": false,
+    "new_subset_ran": false,
+    "reason": "Task ability is the Checkpoint 1 24-scene MPS pilot. A second load was not required to answer that question and was not started.",
+    "task_ability_source": {
+      "commit": "90c6ffe83d61514da217a20f8dfc2f202afbbe69",
+      "report": "docs/checkpoint-1/PILOT_REPORT.md",
+      "summary": "docs/checkpoint-1/summary.json",
+      "predictions": "docs/checkpoint-1/predictions.jsonl",
+      "label": "DEVELOPMENT ONLY",
+      "device": "mps",
+      "parameter_dtype": "torch.float32"
+    },
+    "header_survey": {
+      "repo_id": "HuggingFaceTB/SmolVLM2-500M-Video-Instruct",
+      "revision": "7b375e1b73b11138ff12fe22c8f2822d8fe03467",
+      "filename": "model.safetensors",
+      "on_disk_bytes": 2029990624,
+      "gated": false,
+      "weights_loaded": false,
+      "parameter_count": 507482304,
+      "dtype_counts": {
+        "F32": 507482304
+      },
+      "float32_weight_bytes": 2029929216,
+      "header_bytes": 61400,
+      "approximate": false,
+      "header_source": "range",
+      "load_permitted_by_weight_guard": true,
+      "abort_bytes": 6442450944,
+      "reason": "float32 weight bytes are within the guard",
+      "from_pretrained_called": false
+    }
+  },
+  "gates": {
+    "weight_load_and_memory": {
+      "status": "aborted",
+      "from_pretrained_called": false,
+      "weights_loaded": false,
+      "reason": "No dtype cleared the pre-load budget. See qwen_dtype_decisions."
+    },
+    "minimal_forward": {
+      "status": "not_started",
+      "reason": "Gate 1 aborted before a load."
+    },
+    "clean_answers": {
+      "status": "not_started",
+      "reason": "Gate 1 aborted before a load."
+    },
+    "image_gradients": {
+      "status": "not_started",
+      "reason": "Gate 1 aborted before a load. Gradients are not run after a failed earlier gate."
+    }
+  },
+  "action": "load_aborted",
+  "adopted": false,
+  "passed_gate_1": false,
+  "comparison_with_smolvlm": "Not run. Qwen produced no scores and no generations, so there is no paired subset.",
+  "survey_wall_seconds": 5.572
+}

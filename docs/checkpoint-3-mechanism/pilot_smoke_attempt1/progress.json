@@ -1,0 +1,368 @@
+{
+  "schema": "checkpoint-3.pilot.progress.v1",
+  "label": "SMOKE, one development scene",
+  "plan_commit": "9872e50bff84a320f522d7cda3ba93976fb3ec21",
+  "git_head_at_start": "9872e50bff84a320f522d7cda3ba93976fb3ec21",
+  "scene_order": [
+    "dev4-ref-00-a"
+  ],
+  "cap_seconds": 7200,
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "pid": 85667,
+  "memory_policy": "EMP-1 with M1 (unchanged)",
+  "confirmation_split_used": false,
+  "reserved_h_samples_used": false,
+  "scenes": {},
+  "limitations": [],
+  "budget": {
+    "available_bytes": 16363716608,
+    "decisions": {
+      "float32": {
+        "resident_bytes": 8510128128,
+        "available_bytes": 16363716608,
+        "required_available_bytes": 20871410752,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 13878837248,
+          "calibrated_projection": 20871410752,
+          "staging_double_copy": 17020256256
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [
+          "calibrated_projection",
+          "staging_double_copy"
+        ],
+        "mps_available": true,
+        "permitted": false,
+        "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection, staging_double_copy.",
+        "dtype": "float32"
+      },
+      "bfloat16": {
+        "resident_bytes": 4255064064,
+        "available_bytes": 16363716608,
+        "required_available_bytes": 11509447200,
+        "lines_bytes": {
+          "os_floor": 6442450944,
+          "spare_above_weights": 9623773184,
+          "calibrated_projection": 11509447200,
+          "staging_double_copy": 8510128128
+        },
+        "binding_line": "calibrated_projection",
+        "failed_lines": [],
+        "mps_available": true,
+        "permitted": true,
+        "reason": "OS-available memory clears every pre-load line.",
+        "dtype": "bfloat16"
+      }
+    },
+    "bf16_probe": {
+      "mps_available": true,
+      "mps_built": true,
+      "add_ok": true,
+      "matmul_ok": true,
+      "is_model_forward": false
+    },
+    "guard_lowered": false
+  },
+  "emp1_preload": {
+    "policy": "EMP-1",
+    "lines": {
+      "available_bytes": 10640781475,
+      "pressure_level_max": 1,
+      "free_disk_bytes": 10737418240
+    },
+    "sample": {
+      "t": 1794253003.906371,
+      "pressure": 1,
+      "available": 16363716608,
+      "swap_used": 524288,
+      "footprint": 460080328,
+      "footprint_max": 468468936
+    },
+    "free_disk_bytes": 32809594880,
+    "failed": [],
+    "permitted": true
+  },
+  "footprint_before_load": {
+    "current": 460113096,
+    "lifetime_max": 468468936
+  },
+  "load_permit": {
+    "permitted": true,
+    "policy": "EMP-1",
+    "frozen_bf16_decision_permitted": true,
+    "emp1_preload": {
+      "policy": "EMP-1",
+      "lines": {
+        "available_bytes": 10640781475,
+        "pressure_level_max": 1,
+        "free_disk_bytes": 10737418240
+      },
+      "sample": {
+        "t": 1794253003.906371,
+        "pressure": 1,
+        "available": 16363716608,
+        "swap_used": 524288,
+        "footprint": 460080328,
+        "footprint_max": 468468936
+      },
+      "free_disk_bytes": 32809594880,
+      "failed": [],
+      "permitted": true
+    }
+  },
+  "loaded_model": {
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+    "dtype": "torch.bfloat16",
+    "load_seconds": 4.613
+  },
+  "status": "stopped",
+  "stopped_reason": "dev4-ref-00-a pgd_patch_s0: mask count 170136 != k 170143 or outside S_F",
+  "elapsed_seconds": 270.9,
+  "memory_monitor": {
+    "samples": 543,
+    "by_level": {
+      "1": 543
+    },
+    "min_available": 6770016256,
+    "max_swap_used": 524288,
+    "max_swap_growth": 0,
+    "timeline": [
+      {
+        "t": 1794253003.906892,
+        "pressure": 1,
+        "available": 16363716608,
+        "swap_used": 524288,
+        "footprint": 460113096,
+        "footprint_max": 468468936
+      },
+      {
+        "t": 1794253014.142111,
+        "pressure": 1,
+        "available": 10288185344,
+        "swap_used": 524288,
+        "footprint": 5652202888,
+        "footprint_max": 5651924360
+      },
+      {
+        "t": 1794253024.297173,
+        "pressure": 1,
+        "available": 7520665600,
+        "swap_used": 524288,
+        "footprint": 9011676624,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253034.4541461,
+        "pressure": 1,
+        "available": 6793117696,
+        "swap_used": 524288,
+        "footprint": 9005680080,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253044.607611,
+        "pressure": 1,
+        "available": 7443169280,
+        "swap_used": 524288,
+        "footprint": 8984741328,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253054.763394,
+        "pressure": 1,
+        "available": 7158480896,
+        "swap_used": 524288,
+        "footprint": 8954168784,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253064.93217,
+        "pressure": 1,
+        "available": 8140800000,
+        "swap_used": 524288,
+        "footprint": 8954168784,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253075.081965,
+        "pressure": 1,
+        "available": 7043432448,
+        "swap_used": 524288,
+        "footprint": 8956560848,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253085.24656,
+        "pressure": 1,
+        "available": 7981547520,
+        "swap_used": 524288,
+        "footprint": 8956560848,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253095.396758,
+        "pressure": 1,
+        "available": 7544930304,
+        "swap_used": 524288,
+        "footprint": 8958985680,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253105.568071,
+        "pressure": 1,
+        "available": 6882574336,
+        "swap_used": 524288,
+        "footprint": 8992556496,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253115.731074,
+        "pressure": 1,
+        "available": 7521992704,
+        "swap_used": 524288,
+        "footprint": 8961410512,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253125.891288,
+        "pressure": 1,
+        "available": 7086538752,
+        "swap_used": 524288,
+        "footprint": 8963835368,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253136.045326,
+        "pressure": 1,
+        "available": 8228749312,
+        "swap_used": 524288,
+        "footprint": 8963835368,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253146.225698,
+        "pressure": 1,
+        "available": 7109476352,
+        "swap_used": 524288,
+        "footprint": 8966374888,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253156.379223,
+        "pressure": 1,
+        "available": 8116305920,
+        "swap_used": 524288,
+        "footprint": 8966374888,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253166.529092,
+        "pressure": 1,
+        "available": 7493992448,
+        "swap_used": 524288,
+        "footprint": 8968685032,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253176.710015,
+        "pressure": 1,
+        "available": 6953680896,
+        "swap_used": 524288,
+        "footprint": 8992966120,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253186.8955462,
+        "pressure": 1,
+        "available": 7405748224,
+        "swap_used": 524288,
+        "footprint": 8971126248,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253197.062103,
+        "pressure": 1,
+        "available": 7067533312,
+        "swap_used": 524288,
+        "footprint": 8973501952,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253207.233731,
+        "pressure": 1,
+        "available": 7417577472,
+        "swap_used": 524288,
+        "footprint": 8973469160,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253217.421371,
+        "pressure": 1,
+        "available": 7147864064,
+        "swap_used": 524288,
+        "footprint": 8975812072,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253227.594102,
+        "pressure": 1,
+        "available": 10146054144,
+        "swap_used": 524288,
+        "footprint": 6550930920,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253237.751445,
+        "pressure": 1,
+        "available": 7316504576,
+        "swap_used": 524288,
+        "footprint": 8978253288,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253247.916738,
+        "pressure": 1,
+        "available": 6965346304,
+        "swap_used": 524288,
+        "footprint": 9002042856,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253258.0750499,
+        "pressure": 1,
+        "available": 8110686208,
+        "swap_used": 524288,
+        "footprint": 8980628968,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253268.245182,
+        "pressure": 1,
+        "available": 10122379264,
+        "swap_used": 524288,
+        "footprint": 5679924808,
+        "footprint_max": 9073690064
+      },
+      {
+        "t": 1794253278.37759,
+        "pressure": 1,
+        "available": 9956376576,
+        "swap_used": 524288,
+        "footprint": 5696718408,
+        "footprint_max": 9073690064
+      }
+    ],
+    "process_peak_footprint": 9073690064
+  },
+  "footprint_end": {
+    "current": 5679908424,
+    "lifetime_max": 9073690064
+  }
+}

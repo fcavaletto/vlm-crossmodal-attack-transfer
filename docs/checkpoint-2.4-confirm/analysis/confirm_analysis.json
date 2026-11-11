@@ -1,0 +1,1127 @@
+{
+ "schema": "checkpoint-2.4.confirm.analysis.v1",
+ "input": "/Users/fedecava/Development/vlm-crossmodal-attack-transfer/repo/docs/checkpoint-2.4-confirm/run/records.jsonl",
+ "bootstrap": {
+  "draws": 9999,
+  "seed": 20261116
+ },
+ "n_groups_seen": 48,
+ "n_groups_analyzed": 48,
+ "excluded_incomplete": [],
+ "structure": {
+  "units": 96,
+  "sign_reversals_total": 0,
+  "max_levels": 1,
+  "units_with_coords_outside_fgsm_support": 84,
+  "max_outside_coords": 7,
+  "outside_all_half_level_ties": true,
+  "outside_all_zero_clean_gradient": true,
+  "density_in_fgsm_support": {
+   "mean": {
+    "n": 96,
+    "estimate": 0.29786,
+    "ci95": [
+     0.29453,
+     0.30119
+    ],
+    "nonfinite_draws": 0
+   },
+   "median": 0.29733
+  },
+  "n_elements": 589824
+ },
+ "margin_drop_source": {
+  "neutral": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.0625,
+     "ci95": [
+      2.35924,
+      3.84375
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.3125
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 9.65625,
+     "ci95": [
+      8.78906,
+      10.49492
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 9.5
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 2.0625,
+     "ci95": [
+      1.57031,
+      2.59896
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.625
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.39063,
+     "ci95": [
+      2.85513,
+      3.96844
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.70313
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.26562,
+     "ci95": [
+      5.70832,
+      6.80241
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.42187
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.32812,
+     "ci95": [
+      -0.07749,
+      0.74424
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 0.19531
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.32813,
+     "ci95": [
+      -1.70314,
+      -0.97492
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.09375
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.59375,
+     "ci95": [
+      5.89049,
+      7.32812
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.375
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.04976,
+    "ci95": [
+     -0.01273,
+     0.10571
+    ],
+    "nonfinite_draws": 0
+   },
+   "pgd_rank_among_seeds": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.0
+   },
+   "groups_pgd_beats_all_seeds": 48,
+   "groups_pgd_below_all_seeds": 0,
+   "within_group_seed_sd_median": 0.3391,
+   "n_clean_correct": 45,
+   "flip_rate": {
+    "fgsm": {
+     "n": 45,
+     "estimate": 0.11111,
+     "ci95": [
+      0.02222,
+      0.2
+     ],
+     "nonfinite_draws": 0
+    },
+    "pgd": {
+     "n": 45,
+     "estimate": 0.6,
+     "ci95": [
+      0.46667,
+      0.73333
+     ],
+     "nonfinite_draws": 0
+    },
+    "topk": {
+     "n": 45,
+     "estimate": 0.11111,
+     "ci95": [
+      0.02222,
+      0.2
+     ],
+     "nonfinite_draws": 0
+    },
+    "rand": {
+     "n": 45,
+     "estimate": 0.17778,
+     "ci95": [
+      0.06667,
+      0.28889
+     ],
+     "nonfinite_draws": 0
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 45,
+    "estimate": 0.42222,
+    "ci95": [
+     0.28889,
+     0.57778
+    ],
+    "nonfinite_draws": 0
+   },
+   "flip_topk_minus_rand": {
+    "n": 45,
+    "estimate": -0.06667,
+    "ci95": [
+     -0.15556,
+     0.0
+    ],
+    "nonfinite_draws": 0
+   }
+  },
+  "helpful_nonrevealing": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.57292,
+     "ci95": [
+      2.875,
+      4.28125
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 3.5
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 10.42448,
+     "ci95": [
+      9.64583,
+      11.22669
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 10.625
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 2.26302,
+     "ci95": [
+      1.72135,
+      2.82839
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.0
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.69694,
+     "ci95": [
+      3.22331,
+      4.1797
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 3.5625
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.72754,
+     "ci95": [
+      6.19792,
+      7.27446
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.89844
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.12402,
+     "ci95": [
+      -0.30601,
+      0.55957
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 0.14062
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.43392,
+     "ci95": [
+      -1.77122,
+      -1.10415
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.32031
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.85156,
+     "ci95": [
+      6.22396,
+      7.4974
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.6875
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.0181,
+    "ci95": [
+     -0.04616,
+     0.07754
+    ],
+    "nonfinite_draws": 0
+   },
+   "pgd_rank_among_seeds": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.0
+   },
+   "groups_pgd_beats_all_seeds": 48,
+   "groups_pgd_below_all_seeds": 0,
+   "within_group_seed_sd_median": 0.2751,
+   "n_clean_correct": 45,
+   "flip_rate": {
+    "fgsm": {
+     "n": 45,
+     "estimate": 0.26667,
+     "ci95": [
+      0.13333,
+      0.4
+     ],
+     "nonfinite_draws": 0
+    },
+    "pgd": {
+     "n": 45,
+     "estimate": 0.77778,
+     "ci95": [
+      0.64444,
+      0.88889
+     ],
+     "nonfinite_draws": 0
+    },
+    "topk": {
+     "n": 45,
+     "estimate": 0.13333,
+     "ci95": [
+      0.04444,
+      0.24444
+     ],
+     "nonfinite_draws": 0
+    },
+    "rand": {
+     "n": 45,
+     "estimate": 0.23333,
+     "ci95": [
+      0.12222,
+      0.35556
+     ],
+     "nonfinite_draws": 0
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 45,
+    "estimate": 0.54444,
+    "ci95": [
+     0.4,
+     0.68333
+    ],
+    "nonfinite_draws": 0
+   },
+   "flip_topk_minus_rand": {
+    "n": 45,
+    "estimate": -0.1,
+    "ci95": [
+     -0.18889,
+     -0.02778
+    ],
+    "nonfinite_draws": 0
+   }
+  },
+  "pooled": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.31771,
+     "ci95": [
+      2.65221,
+      4.03392
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.8125
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 10.04036,
+     "ci95": [
+      9.34505,
+      10.75137
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 10.125
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 2.16276,
+     "ci95": [
+      1.67057,
+      2.6888
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.03125
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.54378,
+     "ci95": [
+      3.0695,
+      4.04624
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.96875
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.49658,
+     "ci95": [
+      6.08165,
+      6.91692
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.61719
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.22607,
+     "ci95": [
+      -0.15596,
+      0.6172
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 0.17969
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.38102,
+     "ci95": [
+      -1.71144,
+      -1.06344
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.35156
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.72266,
+     "ci95": [
+      6.16536,
+      7.29303
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.65625
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.03363,
+    "ci95": [
+     -0.02452,
+     0.0874
+    ],
+    "nonfinite_draws": 0
+   }
+  }
+ },
+ "margin_drop_target": {
+  "neutral": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.04948,
+     "ci95": [
+      2.36198,
+      3.78646
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.75
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 8.66146,
+     "ci95": [
+      7.85404,
+      9.48438
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 8.5
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.94531,
+     "ci95": [
+      1.43229,
+      2.48698
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.625
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.125,
+     "ci95": [
+      2.62922,
+      3.65664
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.61719
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 5.53646,
+     "ci95": [
+      5.02668,
+      6.05016
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 5.28125
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.07552,
+     "ci95": [
+      -0.34474,
+      0.51239
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 0.02344
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.17969,
+     "ci95": [
+      -1.52477,
+      -0.83691
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.09375
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 5.61198,
+     "ci95": [
+      4.92448,
+      6.29948
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 5.6875
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.01346,
+    "ci95": [
+     -0.06717,
+     0.08404
+    ],
+    "nonfinite_draws": 0
+   },
+   "pgd_rank_among_seeds": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.0
+   },
+   "groups_pgd_beats_all_seeds": 48,
+   "groups_pgd_below_all_seeds": 0,
+   "within_group_seed_sd_median": 0.2891,
+   "n_clean_correct": 45,
+   "flip_rate": {
+    "fgsm": {
+     "n": 45,
+     "estimate": 0.2,
+     "ci95": [
+      0.08889,
+      0.33333
+     ],
+     "nonfinite_draws": 0
+    },
+    "pgd": {
+     "n": 45,
+     "estimate": 0.64444,
+     "ci95": [
+      0.51111,
+      0.77778
+     ],
+     "nonfinite_draws": 0
+    },
+    "topk": {
+     "n": 45,
+     "estimate": 0.08889,
+     "ci95": [
+      0.02222,
+      0.17778
+     ],
+     "nonfinite_draws": 0
+    },
+    "rand": {
+     "n": 45,
+     "estimate": 0.18611,
+     "ci95": [
+      0.07778,
+      0.30556
+     ],
+     "nonfinite_draws": 0
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 45,
+    "estimate": 0.45833,
+    "ci95": [
+     0.31389,
+     0.60278
+    ],
+    "nonfinite_draws": 0
+   },
+   "flip_topk_minus_rand": {
+    "n": 45,
+    "estimate": -0.09722,
+    "ci95": [
+     -0.18889,
+     -0.02222
+    ],
+    "nonfinite_draws": 0
+   }
+  },
+  "helpful_nonrevealing": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.11458,
+     "ci95": [
+      2.4401,
+      3.84375
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.875
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 9.9401,
+     "ci95": [
+      9.25521,
+      10.64063
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 10.25
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 2.01302,
+     "ci95": [
+      1.47396,
+      2.6069
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.75
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.2972,
+     "ci95": [
+      2.80628,
+      3.80568
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.96875
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.6429,
+     "ci95": [
+      6.12303,
+      7.19632
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.46875
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.18262,
+     "ci95": [
+      -0.19954,
+      0.56055
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 0.21094
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.28418,
+     "ci95": [
+      -1.6748,
+      -0.92804
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.0625
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.82552,
+     "ci95": [
+      6.18229,
+      7.51042
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.75
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.02676,
+    "ci95": [
+     -0.03101,
+     0.07803
+    ],
+    "nonfinite_draws": 0
+   },
+   "pgd_rank_among_seeds": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.0,
+     "ci95": [
+      1.0,
+      1.0
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.0
+   },
+   "groups_pgd_beats_all_seeds": 48,
+   "groups_pgd_below_all_seeds": 0,
+   "within_group_seed_sd_median": 0.3273,
+   "n_clean_correct": 45,
+   "flip_rate": {
+    "fgsm": {
+     "n": 45,
+     "estimate": 0.13333,
+     "ci95": [
+      0.04444,
+      0.24444
+     ],
+     "nonfinite_draws": 0
+    },
+    "pgd": {
+     "n": 45,
+     "estimate": 0.68889,
+     "ci95": [
+      0.55556,
+      0.82222
+     ],
+     "nonfinite_draws": 0
+    },
+    "topk": {
+     "n": 45,
+     "estimate": 0.13333,
+     "ci95": [
+      0.04444,
+      0.24444
+     ],
+     "nonfinite_draws": 0
+    },
+    "rand": {
+     "n": 45,
+     "estimate": 0.15556,
+     "ci95": [
+      0.06667,
+      0.26667
+     ],
+     "nonfinite_draws": 0
+    }
+   },
+   "flip_pgd_minus_rand": {
+    "n": 45,
+    "estimate": 0.53333,
+    "ci95": [
+     0.37778,
+     0.66667
+    ],
+    "nonfinite_draws": 0
+   },
+   "flip_topk_minus_rand": {
+    "n": 45,
+    "estimate": -0.02222,
+    "ci95": [
+     -0.06667,
+     0.0
+    ],
+    "nonfinite_draws": 0
+   }
+  },
+  "pooled": {
+   "D_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.08203,
+     "ci95": [
+      2.42839,
+      3.77474
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.625
+   },
+   "D_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 9.30078,
+     "ci95": [
+      8.59766,
+      10.01823
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 9.34375
+   },
+   "D_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 1.97917,
+     "ci95": [
+      1.4765,
+      2.51172
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 1.75
+   },
+   "D_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 3.2111,
+     "ci95": [
+      2.7464,
+      3.69762
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 2.66406
+   },
+   "selection_pgd_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.08968,
+     "ci95": [
+      5.63655,
+      6.54317
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.03125
+   },
+   "sparsity_rand_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 0.12907,
+     "ci95": [
+      -0.24496,
+      0.51483
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -0.03906
+   },
+   "magnitude_topk_minus_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": -1.23193,
+     "ci95": [
+      -1.57294,
+      -0.90641
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": -1.03125
+   },
+   "total_pgd_minus_fgsm": {
+    "mean": {
+     "n": 48,
+     "estimate": 6.21875,
+     "ci95": [
+      5.61979,
+      6.82552
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 6.09375
+   },
+   "share_of_gap_from_sparsity": {
+    "n": 48,
+    "estimate": 0.02075,
+    "ci95": [
+     -0.0423,
+     0.07805
+    ],
+    "nonfinite_draws": 0
+   }
+  }
+ },
+ "first_order_prediction_source_margin": {
+  "neutral": {
+   "pred_drop_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 39.42413,
+     "ci95": [
+      32.83517,
+      46.7072
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 31.68465
+   },
+   "pred_drop_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 119.12468,
+     "ci95": [
+      98.29724,
+      142.37038
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 94.60548
+   },
+   "pred_drop_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 42.37873,
+     "ci95": [
+      35.14455,
+      50.34778
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 33.68202
+   },
+   "ratio_of_means_pgd_over_rand": 0.9303,
+   "ratio_of_means_topk_over_rand": 2.811
+  },
+  "helpful_nonrevealing": {
+   "pred_drop_pgd": {
+    "mean": {
+     "n": 48,
+     "estimate": 45.7155,
+     "ci95": [
+      39.26092,
+      52.59943
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 44.18105
+   },
+   "pred_drop_topk": {
+    "mean": {
+     "n": 48,
+     "estimate": 141.03874,
+     "ci95": [
+      119.22043,
+      164.57716
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 130.37551
+   },
+   "pred_drop_rand": {
+    "mean": {
+     "n": 48,
+     "estimate": 49.74833,
+     "ci95": [
+      42.629,
+      57.23333
+     ],
+     "nonfinite_draws": 0
+    },
+    "median": 47.17979
+   },
+   "ratio_of_means_pgd_over_rand": 0.9189,
+   "ratio_of_means_topk_over_rand": 2.835
+  }
+ },
+ "decisions": {
+  "P1_selection_beats_matched_random": {
+   "rule": "mean(D_PGD3 - mean_r D_rand_r) > 0 in neutral and in helpful, and pooled 95% CI lower bound > 0",
+   "neutral": {
+    "n": 48,
+    "estimate": 6.26562,
+    "ci95": [
+     5.70832,
+     6.80241
+    ],
+    "nonfinite_draws": 0
+   },
+   "helpful_nonrevealing": {
+    "n": 48,
+    "estimate": 6.72754,
+    "ci95": [
+     6.19792,
+     7.27446
+    ],
+    "nonfinite_draws": 0
+   },
+   "pooled": {
+    "n": 48,
+    "estimate": 6.49658,
+    "ci95": [
+     6.08165,
+     6.91692
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "S1_sparsity_share_at_most_0.25": {
+   "rule": "pooled share = (mean D_rand - mean D_FGSM)/(mean D_PGD3 - mean D_FGSM); 95% CI upper bound <= 0.25",
+   "share": {
+    "n": 48,
+    "estimate": 0.03363,
+    "ci95": [
+     -0.02452,
+     0.0874
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "S2_topk_gradient_worse_than_random": {
+   "rule": "mean(D_topk - D_rand) < 0 in neutral and in helpful, and pooled 95% CI upper bound < 0",
+   "neutral": {
+    "n": 48,
+    "estimate": -1.32813,
+    "ci95": [
+     -1.70314,
+     -0.97492
+    ],
+    "nonfinite_draws": 0
+   },
+   "helpful_nonrevealing": {
+    "n": 48,
+    "estimate": -1.43392,
+    "ci95": [
+     -1.77122,
+     -1.10415
+    ],
+    "nonfinite_draws": 0
+   },
+   "pooled": {
+    "n": 48,
+    "estimate": -1.38102,
+    "ci95": [
+     -1.71144,
+     -1.06344
+    ],
+    "nonfinite_draws": 0
+   },
+   "supported": true
+  },
+  "complete_sample": true
+ }
+}

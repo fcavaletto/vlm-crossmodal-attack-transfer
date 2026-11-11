@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this code, data or records, please cite them as below."
+title: "Which Coordinates, Not How Many: Matched-Count Evidence on the PGD–FGSM Gap in a Vision–Language Model"
+type: software
+authors:
+  - family-names: Cavaletto
+    given-names: Federico
+repository-code: "https://github.com/fcavaletto/vlm-crossmodal-attack-transfer"
+url: "https://github.com/fcavaletto/vlm-crossmodal-attack-transfer"
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - adversarial robustness
+  - vision-language models
+  - FGSM
+  - PGD
+  - gradient saliency
+  - pre-registration
+abstract: >-
+  Pre-registered, held-out evidence that 3-step PGD's advantage over FGSM on
+  Qwen3-VL-2B-Instruct at an L-infinity budget of one 8-bit level comes from
+  which RGB channel coordinates it perturbs, and that two standard
+  clean-gradient rules rank those coordinates below random. Source code is
+  MIT-licensed; original synthetic scenes, experimental records, figures and
+  research documentation are CC BY 4.0; see the README's License section for
+  exclusions.

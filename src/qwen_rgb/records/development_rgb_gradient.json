@@ -1,0 +1,328 @@
+{
+  "measurement_kind": "checkpoint17_qwen_rgb_gradient",
+  "label": "DEVELOPMENT ONLY",
+  "checkpoint": "checkpoint-1.7",
+  "started_from_commit": "004783b5604c34aa066befbcd5356bfd7bd6e7b2",
+  "scene_id": "dev2-attribute-00-a",
+  "context": "neutral",
+  "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+  "revision": "89644892e4d85e24eaac8bacfd4f463576704203",
+  "attacks_run": false,
+  "generation_run": false,
+  "training_run": false,
+  "cloud_gpu": false,
+  "held_out_opened": false,
+  "h_star_fitted": false,
+  "model_from_pretrained_called": false,
+  "model_load_started": false,
+  "rgb_gradient_finite": null,
+  "rgb_gradient_nonzero": null,
+  "reproduction_command": "HF_HOME=/Users/fedecava/Development/models/huggingface PYTHONPATH=src/qwen_rgb:src/vlm_iface:src/pilot /Users/fedecava/Development/_c0-work/venv-vlm/bin/python -m qwen_rgb.measure",
+  "repo_root": "/Users/fedecava/Development/_c17-work/qwen-rgb",
+  "environment": {
+    "HF_HOME": "/Users/fedecava/Development/models/huggingface",
+    "HF_HOME_assigned_by_script": false,
+    "HF_HUB_OFFLINE_was_set": false,
+    "HF_HUB_OFFLINE_set_by_script": false
+  },
+  "machine": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "system": "Darwin",
+    "python": "3.12.14",
+    "machine": "arm64",
+    "cpu_brand": "Apple M4",
+    "hw_memsize": 25769803776
+  },
+  "versions": {
+    "torch": "2.15.0",
+    "transformers": "5.22.1",
+    "python": "3.12.14"
+  },
+  "budget_constants": {
+    "spare_required_bytes": 5368709120,
+    "projected_remaining_floor_bytes": 2147483648,
+    "os_floor_bytes": 6442450944,
+    "source": "docs/checkpoint-1.5/run_model_feasibility.py"
+  },
+  "memory_at_start": {
+    "total": 25769803776,
+    "available": 10914119680,
+    "used": 13559136256,
+    "free": 1201586176
+  },
+  "bf16_probe": {
+    "mps_available": true,
+    "mps_built": true,
+    "add_ok": true,
+    "matmul_ok": true,
+    "is_model_forward": false
+  },
+  "weight_file_present": true,
+  "header": {
+    "parameter_count": 2127532032,
+    "dtype_counts": {
+      "BF16": 2127532032
+    },
+    "float32_weight_bytes": 8510128128,
+    "file_bytes": 4255140312,
+    "header_bytes": 76240,
+    "approximate": false,
+    "weights_loaded": false
+  },
+  "dtype_decisions_at_start": {
+    "float32": {
+      "resident_bytes": 8510128128,
+      "available_bytes": 10914119680,
+      "required_available_bytes": 20871410752,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 13878837248,
+        "calibrated_projection": 20871410752,
+        "staging_double_copy": 17020256256
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "float32"
+    },
+    "bfloat16": {
+      "resident_bytes": 4255064064,
+      "available_bytes": 10914119680,
+      "required_available_bytes": 11509447200,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 9623773184,
+        "calibrated_projection": 11509447200,
+        "staging_double_copy": 8510128128
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "calibrated_projection"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+      "dtype": "bfloat16"
+    }
+  },
+  "dtype_selection_at_start": {
+    "dtype": null,
+    "permitted": false,
+    "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+  },
+  "processor_class": "Qwen3VLProcessor",
+  "image_processor_class": "Qwen2VLImageProcessor",
+  "processor_comparison": {
+    "input_hw": [
+      384,
+      512
+    ],
+    "smart_resize_hw": [
+      384,
+      512
+    ],
+    "resize_is_identity": true,
+    "our_shape": [
+      768,
+      1536
+    ],
+    "our_grid": [
+      [
+        1,
+        24,
+        32
+      ]
+    ],
+    "temporal_copies_equal": true,
+    "versus_pil": {
+      "shapes_match": true,
+      "left_shape": [
+        768,
+        1536
+      ],
+      "right_shape": [
+        768,
+        1536
+      ],
+      "max_abs": 0.0,
+      "mean_abs": 0.0
+    },
+    "versus_uint8_tensor": {
+      "shapes_match": true,
+      "left_shape": [
+        768,
+        1536
+      ],
+      "right_shape": [
+        768,
+        1536
+      ],
+      "max_abs": 0.0,
+      "mean_abs": 0.0
+    },
+    "versus_float_0_255": {
+      "shapes_match": true,
+      "left_shape": [
+        768,
+        1536
+      ],
+      "right_shape": [
+        768,
+        1536
+      ],
+      "max_abs": 0.0,
+      "mean_abs": 0.0
+    },
+    "versus_unit_interval_do_rescale_false": {
+      "shapes_match": true,
+      "left_shape": [
+        768,
+        1536
+      ],
+      "right_shape": [
+        768,
+        1536
+      ],
+      "max_abs": 4.470348358154297e-08,
+      "mean_abs": 7.523794920416549e-10
+    },
+    "grid_matches_pil": true,
+    "grid_matches_uint8_tensor": true,
+    "grid_matches_float_0_255": true,
+    "grid_matches_unit_interval": true,
+    "bf16_cast_of_official_pixels": {
+      "max_abs": 0.0016237497329711914,
+      "mean_abs": 0.0006181860808283091,
+      "note": "The vision tower casts pixel_values to its parameter dtype. This is the gap of that cast on the official float32 pixels, measured without loading the model."
+    },
+    "official_match_max_abs": 0.001,
+    "within_official_match": true,
+    "resize_rounding_probe": {
+      "used_as_model_input": false,
+      "probe_hw": [
+        256,
+        320
+      ],
+      "uint8_resize_dtype": "torch.uint8",
+      "max_abs_normalized_patches": 0.00795203447341919,
+      "mean_abs_normalized_patches": 7.786737114656717e-05,
+      "note": "Torchvision's uint8 bicubic resize rounds. The float resize does not. This probe forces a size change. It is not the model input when smart_resize keeps the original height and width."
+    }
+  },
+  "preprocessor_only_sum_gradient": {
+    "computed": true,
+    "finite": true,
+    "nonzero": true,
+    "abs_mean": 4.0,
+    "abs_max": 4.0,
+    "abs_sum": 2359296.0,
+    "fraction_nonzero": 1.0,
+    "shape": [
+      3,
+      384,
+      512
+    ],
+    "dtype": "torch.float32",
+    "loss": "sum_of_pixel_values",
+    "is_chosen_answer_loss": false
+  },
+  "scene": {
+    "scene_id": "dev2-attribute-00-a",
+    "task_family": "attribute",
+    "answer": "red",
+    "question": "What color is the large circle?",
+    "context_key": "neutral",
+    "context_text": "Several simple objects appear on a plain background.",
+    "prompt": "Several simple objects appear on a plain background.\nWhat color is the large circle?",
+    "image_path": "fixtures/development_v2/images/dev2-attribute-00-a.png",
+    "image_shape": [
+      3,
+      384,
+      512
+    ]
+  },
+  "answer_tokens": {
+    "leading_space": true,
+    "token_ids": [
+      2518
+    ],
+    "pieces": [
+      " red"
+    ],
+    "bare_token_ids": [
+      1151
+    ],
+    "bare_pieces": [
+      "red"
+    ],
+    "reduction": "summed_nll"
+  },
+  "memory_before_releasing_temporary_tensors": {
+    "total": 25769803776,
+    "available": 10777706496,
+    "used": 13690961920,
+    "free": 969195520
+  },
+  "memory_immediately_before_load": {
+    "total": 25769803776,
+    "available": 10786570240,
+    "used": 13680476160,
+    "free": 969768960
+  },
+  "budget_recheck_immediately_before_load": {
+    "float32": {
+      "resident_bytes": 8510128128,
+      "available_bytes": 10786570240,
+      "required_available_bytes": 20871410752,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 13878837248,
+        "calibrated_projection": 20871410752,
+        "staging_double_copy": 17020256256
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "spare_above_weights",
+        "calibrated_projection",
+        "staging_double_copy"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: spare_above_weights, calibrated_projection, staging_double_copy.",
+      "dtype": "float32"
+    },
+    "bfloat16": {
+      "resident_bytes": 4255064064,
+      "available_bytes": 10786570240,
+      "required_available_bytes": 11509447200,
+      "lines_bytes": {
+        "os_floor": 6442450944,
+        "spare_above_weights": 9623773184,
+        "calibrated_projection": 11509447200,
+        "staging_double_copy": 8510128128
+      },
+      "binding_line": "calibrated_projection",
+      "failed_lines": [
+        "calibrated_projection"
+      ],
+      "mps_available": true,
+      "permitted": false,
+      "reason": "OS-available memory is below the pre-load budget. from_pretrained must not be called. Failed lines: calibrated_projection.",
+      "dtype": "bfloat16"
+    }
+  },
+  "dtype_selection_immediately_before_load": {
+    "dtype": null,
+    "permitted": false,
+    "reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget."
+  },
+  "status": "stopped_budget",
+  "stopped_reason": "Neither dtype cleared the Checkpoint 1.5 pre-load budget.",
+  "wall_seconds": 1.453
+}

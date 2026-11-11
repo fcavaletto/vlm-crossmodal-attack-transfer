@@ -1,0 +1,126 @@
+{
+  "generation": {
+    "attempt_cap": 1000,
+    "attempts_total": 48,
+    "development_v4_layouts_excluded": 48,
+    "max_attempt_index": 0,
+    "rejected_constraint": 0,
+    "rejected_novelty": 0
+  },
+  "generator": "scene_confirm.generate",
+  "h_dl_seed_strings_refused": [
+    "study2-checkpoint-2.2-dev-v5",
+    "study2-checkpoint-2.2-sealed-v1"
+  ],
+  "image_size": [
+    512,
+    384
+  ],
+  "model_outputs_used_to_choose_scenes": false,
+  "model_was_run": false,
+  "n_groups": 48,
+  "n_scenes": 96,
+  "name": "study2_trackB_confirm_v1",
+  "numpy": "2.5.4",
+  "pillow": "13.0.0",
+  "primary_arm": "a",
+  "primary_arm_rule": "arm a of every group, fixed before generation (same rule as the 2.3 development S48 set)",
+  "realized_balance": {
+    "both_arms": {
+      "answer": {
+        "blue": 19,
+        "green": 33,
+        "red": 24,
+        "yellow": 20
+      },
+      "foil": {
+        "blue": 26,
+        "green": 18,
+        "red": 32,
+        "yellow": 20
+      },
+      "row": {
+        "bottom": 52,
+        "top": 44
+      },
+      "shape": {
+        "circle": 22,
+        "square": 32,
+        "triangle": 42
+      },
+      "size": {
+        "large": 48,
+        "small": 48
+      },
+      "target_column": {
+        "0": 22,
+        "1": 24,
+        "2": 24,
+        "3": 26
+      }
+    },
+    "ordered_answer_pairs": {
+      "blue->green": 6,
+      "blue->red": 3,
+      "green->blue": 4,
+      "green->red": 6,
+      "green->yellow": 8,
+      "red->blue": 3,
+      "red->green": 6,
+      "red->yellow": 4,
+      "yellow->blue": 3,
+      "yellow->green": 3,
+      "yellow->red": 2
+    },
+    "primary_arm": {
+      "answer": {
+        "blue": 9,
+        "green": 18,
+        "red": 13,
+        "yellow": 8
+      },
+      "foil": {
+        "blue": 13,
+        "green": 9,
+        "red": 16,
+        "yellow": 10
+      },
+      "row": {
+        "bottom": 26,
+        "top": 22
+      },
+      "shape": {
+        "circle": 11,
+        "square": 16,
+        "triangle": 21
+      },
+      "size": {
+        "large": 24,
+        "small": 24
+      },
+      "target_column": {
+        "0": 11,
+        "1": 12,
+        "2": 12,
+        "3": 13
+      }
+    }
+  },
+  "reserved_samples_touched": false,
+  "sampling_distribution": "docs/checkpoint-2.2-draft/V5_GENERATOR_SPEC.md section 3, conditioned on the v4 per-group checks",
+  "seed_string": "study2-trackB-confirm-v1",
+  "separation_checks": {
+    "duplicates_within_split": 0,
+    "layout_signature_and_mirrors_vs_development_v4": "enforced by rejection",
+    "layout_signature_and_mirrors_within_split": "enforced by rejection",
+    "pixel_hash_vs_all_development_images": {
+      "clashes": 0,
+      "compared_against": 216
+    },
+    "scene_graph_hash_vs_all_development_fixtures": {
+      "clashes": 0,
+      "compared_against": 216
+    }
+  },
+  "split": "trackB-confirm"
+}
